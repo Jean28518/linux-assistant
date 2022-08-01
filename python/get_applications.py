@@ -28,6 +28,7 @@ def get_applications_of_dir(path, language):
             continue
         lines = jfiles.get_all_lines_from_file(file)
         name, description, icon, keywords = "", "", "", ""
+        skip = False
         for line in lines:
             if line.startswith("Name="):
                 name = get_value_of_line(line)
@@ -41,10 +42,12 @@ def get_applications_of_dir(path, language):
                 icon = get_value_of_line(line)
             if line.startswith("Keywords="):
                 keywords = get_value_of_line(line)
+            if line.startswith("NoDisplay=true"):
+                skip = True
             # We don't want to add the action, because then e.g. the name get's weird
             if line.startswith("[Desktop Action"):
                 break
-        if name != "":
+        if name != "" and not skip:
             app = app_entry(file, name, description, icon, keywords)
             return_value.append(app)
             

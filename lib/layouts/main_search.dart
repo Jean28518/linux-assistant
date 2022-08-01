@@ -117,6 +117,9 @@ class _MainSearchState extends State<MainSearch> {
             result.tmp_priority += 10;
           }
         }
+        if (result.description.toLowerCase().contains(keyword)) {
+          result.tmp_priority += 5;
+        }
       }
     }
 
