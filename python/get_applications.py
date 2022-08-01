@@ -19,7 +19,7 @@ def get_value_of_line(line: str):
     return return_value
 
 
-def get_applications_of_dir(path, language):
+def get_applications_of_dir(path, language, desktop):
     files = jfolders.get_folder_entries(path)
     return_value = []
     
@@ -44,6 +44,8 @@ def get_applications_of_dir(path, language):
                 keywords = get_value_of_line(line)
             if line.startswith("NoDisplay=true"):
                 skip = True
+            if line.startswith("OnlyShowIn=") and not desktop in line and desktop != "":
+                skip = True
             # We don't want to add the action, because then e.g. the name get's weird
             if line.startswith("[Desktop Action"):
                 break
@@ -56,13 +58,14 @@ def get_applications_of_dir(path, language):
 
 if __name__ == '__main__':
     language = jessentials.get_value_from_arguments("lang", "en")
+    desktop = jessentials.get_value_from_arguments("desktop", "")
 
     dataDirs = os.getenv("XDG_DATA_DIRS").split(":")
 
     return_value = []
     for dataDir in dataDirs:
         dataDir += "/applications/"
-        return_value = jessentials.add_arrays(get_applications_of_dir(dataDir, language), return_value)
+        return_value = jessentials.add_arrays(get_applications_of_dir(dataDir, language, desktop), return_value)
     
 
     for app in return_value:

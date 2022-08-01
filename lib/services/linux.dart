@@ -30,6 +30,15 @@ class Linux {
     return (result.stdout);
   }
 
+  static String getHomeDirectory() {
+    String? home = Platform.environment["HOME"];
+    if (home != null) {
+      return home;
+    } else {
+      return "";
+    }
+  }
+
   static void changeUserPasswordDialog() {
     switch (currentEnviroment.desktop) {
       case DESKTOPS.CINNAMON:
@@ -81,6 +90,22 @@ class Linux {
     String foldersString =
         await runCommandAndGetStdout("python3 python/get_folder_structure.py");
     List<String> folders = foldersString.split('\n');
+
+    // Get Bookmarks:
+    if (currentEnviroment.desktop != DESKTOPS.KDE) {
+      String home = await getHomeDirectory();
+      String bookmarksLocation = home + "/.config/gtk-3.0/bookmarks";
+      String bookmarksString =
+          await runCommandAndGetStdout("cat " + bookmarksLocation);
+      List<String> bookmarkCandidates = bookmarksString.split("\n");
+      for (String bookmarkCandidate in bookmarkCandidates) {
+        String bookmark = bookmarkCandidate.split(" ")[0];
+        if (bookmark.startsWith("file://")) {
+          folders.add(bookmark.replaceFirst("file://", ""));
+        }
+      }
+    }
+
     List<ActionEntry> actionEntries = [];
     for (String folder in folders) {
       String folderName = folder.split('/').last;
@@ -96,7 +121,9 @@ class Linux {
     String applicationsString = await runCommandAndGetStdout(
         "python3 python/get_applications.py " +
             "--lang=" +
-            currentEnviroment.language);
+            currentEnviroment.language +
+            " --desktop=" +
+            getStringOfDesktopEnum(currentEnviroment.desktop));
     List<String> applications = applicationsString.split('\n');
     List<ActionEntry> actionEntries = [];
     List<String> filter = _getApplicationEntryFilter();
@@ -123,29 +150,12 @@ class Linux {
       entry.priority = -5;
       actionEntries.add(entry);
     }
-
     return actionEntries;
   }
 
-  static _getApplicationEntryFilter() {
-    // Add here the filename of the desktopfiles (without desktop)
-    var filter = [
-      "snap-handle-link",
-      "io.snapcraft.SessionAgent",
-    ];
-
-    // No KDE desktop
-    if (currentEnviroment.desktop != DESKTOPS.KDE) {
-      filter.add("mintinstall-kde");
-    }
-
-    // No Xfce desktop
-    if (currentEnviroment.desktop != DESKTOPS.XFCE) {
-      filter.add("xfce4-session-logout");
-      filter.add("xfce4-about");
-      filter.add("xfce-settings-manager");
-      filter.add("xfce-wm-settings");
-    }
+  static List<String> _getApplicationEntryFilter() {
+    // Add here the filename of the desktop files (without .desktop)
+    List<String> filter = [];
 
     // ---------------------------------------------------------------------- //
     return filter;
