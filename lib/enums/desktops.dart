@@ -1,4 +1,6 @@
 enum DESKTOPS {
   GNOME,
   CINNAMON,
+  KDE,
+  XFCE,
 }

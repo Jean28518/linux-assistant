@@ -6,4 +6,5 @@ class Enviroment {
   var version = 20.3;
   var desktop = DESKTOPS.CINNAMON;
   var browser = BROWSERS.FIREFOX;
+  var language = "de";
 }

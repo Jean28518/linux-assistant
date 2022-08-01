@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linux_helper/enums/desktops.dart';
 import 'package:linux_helper/services/main_search_loader.dart';
 import 'package:linux_helper/models/action_entry.dart';
 import 'package:linux_helper/services/linux.dart';
@@ -39,6 +40,20 @@ class ActionHandler {
     if (actionEntry.action.startsWith("openfolder:")) {
       Linux.runCommand(
           "xdg-open " + actionEntry.action.replaceFirst("openfolder:", ""));
+      callback();
+    }
+
+    if (actionEntry.action.startsWith("openapp:")) {
+      if (Linux.currentEnviroment.desktop == DESKTOPS.KDE) {
+        Linux.runCommand("kioclient exec " +
+            actionEntry.action.replaceFirst("openapp:", ""));
+      } else {
+        String filepath = actionEntry.action.replaceFirst("openapp:", "");
+        String file = filepath.split("/").last;
+        String filename = file.replaceAll(".desktop", "");
+        Linux.runCommand("gtk-launch " + filename);
+      }
+
       callback();
     }
   }

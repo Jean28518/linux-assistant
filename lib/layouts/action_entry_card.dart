@@ -28,11 +28,28 @@ class ActionEntryCard extends StatelessWidget {
           hoverColor: Colors.grey,
           title: Text(actionEntry.name),
           subtitle: Text(actionEntry.description),
+          leading: getIcon(),
         ),
         onTap: () {
           ActionHandler.handleActionEntry(actionEntry, callback);
         },
       ),
     );
+  }
+
+  Widget getIcon() {
+    if (actionEntry.action.startsWith("openfolder:")) {
+      return Icon(Icons.folder);
+    }
+    if (actionEntry.action.startsWith("openapp:")) {
+      return Icon(Icons.apps);
+    }
+    if (actionEntry.action.startsWith("websearch:")) {
+      return Icon(Icons.search);
+    }
+    if (actionEntry.action.startsWith("openwebsite:")) {
+      return Icon(Icons.web);
+    }
+    return (Icon(Icons.star));
   }
 }

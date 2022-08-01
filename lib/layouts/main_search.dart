@@ -78,22 +78,20 @@ class _MainSearchState extends State<MainSearch> {
   void _runFilter(String keyword, {bool runSetState = true}) {
     _lastKeyword = keyword;
     keyword = keyword.toLowerCase();
+    List<String> keys = keyword.split(" ");
     List<ActionEntry> results = [];
     if (keyword.isEmpty) {
       results = [];
     } else {
-      results = actionEntries
-          .where((actionEntry) =>
-              (actionEntry.name.toLowerCase().contains(keyword) ||
-                  actionEntry.description.toLowerCase().contains(keyword)))
-          .toList();
-    }
-
-    if (results.isEmpty &&
-        keyword != "" &&
-        Linux.currentEnviroment.browser == BROWSERS.FIREFOX) {
-      results.add(ActionEntry("Search in web for " + keyword,
-          "look for online results..", "websearch:" + keyword));
+      results = actionEntries.where((actionEntry) {
+        for (String key in keys) {
+          if (actionEntry.name.toLowerCase().contains(key) ||
+              actionEntry.description.toLowerCase().contains(key)) {
+            return true;
+          }
+        }
+        return false;
+      }).toList();
     }
 
     if (Uri.parse(keyword).isAbsolute) {
@@ -103,7 +101,30 @@ class _MainSearchState extends State<MainSearch> {
       results.add(actionEntry);
     }
 
-    results.sort((a, b) => b.priority.compareTo(a.priority));
+    if (results.isEmpty &&
+        keyword != "" &&
+        Linux.currentEnviroment.browser == BROWSERS.FIREFOX) {
+      results.add(ActionEntry("Search in web for " + keyword,
+          "look for online results..", "websearch:" + keyword));
+    }
+
+    for (ActionEntry result in results) {
+      result.tmp_priority = 0;
+      for (String key in keys) {
+        if (result.name.toLowerCase().contains(key)) {
+          result.tmp_priority += 10;
+          if (result.name.toLowerCase().startsWith(key)) {
+            result.tmp_priority += 10;
+          }
+        }
+      }
+    }
+
+    // Sort:
+    results.sort((a, b) => (a.name).compareTo(b.name));
+
+    results.sort((a, b) =>
+        (b.priority + b.tmp_priority).compareTo(a.priority + a.tmp_priority));
 
     _foundEntries = results;
 
