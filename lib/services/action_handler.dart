@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:linux_helper/layouts/search.dart';
+import 'package:linux_helper/services/main_search_loader.dart';
 import 'package:linux_helper/models/action_entry.dart';
 import 'package:linux_helper/services/linux.dart';
 
 class ActionHandler {
-  late MainSearch mainSearch;
-  ActionHandler(MainSearch mainSearch) {
-    this.mainSearch = mainSearch;
-  }
-
   static void handleActionEntry(
       ActionEntry actionEntry, VoidCallback callback) {
     print(actionEntry.action);
@@ -38,6 +33,12 @@ class ActionHandler {
     if (actionEntry.action.startsWith("openwebsite:")) {
       Linux.openWebbrowserWithSite(
           actionEntry.action.replaceFirst("openwebsite:", ""));
+      callback();
+    }
+
+    if (actionEntry.action.startsWith("openfolder:")) {
+      Linux.runCommand(
+          "xdg-open " + actionEntry.action.replaceFirst("openfolder:", ""));
       callback();
     }
   }

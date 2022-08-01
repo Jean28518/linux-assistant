@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:linux_helper/layouts/search.dart';
+import 'package:linux_helper/services/main_search_loader.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      home: MainSearch(),
+      home: MainSearchLoader(),
     );
   }
 }

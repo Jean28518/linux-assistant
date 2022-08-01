@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/widgets.dart';
 import 'package:linux_helper/enums/browsers.dart';
 import 'package:linux_helper/layouts/action_entry_card.dart';
 import 'package:linux_helper/layouts/recommendation_card.dart';
@@ -10,27 +7,17 @@ import 'package:linux_helper/services/action_handler.dart';
 import 'package:linux_helper/services/linux.dart';
 
 class MainSearch extends StatefulWidget {
-  const MainSearch({Key? key}) : super(key: key);
+  late List<ActionEntry> actionEntries;
+
+  MainSearch({Key? key, required this.actionEntries}) : super(key: key);
 
   @override
-  State<MainSearch> createState() => _MainSearchState();
+  State<MainSearch> createState() =>
+      _MainSearchState(actionEntries: actionEntries);
 }
 
 class _MainSearchState extends State<MainSearch> {
-  final actionEntries = [
-    ActionEntry(
-        "Password", "Change password of current user", "change_user_password"),
-    ActionEntry("User Profile", "Change userdetails", "open_usersettings"),
-    ActionEntry("Systeminformation", "Linux Mint 20.3 Cinnamon",
-        "open_systeminformation"),
-    ActionEntry("Update", "TestBeschreibung", ""),
-    ActionEntry("Apps", "TestBeschreibung", ""),
-    ActionEntry("Health", "TestBeschreibung", ""),
-    ActionEntry("Security", "TestBeschreibung", ""),
-    ActionEntry("Driver", "TestBeschreibung", ""),
-    ActionEntry("Desktop", "TestBeschreibung", ""),
-    ActionEntry("Printer", "TestBeschreibung", ""),
-  ];
+  late List<ActionEntry> actionEntries;
 
   String _lastKeyword = "";
 
@@ -39,6 +26,8 @@ class _MainSearchState extends State<MainSearch> {
   var selectedIndex = 1;
 
   final searchBarController = TextEditingController();
+
+  _MainSearchState({required this.actionEntries});
 
   @override
   Widget build(BuildContext context) {
