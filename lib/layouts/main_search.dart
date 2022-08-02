@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:linux_helper/enums/browsers.dart';
 import 'package:linux_helper/layouts/action_entry_card.dart';
 import 'package:linux_helper/layouts/disk_space.dart';
+import 'package:linux_helper/layouts/memory_status.dart';
 import 'package:linux_helper/layouts/recommendation_card.dart';
 import 'package:linux_helper/models/action_entry.dart';
 import 'package:linux_helper/services/action_handler.dart';
@@ -39,7 +40,16 @@ class _MainSearchState extends State<MainSearch> {
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            DiskSpace(),
+            _foundEntries.length == 0
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      DiskSpace(),
+                      SizedBox(width: 10),
+                      MemoryStatus(),
+                    ],
+                  )
+                : Container(),
             SizedBox(
               height: 10,
             ),

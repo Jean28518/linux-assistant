@@ -40,6 +40,9 @@ class SingleBarChart extends StatelessWidget {
                   touchTooltipData: BarTouchTooltipData(
                       tooltipBgColor: backgroundColor,
                       getTooltipItem: ((group, groupIndex, rod, rodIndex) {
+                        if (tooltip == "") {
+                          return null;
+                        }
                         switch (groupIndex) {
                           case 0:
                             return BarTooltipItem(tooltip, textStyle);
