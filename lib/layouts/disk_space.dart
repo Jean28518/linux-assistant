@@ -24,7 +24,7 @@ class DiskSpace extends StatelessWidget {
           List<Text> descriptions = [];
           for (String line in lines) {
             List<String> values = line.split("\t");
-            if (values.length >= 6) {
+            if (values.length >= 6 && values[5] != "/boot/efi") {
               barCharts.add(
                 SingleBarChart(
                   value: double.parse(

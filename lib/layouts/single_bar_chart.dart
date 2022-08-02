@@ -75,7 +75,7 @@ class SingleBarChart extends StatelessWidget {
       barRods: [
         BarChartRodData(
           fromY: 2.5,
-          toY: value * (size - 2.5) + 2.5,
+          toY: value * (size - 5) + 2.5,
           color: fillColor,
           width: 15,
         ),
