@@ -142,7 +142,9 @@ class Linux {
       ActionEntry entry =
           ActionEntry(values[1], values[2], "openapp:" + values[0]);
 
-      // TODO: Import Icon
+      if (values.length >= 4) {
+        entry.iconURI = values[3];
+      }
 
       if (values.length >= 5) {
         entry.keywords = values[4].split(';');

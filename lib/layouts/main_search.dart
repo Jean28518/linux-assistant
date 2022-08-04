@@ -61,7 +61,7 @@ class _MainSearchState extends State<MainSearch> {
               autofocus: true,
               onChanged: (value) => _runFilter(value),
               onSubmitted: (value) {
-                if (_foundEntries.length == 1) {
+                if (_foundEntries.length > 0) {
                   ActionHandler.handleActionEntry(_foundEntries[0], clear);
                 }
               },

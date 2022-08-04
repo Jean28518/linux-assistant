@@ -22,7 +22,11 @@ class _MemoryStatusState extends State<MemoryStatus> {
     super.initState();
 
     _everySecond = Timer.periodic(Duration(seconds: 5), (Timer t) {
-      setState(() {});
+      if (mounted) {
+        setState(() {});
+      } else {
+        _everySecond.cancel();
+      }
     });
   }
 
