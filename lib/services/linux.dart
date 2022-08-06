@@ -6,7 +6,7 @@ import 'package:linux_helper/models/action_entry.dart';
 import 'package:linux_helper/models/enviroment.dart';
 
 class Linux {
-  static Enviroment currentEnviroment = Enviroment();
+  static Environment currentEnviroment = Environment();
 
   static void runCommand(String command) async {
     List<String> arguments = command.split(' ');
@@ -33,6 +33,9 @@ class Linux {
   static String getHomeDirectory() {
     String? home = Platform.environment["HOME"];
     if (home != null) {
+      if (!home.endsWith("/")) {
+        home += "/";
+      }
       return home;
     } else {
       return "";

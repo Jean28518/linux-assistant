@@ -6,12 +6,11 @@ import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:linux_helper/services/linux.dart';
 
 class IconLoader {
+  // handle IconLoader as a singleton
   static final IconLoader _instance = IconLoader._privateConstructor();
-
   factory IconLoader() {
     return _instance;
   }
-
   IconLoader._privateConstructor();
 
   Map cache = {};

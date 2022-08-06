@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/widgets.dart';
-import 'package:linux_helper/enums/browsers.dart';
-import 'package:linux_helper/layouts/action_entry_card.dart';
 import 'package:linux_helper/layouts/main_search.dart';
-import 'package:linux_helper/layouts/recommendation_card.dart';
 import 'package:linux_helper/models/action_entry.dart';
 import 'package:linux_helper/models/action_entry_list.dart';
-import 'package:linux_helper/services/action_handler.dart';
+import 'package:linux_helper/models/enviroment.dart';
+import 'package:linux_helper/services/config_handler.dart';
 import 'package:linux_helper/services/linux.dart';
 
 class MainSearchLoader extends StatefulWidget {
@@ -36,7 +31,14 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
     ActionEntry("Printer", "TestBeschreibung", ""),
   ];
 
-  Future<ActionEntryList> prepareActionEntries() async {
+  Future<ActionEntryList> prepare() async {
+    // prepare config
+    ConfigHandler configHandler = ConfigHandler();
+    await configHandler.loadConfigFromFile();
+    Linux.currentEnviroment =
+        configHandler.getValueUnsafe("environment", Environment());
+
+    // prepare Action Entries
     ActionEntryList returnValue = ActionEntryList(entries: []);
     returnValue.entries.addAll(basicEntries);
     var folderEntries = await Linux.getAllFolderEntriesOfUser();
@@ -48,8 +50,8 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
 
   @override
   Widget build(BuildContext context) {
-    futureActionEntryList = prepareActionEntries();
-    return FutureBuilder<ActionEntryList>(
+    futureActionEntryList = prepare();
+    return FutureBuilder<dynamic>(
       future: futureActionEntryList,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
