@@ -20,6 +20,32 @@ class Linux {
     print(result.stdout);
   }
 
+  static void runCommandWithCustomArguments(
+      String exec, List<String> arguments) async {
+    print("Running linux command: " +
+        exec +
+        " with arguments: " +
+        arguments.toString());
+    var result = await Process.run(exec, arguments, runInShell: true);
+    if (result.stderr is String && !result.stderr.toString().isEmpty) {
+      print(result.stderr);
+    }
+    print(result.stdout);
+  }
+
+  static void runCommandWithCustomArgumentsAndGetStdOut(
+      String exec, List<String> arguments) async {
+    print("Running linux command: " +
+        exec +
+        " with arguments: " +
+        arguments.toString());
+    var result = await Process.run(exec, arguments, runInShell: true);
+    if (result.stderr is String && !result.stderr.toString().isEmpty) {
+      print(result.stderr);
+    }
+    return (result.stdout);
+  }
+
   static Future<String> runCommandAndGetStdout(String command) async {
     List<String> arguments = command.split(' ');
     String exec = arguments.removeAt(0);
@@ -164,5 +190,19 @@ class Linux {
 
     // ---------------------------------------------------------------------- //
     return filter;
+  }
+
+  static Future<List<ActionEntry>> getRecentFiles() async {
+    String recentFileString =
+        await runCommandAndGetStdout("python3 python/get_recent_files_2.py");
+    List<String> recentFiles = recentFileString.split("\n");
+    List<ActionEntry> actionEntries = [];
+    for (String recentFile in recentFiles) {
+      String fileName = recentFile.split("/").last;
+      ActionEntry actionEntry =
+          ActionEntry(fileName, "Open " + recentFile, "openfile:" + recentFile);
+      actionEntries.add(actionEntry);
+    }
+    return actionEntries;
   }
 }

@@ -43,6 +43,12 @@ class ActionHandler {
       callback();
     }
 
+    if (actionEntry.action.startsWith("openfile:")) {
+      String file = actionEntry.action.replaceFirst("openfile:", "");
+      Linux.runCommandWithCustomArguments("xdg-open", [file]);
+      callback();
+    }
+
     if (actionEntry.action.startsWith("openapp:")) {
       if (Linux.currentEnviroment.desktop == DESKTOPS.KDE) {
         Linux.runCommand("kioclient exec " +

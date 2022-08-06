@@ -70,6 +70,12 @@ class ActionEntryCard extends StatelessWidget {
         size: 48,
       );
     }
+    if (actionEntry.action.startsWith("openfile:")) {
+      return Icon(
+        Icons.description,
+        size: 48,
+      );
+    }
     return (Icon(
       Icons.star,
       size: 48,
