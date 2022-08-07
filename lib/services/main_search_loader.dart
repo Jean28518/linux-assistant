@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:linux_helper/layouts/loading_indicator.dart';
 import 'package:linux_helper/layouts/main_search.dart';
 import 'package:linux_helper/models/action_entry.dart';
 import 'package:linux_helper/models/action_entry_list.dart';
-import 'package:linux_helper/models/enviroment.dart';
-import 'package:linux_helper/services/config_handler.dart';
 import 'package:linux_helper/services/linux.dart';
 
 class MainSearchLoader extends StatefulWidget {
@@ -32,23 +31,6 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
   ];
 
   Future<ActionEntryList> prepare() async {
-    // prepare config
-    ConfigHandler configHandler = ConfigHandler();
-    await configHandler.loadConfigFromFile();
-
-    // Load environment
-    Map<String, dynamic> environmentMap =
-        configHandler.getValueUnsafe("environment", <String, dynamic>{});
-    if (environmentMap.isEmpty) {
-      Environment environment = await Linux.getCurrentEnviroment();
-      Linux.currentEnviroment = environment;
-      configHandler.setValue("environment", environment.toJson());
-    } else {
-      Linux.currentEnviroment = Environment.fromJson(environmentMap);
-    }
-
-    print(Linux.currentEnviroment.toJson());
-
     // prepare Action Entries
     ActionEntryList returnValue = ActionEntryList(entries: []);
     returnValue.entries.addAll(basicEntries);
@@ -70,18 +52,7 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
         if (snapshot.hasData) {
           return (MainSearch(actionEntries: snapshot.data!.entries));
         } else {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  child: CircularProgressIndicator(),
-                  height: 80,
-                  width: 80,
-                )
-              ],
-            ),
-          );
+          return LoadingIndicator(text: "Preparing search...");
         }
       },
     );
