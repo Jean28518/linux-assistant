@@ -5,18 +5,6 @@ enum DESKTOPS {
   XFCE,
 }
 
-String getStringOfDesktopEnum(var desktop) {
-  switch (desktop) {
-    case DESKTOPS.GNOME:
-      return "GNOME";
-    case DESKTOPS.CINNAMON:
-      return "CINNAMON";
-    case DESKTOPS.KDE:
-      return "KDE";
-    case DESKTOPS.XFCE:
-      return "XFCE";
-
-    default:
-      return "";
-  }
+DESKTOPS getDektopEnumOfString(str) {
+  return DESKTOPS.values.firstWhere((e) => e.toString() == str);
 }

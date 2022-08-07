@@ -21,6 +21,9 @@ def does_file_exist(file_path):
 def replace_tilde_to_home(folder_path):
     return folder_path.replace("~", os.environ['HOME'])
 
+def get_environment_variable(key):
+    return os.environ[key]
+
 # example for enviroment={'DEBIAN_FRONTEND': 'noninteractive'}
 # if return_output==true: function returns a array of strings
 def run_command(command, print_output=True, return_output=False, enviroment = {}):

@@ -61,7 +61,7 @@ class DiskSpace extends StatelessWidget {
   String getDisklabel(text) {
     String label = text.split("/").last;
     if (label == "") {
-      label = getStringOfDistrosEnum(Linux.currentEnviroment.distribution);
+      label = getNiceStringOfDistrosEnum(Linux.currentEnviroment.distribution);
     }
     return label;
   }
