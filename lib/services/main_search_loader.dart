@@ -35,8 +35,19 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
     // prepare config
     ConfigHandler configHandler = ConfigHandler();
     await configHandler.loadConfigFromFile();
-    Linux.currentEnviroment =
-        configHandler.getValueUnsafe("environment", Environment());
+
+    // Load environment
+    Map<String, dynamic> environmentMap =
+        configHandler.getValueUnsafe("environment", <String, dynamic>{});
+    if (environmentMap.isEmpty) {
+      Environment environment = await Linux.getCurrentEnviroment();
+      Linux.currentEnviroment = environment;
+      configHandler.setValue("environment", environment.toJson());
+    } else {
+      Linux.currentEnviroment = Environment.fromJson(environmentMap);
+    }
+
+    print(Linux.currentEnviroment.toJson());
 
     // prepare Action Entries
     ActionEntryList returnValue = ActionEntryList(entries: []);

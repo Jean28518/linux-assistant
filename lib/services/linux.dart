@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:linux_helper/enums/browsers.dart';
 import 'package:linux_helper/enums/desktops.dart';
+import 'package:linux_helper/enums/distros.dart';
 import 'package:linux_helper/models/action_entry.dart';
 import 'package:linux_helper/models/enviroment.dart';
 
@@ -152,7 +153,7 @@ class Linux {
             "--lang=" +
             currentEnviroment.language +
             " --desktop=" +
-            getStringOfDesktopEnum(currentEnviroment.desktop));
+            currentEnviroment.desktop.toString());
     List<String> applications = applicationsString.split('\n');
     List<ActionEntry> actionEntries = [];
     List<String> filter = _getApplicationEntryFilter();
@@ -204,5 +205,55 @@ class Linux {
       actionEntries.add(actionEntry);
     }
     return actionEntries;
+  }
+
+  static Future<Environment> getCurrentEnviroment() async {
+    String commandOutput =
+        await runCommandAndGetStdout("python3 python/get_enviroment.py");
+    List<String> lines = commandOutput.split("\n");
+    Environment newEnvironment = Environment();
+
+    // get OS:
+    if (lines[0].contains("Linux Mint")) {
+      newEnvironment.distribution = DISTROS.LINUX_MINT;
+    } else if (lines[0].toLowerCase().contains("ubuntu")) {
+      newEnvironment.distribution = DISTROS.UBUNTU;
+    } else if (lines[0].toLowerCase().contains("debian")) {
+      newEnvironment.distribution = DISTROS.DEBIAN;
+    }
+
+    // get version:
+    newEnvironment.version = double.parse(lines[1]);
+
+    // get desktop:
+    if (lines[2].toLowerCase().contains("gnome")) {
+      newEnvironment.desktop = DESKTOPS.GNOME;
+    } else if (lines[2].toLowerCase().contains("cinnamon")) {
+      newEnvironment.desktop = DESKTOPS.CINNAMON;
+    } else if (lines[2].toLowerCase().contains("kde")) {
+      newEnvironment.desktop = DESKTOPS.KDE;
+    } else if (lines[2].toLowerCase().contains("xfce")) {
+      newEnvironment.desktop = DESKTOPS.XFCE;
+    }
+
+    // get language
+    newEnvironment.language = lines[3];
+
+    // get default browser
+    if (lines[4].toLowerCase().contains("brave")) {
+      newEnvironment.browser = BROWSERS.BRAVE;
+    } else if (lines[4].toLowerCase().contains("chrome")) {
+      newEnvironment.browser = BROWSERS.CHROME;
+    } else if (lines[4].toLowerCase().contains("chromium")) {
+      newEnvironment.browser = BROWSERS.CHROMIUM;
+    } else if (lines[4].toLowerCase().contains("edge")) {
+      newEnvironment.browser = BROWSERS.EDGE;
+    } else if (lines[4].toLowerCase().contains("firefox")) {
+      newEnvironment.browser = BROWSERS.FIREFOX;
+    } else if (lines[4].toLowerCase().contains("opera")) {
+      newEnvironment.browser = BROWSERS.OPERA;
+    }
+
+    return newEnvironment;
   }
 }
