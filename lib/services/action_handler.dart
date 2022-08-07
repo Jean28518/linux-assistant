@@ -38,8 +38,8 @@ class ActionHandler {
     }
 
     if (actionEntry.action.startsWith("openfolder:")) {
-      Linux.runCommand(
-          "xdg-open " + actionEntry.action.replaceFirst("openfolder:", ""));
+      Linux.runCommandWithCustomArguments(
+          "xdg-open", [actionEntry.action.replaceFirst("openfolder:", "")]);
       callback();
     }
 
