@@ -7,6 +7,7 @@ import 'package:linux_helper/layouts/recommendation_card.dart';
 import 'package:linux_helper/models/action_entry.dart';
 import 'package:linux_helper/services/action_handler.dart';
 import 'package:linux_helper/services/linux.dart';
+import 'package:window_manager/window_manager.dart';
 
 class MainSearch extends StatefulWidget {
   late List<ActionEntry> actionEntries;
@@ -85,6 +86,7 @@ class _MainSearchState extends State<MainSearch> {
   }
 
   void clear() {
+    windowManager.minimize();
     _lastKeyword = "";
     searchBarController.clear();
     _runFilter("");

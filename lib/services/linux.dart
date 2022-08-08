@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:linux_helper/enums/browsers.dart';
 import 'package:linux_helper/enums/desktops.dart';
 import 'package:linux_helper/enums/distros.dart';
@@ -8,6 +9,7 @@ import 'package:linux_helper/models/enviroment.dart';
 
 class Linux {
   static Environment currentEnviroment = Environment();
+  static String executableFolder = "";
 
   static void runCommand(String command) async {
     List<String> arguments = command.split(' ');
@@ -34,7 +36,7 @@ class Linux {
     print(result.stdout);
   }
 
-  static void runCommandWithCustomArgumentsAndGetStdOut(
+  static Future<String> runCommandWithCustomArgumentsAndGetStdOut(
       String exec, List<String> arguments) async {
     print("Running linux command: " +
         exec +
@@ -96,6 +98,16 @@ class Linux {
     }
   }
 
+  static void openOrInstallWarpinator() {
+    switch (currentEnviroment.distribution) {
+      case DISTROS.DEBIAN:
+        runCommand("warpinator");
+        break;
+      default:
+        runCommand("pkexec flatpak install warpinator -y");
+    }
+  }
+
   static void openWebbrowserSeach(String searchterm) {
     runCommand("firefox --search '" + searchterm + "'");
   }
@@ -117,8 +129,8 @@ class Linux {
   }
 
   static Future<List<ActionEntry>> getAllFolderEntriesOfUser() async {
-    String foldersString =
-        await runCommandAndGetStdout("python3 python/get_folder_structure.py");
+    String foldersString = await runCommandWithCustomArgumentsAndGetStdOut(
+        "python3", ["${executableFolder}python/get_folder_structure.py"]);
     List<String> folders = foldersString.split('\n');
 
     // Get Bookmarks:
@@ -148,12 +160,13 @@ class Linux {
   }
 
   static Future<List<ActionEntry>> getAllAvailableApplications() async {
-    String applicationsString = await runCommandAndGetStdout(
-        "python3 python/get_applications.py " +
-            "--lang=" +
-            currentEnviroment.language +
-            " --desktop=" +
-            currentEnviroment.desktop.toString());
+    String applicationsString =
+        await runCommandWithCustomArgumentsAndGetStdOut("python3", [
+      "${executableFolder}python/get_applications.py",
+      "--lang=${currentEnviroment.language}",
+      "--desktop=${currentEnviroment.desktop.toString()}"
+    ]);
+
     List<String> applications = applicationsString.split('\n');
     List<ActionEntry> actionEntries = [];
     List<String> filter = _getApplicationEntryFilter();
@@ -194,22 +207,23 @@ class Linux {
   }
 
   static Future<List<ActionEntry>> getRecentFiles() async {
-    String recentFileString =
-        await runCommandAndGetStdout("python3 python/get_recent_files_2.py");
+    String recentFileString = await runCommandWithCustomArgumentsAndGetStdOut(
+        "python3", ["${executableFolder}python/get_recent_files_2.py"]);
     List<String> recentFiles = recentFileString.split("\n");
     List<ActionEntry> actionEntries = [];
     for (String recentFile in recentFiles) {
       String fileName = recentFile.split("/").last;
       ActionEntry actionEntry =
           ActionEntry(fileName, "Open " + recentFile, "openfile:" + recentFile);
+      actionEntry.priority = -15;
       actionEntries.add(actionEntry);
     }
     return actionEntries;
   }
 
   static Future<Environment> getCurrentEnviroment() async {
-    String commandOutput =
-        await runCommandAndGetStdout("python3 python/get_enviroment.py");
+    String commandOutput = await runCommandWithCustomArgumentsAndGetStdOut(
+        "python3", ["${executableFolder}python/get_enviroment.py"]);
     List<String> lines = commandOutput.split("\n");
     Environment newEnvironment = Environment();
 
@@ -255,5 +269,21 @@ class Linux {
     }
 
     return newEnvironment;
+  }
+
+  // Returns local path when app is run in debug
+  static String getExecutableFolder() {
+    if (kDebugMode) {
+      return "";
+    }
+    String wholePath = Platform.resolvedExecutable;
+    List<String> parts = wholePath.split("/");
+    parts.removeLast(); // remove executable file
+    String returnValue = "/";
+    for (String part in parts) {
+      returnValue = "${returnValue}/${part}";
+    }
+    returnValue = "${returnValue}/";
+    return returnValue;
   }
 }

@@ -19,15 +19,27 @@ class IconLoader {
     if (cache.containsKey(appCode)) {
       return cache[appCode];
     }
-    String iconPath = await Linux.runCommandAndGetStdout(
-        "python3 python/get_icon_path_2.py --icon=" + appCode);
+    String iconPath = await Linux.runCommandWithCustomArgumentsAndGetStdOut(
+        "python3", [
+      "${Linux.executableFolder}python/get_icon_path_2.py",
+      "--icon=${appCode}"
+    ]);
 
     if (iconPath.contains("not found")) {
-      String defaultIconPath = await Linux.runCommandAndGetStdout(
-          "python3 python/get_icon_path_2.py --icon=applications-system");
-      Image image = Image.file(File(defaultIconPath.replaceAll("\n", "")));
-      cache[appCode] = image;
-      return image;
+      if (cache.containsKey("!default!")) {
+        cache[appCode] = cache['!default!'];
+      } else {
+        String defaultIconPath =
+            await Linux.runCommandWithCustomArgumentsAndGetStdOut("python3", [
+          "${Linux.executableFolder}python/get_icon_path_2.py",
+          "--icon=applications-system"
+        ]);
+        Image image = Image.file(File(defaultIconPath.replaceAll("\n", "")));
+
+        cache['!default!'] = image;
+        cache[appCode] = image;
+      }
+      return cache[appCode];
     }
 
     File file = await File(iconPath.replaceAll("\n", ""));
