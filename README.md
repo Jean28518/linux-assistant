@@ -4,6 +4,8 @@ Distribution indenpendent tool for everything, a linux desktop user needs. Writt
 ## Requirements
 ```bash
 sudo apt-get install keybinder-3.0
+sudo snap install flutter --classic
+flutter doctor
 ```
 
 ## Build
