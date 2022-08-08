@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hotkey_manager/hotkey_manager.dart';
 import 'package:linux_helper/enums/browsers.dart';
 import 'package:linux_helper/layouts/action_entry_card.dart';
 import 'package:linux_helper/layouts/disk_space.dart';
@@ -26,11 +27,14 @@ class _MainSearchState extends State<MainSearch> {
 
   List<ActionEntry> _foundEntries = [];
 
-  var selectedIndex = 1;
+  var selectedIndex = 0;
 
   final searchBarController = TextEditingController();
+  final scrollController = ScrollController();
 
-  _MainSearchState({required this.actionEntries});
+  _MainSearchState({required this.actionEntries}) {
+    initHotkeysForKeyboardUse();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +67,8 @@ class _MainSearchState extends State<MainSearch> {
               onChanged: (value) => _runFilter(value),
               onSubmitted: (value) {
                 if (_foundEntries.length > 0) {
-                  ActionHandler.handleActionEntry(_foundEntries[0], clear);
+                  ActionHandler.handleActionEntry(
+                      _foundEntries[selectedIndex], clear);
                 }
               },
             ),
@@ -71,6 +76,7 @@ class _MainSearchState extends State<MainSearch> {
                 ? RecommendationCard()
                 : Expanded(
                     child: ListView(
+                      controller: scrollController,
                       children: List.generate(
                           _foundEntries.length,
                           (index) => ActionEntryCard(
@@ -85,8 +91,10 @@ class _MainSearchState extends State<MainSearch> {
     );
   }
 
-  void clear() {
-    windowManager.minimize();
+  void clear({minimze = true}) {
+    if (minimze) {
+      windowManager.minimize();
+    }
     _lastKeyword = "";
     searchBarController.clear();
     _runFilter("");
@@ -151,5 +159,50 @@ class _MainSearchState extends State<MainSearch> {
     if (runSetState) {
       setState(() {});
     }
+  }
+
+  void initHotkeysForKeyboardUse() {
+    HotKey down = HotKey(
+      KeyCode.arrowDown,
+      scope: HotKeyScope.inapp,
+    );
+    hotKeyManager.register(
+      down,
+      keyDownHandler: (hotKey) async {
+        if (selectedIndex + 1 < _foundEntries.length) {
+          setState(() {
+            selectedIndex += 1;
+            scrollController.jumpTo(scrollController.offset + 40);
+          });
+        }
+      },
+    );
+
+    HotKey up = HotKey(
+      KeyCode.arrowUp,
+      scope: HotKeyScope.inapp,
+    );
+    hotKeyManager.register(
+      up,
+      keyDownHandler: (hotKey) async {
+        if (selectedIndex - 1 >= 0) {
+          setState(() {
+            selectedIndex -= 1;
+            scrollController.jumpTo(scrollController.offset - 40);
+          });
+        }
+      },
+    );
+
+    HotKey escape = HotKey(
+      KeyCode.escape,
+      scope: HotKeyScope.inapp,
+    );
+    hotKeyManager.register(
+      escape,
+      keyDownHandler: (hotKey) async {
+        clear(minimze: false);
+      },
+    );
   }
 }

@@ -55,7 +55,6 @@ class MyApp extends StatelessWidget {
         await windowManager.show();
         await windowManager.focus();
         Linux.runCommand("wmctrl -a linux_helper");
-        print('onKeyDown+${hotKey.toJson()}');
       },
     );
   }
