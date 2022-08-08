@@ -1,7 +1,7 @@
 # linux-helper
 Distribution indenpendent tool for everything, a linux desktop user needs. Written in flutter
 
-## Requirements:
+## Requirements
 ```bash
 sudo apt-get install keybinder-3.0
 ```
