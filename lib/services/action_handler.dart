@@ -22,6 +22,10 @@ class ActionHandler {
         Linux.openUserSettings();
         callback();
         break;
+      case "send_files_via_warpinator":
+        Linux.openOrInstallWarpinator();
+        callback();
+        break;
       default:
     }
 
