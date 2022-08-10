@@ -27,7 +27,7 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
         "open_systeminformation"),
     ActionEntry("Update", "coming soon...", ""),
     ActionEntry("Health", "coming soon...", ""),
-    ActionEntry("Security", "coming soon...", ""),
+    ActionEntry("Security", "Integrated security checker", "security_check"),
     ActionEntry("Driver", "coming soon...", ""),
     ActionEntry("Desktop", "coming soon...", ""),
     ActionEntry("Printer", "coming soon...", ""),

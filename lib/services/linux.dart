@@ -37,14 +37,21 @@ class Linux {
   }
 
   static Future<String> runCommandWithCustomArgumentsAndGetStdOut(
-      String exec, List<String> arguments) async {
+      String exec, List<String> arguments,
+      {bool getErrorMessages = false}) async {
     print("Running linux command: " +
         exec +
         " with arguments: " +
         arguments.toString());
     var result = await Process.run(exec, arguments, runInShell: true);
+
     if (result.stderr is String && !result.stderr.toString().isEmpty) {
       print(result.stderr);
+      if (getErrorMessages) {
+        String returnValue = result.stderr;
+        returnValue += result.stdout;
+        return returnValue;
+      }
     }
     return (result.stdout);
   }
@@ -208,7 +215,7 @@ class Linux {
 
   static Future<List<ActionEntry>> getRecentFiles() async {
     String recentFileString = await runCommandWithCustomArgumentsAndGetStdOut(
-        "python3", ["${executableFolder}python/get_recent_files_2.py"]);
+        "/usr/bin/python3", ["${executableFolder}python/get_recent_files.py"]);
     List<String> recentFiles = recentFileString.split("\n");
     List<ActionEntry> actionEntries = [];
     for (String recentFile in recentFiles) {
@@ -273,17 +280,22 @@ class Linux {
 
   // Returns local path when app is run in debug
   static String getExecutableFolder() {
-    if (kDebugMode) {
-      return "";
+    // if (kDebugMode) {
+    String pwd = "";
+    if (Platform.environment['PWD'] != null) {
+      pwd = Platform.environment['PWD']!;
+      pwd += "/";
     }
-    String wholePath = Platform.resolvedExecutable;
-    List<String> parts = wholePath.split("/");
-    parts.removeLast(); // remove executable file
-    String returnValue = "/";
-    for (String part in parts) {
-      returnValue = "${returnValue}/${part}";
-    }
-    returnValue = "${returnValue}/";
-    return returnValue;
+    return pwd;
+    // }
+    // String wholePath = Platform.resolvedExecutable;
+    // List<String> parts = wholePath.split("/");
+    // parts.removeLast(); // remove executable file
+    // String returnValue = "/";
+    // for (String part in parts) {
+    //   returnValue = "${returnValue}/${part}";
+    // }
+    // returnValue = "${returnValue}/";
+    // return returnValue;
   }
 }

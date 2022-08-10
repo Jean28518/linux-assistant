@@ -30,8 +30,8 @@ def get_additional_sources():
                 print(f"additionalsource: {sections[length-3]} {sections[length-2]} {sections[length-1]}")
 
 def get_available_updates():
-    jessentials.run_command("apt update", False, False)
-    lines = jessentials.run_command("apt list --upgradable", False, True)
+    jessentials.run_command("apt update", False, False, {'DEBIAN_FRONTEND': 'noninteractive'})
+    lines = jessentials.run_command("apt list --upgradable", False, True, {'DEBIAN_FRONTEND': 'noninteractive'})
     for i in range(1, len(lines)):
         line = lines[i].strip().split("/")[0]
         print(f"upgradeablepackage: {line}")
@@ -46,15 +46,27 @@ def check_home_folder_rights(home_folder):
 
 def check_server_access():
     # Check for Xrdp
-    lines = jessentials.run_command("systemctl status xrdp", False, True)
+    if (jfiles.does_file_exist("/usr/sbin/ufw")):
+        lines = jessentials.run_command("/usr/sbin/iptables -L", False, True)
+        ufwUserFound = False
+        for line in lines:
+            if "ufw-user" in line:
+                ufwUserFound = True
+                break
+        if not ufwUserFound:
+            print("firewallinactive")
+    else:
+        print("nofirewall")
+    
+    lines = jessentials.run_command("/usr/bin/systemctl status xrdp", False, True)
     if (len(lines) > 1):
         print("xrdprunning")
     # Check for ssh:
-    lines = jessentials.run_command("systemctl status ssh", False, True)
+    lines = jessentials.run_command("/usr/bin/systemctl status ssh", False, True)
     if (len(lines) > 1):
         print("sshrunning")
-        lines = jessentials.run_command("systemctl status fail2ban", False, True)
-        if (len(lines) > 1):
+        lines = jessentials.run_command("/usr/bin/systemctl status fail2ban", False, True)
+        if (len(lines) == 0):
             print("fail2bannotrunning")
 
 if __name__ == "__main__":

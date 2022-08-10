@@ -41,7 +41,7 @@ class ActionEntryCard extends StatelessWidget {
           ),
         ),
         onTap: () {
-          ActionHandler.handleActionEntry(actionEntry, callback);
+          ActionHandler.handleActionEntry(actionEntry, callback, context);
         },
       ),
     );

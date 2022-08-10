@@ -56,7 +56,7 @@ class MintY {
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
       stops: [0, 1],
-      colors: [Color(0xff68b540), Color(0xff2ab9a4)],
+      colors: [Colors.blue, Color(0xff2ab9a4)],
     ),
   );
 
@@ -166,11 +166,12 @@ class MintYPage extends StatelessWidget {
               ],
             ),
           ),
-          Container(height: 8, color: Theme.of(context).backgroundColor),
+          Container(height: 8, color: Theme.of(context).canvasColor),
           contentElements.length != 0
               ? Expanded(
                   child: Container(
-                    color: Theme.of(context).backgroundColor,
+                    padding: EdgeInsets.all(16.0),
+                    color: Theme.of(context).canvasColor,
                     child: Center(
                       child: ListView(
                         shrinkWrap: true,
@@ -180,7 +181,7 @@ class MintYPage extends StatelessWidget {
                   ),
                 )
               : customContentElement,
-          Container(height: 8, color: Theme.of(context).backgroundColor),
+          Container(height: 8, color: Theme.of(context).canvasColor),
           bottom != null
               ? Container(
                   height: 80,
@@ -191,7 +192,7 @@ class MintYPage extends StatelessWidget {
                       //         MediaQuery.of(context).size.height
                       //     ? Colors.red
                       //     : Colors.green,  // Does not work!
-                      Theme.of(context).backgroundColor,
+                      Theme.of(context).canvasColor,
                 )
               : Container()
         ],
@@ -238,6 +239,41 @@ class MintYButton extends StatelessWidget {
           ),
         ),
       );
+}
+
+class MintYButtonNavigate extends StatelessWidget {
+  late Widget route;
+  late Text text;
+  late Color color;
+  late double width;
+  late double height;
+
+  MintYButtonNavigate(
+      {required this.route,
+      this.text = const Text("Text"),
+      this.color = const Color.fromARGB(255, 232, 232, 232),
+      this.width = 160,
+      this.height = 60,
+      Key? key})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MintYButton(
+      text: text,
+      color: color,
+      width: width,
+      height: height,
+      onPressed: () {
+        if (route != null) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => route),
+          );
+        }
+      },
+    );
+  }
 }
 
 class MintYButtonNext extends StatelessWidget {

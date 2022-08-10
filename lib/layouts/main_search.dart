@@ -68,7 +68,7 @@ class _MainSearchState extends State<MainSearch> {
               onSubmitted: (value) {
                 if (_foundEntries.length > 0) {
                   ActionHandler.handleActionEntry(
-                      _foundEntries[selectedIndex], clear);
+                      _foundEntries[selectedIndex], clear, context);
                 }
               },
             ),

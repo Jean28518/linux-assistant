@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:linux_helper/enums/desktops.dart';
-import 'package:linux_helper/services/main_search_loader.dart';
+import 'package:linux_helper/layouts/security_check.dart/overview.dart';
 import 'package:linux_helper/models/action_entry.dart';
 import 'package:linux_helper/services/linux.dart';
 
 class ActionHandler {
   static void handleActionEntry(
-      ActionEntry actionEntry, VoidCallback callback) {
+      ActionEntry actionEntry, VoidCallback callback, BuildContext context) {
     print(actionEntry.action);
 
     switch (actionEntry.action) {
@@ -25,6 +25,14 @@ class ActionHandler {
       case "send_files_via_warpinator":
         Linux.openOrInstallWarpinator();
         callback();
+        break;
+      case "security_check":
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const SecurityCheckOverview()),
+        );
+
         break;
       default:
     }

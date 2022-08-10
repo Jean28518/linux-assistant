@@ -20,8 +20,8 @@ class IconLoader {
       return cache[appCode];
     }
     String iconPath = await Linux.runCommandWithCustomArgumentsAndGetStdOut(
-        "python3", [
-      "${Linux.executableFolder}python/get_icon_path_2.py",
+        "/usr/bin/python3", [
+      "${Linux.executableFolder}python/get_icon_path.py",
       "--icon=${appCode}"
     ]);
 
@@ -30,8 +30,9 @@ class IconLoader {
         cache[appCode] = cache['!default!'];
       } else {
         String defaultIconPath =
-            await Linux.runCommandWithCustomArgumentsAndGetStdOut("python3", [
-          "${Linux.executableFolder}python/get_icon_path_2.py",
+            await Linux.runCommandWithCustomArgumentsAndGetStdOut(
+                "/usr/bin/python3", [
+          "${Linux.executableFolder}python/get_icon_path.py",
           "--icon=applications-system"
         ]);
         Image image = Image.file(File(defaultIconPath.replaceAll("\n", "")));
