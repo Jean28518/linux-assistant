@@ -25,9 +25,10 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
         "System information",
         "${getNiceStringOfDistrosEnum(Linux.currentEnviroment.distribution)} ${Linux.currentEnviroment.version.toString()} ${getNiceStringOfDesktopsEnum(Linux.currentEnviroment.desktop)}",
         "open_systeminformation"),
+    ActionEntry(
+        "Security Check", "Integrated security checker", "security_check"),
     ActionEntry("Update", "coming soon...", ""),
     ActionEntry("Health", "coming soon...", ""),
-    ActionEntry("Security", "Integrated security checker", "security_check"),
     ActionEntry("Driver", "coming soon...", ""),
     ActionEntry("Desktop", "coming soon...", ""),
     ActionEntry("Printer", "coming soon...", ""),

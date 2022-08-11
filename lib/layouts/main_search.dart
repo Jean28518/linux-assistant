@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:hotkey_manager/hotkey_manager.dart';
 import 'package:linux_helper/enums/browsers.dart';
@@ -27,7 +28,7 @@ class _MainSearchState extends State<MainSearch> {
 
   List<ActionEntry> _foundEntries = [];
 
-  var selectedIndex = 0;
+  var selectedIndex = 1;
 
   final searchBarController = TextEditingController();
   final scrollController = ScrollController();
@@ -97,6 +98,7 @@ class _MainSearchState extends State<MainSearch> {
     }
     _lastKeyword = "";
     searchBarController.clear();
+    selectedIndex = 0;
     _runFilter("");
   }
 
@@ -126,11 +128,10 @@ class _MainSearchState extends State<MainSearch> {
       results.add(actionEntry);
     }
 
-    if (results.isEmpty &&
-        keyword != "" &&
-        Linux.currentEnviroment.browser == BROWSERS.FIREFOX) {
+    if (keyword != "" && Linux.currentEnviroment.browser == BROWSERS.FIREFOX) {
       results.add(ActionEntry("Search in web for " + keyword,
           "look for online results..", "websearch:" + keyword));
+      results.last.priority = -50;
     }
 
     for (ActionEntry result in results) {
@@ -146,6 +147,12 @@ class _MainSearchState extends State<MainSearch> {
           result.tmp_priority += 5;
         }
       }
+    }
+
+    if (selectedIndex >= results.length) {
+      selectedIndex = results.length - 1;
+    } else if (results.length > 0 && selectedIndex == -1) {
+      selectedIndex = 0;
     }
 
     // Sort:
@@ -172,7 +179,9 @@ class _MainSearchState extends State<MainSearch> {
         if (selectedIndex + 1 < _foundEntries.length) {
           setState(() {
             selectedIndex += 1;
-            scrollController.jumpTo(scrollController.offset + 40);
+            if (_foundEntries.length > 10) {
+              scrollController.jumpTo(scrollController.offset + 70);
+            }
           });
         }
       },
@@ -188,7 +197,9 @@ class _MainSearchState extends State<MainSearch> {
         if (selectedIndex - 1 >= 0) {
           setState(() {
             selectedIndex -= 1;
-            scrollController.jumpTo(scrollController.offset - 40);
+            if (_foundEntries.length > 10) {
+              scrollController.jumpTo(scrollController.offset - 70);
+            }
           });
         }
       },
