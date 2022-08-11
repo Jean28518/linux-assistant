@@ -11,16 +11,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await WindowManager.instance.ensureInitialized();
 
-  WindowOptions windowOptions = WindowOptions(
-    size: Size(800, 600),
-    center: true,
-    skipTaskbar: false,
-  );
-  windowManager.waitUntilReadyToShow(windowOptions, () async {
-    await windowManager.show();
-    await windowManager.focus();
-  });
-
   // For hot reload, `unregisterAll()` needs to be called.
   await HotKeyManager.instance.unregisterAll();
 
@@ -43,17 +33,15 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  Future<void> initHotkeyToShowUp() async {
+  static initHotkeyToShowUp() {
     HotKey _hotKey = HotKey(
       KeyCode.keyQ,
       modifiers: [KeyModifier.alt],
       scope: HotKeyScope.system,
     );
-    await hotKeyManager.register(
+    hotKeyManager.register(
       _hotKey,
-      keyDownHandler: (hotKey) async {
-        await windowManager.show();
-        await windowManager.focus();
+      keyDownHandler: (hotKey) {
         Linux.runCommand("wmctrl -a linux_helper");
       },
     );

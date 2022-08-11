@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:linux_helper/enums/desktops.dart';
+import 'package:linux_helper/layouts/main_search.dart';
 import 'package:linux_helper/layouts/security_check.dart/overview.dart';
 import 'package:linux_helper/models/action_entry.dart';
 import 'package:linux_helper/services/linux.dart';
@@ -27,6 +28,7 @@ class ActionHandler {
         callback();
         break;
       case "security_check":
+        MainSearch.unregisterHotkeysForKeyboardUse();
         Navigator.push(
           context,
           MaterialPageRoute(

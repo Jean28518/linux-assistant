@@ -280,22 +280,22 @@ class Linux {
 
   // Returns local path when app is run in debug
   static String getExecutableFolder() {
-    // if (kDebugMode) {
-    String pwd = "";
-    if (Platform.environment['PWD'] != null) {
-      pwd = Platform.environment['PWD']!;
-      pwd += "/";
+    if (kDebugMode) {
+      String pwd = "";
+      if (Platform.environment['PWD'] != null) {
+        pwd = Platform.environment['PWD']!;
+        pwd += "/";
+      }
+      return pwd;
     }
-    return pwd;
-    // }
-    // String wholePath = Platform.resolvedExecutable;
-    // List<String> parts = wholePath.split("/");
-    // parts.removeLast(); // remove executable file
-    // String returnValue = "/";
-    // for (String part in parts) {
-    //   returnValue = "${returnValue}/${part}";
-    // }
-    // returnValue = "${returnValue}/";
-    // return returnValue;
+    String wholePath = Platform.resolvedExecutable;
+    List<String> parts = wholePath.split("/");
+    parts.removeLast(); // remove executable file
+    String returnValue = "/";
+    for (String part in parts) {
+      returnValue = "${returnValue}/${part}";
+    }
+    returnValue = "${returnValue}/";
+    return returnValue;
   }
 }
