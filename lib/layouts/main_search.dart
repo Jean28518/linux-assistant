@@ -128,29 +128,33 @@ class _MainSearchState extends State<MainSearch> {
     }
 
     if (Uri.parse(keyword).isAbsolute) {
-      ActionEntry actionEntry = ActionEntry("Open " + keyword,
-          "Open default webbrowser", "openwebsite:" + keyword);
+      ActionEntry actionEntry = ActionEntry(
+          name: "Open " + keyword,
+          description: "Open default webbrowser",
+          action: "openwebsite:" + keyword);
       actionEntry.priority = 10;
       results.add(actionEntry);
     }
 
     if (keyword != "" && Linux.currentEnviroment.browser == BROWSERS.FIREFOX) {
-      results.add(ActionEntry("Search in web for " + keyword,
-          "look for online results..", "websearch:" + keyword));
+      results.add(ActionEntry(
+          name: "Search in web for " + keyword,
+          description: "look for online results..",
+          action: "websearch:" + keyword));
       results.last.priority = -50;
     }
 
     for (ActionEntry result in results) {
-      result.tmp_priority = 0;
+      result.tmpPriority = 0;
       for (String key in keys) {
         if (result.name.toLowerCase().contains(key)) {
-          result.tmp_priority += 10;
+          result.tmpPriority += 10;
           if (result.name.toLowerCase().startsWith(key)) {
-            result.tmp_priority += 10;
+            result.tmpPriority += 10;
           }
         }
         if (result.description.toLowerCase().contains(keyword)) {
-          result.tmp_priority += 5;
+          result.tmpPriority += 5;
         }
       }
     }
@@ -165,7 +169,7 @@ class _MainSearchState extends State<MainSearch> {
     results.sort((a, b) => (a.name).compareTo(b.name));
 
     results.sort((a, b) =>
-        (b.priority + b.tmp_priority).compareTo(a.priority + a.tmp_priority));
+        (b.priority + b.tmpPriority).compareTo(a.priority + a.tmpPriority));
 
     _foundEntries = results;
 

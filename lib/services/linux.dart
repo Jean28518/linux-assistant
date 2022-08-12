@@ -158,8 +158,10 @@ class Linux {
     List<ActionEntry> actionEntries = [];
     for (String folder in folders) {
       String folderName = folder.split('/').last;
-      ActionEntry entry =
-          ActionEntry(folderName, 'Open ' + folder, "openfolder:" + folder);
+      ActionEntry entry = ActionEntry(
+          name: folderName,
+          description: 'Open ' + folder,
+          action: "openfolder:" + folder);
       entry.priority = -10;
       actionEntries.add(entry);
     }
@@ -189,8 +191,10 @@ class Linux {
       if (filter.contains(app_id)) {
         continue;
       }
-      ActionEntry entry =
-          ActionEntry(values[1], values[2], "openapp:" + values[0]);
+      ActionEntry entry = ActionEntry(
+          name: values[1],
+          description: values[2],
+          action: "openapp:" + values[0]);
 
       if (values.length >= 4) {
         entry.iconURI = values[3];
@@ -220,8 +224,10 @@ class Linux {
     List<ActionEntry> actionEntries = [];
     for (String recentFile in recentFiles) {
       String fileName = recentFile.split("/").last;
-      ActionEntry actionEntry =
-          ActionEntry(fileName, "Open " + recentFile, "openfile:" + recentFile);
+      ActionEntry actionEntry = ActionEntry(
+          name: fileName,
+          description: "Open " + recentFile,
+          action: "openfile:" + recentFile);
       actionEntry.priority = -15;
       actionEntries.add(actionEntry);
     }

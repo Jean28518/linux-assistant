@@ -77,4 +77,6 @@ class ActionHandler {
       callback();
     }
   }
+
+  static void handleRecommendation() {}
 }

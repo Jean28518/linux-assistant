@@ -1,15 +1,22 @@
-class ActionEntry {
-  String name = "";
-  String description = "";
-  String action = "";
-  String iconURI = "";
-  var priority = 0;
-  var tmp_priority = 0;
-  List<String> keywords = [];
+import 'package:flutter/material.dart';
 
-  ActionEntry(String name, String description, String action) {
-    this.name = name;
-    this.description = description;
-    this.action = action;
-  }
+class ActionEntry {
+  late String name;
+  late String description;
+  late String action;
+  late String iconURI;
+  late double priority;
+  late List<String> keywords;
+  late Widget iconWidget; // Currently only used by recommendation_cards
+  double tmpPriority = 0;
+
+  ActionEntry({
+    required this.name,
+    required this.description,
+    required this.action,
+    this.iconURI = "",
+    this.priority = 0,
+    this.keywords = const [],
+    this.iconWidget = const Text(""),
+  }) {}
 }
