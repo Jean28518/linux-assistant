@@ -356,15 +356,14 @@ class MintYSelectableCardWithIcon extends StatelessWidget {
             SizedBox(
               height: 30,
             ),
-            Text(title,
-                style: Theme.of(context).textTheme.headline2,
-                textAlign: TextAlign.center),
+            Text(title, style: MintY.heading2, textAlign: TextAlign.center),
             SizedBox(
               height: 30,
             ),
             Text(
               text,
               textAlign: TextAlign.center,
+              style: MintY.paragraph,
             )
           ]),
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:linux_helper/enums/desktops.dart';
+import 'package:linux_helper/layouts/after_installation/after_installation_entry.dart';
 import 'package:linux_helper/layouts/main_search.dart';
 import 'package:linux_helper/layouts/security_check.dart/overview.dart';
 import 'package:linux_helper/models/action_entry.dart';
@@ -34,7 +35,14 @@ class ActionHandler {
           MaterialPageRoute(
               builder: (context) => const SecurityCheckOverview()),
         );
-
+        break;
+      case "after_installation":
+        MainSearch.unregisterHotkeysForKeyboardUse();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const AfterInstallationEntry()),
+        );
         break;
       default:
     }

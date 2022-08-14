@@ -21,4 +21,13 @@ final recommendations = [
       size: 48,
     ),
   ),
+  ActionEntry(
+    name: "After Installation",
+    description: "Set up your linux machine to your needs. ",
+    action: "after_installation",
+    iconWidget: const Icon(
+      Icons.start,
+      size: 48,
+    ),
+  ),
 ];
