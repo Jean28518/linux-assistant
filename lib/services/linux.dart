@@ -116,7 +116,7 @@ class Linux {
   }
 
   static void openWebbrowserSeach(String searchterm) {
-    runCommand("firefox --search '" + searchterm + "'");
+    runCommandWithCustomArguments("firefox", ["--search", searchterm]);
   }
 
   static void openWebbrowserWithSite(String website) {

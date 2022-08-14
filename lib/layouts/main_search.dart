@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:hotkey_manager/hotkey_manager.dart';
+import 'package:linux_helper/content/top_level_domains.dart';
 import 'package:linux_helper/enums/browsers.dart';
 import 'package:linux_helper/layouts/action_entry_card.dart';
 import 'package:linux_helper/layouts/disk_space.dart';
@@ -127,10 +128,24 @@ class _MainSearchState extends State<MainSearch> {
       }).toList();
     }
 
-    if (Uri.parse(keyword).isAbsolute) {
+    bool uri_recognized = false;
+
+    if (Uri.parse(keyword).isAbsolute || keyword.contains("www.")) {
+      uri_recognized = true;
+    } else if (keyword.contains(".") && !keyword.endsWith(".")) {
+      String keysplit = keyword.split(".").last.toUpperCase();
+      for (String top_level_domain in top_level_domains) {
+        if (top_level_domain == keysplit) {
+          uri_recognized = true;
+          break;
+        }
+      }
+    }
+
+    if (uri_recognized) {
       ActionEntry actionEntry = ActionEntry(
           name: "Open " + keyword,
-          description: "Open default webbrowser",
+          description: "Open with default webbrowser",
           action: "openwebsite:" + keyword);
       actionEntry.priority = 10;
       results.add(actionEntry);
