@@ -105,14 +105,29 @@ class Linux {
     }
   }
 
-  static void openOrInstallWarpinator() {
-    switch (currentEnviroment.distribution) {
-      case DISTROS.DEBIAN:
-        runCommand("warpinator");
-        break;
-      default:
-        runCommand("pkexec flatpak install warpinator -y");
+  static void openOrInstallWarpinator() async {
+    bool does_warpinator_exist = await File("/usr/bin/warpinator").exists();
+    if (does_warpinator_exist) {
+      runCommand("/usr/bin/warpinator");
+      return;
+    } else {
+      does_warpinator_exist =
+          await isSpecificFlatpakInstalled("org.x.Warpinator");
+      if (does_warpinator_exist) {
+        runCommand("/usr/bin/flatpak run org.x.Warpinator");
+        return;
+      }
     }
+    // if no warpinator is installed at all:
+    if (currentEnviroment.distribution == DISTROS.LINUX_MINT) {
+      runCommand("/usr/bin/pkexec /usr/bin/apt install warpinator");
+    }
+    runCommand("/usr/bin/pkexec /usr/bin/flatpak install warpinator -y");
+  }
+
+  static Future<bool> isSpecificFlatpakInstalled(flatpak_id) async {
+    String flatpakList = await runCommandAndGetStdout("/usr/bin/flatpak list");
+    return flatpakList.contains(flatpak_id);
   }
 
   static void openWebbrowserSeach(String searchterm) {

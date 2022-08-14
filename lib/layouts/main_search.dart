@@ -134,7 +134,7 @@ class _MainSearchState extends State<MainSearch> {
       uri_recognized = true;
     } else if (keyword.contains(".") && !keyword.endsWith(".")) {
       String keysplit = keyword.split(".").last.toUpperCase();
-      for (String top_level_domain in top_level_domains) {
+      for (String top_level_domain in topLevelDomains) {
         if (top_level_domain == keysplit) {
           uri_recognized = true;
           break;

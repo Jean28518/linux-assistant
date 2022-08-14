@@ -1,4 +1,4 @@
-final top_level_domains = [
+final topLevelDomains = [
   "AAA",
   "AARP",
   "ABARTH",
