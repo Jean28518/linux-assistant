@@ -152,7 +152,8 @@ class Linux {
 
   static Future<List<ActionEntry>> getAllFolderEntriesOfUser() async {
     String foldersString = await runCommandWithCustomArgumentsAndGetStdOut(
-        "python3", ["${executableFolder}python/get_folder_structure.py"]);
+        "python3",
+        ["${executableFolder}additional/python/get_folder_structure.py"]);
     List<String> folders = foldersString.split('\n');
 
     // Get Bookmarks:
@@ -186,7 +187,7 @@ class Linux {
   static Future<List<ActionEntry>> getAllAvailableApplications() async {
     String applicationsString =
         await runCommandWithCustomArgumentsAndGetStdOut("python3", [
-      "${executableFolder}python/get_applications.py",
+      "${executableFolder}additional/python/get_applications.py",
       "--lang=${currentEnviroment.language}",
       "--desktop=${currentEnviroment.desktop.toString()}"
     ]);
@@ -234,7 +235,8 @@ class Linux {
 
   static Future<List<ActionEntry>> getRecentFiles() async {
     String recentFileString = await runCommandWithCustomArgumentsAndGetStdOut(
-        "/usr/bin/python3", ["${executableFolder}python/get_recent_files.py"]);
+        "/usr/bin/python3",
+        ["${executableFolder}additional/python/get_recent_files.py"]);
     List<String> recentFiles = recentFileString.split("\n");
     List<ActionEntry> actionEntries = [];
     for (String recentFile in recentFiles) {
@@ -251,7 +253,7 @@ class Linux {
 
   static Future<Environment> getCurrentEnviroment() async {
     String commandOutput = await runCommandWithCustomArgumentsAndGetStdOut(
-        "python3", ["${executableFolder}python/get_enviroment.py"]);
+        "python3", ["${executableFolder}additional/python/get_enviroment.py"]);
     List<String> lines = commandOutput.split("\n");
     Environment newEnvironment = Environment();
 

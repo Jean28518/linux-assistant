@@ -1,5 +1,5 @@
-name: linux_helper
-description: A new Flutter project.
+name: linux_assistant
+description: Distribution indenpendent tool for everything, a linux desktop user needs.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -62,25 +62,6 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  assets:
-    - assets/images/linuxmint_logo.png
-    - assets/images/onlyoffice_logo.png
-    - assets/images/libreoffice_logo.png
-    - assets/images/wpsoffice_logo.png
-    - assets/images/firefox_logo.png
-    - assets/images/chrome_logo.png
-    - assets/images/chromium_logo.png
-    - assets/images/spotify_logo.png
-    - assets/images/discord_logo.png 
-    - assets/images/zoom_logo.png 
-    - assets/images/teams_logo.png 
-    - assets/images/jitsi_logo.png 
-    - assets/images/multimedia_codecs.png
-    - assets/images/timeshift_logo.png
-    - assets/images/drivers.png
-    - assets/images/update_logo.png
-    - assets/images/mintinstall_logo.png
-    - assets/images/firewall.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

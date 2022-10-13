@@ -21,7 +21,7 @@ class SecurityCheckOverview extends StatelessWidget {
             "pkexec",
             [
               "/usr/bin/python3",
-              "${Linux.executableFolder}python/check_security.py",
+              "${Linux.executableFolder}additional/python/check_security.py",
               "--home=${Platform.environment['HOME']}",
             ],
             getErrorMessages: true);

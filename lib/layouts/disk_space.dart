@@ -13,7 +13,8 @@ class DiskSpace extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future<String> diskSpaces = Linux.runCommandWithCustomArgumentsAndGetStdOut(
-        "python3", ["${Linux.executableFolder}python/get_diskspace.py"]);
+        "python3",
+        ["${Linux.executableFolder}additional/python/get_diskspace.py"]);
 
     return FutureBuilder<String>(
       future: diskSpaces,

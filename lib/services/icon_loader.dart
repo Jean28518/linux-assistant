@@ -22,23 +22,27 @@ class IconLoader {
     }
     String iconPath = await Linux.runCommandWithCustomArgumentsAndGetStdOut(
         "/usr/bin/python3", [
-      "${Linux.executableFolder}python/get_icon_path.py",
+      "${Linux.executableFolder}additional/python/get_icon_path.py",
       "--icon=$appCode"
     ]);
 
     if (iconPath.contains("not found")) {
-      if (cache.containsKey("!default!")) {
-        cache[cacheKeyword] = cache['!default!'];
+      if (cache.containsKey("!default!-$iconSize")) {
+        cache[cacheKeyword] = cache['!default!-$iconSize'];
       } else {
         String defaultIconPath =
             await Linux.runCommandWithCustomArgumentsAndGetStdOut(
                 "/usr/bin/python3", [
-          "${Linux.executableFolder}python/get_icon_path.py",
+          "${Linux.executableFolder}additional/python/get_icon_path.py",
           "--icon=applications-system"
         ]);
-        Image image = Image.file(File(defaultIconPath.replaceAll("\n", "")));
+        Image image = Image.file(
+          File(defaultIconPath.replaceAll("\n", "")),
+          width: iconSize,
+          height: iconSize,
+        );
 
-        cache['!default!'] = image;
+        cache['!default!-$iconSize'] = image;
         cache[cacheKeyword] = image;
       }
       return cache[cacheKeyword];

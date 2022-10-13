@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:linux_helper/layouts/after_installation/office_selection.dart';
 import 'package:linux_helper/layouts/mintY.dart';
 import 'package:linux_helper/layouts/system_icon.dart';
 import 'package:linux_helper/services/icon_loader.dart';
@@ -44,7 +45,7 @@ class _AfterInstallationBrowserSelectionState
               MintYSelectableCardWithIcon(
                 icon: const SystemIcon(iconString: "chromium", iconSize: 150),
                 title: "Chromium",
-                text: "Open Source browser. Free base of Google Chrom.e",
+                text: "Open Source browser. Free base of Google Chrome.",
                 selected: chromiumSelected,
                 onPressed: () {
                   chromiumSelected = !chromiumSelected;
@@ -68,7 +69,8 @@ class _AfterInstallationBrowserSelectionState
             ],
           ),
         ],
-        bottom: MintYButtonNext(route: MainSearchLoader()),
+        bottom:
+            MintYButtonNext(route: const AfterInstallationOfficeSelection()),
       ),
     );
   }
