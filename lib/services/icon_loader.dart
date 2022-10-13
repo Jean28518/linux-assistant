@@ -15,19 +15,20 @@ class IconLoader {
 
   Map cache = {};
 
-  Future<Image> getIconForApp(appCode) async {
-    if (cache.containsKey(appCode)) {
-      return cache[appCode];
+  Future<Image> getIconForApp(appCode, {double iconSize = 48}) async {
+    String cacheKeyword = "$appCode-$iconSize";
+    if (cache.containsKey(cacheKeyword)) {
+      return cache[cacheKeyword];
     }
     String iconPath = await Linux.runCommandWithCustomArgumentsAndGetStdOut(
         "/usr/bin/python3", [
       "${Linux.executableFolder}python/get_icon_path.py",
-      "--icon=${appCode}"
+      "--icon=$appCode"
     ]);
 
     if (iconPath.contains("not found")) {
       if (cache.containsKey("!default!")) {
-        cache[appCode] = cache['!default!'];
+        cache[cacheKeyword] = cache['!default!'];
       } else {
         String defaultIconPath =
             await Linux.runCommandWithCustomArgumentsAndGetStdOut(
@@ -38,21 +39,37 @@ class IconLoader {
         Image image = Image.file(File(defaultIconPath.replaceAll("\n", "")));
 
         cache['!default!'] = image;
-        cache[appCode] = image;
+        cache[cacheKeyword] = image;
       }
-      return cache[appCode];
+      return cache[cacheKeyword];
     }
 
     File file = await File(iconPath.replaceAll("\n", ""));
     if (iconPath.contains(".svg")) {
       Image image = Image(
-          width: 48, height: 48, image: Svg(iconPath.replaceAll("\n", "")));
-      cache[appCode] = image;
+          width: iconSize,
+          height: iconSize,
+          image: Svg(iconPath.replaceAll("\n", "")));
+      cache[cacheKeyword] = image;
       return image;
     } else {
-      Image image = Image.file(file);
-      cache[appCode] = image;
+      Image image = Image.file(
+        file,
+        height: iconSize,
+        width: iconSize,
+      );
+      cache[cacheKeyword] = image;
       return image;
     }
+  }
+
+  bool isIconLoaded(appCode, {double iconSize = 48}) {
+    String cacheKey = "$appCode-$iconSize";
+    return (cache.containsKey(cacheKey));
+  }
+
+  Image getIconFromCache(appCode, {double iconSize = 48}) {
+    String cacheKey = "$appCode-$iconSize";
+    return cache[cacheKey];
   }
 }

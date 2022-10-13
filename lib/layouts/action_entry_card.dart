@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:linux_helper/layouts/system_icon.dart';
 import 'package:linux_helper/services/icon_loader.dart';
 import 'package:linux_helper/services/main_search_loader.dart';
 import 'package:linux_helper/models/action_entry.dart';
@@ -19,7 +20,7 @@ class ActionEntryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterial(context));
-    Future<Widget> icon = getIcon();
+    Widget icon = getIcon();
     return Card(
       child: InkWell(
         child: ListTile(
@@ -30,15 +31,7 @@ class ActionEntryCard extends StatelessWidget {
           hoverColor: Colors.grey,
           title: Text(actionEntry.name),
           subtitle: Text(actionEntry.description),
-          leading: FutureBuilder<Widget>(
-            future: icon,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return snapshot.data!;
-              }
-              return CircularProgressIndicator();
-            },
-          ),
+          leading: icon,
         ),
         onTap: () {
           ActionHandler.handleActionEntry(actionEntry, callback, context);
@@ -47,7 +40,7 @@ class ActionEntryCard extends StatelessWidget {
     );
   }
 
-  Future<Widget> getIcon() async {
+  Widget getIcon() {
     if (actionEntry.action.startsWith("openfolder:")) {
       return Icon(
         Icons.folder,
@@ -56,7 +49,10 @@ class ActionEntryCard extends StatelessWidget {
     }
     if (actionEntry.action.startsWith("openapp:")) {
       IconLoader iconLoader = IconLoader();
-      return await iconLoader.getIconForApp(actionEntry.iconURI);
+      return SystemIcon(
+        iconString: actionEntry.iconURI,
+        iconSize: 48,
+      );
     }
     if (actionEntry.action.startsWith("websearch:")) {
       return Icon(
