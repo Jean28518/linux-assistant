@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:linux_helper/layouts/mintY.dart';
+import 'package:linux_assistant/layouts/mintY.dart';
 
 class LoadingIndicator extends StatelessWidget {
   late String text;

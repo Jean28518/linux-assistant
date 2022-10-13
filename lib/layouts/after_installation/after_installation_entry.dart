@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:linux_helper/layouts/after_installation/browser_selection.dart';
-import 'package:linux_helper/layouts/mintY.dart';
+import 'package:linux_assistant/layouts/after_installation/browser_selection.dart';
+import 'package:linux_assistant/layouts/mintY.dart';
 
 class AfterInstallationEntry extends StatelessWidget {
   const AfterInstallationEntry({Key? key}) : super(key: key);

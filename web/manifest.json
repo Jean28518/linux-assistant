@@ -1,6 +1,6 @@
 {
-    "name": "linux_helper",
-    "short_name": "linux_helper",
+    "name": "linux_assistant",
+    "short_name": "linux_assistant",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

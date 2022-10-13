@@ -1,16 +1,16 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:hotkey_manager/hotkey_manager.dart';
-import 'package:linux_helper/content/top_level_domains.dart';
-import 'package:linux_helper/enums/browsers.dart';
-import 'package:linux_helper/layouts/action_entry_card.dart';
-import 'package:linux_helper/layouts/disk_space.dart';
-import 'package:linux_helper/layouts/memory_status.dart';
-import 'package:linux_helper/layouts/recommendation_card.dart';
-import 'package:linux_helper/main.dart';
-import 'package:linux_helper/models/action_entry.dart';
-import 'package:linux_helper/services/action_handler.dart';
-import 'package:linux_helper/services/linux.dart';
+import 'package:linux_assistant/content/top_level_domains.dart';
+import 'package:linux_assistant/enums/browsers.dart';
+import 'package:linux_assistant/layouts/action_entry_card.dart';
+import 'package:linux_assistant/layouts/disk_space.dart';
+import 'package:linux_assistant/layouts/memory_status.dart';
+import 'package:linux_assistant/layouts/recommendation_card.dart';
+import 'package:linux_assistant/main.dart';
+import 'package:linux_assistant/models/action_entry.dart';
+import 'package:linux_assistant/services/action_handler.dart';
+import 'package:linux_assistant/services/linux.dart';
 import 'package:window_manager/window_manager.dart';
 
 class MainSearch extends StatefulWidget {

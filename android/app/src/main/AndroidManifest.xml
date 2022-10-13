@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.linux_helper">
+    package="com.example.linux_assistant">
    <application
-        android:label="linux_helper"
+        android:label="linux_assistant"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

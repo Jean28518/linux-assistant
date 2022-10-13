@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:linux_helper/enums/desktops.dart';
-import 'package:linux_helper/enums/distros.dart';
-import 'package:linux_helper/layouts/greeter/environment_selection.dart';
-import 'package:linux_helper/layouts/loading_indicator.dart';
-import 'package:linux_helper/layouts/mintY.dart';
-import 'package:linux_helper/models/enviroment.dart';
-import 'package:linux_helper/services/config_handler.dart';
-import 'package:linux_helper/services/linux.dart';
-import 'package:linux_helper/services/main_search_loader.dart';
+import 'package:linux_assistant/enums/desktops.dart';
+import 'package:linux_assistant/enums/distros.dart';
+import 'package:linux_assistant/layouts/greeter/environment_selection.dart';
+import 'package:linux_assistant/layouts/loading_indicator.dart';
+import 'package:linux_assistant/layouts/mintY.dart';
+import 'package:linux_assistant/models/enviroment.dart';
+import 'package:linux_assistant/services/config_handler.dart';
+import 'package:linux_assistant/services/linux.dart';
+import 'package:linux_assistant/services/main_search_loader.dart';
 
 class IsYourEnvironmentCorrectView extends StatelessWidget {
   const IsYourEnvironmentCorrectView({Key? key}) : super(key: key);

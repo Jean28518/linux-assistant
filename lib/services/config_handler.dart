@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:linux_helper/services/linux.dart';
+import 'package:linux_assistant/services/linux.dart';
 
 class ConfigHandler {
   // handle IconLoader as a singleton

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:linux_helper/layouts/after_installation/office_selection.dart';
-import 'package:linux_helper/layouts/mintY.dart';
-import 'package:linux_helper/layouts/system_icon.dart';
-import 'package:linux_helper/services/icon_loader.dart';
-import 'package:linux_helper/services/main_search_loader.dart';
+import 'package:linux_assistant/layouts/after_installation/office_selection.dart';
+import 'package:linux_assistant/layouts/mintY.dart';
+import 'package:linux_assistant/layouts/system_icon.dart';
+import 'package:linux_assistant/services/icon_loader.dart';
+import 'package:linux_assistant/services/main_search_loader.dart';
 
 class AfterInstallationBrowserSelection extends StatefulWidget {
   const AfterInstallationBrowserSelection({Key? key}) : super(key: key);

@@ -1,7 +1,7 @@
-import 'package:linux_helper/enums/desktops.dart';
-import 'package:linux_helper/enums/distros.dart';
-import 'package:linux_helper/models/action_entry.dart';
-import 'package:linux_helper/services/linux.dart';
+import 'package:linux_assistant/enums/desktops.dart';
+import 'package:linux_assistant/enums/distros.dart';
+import 'package:linux_assistant/models/action_entry.dart';
+import 'package:linux_assistant/services/linux.dart';
 
 final basicEntries = [
   ActionEntry(

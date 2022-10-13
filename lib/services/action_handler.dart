@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:linux_helper/enums/desktops.dart';
-import 'package:linux_helper/layouts/after_installation/after_installation_entry.dart';
-import 'package:linux_helper/layouts/main_search.dart';
-import 'package:linux_helper/layouts/security_check/overview.dart';
-import 'package:linux_helper/models/action_entry.dart';
-import 'package:linux_helper/services/linux.dart';
+import 'package:linux_assistant/enums/desktops.dart';
+import 'package:linux_assistant/layouts/after_installation/after_installation_entry.dart';
+import 'package:linux_assistant/layouts/main_search.dart';
+import 'package:linux_assistant/layouts/security_check/overview.dart';
+import 'package:linux_assistant/models/action_entry.dart';
+import 'package:linux_assistant/services/linux.dart';
 
 class ActionHandler {
   static void handleActionEntry(

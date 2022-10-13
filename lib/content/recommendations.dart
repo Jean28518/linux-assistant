@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:linux_helper/models/action_entry.dart';
+import 'package:linux_assistant/models/action_entry.dart';
 
 final recommendations = [
   ActionEntry(

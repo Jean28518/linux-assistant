@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:hotkey_manager/hotkey_manager.dart';
-import 'package:linux_helper/layouts/greeter/start_screen.dart';
-import 'package:linux_helper/layouts/mintY.dart';
-import 'package:linux_helper/services/linux.dart';
+import 'package:linux_assistant/layouts/greeter/start_screen.dart';
+import 'package:linux_assistant/layouts/mintY.dart';
+import 'package:linux_assistant/services/linux.dart';
 import 'package:window_manager/window_manager.dart';
 
 void main() async {
@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
     hotKeyManager.register(
       _hotKey,
       keyDownHandler: (hotKey) {
-        Linux.runCommand("wmctrl -a linux_helper");
+        Linux.runCommand("wmctrl -a linux_assistant");
       },
     );
   }

@@ -3,9 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:linux_helper/content/recommendations.dart';
-import 'package:linux_helper/models/action_entry.dart';
-import 'package:linux_helper/services/action_handler.dart';
+import 'package:linux_assistant/content/recommendations.dart';
+import 'package:linux_assistant/models/action_entry.dart';
+import 'package:linux_assistant/services/action_handler.dart';
 
 class RecommendationCard extends StatelessWidget {
   const RecommendationCard({Key? key}) : super(key: key);

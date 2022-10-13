@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
-import 'package:linux_helper/layouts/loading_indicator.dart';
-import 'package:linux_helper/layouts/mintY.dart';
-import 'package:linux_helper/services/linux.dart';
-import 'package:linux_helper/services/main_search_loader.dart';
+import 'package:linux_assistant/layouts/loading_indicator.dart';
+import 'package:linux_assistant/layouts/mintY.dart';
+import 'package:linux_assistant/services/linux.dart';
+import 'package:linux_assistant/services/main_search_loader.dart';
 
 class SecurityCheckOverview extends StatelessWidget {
   const SecurityCheckOverview({Key? key}) : super(key: key);

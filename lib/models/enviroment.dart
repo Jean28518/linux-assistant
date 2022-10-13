@@ -1,6 +1,6 @@
-import 'package:linux_helper/enums/browsers.dart';
-import 'package:linux_helper/enums/desktops.dart';
-import 'package:linux_helper/enums/distros.dart';
+import 'package:linux_assistant/enums/browsers.dart';
+import 'package:linux_assistant/enums/desktops.dart';
+import 'package:linux_assistant/enums/distros.dart';
 
 class Environment {
   var distribution = DISTROS.DEBIAN;

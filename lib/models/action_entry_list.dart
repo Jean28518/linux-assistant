@@ -1,4 +1,4 @@
-import 'package:linux_helper/models/action_entry.dart';
+import 'package:linux_assistant/models/action_entry.dart';
 
 class ActionEntryList {
   late List<ActionEntry> entries;

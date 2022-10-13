@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:linux_helper/content/basic_entries.dart';
-import 'package:linux_helper/content/recommendations.dart';
-import 'package:linux_helper/layouts/loading_indicator.dart';
-import 'package:linux_helper/layouts/main_search.dart';
-import 'package:linux_helper/models/action_entry_list.dart';
-import 'package:linux_helper/services/linux.dart';
+import 'package:linux_assistant/content/basic_entries.dart';
+import 'package:linux_assistant/content/recommendations.dart';
+import 'package:linux_assistant/layouts/loading_indicator.dart';
+import 'package:linux_assistant/layouts/main_search.dart';
+import 'package:linux_assistant/models/action_entry_list.dart';
+import 'package:linux_assistant/services/linux.dart';
 
 class MainSearchLoader extends StatefulWidget {
   const MainSearchLoader({Key? key}) : super(key: key);

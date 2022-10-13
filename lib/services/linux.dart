@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:linux_helper/enums/browsers.dart';
-import 'package:linux_helper/enums/desktops.dart';
-import 'package:linux_helper/enums/distros.dart';
-import 'package:linux_helper/models/action_entry.dart';
-import 'package:linux_helper/models/enviroment.dart';
+import 'package:linux_assistant/enums/browsers.dart';
+import 'package:linux_assistant/enums/desktops.dart';
+import 'package:linux_assistant/enums/distros.dart';
+import 'package:linux_assistant/models/action_entry.dart';
+import 'package:linux_assistant/models/enviroment.dart';
 
 class Linux {
   static Environment currentEnviroment = Environment();
