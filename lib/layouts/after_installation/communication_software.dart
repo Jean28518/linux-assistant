@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:linux_assistant/layouts/after_installation/automatic_configuration_entry.dart';
 import 'package:linux_assistant/layouts/mintY.dart';
 import 'package:linux_assistant/layouts/system_icon.dart';
 import 'package:linux_assistant/services/icon_loader.dart';
@@ -84,7 +85,8 @@ class _AfterInstallationCommunicationSoftwareSelectionState
             children: content,
           ),
         ),
-        bottom: MintYButtonNext(route: MainSearchLoader()),
+        bottom: MintYButtonNext(
+            route: const AfterInstallationAutomaticConfigurationEntry()),
       ),
     );
   }

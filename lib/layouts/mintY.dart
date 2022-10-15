@@ -149,53 +149,55 @@ class MintYPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      key: UniqueKey(),
-      child: Column(
-        children: [
-          Container(
-            decoration: MintY.colorfulBackground,
-            padding: const EdgeInsets.all(26.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: MintY.heading2White,
-                ),
-              ],
+    return Scaffold(
+      body: Container(
+        key: UniqueKey(),
+        child: Column(
+          children: [
+            Container(
+              decoration: MintY.colorfulBackground,
+              padding: const EdgeInsets.all(26.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: MintY.heading2White,
+                  ),
+                ],
+              ),
             ),
-          ),
-          Container(height: 8, color: Theme.of(context).canvasColor),
-          contentElements.length != 0
-              ? Expanded(
-                  child: Container(
-                    padding: EdgeInsets.all(16.0),
-                    color: Theme.of(context).canvasColor,
-                    child: Center(
-                      child: ListView(
-                        shrinkWrap: true,
-                        children: contentElements,
+            Container(height: 8, color: Theme.of(context).canvasColor),
+            contentElements.length != 0
+                ? Expanded(
+                    child: Container(
+                      padding: EdgeInsets.all(16.0),
+                      color: Theme.of(context).canvasColor,
+                      child: Center(
+                        child: ListView(
+                          shrinkWrap: true,
+                          children: contentElements,
+                        ),
                       ),
                     ),
-                  ),
-                )
-              : customContentElement,
-          Container(height: 8, color: Theme.of(context).canvasColor),
-          bottom != null
-              ? Container(
-                  height: 80,
-                  child: Center(child: bottom),
-                  // color: Theme.of(context).backgroundColor,
-                  color:
-                      // scrollController.position.maxScrollExtent + 80.0 + 89.0 >
-                      //         MediaQuery.of(context).size.height
-                      //     ? Colors.red
-                      //     : Colors.green,  // Does not work!
-                      Theme.of(context).canvasColor,
-                )
-              : Container()
-        ],
+                  )
+                : customContentElement,
+            Container(height: 8, color: Theme.of(context).canvasColor),
+            bottom != null
+                ? Container(
+                    height: 80,
+                    child: Center(child: bottom),
+                    // color: Theme.of(context).backgroundColor,
+                    color:
+                        // scrollController.position.maxScrollExtent + 80.0 + 89.0 >
+                        //         MediaQuery.of(context).size.height
+                        //     ? Colors.red
+                        //     : Colors.green,  // Does not work!
+                        Theme.of(context).canvasColor,
+                  )
+                : Container()
+          ],
+        ),
       ),
     );
   }
@@ -327,14 +329,7 @@ class _MintYSelectableCardWithIconState
     extends State<MintYSelectableCardWithIcon> {
   _MintYSelectableCardWithIconState();
 
-  void localOnPressed() {
-    setState(() {
-      widget.selected = !widget.selected;
-      if (widget.onPressed != null) {
-        widget.onPressed!.call();
-      }
-    });
-  }
+  void localOnPressed() {}
 
   @override
   Widget build(BuildContext context) {
@@ -342,7 +337,10 @@ class _MintYSelectableCardWithIconState
       child: Card(
         child: InkWell(
           onTap: () {
-            localOnPressed();
+            setState(() {
+              widget.selected = !widget.selected;
+            });
+            widget.onPressed?.call();
           },
           child: Container(
             padding: EdgeInsets.all(15),
@@ -387,27 +385,28 @@ class _MintYSelectableCardWithIconState
   }
 }
 
-class MintYSelectableEntryWithIconHorizontal extends StatelessWidget {
+class MintYSelectableEntryWithIconHorizontal extends StatefulWidget {
   late Widget icon;
   late String title;
   late String text;
   late bool selected;
   VoidCallback? onPressed;
 
-  MintYSelectableEntryWithIconHorizontal({
-    Widget icon = const Icon(Icons.umbrella),
-    String title = "Title",
-    String text = "Lorem ipsum...",
-    bool selected = false,
-    VoidCallback? onPressed,
-  }) {
-    this.icon = icon;
-    this.title = title;
-    this.text = text;
-    this.selected = selected;
-    this.onPressed = onPressed;
-  }
+  MintYSelectableEntryWithIconHorizontal(
+      {this.icon = const Icon(Icons.umbrella),
+      this.title = "Title",
+      this.text = "Lorem Ipsum...",
+      this.selected = false,
+      this.onPressed,
+      super.key});
 
+  @override
+  State<MintYSelectableEntryWithIconHorizontal> createState() =>
+      _MintYSelectableEntryWithIconHorizontalState();
+}
+
+class _MintYSelectableEntryWithIconHorizontalState
+    extends State<MintYSelectableEntryWithIconHorizontal> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -415,7 +414,10 @@ class MintYSelectableEntryWithIconHorizontal extends StatelessWidget {
       child: Card(
         child: InkWell(
           onTap: () {
-            onPressed?.call();
+            setState(() {
+              widget.selected = !widget.selected;
+            });
+            widget.onPressed?.call();
           },
           child: Container(
             padding: EdgeInsets.all(8),
@@ -423,7 +425,7 @@ class MintYSelectableEntryWithIconHorizontal extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Column(
-                  children: [icon],
+                  children: [widget.icon],
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 ),
                 SizedBox(
@@ -438,15 +440,15 @@ class MintYSelectableEntryWithIconHorizontal extends StatelessWidget {
                         height: 16,
                       ),
                       Text(
-                        title,
-                        style: Theme.of(context).textTheme.headline2,
+                        widget.title,
+                        style: MintY.heading2,
                       ),
                       SizedBox(
                         height: 10,
                       ),
                       Text(
-                        text,
-                        style: Theme.of(context).textTheme.bodyText1,
+                        widget.text,
+                        style: MintY.paragraph,
                         maxLines: 100,
                       )
                     ],
@@ -457,7 +459,7 @@ class MintYSelectableEntryWithIconHorizontal extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Container(
-                      child: selected
+                      child: widget.selected
                           ? Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
@@ -516,13 +518,12 @@ class MintYButtonBigWithIcon extends StatelessWidget {
               SizedBox(height: 15),
               icon,
               SizedBox(height: 20),
-              Text(title,
-                  style: Theme.of(context).textTheme.headline2,
-                  textAlign: TextAlign.center),
+              Text(title, style: MintY.heading2, textAlign: TextAlign.center),
               SizedBox(height: 20),
               Text(
                 text,
                 textAlign: TextAlign.center,
+                style: MintY.paragraph,
               )
             ],
           ),
