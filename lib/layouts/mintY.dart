@@ -303,69 +303,84 @@ class MintYButtonNext extends StatelessWidget {
   }
 }
 
-class MintYSelectableCardWithIcon extends StatelessWidget {
-  late Widget icon;
-  late String title;
-  late String text;
-  late bool selected;
-  VoidCallback? onPressed;
+class MintYSelectableCardWithIcon extends StatefulWidget {
+  final Widget icon;
+  final String title;
+  final String text;
+  bool selected;
+  final VoidCallback? onPressed;
 
-  MintYSelectableCardWithIcon({
-    Widget icon = const Icon(Icons.umbrella),
-    String title = "Title",
-    String text = "Lorem ipsum...",
-    bool selected = false,
-    VoidCallback? onPressed,
-  }) {
-    this.icon = icon;
-    this.title = title;
-    this.text = text;
-    this.selected = selected;
-    this.onPressed = onPressed;
+  MintYSelectableCardWithIcon(
+      {this.icon = const Icon(Icons.umbrella),
+      this.title = "Title",
+      this.text = "Lorem ipsum...",
+      this.selected = false,
+      this.onPressed,
+      super.key});
+
+  @override
+  State<MintYSelectableCardWithIcon> createState() =>
+      _MintYSelectableCardWithIconState();
+}
+
+class _MintYSelectableCardWithIconState
+    extends State<MintYSelectableCardWithIcon> {
+  _MintYSelectableCardWithIconState();
+
+  void localOnPressed() {
+    setState(() {
+      widget.selected = !widget.selected;
+      if (widget.onPressed != null) {
+        widget.onPressed!.call();
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: InkWell(
-        onTap: () {
-          onPressed?.call();
-        },
-        child: Container(
-          padding: EdgeInsets.all(15),
-          height: 400,
-          width: 350,
-          child: Column(children: [
-            Container(
-              padding: EdgeInsets.all(10),
-              height: 30,
-              child: selected
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Icon(
-                          Icons.check,
-                          size: 30,
-                          color: MintY.currentColor,
-                        )
-                      ],
-                    )
-                  : null,
-            ),
-            icon,
-            SizedBox(
-              height: 30,
-            ),
-            Text(title, style: MintY.heading2, textAlign: TextAlign.center),
-            SizedBox(
-              height: 30,
-            ),
-            Text(
-              text,
-              textAlign: TextAlign.center,
-              style: MintY.paragraph,
-            )
-          ]),
+    return Center(
+      child: Card(
+        child: InkWell(
+          onTap: () {
+            localOnPressed();
+          },
+          child: Container(
+            padding: EdgeInsets.all(15),
+            height: 400,
+            width: 350,
+            child: Column(children: [
+              Container(
+                padding: EdgeInsets.all(10),
+                height: 30,
+                child: widget.selected
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Icon(
+                            Icons.check,
+                            size: 30,
+                            color: MintY.currentColor,
+                          )
+                        ],
+                      )
+                    : null,
+              ),
+              widget.icon,
+              SizedBox(
+                height: 30,
+              ),
+              Text(widget.title,
+                  style: MintY.heading2, textAlign: TextAlign.center),
+              SizedBox(
+                height: 30,
+              ),
+              Text(
+                widget.text,
+                textAlign: TextAlign.center,
+                style: MintY.paragraph,
+              )
+            ]),
+          ),
         ),
       ),
     );
