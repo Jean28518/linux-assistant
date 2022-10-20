@@ -1,13 +1,16 @@
 import 'package:linux_assistant/enums/browsers.dart';
 import 'package:linux_assistant/enums/desktops.dart';
 import 'package:linux_assistant/enums/distros.dart';
+import 'package:linux_assistant/enums/softwareManagers.dart';
 
 class Environment {
   var distribution = DISTROS.DEBIAN;
   var version = -1.0;
   var desktop = DESKTOPS.CINNAMON;
-  var browser = BROWSERS.BRAVE;
+  var browser = BROWSERS.FIREFOX;
   var language = "";
+  List<SOFTWARE_MANAGERS> installedSoftwareManagers = [];
+  var preferredSoftwareManager = SOFTWARE_MANAGERS.APT;
 
   Map<String, dynamic> toJson() {
     return {
@@ -16,6 +19,8 @@ class Environment {
       'desktop': desktop.toString(),
       'browser': browser.toString(),
       'language': language,
+      'installedSoftwareManagers': installedSoftwareManagers.join(";"),
+      'preferredSoftwareManager': preferredSoftwareManager.toString(),
     };
   }
 
@@ -25,6 +30,13 @@ class Environment {
     desktop = getDektopEnumOfString(input['desktop']);
     browser = getBrowserEnumOfString(input['browser']);
     language = input['language'];
+    List<String> installedSoftwareManagersStrings =
+        input["installedSoftwareManagers"].toString().split(";");
+    for (String string in installedSoftwareManagersStrings) {
+      installedSoftwareManagers.add(getSoftwareManagerEnumOfString(string));
+    }
+    preferredSoftwareManager =
+        getSoftwareManagerEnumOfString(input["preferredSoftwareManager"]);
   }
 
   Environment();

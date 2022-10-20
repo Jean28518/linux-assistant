@@ -47,7 +47,7 @@ class _AfterInstallationCommunicationSoftwareSelectionState
         selected: false,
       ),
       MintYSelectableCardWithIcon(
-        icon: const SystemIcon(iconString: "us.zoom.Zoom", iconSize: 150),
+        icon: const SystemIcon(iconString: "zoom", iconSize: 150),
         title: "Zoom",
         text: "Proprietary conference software.",
         selected: false,

@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:linux_assistant/enums/browsers.dart';
 import 'package:linux_assistant/enums/desktops.dart';
 import 'package:linux_assistant/enums/distros.dart';
+import 'package:linux_assistant/enums/softwareManagers.dart';
 import 'package:linux_assistant/models/action_entry.dart';
 import 'package:linux_assistant/models/enviroment.dart';
 
@@ -11,25 +12,28 @@ class Linux {
   static Environment currentEnviroment = Environment();
   static String executableFolder = "";
 
-  static void runCommand(String command) async {
+  static void runCommand(String command,
+      {Map<String, String>? environment}) async {
     List<String> arguments = command.split(' ');
     String exec = arguments.removeAt(0);
 
     print("Running linux command: " + command);
-    var result = await Process.run(exec, arguments, runInShell: true);
+    var result = await Process.run(exec, arguments,
+        runInShell: true, environment: environment);
     if (result.stderr is String && !result.stderr.toString().isEmpty) {
       print(result.stderr);
     }
     print(result.stdout);
   }
 
-  static void runCommandWithCustomArguments(
-      String exec, List<String> arguments) async {
+  static void runCommandWithCustomArguments(String exec, List<String> arguments,
+      {Map<String, String>? environment}) async {
     print("Running linux command: " +
         exec +
         " with arguments: " +
         arguments.toString());
-    var result = await Process.run(exec, arguments, runInShell: true);
+    var result = await Process.run(exec, arguments,
+        runInShell: true, environment: environment);
     if (result.stderr is String && !result.stderr.toString().isEmpty) {
       print(result.stderr);
     }
@@ -38,12 +42,13 @@ class Linux {
 
   static Future<String> runCommandWithCustomArgumentsAndGetStdOut(
       String exec, List<String> arguments,
-      {bool getErrorMessages = false}) async {
+      {bool getErrorMessages = false, Map<String, String>? environment}) async {
     print("Running linux command: " +
         exec +
         " with arguments: " +
         arguments.toString());
-    var result = await Process.run(exec, arguments, runInShell: true);
+    var result = await Process.run(exec, arguments,
+        runInShell: true, environment: environment);
 
     if (result.stderr is String && !result.stderr.toString().isEmpty) {
       print(result.stderr);
@@ -56,10 +61,12 @@ class Linux {
     return (result.stdout);
   }
 
-  static Future<String> runCommandAndGetStdout(String command) async {
+  static Future<String> runCommandAndGetStdout(String command,
+      {Map<String, String>? environment}) async {
     List<String> arguments = command.split(' ');
     String exec = arguments.removeAt(0);
-    var result = await Process.run(exec, arguments, runInShell: true);
+    var result = await Process.run(exec, arguments,
+        runInShell: true, environment: environment);
     if (result.stderr is String && !result.stderr.toString().isEmpty) {
       print(result.stderr);
     }
@@ -119,10 +126,64 @@ class Linux {
       }
     }
     // if no warpinator is installed at all:
-    if (currentEnviroment.distribution == DISTROS.LINUX_MINT) {
-      runCommand("/usr/bin/pkexec /usr/bin/apt install warpinator");
+    installApplication("warpinator");
+  }
+
+  static void installApplication(String appCode,
+      {SOFTWARE_MANAGERS? preferredSoftwareManager}) async {
+    preferredSoftwareManager ??= currentEnviroment.preferredSoftwareManager;
+
+    // Move preferred software manager to the start of the list
+    currentEnviroment.installedSoftwareManagers
+        .insert(0, preferredSoftwareManager!);
+    currentEnviroment.installedSoftwareManagers.removeAt(currentEnviroment
+        .installedSoftwareManagers
+        .lastIndexOf(preferredSoftwareManager));
+
+    for (SOFTWARE_MANAGERS softwareManager
+        in currentEnviroment.installedSoftwareManagers) {
+      if (softwareManager == SOFTWARE_MANAGERS.APT) {
+        // Check, if package is available:
+        String output = await Linux.runCommandAndGetStdout(
+            "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.APT)} show $appCode");
+        if (!output.contains("Package: ")) {
+          continue;
+        }
+
+        runCommand(
+            "pkexec ${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.APT)} install $appCode -y",
+            environment: {"DEBIAN_FRONTEND": "noninteractive"});
+        return;
+      }
+
+      if (softwareManager == SOFTWARE_MANAGERS.FLATPAK) {
+        // Check, if package is available:
+        String output = await Linux.runCommandAndGetStdout(
+            "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.FLATPAK)} search $appCode");
+        if (output.split("\n").length != 2) {
+          continue;
+        }
+
+        String repo = output.split("\t").last.replaceAll("\n", "");
+
+        runCommand(
+            "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.FLATPAK)} install $repo $appCode --system -y --noninteractive");
+        return;
+      }
+
+      if (softwareManager == SOFTWARE_MANAGERS.SNAP) {
+        // Check, if package is available:
+        String output = await Linux.runCommandAndGetStdout(
+            "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.SNAP)} info $appCode");
+        if (output.split("\n").length < 5) {
+          continue;
+        }
+
+        runCommand(
+            "pkexec ${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.SNAP)} install $appCode");
+        return;
+      }
     }
-    runCommand("/usr/bin/pkexec /usr/bin/flatpak install warpinator -y");
   }
 
   static Future<bool> isSpecificFlatpakInstalled(flatpak_id) async {
@@ -298,7 +359,29 @@ class Linux {
       newEnvironment.browser = BROWSERS.OPERA;
     }
 
+    for (int i = 0; i < SOFTWARE_MANAGERS.values.length; i++) {
+      if (await File(
+              getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.values[i]))
+          .exists()) {
+        newEnvironment.installedSoftwareManagers
+            .add(SOFTWARE_MANAGERS.values[i]);
+      }
+    }
+
     return newEnvironment;
+  }
+
+  static String getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS input) {
+    switch (input) {
+      case SOFTWARE_MANAGERS.FLATPAK:
+        return "/usr/bin/flatpak";
+      case SOFTWARE_MANAGERS.SNAP:
+        return "/usr/bin/snap";
+      case SOFTWARE_MANAGERS.APT:
+        return "/usr/bin/apt";
+      default:
+        return "";
+    }
   }
 
   // Returns local path when app is run in debug

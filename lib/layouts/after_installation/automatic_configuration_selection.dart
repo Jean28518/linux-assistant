@@ -18,6 +18,7 @@ class AfterInstallationAutomaticConfiguration extends StatelessWidget {
             iconSize: 128,
           ),
           title: "Multimedia Codecs Installation",
+          selected: true,
           text:
               "Additional proprietary multimedia codes for playing videos and music.",
         ),
@@ -27,6 +28,7 @@ class AfterInstallationAutomaticConfiguration extends StatelessWidget {
             iconSize: 128,
           ),
           title: "Automatic Snapshots",
+          selected: true,
           text:
               "Configure automatic snapshots with timeshift. Timeshift will be configured to 2 monthly automatic snapshots on your root partition.",
         ),
@@ -36,6 +38,7 @@ class AfterInstallationAutomaticConfiguration extends StatelessWidget {
             iconSize: 128,
           ),
           title: "Automatic Driver Installation",
+          selected: true,
           text: "All recommended drivers will be installed.",
         ),
         MintYSelectableEntryWithIconHorizontal(
@@ -44,6 +47,7 @@ class AfterInstallationAutomaticConfiguration extends StatelessWidget {
             iconSize: 128,
           ),
           title: "Automatic Update Manager Configuration",
+          selected: true,
           text:
               "Automatic updates and maintainance will be configured. Also the fastest mirror server will be choosen for faster downloads.",
         ),
