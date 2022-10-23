@@ -45,5 +45,18 @@ class MyApp extends StatelessWidget {
         Linux.runCommand("wmctrl -a linux_assistant");
       },
     );
+
+    // Debug Call
+    HotKey _hotKeyDebug = HotKey(
+      KeyCode.keyD,
+      modifiers: [KeyModifier.control],
+      scope: HotKeyScope.inapp,
+    );
+    hotKeyManager.register(
+      _hotKeyDebug,
+      keyDownHandler: (hotKey) async {
+        // insert here function calls to debug
+      },
+    );
   }
 }

@@ -186,9 +186,64 @@ class Linux {
     }
   }
 
-  static Future<bool> isSpecificFlatpakInstalled(flatpak_id) async {
-    String flatpakList = await runCommandAndGetStdout("/usr/bin/flatpak list");
-    return flatpakList.contains(flatpak_id);
+  // Could also return true, if only a part of an application id is found in the output.
+  static Future<bool> isSpecificFlatpakInstalled(String appCode) async {
+    String flatpakList = await runCommandAndGetStdout(
+        "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.FLATPAK)} list --columns=application");
+    return flatpakList.toLowerCase().contains(appCode.toLowerCase());
+  }
+
+  static Future<bool> isSpecificDebPackageInstalled(appCode) async {
+    String output = await runCommandAndGetStdout("/usr/bin/dpkg -l $appCode");
+    return output.contains("ii  $appCode");
+  }
+
+  static Future<bool> isSpecificSnapInstalled(appCode) async {
+    String output = await runCommandAndGetStdout(
+        "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.SNAP)} info $appCode");
+    return output.contains("installed: ");
+  }
+
+  // If you don't specify the softwareManager it will be tried to remove the application with all Software Managers
+  static void removeApplication(String appCode,
+      {SOFTWARE_MANAGERS? softwareManager}) async {
+    // Deb Package
+    bool isDebianPackageInstalled =
+        await isSpecificDebPackageInstalled(appCode);
+    if ((softwareManager == null || softwareManager == SOFTWARE_MANAGERS.APT) &&
+        isDebianPackageInstalled) {
+      Linux.runCommand(
+          "pkexec ${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.SNAP)} remove $appCode -y",
+          environment: {"DEBIAN_FRONTEND": "noninteractive"});
+    }
+
+    // Flatpak
+    bool isFlatpakInstalled = await isSpecificFlatpakInstalled(appCode);
+    print(isFlatpakInstalled);
+    if ((softwareManager == null ||
+            softwareManager == SOFTWARE_MANAGERS.FLATPAK) &&
+        isFlatpakInstalled) {
+      print("HUHUU");
+      Linux.runCommand(
+          "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.FLATPAK)} remove $appCode -y --noninteractive");
+    }
+
+    // Snap
+    bool isSnapInstalled = await isSpecificSnapInstalled(appCode);
+    if ((softwareManager == null ||
+            softwareManager == SOFTWARE_MANAGERS.SNAP) &&
+        isSnapInstalled) {
+      Linux.runCommand(
+          "pkexec ${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.SNAP)} remove $appCode -y");
+    }
+  }
+
+  static Future<bool> isApplicationInstalled(String appCode) async {
+    bool isDebianPackageInstalled =
+        await isSpecificDebPackageInstalled(appCode);
+    bool isFlatpakInstalled = await isSpecificFlatpakInstalled(appCode);
+    bool isSnapInstalled = await isSpecificSnapInstalled(appCode);
+    return isDebianPackageInstalled || isFlatpakInstalled || isSnapInstalled;
   }
 
   static void openWebbrowserSeach(String searchterm) {

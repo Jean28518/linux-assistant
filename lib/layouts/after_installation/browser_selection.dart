@@ -5,10 +5,15 @@ import 'package:linux_assistant/layouts/after_installation/office_selection.dart
 import 'package:linux_assistant/layouts/mintY.dart';
 import 'package:linux_assistant/layouts/system_icon.dart';
 import 'package:linux_assistant/services/icon_loader.dart';
+import 'package:linux_assistant/services/linux.dart';
 import 'package:linux_assistant/services/main_search_loader.dart';
 
 class AfterInstallationBrowserSelection extends StatefulWidget {
-  const AfterInstallationBrowserSelection({Key? key}) : super(key: key);
+  AfterInstallationBrowserSelection({Key? key}) : super(key: key);
+
+  Future<bool> firefoxInstalled = Linux.isApplicationInstalled("firefox");
+  Future<bool> chromiumInstalled = Linux.isApplicationInstalled("chromium");
+  Future<bool> chromeInstalled = Linux.isApplicationInstalled("chrome");
 
   @override
   State<AfterInstallationBrowserSelection> createState() =>
@@ -17,9 +22,6 @@ class AfterInstallationBrowserSelection extends StatefulWidget {
 
 class _AfterInstallationBrowserSelectionState
     extends State<AfterInstallationBrowserSelection> {
-  bool firefoxSelected = true;
-  bool chromiumSelected = false;
-  bool chromeSelected = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,11 +35,7 @@ class _AfterInstallationBrowserSelectionState
                 icon: const SystemIcon(iconString: "firefox", iconSize: 150),
                 title: "Firefox",
                 text: "Open Source browser with focus on privacy by Mozilla.",
-                selected: firefoxSelected,
-                onPressed: () {
-                  firefoxSelected = !firefoxSelected;
-                  setState(() {});
-                },
+                selected: true,
               ),
               SizedBox(
                 width: 10,
@@ -46,11 +44,7 @@ class _AfterInstallationBrowserSelectionState
                 icon: const SystemIcon(iconString: "chromium", iconSize: 150),
                 title: "Chromium",
                 text: "Open Source browser. Free base of Google Chrome.",
-                selected: chromiumSelected,
-                onPressed: () {
-                  chromiumSelected = !chromiumSelected;
-                  setState(() {});
-                },
+                selected: false,
               ),
               SizedBox(
                 width: 10,
@@ -60,11 +54,7 @@ class _AfterInstallationBrowserSelectionState
                     iconString: "google-chrome", iconSize: 150),
                 title: "Google Chrome",
                 text: "Proprietary browser from Google.",
-                selected: chromeSelected,
-                onPressed: () {
-                  chromeSelected = !chromeSelected;
-                  setState(() {});
-                },
+                selected: false,
               ),
             ],
           ),

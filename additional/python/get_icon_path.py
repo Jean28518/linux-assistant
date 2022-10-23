@@ -8,8 +8,6 @@ import jessentials
 import jfolders
 import jfiles
 
-jfiles.write_lines_to_file(os.getenv("HOME")+"/helpme", [os.getcwd()])
-
 icon_name = jessentials.get_value_from_arguments("icon")
 icon_theme = Gtk.IconTheme.get_default()
 icon = icon_theme.lookup_icon(icon_name, 96, 0)
