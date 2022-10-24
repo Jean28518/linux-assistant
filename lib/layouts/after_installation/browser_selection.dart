@@ -4,24 +4,22 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:linux_assistant/layouts/after_installation/office_selection.dart';
 import 'package:linux_assistant/layouts/mintY.dart';
 import 'package:linux_assistant/layouts/system_icon.dart';
+import 'package:linux_assistant/services/after_installation_service.dart';
 import 'package:linux_assistant/services/icon_loader.dart';
 import 'package:linux_assistant/services/linux.dart';
 import 'package:linux_assistant/services/main_search_loader.dart';
 
-class AfterInstallationBrowserSelection extends StatefulWidget {
-  AfterInstallationBrowserSelection({Key? key}) : super(key: key);
+class AfterInstallationBrowserSelection extends StatelessWidget {
+  AfterInstallationBrowserSelection({super.key});
 
-  Future<bool> firefoxInstalled = Linux.isApplicationInstalled("firefox");
-  Future<bool> chromiumInstalled = Linux.isApplicationInstalled("chromium");
-  Future<bool> chromeInstalled = Linux.isApplicationInstalled("chrome");
+  static Future<bool> firefoxInstalled =
+      Linux.areApplicationsInstalled(["firefox"]);
+  static Future<bool> chromiumInstalled =
+      Linux.areApplicationsInstalled(["chromium"]);
+  static Future<bool> googleChromeStableInstalled =
+      Linux.areApplicationsInstalled(
+          ["google-chrome-stable", "com.google.Chrome"]);
 
-  @override
-  State<AfterInstallationBrowserSelection> createState() =>
-      _AfterInstallationBrowserSelectionState();
-}
-
-class _AfterInstallationBrowserSelectionState
-    extends State<AfterInstallationBrowserSelection> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,36 +29,88 @@ class _AfterInstallationBrowserSelectionState
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              MintYSelectableCardWithIcon(
-                icon: const SystemIcon(iconString: "firefox", iconSize: 150),
-                title: "Firefox",
-                text: "Open Source browser with focus on privacy by Mozilla.",
-                selected: true,
+              FutureBuilder(
+                future: firefoxInstalled,
+                builder: (context, snapshot) {
+                  AfterInstallationService.firefox =
+                      snapshot.data.toString() == 'true';
+                  if (snapshot.hasData) {
+                    return MintYSelectableCardWithIcon(
+                      icon: const SystemIcon(
+                          iconString: "firefox", iconSize: 150),
+                      title: "Firefox",
+                      text:
+                          "Open Source browser with focus on privacy by Mozilla.",
+                      selected: snapshot.data.toString() == 'true',
+                      onPressed: () {
+                        AfterInstallationService.firefox =
+                            !AfterInstallationService.firefox;
+                      },
+                    );
+                  } else {
+                    return const MintYProgressIndicatorCircle();
+                  }
+                },
               ),
               SizedBox(
                 width: 10,
               ),
-              MintYSelectableCardWithIcon(
-                icon: const SystemIcon(iconString: "chromium", iconSize: 150),
-                title: "Chromium",
-                text: "Open Source browser. Free base of Google Chrome.",
-                selected: false,
+              FutureBuilder(
+                future: chromiumInstalled,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    AfterInstallationService.chromium =
+                        snapshot.data.toString() == 'true';
+                    return MintYSelectableCardWithIcon(
+                      icon: const SystemIcon(
+                          iconString: "chromium", iconSize: 150),
+                      title: "Chromium",
+                      text: "Open Source browser. Free base of Google Chrome.",
+                      selected: snapshot.data.toString() == 'true',
+                      onPressed: () {
+                        AfterInstallationService.chromium =
+                            !AfterInstallationService.chromium;
+                      },
+                    );
+                  } else {
+                    return const MintYProgressIndicatorCircle();
+                  }
+                },
               ),
               SizedBox(
                 width: 10,
               ),
-              MintYSelectableCardWithIcon(
-                icon: const SystemIcon(
-                    iconString: "google-chrome", iconSize: 150),
-                title: "Google Chrome",
-                text: "Proprietary browser from Google.",
-                selected: false,
+              FutureBuilder(
+                future: googleChromeStableInstalled,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    AfterInstallationService.googleChrome =
+                        snapshot.data.toString() == 'true';
+                    return MintYSelectableCardWithIcon(
+                      icon: const SystemIcon(
+                          iconString: "google-chrome", iconSize: 150),
+                      title: "Google Chrome",
+                      text: "Proprietary browser from Google.",
+                      selected: snapshot.data.toString() == 'true',
+                      onPressed: () {
+                        AfterInstallationService.googleChrome =
+                            !AfterInstallationService.googleChrome;
+                      },
+                    );
+                  } else {
+                    return const MintYProgressIndicatorCircle();
+                  }
+                },
               ),
             ],
           ),
         ],
-        bottom:
-            MintYButtonNext(route: const AfterInstallationOfficeSelection()),
+        bottom: MintYButtonNext(
+          route: const AfterInstallationOfficeSelection(),
+          onPressed: () {
+            AfterInstallationService.applyCurrentBrowserSituation();
+          },
+        ),
       ),
     );
   }

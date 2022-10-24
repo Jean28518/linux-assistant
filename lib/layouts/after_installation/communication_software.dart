@@ -7,17 +7,9 @@ import 'package:linux_assistant/layouts/system_icon.dart';
 import 'package:linux_assistant/services/icon_loader.dart';
 import 'package:linux_assistant/services/main_search_loader.dart';
 
-class AfterInstallationCommunicationSoftwareSelection extends StatefulWidget {
-  const AfterInstallationCommunicationSoftwareSelection({Key? key})
-      : super(key: key);
+class AfterInstallationCommunicationSoftwareSelection extends StatelessWidget {
+  const AfterInstallationCommunicationSoftwareSelection({super.key});
 
-  @override
-  State<AfterInstallationCommunicationSoftwareSelection> createState() =>
-      _AfterInstallationCommunicationSoftwareSelectionState();
-}
-
-class _AfterInstallationCommunicationSoftwareSelectionState
-    extends State<AfterInstallationCommunicationSoftwareSelection> {
   @override
   Widget build(BuildContext context) {
     const double padding = 20;
@@ -47,7 +39,7 @@ class _AfterInstallationCommunicationSoftwareSelectionState
         selected: false,
       ),
       MintYSelectableCardWithIcon(
-        icon: const SystemIcon(iconString: "zoom", iconSize: 150),
+        icon: const SystemIcon(iconString: "zoom-zoom", iconSize: 150),
         title: "Zoom",
         text: "Proprietary conference software.",
         selected: false,

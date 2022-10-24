@@ -126,10 +126,12 @@ class Linux {
       }
     }
     // if no warpinator is installed at all:
-    installApplication("warpinator");
+    installApplications(["warpinator"]);
   }
 
-  static void installApplication(String appCode,
+  /// Tries to install one of the appCodes. Stops after one was successfully found.
+  /// First elements of the list will be priorized.
+  static void installApplications(List<String> appCodes,
       {SOFTWARE_MANAGERS? preferredSoftwareManager}) async {
     preferredSoftwareManager ??= currentEnviroment.preferredSoftwareManager;
 
@@ -140,48 +142,45 @@ class Linux {
         .installedSoftwareManagers
         .lastIndexOf(preferredSoftwareManager));
 
-    for (SOFTWARE_MANAGERS softwareManager
-        in currentEnviroment.installedSoftwareManagers) {
-      if (softwareManager == SOFTWARE_MANAGERS.APT) {
-        // Check, if package is available:
-        String output = await Linux.runCommandAndGetStdout(
-            "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.APT)} show $appCode");
-        if (!output.contains("Package: ")) {
-          continue;
+    for (String appCode in appCodes) {
+      for (SOFTWARE_MANAGERS softwareManager
+          in currentEnviroment.installedSoftwareManagers) {
+        if (softwareManager == SOFTWARE_MANAGERS.APT) {
+          // Check, if package is available:
+          bool available = await isDebPackageAvailable(appCode);
+          if (!available) {
+            continue;
+          }
+
+          runCommand(
+              "pkexec ${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.APT)} install $appCode -y",
+              environment: {"DEBIAN_FRONTEND": "noninteractive"});
+          return;
         }
 
-        runCommand(
-            "pkexec ${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.APT)} install $appCode -y",
-            environment: {"DEBIAN_FRONTEND": "noninteractive"});
-        return;
-      }
+        if (softwareManager == SOFTWARE_MANAGERS.FLATPAK) {
+          // Check, if package is available:
+          String repo = await isFlatpakAvailable(appCode);
+          if (repo == "") {
+            continue;
+          }
 
-      if (softwareManager == SOFTWARE_MANAGERS.FLATPAK) {
-        // Check, if package is available:
-        String output = await Linux.runCommandAndGetStdout(
-            "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.FLATPAK)} search $appCode");
-        if (output.split("\n").length != 2) {
-          continue;
+          runCommand(
+              "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.FLATPAK)} install $repo $appCode --system -y --noninteractive");
+          return;
         }
 
-        String repo = output.split("\t").last.replaceAll("\n", "");
+        if (softwareManager == SOFTWARE_MANAGERS.SNAP) {
+          // Check, if package is available:
+          bool available = await isSnapAvailable(appCode);
+          if (!available) {
+            continue;
+          }
 
-        runCommand(
-            "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.FLATPAK)} install $repo $appCode --system -y --noninteractive");
-        return;
-      }
-
-      if (softwareManager == SOFTWARE_MANAGERS.SNAP) {
-        // Check, if package is available:
-        String output = await Linux.runCommandAndGetStdout(
-            "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.SNAP)} info $appCode");
-        if (output.split("\n").length < 5) {
-          continue;
+          runCommand(
+              "pkexec ${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.SNAP)} install $appCode");
+          return;
         }
-
-        runCommand(
-            "pkexec ${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.SNAP)} install $appCode");
-        return;
       }
     }
   }
@@ -204,46 +203,131 @@ class Linux {
     return output.contains("installed: ");
   }
 
-  // If you don't specify the softwareManager it will be tried to remove the application with all Software Managers
-  static void removeApplication(String appCode,
+  /// Tries to uninstall all appCodes.
+  /// If you don't specify the softwareManager it will be tried to remove the application with all Software Managers
+  static void removeApplications(List<String> appCodes,
       {SOFTWARE_MANAGERS? softwareManager}) async {
-    // Deb Package
-    bool isDebianPackageInstalled =
-        await isSpecificDebPackageInstalled(appCode);
-    if ((softwareManager == null || softwareManager == SOFTWARE_MANAGERS.APT) &&
-        isDebianPackageInstalled) {
-      Linux.runCommand(
-          "pkexec ${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.SNAP)} remove $appCode -y",
-          environment: {"DEBIAN_FRONTEND": "noninteractive"});
-    }
+    for (String appCode in appCodes) {
+      // Deb Package
+      bool isDebianPackageInstalled =
+          await isSpecificDebPackageInstalled(appCode);
+      if ((softwareManager == null ||
+              softwareManager == SOFTWARE_MANAGERS.APT) &&
+          isDebianPackageInstalled) {
+        Linux.runCommand(
+            "pkexec ${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.APT)} remove $appCode -y",
+            environment: {"DEBIAN_FRONTEND": "noninteractive"});
+      }
 
-    // Flatpak
-    bool isFlatpakInstalled = await isSpecificFlatpakInstalled(appCode);
-    print(isFlatpakInstalled);
-    if ((softwareManager == null ||
-            softwareManager == SOFTWARE_MANAGERS.FLATPAK) &&
-        isFlatpakInstalled) {
-      print("HUHUU");
-      Linux.runCommand(
-          "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.FLATPAK)} remove $appCode -y --noninteractive");
-    }
+      // Flatpak
+      bool isFlatpakInstalled = await isSpecificFlatpakInstalled(appCode);
+      print(isFlatpakInstalled);
+      if ((softwareManager == null ||
+              softwareManager == SOFTWARE_MANAGERS.FLATPAK) &&
+          isFlatpakInstalled) {
+        print("HUHUU");
+        Linux.runCommand(
+            "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.FLATPAK)} remove $appCode -y --noninteractive");
+      }
 
-    // Snap
-    bool isSnapInstalled = await isSpecificSnapInstalled(appCode);
-    if ((softwareManager == null ||
-            softwareManager == SOFTWARE_MANAGERS.SNAP) &&
-        isSnapInstalled) {
-      Linux.runCommand(
-          "pkexec ${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.SNAP)} remove $appCode -y");
+      // Snap
+      bool isSnapInstalled = await isSpecificSnapInstalled(appCode);
+      if ((softwareManager == null ||
+              softwareManager == SOFTWARE_MANAGERS.SNAP) &&
+          isSnapInstalled) {
+        Linux.runCommand(
+            "pkexec ${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.SNAP)} remove $appCode -y");
+      }
     }
   }
 
-  static Future<bool> isApplicationInstalled(String appCode) async {
-    bool isDebianPackageInstalled =
-        await isSpecificDebPackageInstalled(appCode);
-    bool isFlatpakInstalled = await isSpecificFlatpakInstalled(appCode);
-    bool isSnapInstalled = await isSpecificSnapInstalled(appCode);
-    return isDebianPackageInstalled || isFlatpakInstalled || isSnapInstalled;
+  // Returns true, if one of these application is installed.
+  static Future<bool> areApplicationsInstalled(List<String> appCodes) async {
+    if (currentEnviroment.installedSoftwareManagers
+        .contains(SOFTWARE_MANAGERS.APT)) {
+      for (String appCode in appCodes) {
+        bool isDebianPackageInstalled =
+            await isSpecificDebPackageInstalled(appCode);
+        if (isDebianPackageInstalled) {
+          return true;
+        }
+      }
+    }
+    if (currentEnviroment.installedSoftwareManagers
+        .contains(SOFTWARE_MANAGERS.FLATPAK)) {
+      for (String appCode in appCodes) {
+        bool isFlatpakInstalled = await isSpecificFlatpakInstalled(appCode);
+        if (isFlatpakInstalled) {
+          return true;
+        }
+      }
+    }
+    if (currentEnviroment.installedSoftwareManagers
+        .contains(SOFTWARE_MANAGERS.SNAP)) {
+      for (String appCode in appCodes) {
+        bool isSnapInstalled = await isSpecificSnapInstalled(appCode);
+        if (isSnapInstalled) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  static Future<bool> isDebPackageAvailable(String appCode) async {
+    String output = await runCommandAndGetStdout(
+        "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.APT)} show $appCode");
+    return output.contains("Package: ");
+  }
+
+  /// returns the source under which the Flatpak is available, otherwise empty String
+  static Future<String> isFlatpakAvailable(String appCode) async {
+    String output = await Linux.runCommandAndGetStdout(
+        "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.FLATPAK)} search $appCode");
+    if (output.split("\n").length == 2) {
+      return output.split("\t").last.replaceAll("\n", "");
+    }
+    return "";
+  }
+
+  static Future<bool> isSnapAvailable(String appCode) async {
+    String output = await Linux.runCommandAndGetStdout(
+        "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.SNAP)} info $appCode");
+    return output.split("\n").length > 5;
+  }
+
+  /// returns true, if at least one of the app codes is available
+  static Future<bool> areApplicationsAvailable(List<String> appCodes) async {
+    for (String appCode in appCodes) {
+      bool available = await isDebPackageAvailable(appCode);
+      if (available) {
+        return true;
+      }
+      available = await isSnapAvailable(appCode);
+      if (available) {
+        return true;
+      }
+      String repo = await isFlatpakAvailable(appCode);
+      if (repo != "") {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /// If [installed] == false, it will be ensured that the app is not installed on the system
+  /// If [installed] == true, it will be ensured that the app will be installed on the system
+  ///
+  /// Tries to install at least one appCode in [appCodes] or tries to remove all appCodes
+  static void ensureApplicationInstallation(List<String> appCodes,
+      {bool installed = true}) async {
+    bool initial = await areApplicationsInstalled(appCodes);
+    print("App: $appCodes initial: $initial installed: $installed");
+    if (installed && !initial) {
+      installApplications(appCodes);
+    } else if (!installed && initial) {
+      removeApplications(appCodes);
+    }
   }
 
   static void openWebbrowserSeach(String searchterm) {

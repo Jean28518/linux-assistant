@@ -280,9 +280,11 @@ class MintYButtonNavigate extends StatelessWidget {
 
 class MintYButtonNext extends StatelessWidget {
   late Widget route;
+  late VoidCallback? onPressed;
 
-  MintYButtonNext({required Widget route, Key? key}) : super(key: key) {
+  MintYButtonNext({required Widget route, VoidCallback? onPressed, Key? key}) {
     this.route = route;
+    this.onPressed = onPressed;
   }
 
   @override
@@ -294,12 +296,11 @@ class MintYButtonNext extends StatelessWidget {
       ),
       color: MintY.currentColor,
       onPressed: () {
-        if (route != null) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => route),
-          );
-        }
+        onPressed?.call();
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => route),
+        );
       },
     );
   }
