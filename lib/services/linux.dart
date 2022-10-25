@@ -185,8 +185,11 @@ class Linux {
     }
   }
 
-  // Could also return true, if only a part of an application id is found in the output.
   static Future<bool> isSpecificFlatpakInstalled(String appCode) async {
+    // Only accept appCodes with two '.' in it. Example: 'com.example.app'
+    if (".".allMatches(appCode).length != 2) {
+      return false;
+    }
     String flatpakList = await runCommandAndGetStdout(
         "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.FLATPAK)} list --columns=application");
     return flatpakList.toLowerCase().contains(appCode.toLowerCase());

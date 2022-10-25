@@ -4,51 +4,147 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:linux_assistant/layouts/after_installation/automatic_configuration_entry.dart';
 import 'package:linux_assistant/layouts/mintY.dart';
 import 'package:linux_assistant/layouts/system_icon.dart';
+import 'package:linux_assistant/services/after_installation_service.dart';
 import 'package:linux_assistant/services/icon_loader.dart';
+import 'package:linux_assistant/services/linux.dart';
 import 'package:linux_assistant/services/main_search_loader.dart';
 
 class AfterInstallationCommunicationSoftwareSelection extends StatelessWidget {
-  const AfterInstallationCommunicationSoftwareSelection({super.key});
+  AfterInstallationCommunicationSoftwareSelection({super.key});
+
+  static Future<bool> thunderbirdInstalled =
+      Linux.areApplicationsInstalled(["thunderbird"]);
+  static Future<bool> jitsiMeetInstalled =
+      Linux.areApplicationsInstalled(["org.jitsi.jitsi-meet"]);
+  static Future<bool> elementInstalled =
+      Linux.areApplicationsInstalled(["im.riot.Riot", "element-desktop"]);
+  static Future<bool> discordInstalled =
+      Linux.areApplicationsInstalled(["com.discordapp.Discord", "discord"]);
+  static Future<bool> zoomInstalled =
+      Linux.areApplicationsInstalled(["us.zoom.Zoom", "zoom-client"]);
+
+  /// Here the snap is preferred, because it is offically supported by Microsoft.
+  static Future<bool> microsoftTeamsInstalled =
+      Linux.areApplicationsInstalled(["teams", "com.microsoft.Teams"]);
 
   @override
   Widget build(BuildContext context) {
     const double padding = 20;
     List<Widget> content = [
-      MintYSelectableCardWithIcon(
-        icon: const SystemIcon(iconString: "thunderbird", iconSize: 150),
-        title: "Thunderbird",
-        text: "Open Source E-Mail Client from Mozilla.",
-        selected: true,
+      FutureBuilder<bool>(
+        future: thunderbirdInstalled,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            AfterInstallationService.thunderbird =
+                snapshot.data.toString() == 'true';
+            return MintYSelectableCardWithIcon(
+                icon:
+                    const SystemIcon(iconString: "thunderbird", iconSize: 150),
+                title: "Thunderbird",
+                text: "Open Source E-Mail Client from Mozilla.",
+                selected: snapshot.data.toString() == 'true',
+                onPressed: () {
+                  AfterInstallationService.thunderbird =
+                      !AfterInstallationService.thunderbird;
+                });
+          }
+          return Center(child: MintYProgressIndicatorCircle());
+        },
       ),
-      MintYSelectableCardWithIcon(
-        icon: const SystemIcon(iconString: "jitsi", iconSize: 150),
-        title: "Jitsi Meet",
-        text: "Open Source video conference tool.",
-        selected: false,
+      FutureBuilder<bool>(
+        future: jitsiMeetInstalled,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            AfterInstallationService.jitsiMeet =
+                snapshot.data.toString() == 'true';
+            return MintYSelectableCardWithIcon(
+                icon: const SystemIcon(iconString: "jitsi", iconSize: 150),
+                title: "Jitsi Meet",
+                text: "Open Source video conference tool.",
+                selected: snapshot.data.toString() == 'true',
+                onPressed: () {
+                  AfterInstallationService.jitsiMeet =
+                      !AfterInstallationService.jitsiMeet;
+                });
+          }
+          return Center(child: MintYProgressIndicatorCircle());
+        },
       ),
-      MintYSelectableCardWithIcon(
-        icon: const SystemIcon(iconString: "element", iconSize: 150),
-        title: "Element",
-        text: "Open Source messaging tool based on matrix protocol.",
-        selected: false,
+      FutureBuilder<bool>(
+        future: elementInstalled,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            AfterInstallationService.element =
+                snapshot.data.toString() == 'true';
+            return MintYSelectableCardWithIcon(
+                icon: const SystemIcon(iconString: "element", iconSize: 150),
+                title: "Element",
+                text: "Open Source messaging tool based on matrix protocol.",
+                selected: snapshot.data.toString() == 'true',
+                onPressed: () {
+                  AfterInstallationService.element =
+                      !AfterInstallationService.element;
+                });
+          }
+          return Center(child: MintYProgressIndicatorCircle());
+        },
       ),
-      MintYSelectableCardWithIcon(
-        icon: const SystemIcon(iconString: "discord", iconSize: 150),
-        title: "Discord",
-        text: "Proprietary community chat software",
-        selected: false,
+      FutureBuilder<bool>(
+        future: discordInstalled,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            AfterInstallationService.discord =
+                snapshot.data.toString() == 'true';
+            return MintYSelectableCardWithIcon(
+                icon: const SystemIcon(iconString: "discord", iconSize: 150),
+                title: "Discord",
+                text: "Proprietary community chat software",
+                selected: snapshot.data.toString() == 'true',
+                onPressed: () {
+                  AfterInstallationService.discord =
+                      !AfterInstallationService.discord;
+                });
+          }
+          return Center(child: MintYProgressIndicatorCircle());
+        },
       ),
-      MintYSelectableCardWithIcon(
-        icon: const SystemIcon(iconString: "zoom-zoom", iconSize: 150),
-        title: "Zoom",
-        text: "Proprietary conference software.",
-        selected: false,
+      FutureBuilder<bool>(
+        future: zoomInstalled,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            AfterInstallationService.zoom = snapshot.data.toString() == 'true';
+            return MintYSelectableCardWithIcon(
+                icon: const SystemIcon(iconString: "zoom-zoom", iconSize: 150),
+                title: "Zoom",
+                text: "Proprietary conference software.",
+                selected: snapshot.data.toString() == 'true',
+                onPressed: () {
+                  AfterInstallationService.zoom =
+                      !AfterInstallationService.zoom;
+                });
+          }
+          return Center(child: MintYProgressIndicatorCircle());
+        },
       ),
-      MintYSelectableCardWithIcon(
-        icon: const SystemIcon(iconString: "microsoft-teams", iconSize: 150),
-        title: "Microsoft Teams",
-        text: "Proprietary team communication software.",
-        selected: false,
+      FutureBuilder<bool>(
+        future: microsoftTeamsInstalled,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            AfterInstallationService.microsoftTeams =
+                snapshot.data.toString() == 'true';
+            return MintYSelectableCardWithIcon(
+                icon: const SystemIcon(
+                    iconString: "microsoft-teams", iconSize: 150),
+                title: "Microsoft Teams",
+                text: "Proprietary team communication software.",
+                selected: snapshot.data.toString() == 'true',
+                onPressed: () {
+                  AfterInstallationService.microsoftTeams =
+                      !AfterInstallationService.microsoftTeams;
+                });
+          }
+          return Center(child: MintYProgressIndicatorCircle());
+        },
       ),
     ];
 
@@ -78,7 +174,11 @@ class AfterInstallationCommunicationSoftwareSelection extends StatelessWidget {
           ),
         ),
         bottom: MintYButtonNext(
-            route: const AfterInstallationAutomaticConfigurationEntry()),
+          route: const AfterInstallationAutomaticConfigurationEntry(),
+          onPressed: () {
+            AfterInstallationService.applyCommunicationSituation();
+          },
+        ),
       ),
     );
   }
