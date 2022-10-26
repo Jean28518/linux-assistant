@@ -546,4 +546,69 @@ class Linux {
     returnValue = "${returnValue}/";
     return returnValue;
   }
+
+  static Future<String> installMultimediaCodecs() async {
+    switch (currentEnviroment.distribution) {
+      case DISTROS.DEBIAN:
+        // await Linux.runCommandAndGetStdout(
+        //     "pkexec /usr/bin/apt-add-repository contrib");
+        // await Linux.runCommandAndGetStdout(
+        //     "pkexec ${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.APT)} update");
+        // await Linux.runCommandAndGetStdout(
+        //     "pkexec ${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.APT)} install vlc libavcodec-extra libdvd-pkg -y",
+        //     environment: {"DEBIAN_FRONTEND": "noninteractive"});
+
+        // Currently do not add other repositories without warning, so we won't install libdvd-pkg
+        return Linux.runCommandAndGetStdout(
+            "pkexec ${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.APT)} install vlc libavcodec-extra -y",
+            environment: {"DEBIAN_FRONTEND": "noninteractive"});
+      case DISTROS.LINUX_MINT:
+        return Linux.runCommandAndGetStdout(
+            "pkexec ${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.APT)} install mint-meta-codecs -y",
+            environment: {"DEBIAN_FRONTEND": "noninteractive"});
+      case DISTROS.UBUNTU:
+        return Linux.runCommandAndGetStdout(
+            "pkexec ${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.APT)} install ubuntu-restricted-extras -y",
+            environment: {"DEBIAN_FRONTEND": "noninteractive"});
+      default:
+        return "";
+    }
+  }
+
+  /// Python script has to be in the additional/python folder.
+  /// Example: [filename] = example.py
+  static Future<String> runPythonScript(String filename,
+      {bool root = false}) async {
+    if (root) {
+      return runCommandWithCustomArgumentsAndGetStdOut("pkexec",
+          ["python3", "${executableFolder}additional/python/$filename"]);
+    }
+    return runCommandWithCustomArgumentsAndGetStdOut(
+        "python3", ["${executableFolder}additional/python/$filename"]);
+  }
+
+  static Future<bool> isNvidiaCardInstalledOnSystem() async {
+    String output = await runCommandAndGetStdout("lshw");
+    output = output.toLowerCase();
+    return output.contains("nvidia");
+  }
+
+  static void applyAutomaticConfigurationAfterInstallation(
+      {bool installMultimediaCodecs_ = true,
+      bool setupAutomaticSnapshots = true,
+      bool installNvidiaDriversAutomatically = true,
+      bool setupAutomaticUpdates = true}) async {
+    if (installMultimediaCodecs_) {
+      await installMultimediaCodecs();
+    }
+    if (setupAutomaticSnapshots) {
+      await runPythonScript("setup_automatic_snapshots.py", root: true);
+    }
+    if (installNvidiaDriversAutomatically) {
+      await runPythonScript("install_nvidia_driver.py", root: true);
+    }
+    if (setupAutomaticUpdates) {
+      await runPythonScript("setup_automatic_updates.py.py", root: true);
+    }
+  }
 }

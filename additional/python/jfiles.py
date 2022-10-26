@@ -2,6 +2,7 @@
 # License: Apache License 2.0
 
 import gettext
+import json
 import os
 
 def does_file_exist(file_path):
@@ -177,3 +178,10 @@ def get_string_of_file(file_path):
 
 def copy_file(source_path, destination_path):
     os.system("cp '" + source_path + "' '" + destination_path + "'")
+
+def get_dict_of_json_file(file_path):
+    return json.load(open(file_path, 'r'))
+
+## Overwrites the existent file
+def write_dict_to_json_file(dict, file_path):
+    return json.dump(dict, open(file_path, 'w'), ensure_ascii=False, indent=2)

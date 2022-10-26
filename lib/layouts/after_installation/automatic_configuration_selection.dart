@@ -1,11 +1,17 @@
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/widgets.dart';
 import 'package:linux_assistant/layouts/mintY.dart';
 import 'package:linux_assistant/layouts/system_icon.dart';
+import 'package:linux_assistant/services/after_installation_service.dart';
+import 'package:linux_assistant/services/linux.dart';
 import 'package:linux_assistant/services/main_search_loader.dart';
 
 class AfterInstallationAutomaticConfiguration extends StatelessWidget {
-  const AfterInstallationAutomaticConfiguration({Key? key}) : super(key: key);
+  AfterInstallationAutomaticConfiguration({Key? key}) : super(key: key);
+
+  Future<bool> isNvidiaCardInstalledOnSystem =
+      Linux.isNvidiaCardInstalledOnSystem();
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +23,12 @@ class AfterInstallationAutomaticConfiguration extends StatelessWidget {
             iconString: "multimedia",
             iconSize: 128,
           ),
-          title: "Multimedia Codecs Installation",
+          title: "Install Multimedia Codecs",
           selected: true,
+          onPressed: () {
+            AfterInstallationService.installMultimediaCodecs =
+                !AfterInstallationService.installMultimediaCodecs;
+          },
           text:
               "Additional proprietary multimedia codes for playing videos and music.",
         ),
@@ -29,17 +39,38 @@ class AfterInstallationAutomaticConfiguration extends StatelessWidget {
           ),
           title: "Automatic Snapshots",
           selected: true,
+          onPressed: () {
+            AfterInstallationService.setupAutomaticSnapshots =
+                !AfterInstallationService.setupAutomaticSnapshots;
+          },
           text:
-              "Configure automatic snapshots with timeshift. Timeshift will be configured to 2 monthly automatic snapshots on your root partition.",
+              "Configure automatic snapshots with timeshift. Timeshift will be configured to 2 monthly automatic snapshots on your root partition. It will not backup your personal files.",
         ),
-        MintYSelectableEntryWithIconHorizontal(
-          icon: SystemIcon(
-            iconString: "cs-drivers",
-            iconSize: 128,
-          ),
-          title: "Automatic Driver Installation",
-          selected: true,
-          text: "All recommended drivers will be installed.",
+        FutureBuilder<bool>(
+          future: isNvidiaCardInstalledOnSystem,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              if (snapshot.data.toString() == "true") {
+                AfterInstallationService.installNvidiaDrivers = true;
+                return MintYSelectableEntryWithIconHorizontal(
+                  icon: SystemIcon(
+                    iconString: "cs-drivers",
+                    iconSize: 128,
+                  ),
+                  title: "Automatic Nividia-Driver installation",
+                  selected: true,
+                  onPressed: () {
+                    AfterInstallationService.installNvidiaDrivers =
+                        !AfterInstallationService.installNvidiaDrivers;
+                  },
+                  text: "All recommended drivers will be installed.",
+                );
+              } else {
+                AfterInstallationService.installNvidiaDrivers = false;
+              }
+            }
+            return Container();
+          },
         ),
         MintYSelectableEntryWithIconHorizontal(
           icon: SystemIcon(
@@ -48,11 +79,19 @@ class AfterInstallationAutomaticConfiguration extends StatelessWidget {
           ),
           title: "Automatic Update Manager Configuration",
           selected: true,
-          text:
-              "Automatic updates and maintainance will be configured. Also the fastest mirror server will be choosen for faster downloads.",
+          onPressed: () {
+            AfterInstallationService.setupAutomaticUpdates =
+                !AfterInstallationService.setupAutomaticUpdates;
+          },
+          text: "Automatic updates and maintainance will be configured.",
         ),
       ],
-      bottom: MintYButtonNext(route: const MainSearchLoader()),
+      bottom: MintYButtonNext(
+        route: const MainSearchLoader(),
+        onPressed: () {
+          AfterInstallationService.applyAutomaticConfiguration();
+        },
+      ),
     );
   }
 }

@@ -55,7 +55,7 @@ class AfterInstallationAutomaticConfigurationEntry extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          const AfterInstallationAutomaticConfiguration()),
+                          AfterInstallationAutomaticConfiguration()),
                 );
               },
             ),

@@ -16,6 +16,12 @@ class AfterInstallationService {
   static bool zoom = false;
   static bool microsoftTeams = false;
 
+  static bool installMultimediaCodecs = true;
+  static bool setupAutomaticSnapshots = true;
+  // This will only be automatically set to true, if nvidia card is installed on system:
+  static bool installNvidiaDrivers = false;
+  static bool setupAutomaticUpdates = true;
+
   static void applyCurrentBrowserSituation() async {
     Linux.ensureApplicationInstallation(["firefox"], installed: firefox);
     Linux.ensureApplicationInstallation(["chromium"], installed: chromium);
@@ -49,5 +55,13 @@ class AfterInstallationService {
     /// Here the snap is preferred, because it is offically supported by Microsoft.
     Linux.ensureApplicationInstallation(["teams", "com.microsoft.Teams"],
         installed: microsoftTeams);
+  }
+
+  static void applyAutomaticConfiguration() async {
+    Linux.applyAutomaticConfigurationAfterInstallation(
+        installMultimediaCodecs_: installMultimediaCodecs,
+        installNvidiaDriversAutomatically: installNvidiaDrivers,
+        setupAutomaticSnapshots: setupAutomaticSnapshots,
+        setupAutomaticUpdates: setupAutomaticUpdates);
   }
 }

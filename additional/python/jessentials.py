@@ -8,6 +8,8 @@ import subprocess
 import sys
 import shlex
 
+import jfiles
+
 def ensure_root_privileges():
     if not is_script_running_as_root():
         fail("This script must run as root! Try adding sudo before your command.", errno.EACCES)
@@ -153,3 +155,6 @@ def add_arrays(arr1, arr2):
     for e in arr2:
         arr1.append(e)
     return arr1
+
+def get_current_distribution():
+    return jfiles.get_value_from_file("/etc/os-release", "ID", "unkown")
