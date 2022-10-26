@@ -13,7 +13,7 @@ class AfterInstallationBrowserSelection extends StatelessWidget {
   AfterInstallationBrowserSelection({super.key});
 
   static Future<bool> firefoxInstalled =
-      Linux.areApplicationsInstalled(["firefox"]);
+      Linux.areApplicationsInstalled(["firefox", "firefox-esr"]);
   static Future<bool> chromiumInstalled =
       Linux.areApplicationsInstalled(["chromium"]);
   static Future<bool> googleChromeStableInstalled =

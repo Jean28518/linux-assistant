@@ -6,6 +6,8 @@ print("Enabling automaitc snapshots...")
 jessentials.ensure_root_privileges()
 jessentials.run_command("apt update", enviroment={'DEBIAN_FRONTEND': 'noninteractive'})
 jessentials.run_command("apt install -y timeshift", enviroment={'DEBIAN_FRONTEND': 'noninteractive'})
+if not jfiles.does_file_exist("/etc/timeshift/timeshift.json"):
+    jfiles.copy_file("/etc/timeshift/default.json", "/etc/timeshift/timeshift.json")
 timeshift_config = jfiles.get_dict_of_json_file("/etc/timeshift/timeshift.json")
 print(timeshift_config)
 fstab_line = jfiles.get_value_from_file("/etc/fstab", "UUID").strip()

@@ -23,7 +23,8 @@ class AfterInstallationService {
   static bool setupAutomaticUpdates = true;
 
   static void applyCurrentBrowserSituation() async {
-    Linux.ensureApplicationInstallation(["firefox"], installed: firefox);
+    Linux.ensureApplicationInstallation(["firefox", "firefox-esr"],
+        installed: firefox);
     Linux.ensureApplicationInstallation(["chromium"], installed: chromium);
     Linux.ensureApplicationInstallation(
         ["google-chrome-stable", "com.google.Chrome"],
