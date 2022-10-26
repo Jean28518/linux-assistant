@@ -3,12 +3,14 @@ Distribution indenpendent tool for everything, a linux desktop user needs. Writt
 
 ## Requirements
 ```bash
-sudo apt-get install keybinder-3.0
+sudo apt install keybinder-3.0
+sudo apt install gir1.2-keybinder-3.0 # For debian
 ```
 
 ## Build
 ```bash
-sudo apt-get install keybinder-3.0 snapd
+# Install keybinder, see requirements
+sudo apt install snapd
 sudo snap install flutter --classic
 flutter doctor # If command not found: Reboot and try again
 flutter build linux
