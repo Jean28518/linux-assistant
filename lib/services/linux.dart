@@ -611,4 +611,20 @@ class Linux {
       await runPythonScript("setup_automatic_updates.py.py", root: true);
     }
   }
+
+  static Future<List<ActionEntry>> getFavoriteFiles() async {
+    String output = await runPythonScript("get_favorite_files.py");
+    output = output.trim();
+    List<String> list = output.split("\n");
+
+    List<ActionEntry> actionEntries = [];
+    for (String e in list) {
+      String fileName = e.split("/").last;
+      ActionEntry actionEntry = ActionEntry(
+          name: fileName, description: "Open " + e, action: "openfile:" + e);
+      actionEntry.priority = -5;
+      actionEntries.add(actionEntry);
+    }
+    return actionEntries;
+  }
 }

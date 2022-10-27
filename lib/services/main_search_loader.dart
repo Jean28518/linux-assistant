@@ -27,6 +27,8 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
     returnValue.entries.addAll(applicationEntries);
     var recentFiles = await Linux.getRecentFiles();
     returnValue.entries.addAll(recentFiles);
+    var favoriteFiles = await Linux.getFavoriteFiles();
+    returnValue.entries.addAll(favoriteFiles);
     return returnValue;
   }
 
