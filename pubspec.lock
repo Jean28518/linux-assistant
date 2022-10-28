@@ -37,7 +37,7 @@ packages:
     source: hosted
     version: "1.16.0"
   crypto:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: crypto
       url: "https://pub.dartlang.org"

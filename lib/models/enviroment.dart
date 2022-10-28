@@ -12,6 +12,9 @@ class Environment {
   List<SOFTWARE_MANAGERS> installedSoftwareManagers = [];
   var preferredSoftwareManager = SOFTWARE_MANAGERS.APT;
 
+  /// POSIX User ID.
+  var currentUserId = 1000;
+
   Map<String, dynamic> toJson() {
     return {
       'distribution': distribution.toString(),
@@ -21,6 +24,7 @@ class Environment {
       'language': language,
       'installedSoftwareManagers': installedSoftwareManagers.join(";"),
       'preferredSoftwareManager': preferredSoftwareManager.toString(),
+      'currentUserId': currentUserId
     };
   }
 
@@ -37,6 +41,7 @@ class Environment {
     }
     preferredSoftwareManager =
         getSoftwareManagerEnumOfString(input["preferredSoftwareManager"]);
+    currentUserId = input['currentUserId'];
   }
 
   Environment();

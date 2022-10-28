@@ -7,10 +7,16 @@ import 'package:linux_assistant/enums/distros.dart';
 import 'package:linux_assistant/enums/softwareManagers.dart';
 import 'package:linux_assistant/models/action_entry.dart';
 import 'package:linux_assistant/models/enviroment.dart';
+import 'package:linux_assistant/models/linux_command.dart';
+import 'package:linux_assistant/services/hashing.dart';
 
 class Linux {
   static Environment currentEnviroment = Environment();
   static String executableFolder = "";
+
+  /// Commands in it can be run at once by [Linux.executeCommandQueue()]
+  /// or by opening the page "RunCommandQueue"
+  static List<LinuxCommand> commandQueue = [];
 
   static void runCommand(String command,
       {Map<String, String>? environment}) async {
@@ -49,12 +55,11 @@ class Linux {
         arguments.toString());
     var result = await Process.run(exec, arguments,
         runInShell: true, environment: environment);
-
     if (result.stderr is String && !result.stderr.toString().isEmpty) {
       print(result.stderr);
       if (getErrorMessages) {
-        String returnValue = result.stderr;
-        returnValue += result.stdout;
+        String returnValue = result.stdout;
+        returnValue += result.stderr;
         return returnValue;
       }
     }
@@ -67,10 +72,12 @@ class Linux {
     String exec = arguments.removeAt(0);
     var result = await Process.run(exec, arguments,
         runInShell: true, environment: environment);
+    String output = result.stdout.toString() + "\n";
     if (result.stderr is String && !result.stderr.toString().isEmpty) {
       print(result.stderr);
+      output += result.stderr.toString();
     }
-    return (result.stdout);
+    return output;
   }
 
   static String getHomeDirectory() {
@@ -131,7 +138,8 @@ class Linux {
 
   /// Tries to install one of the appCodes. Stops after one was successfully found.
   /// First elements of the list will be priorized.
-  static void installApplications(List<String> appCodes,
+  /// Doesn't run the command instantly, only puts the commands in to [Linux.commandQueue].
+  static Future<void> installApplications(List<String> appCodes,
       {SOFTWARE_MANAGERS? preferredSoftwareManager}) async {
     preferredSoftwareManager ??= currentEnviroment.preferredSoftwareManager;
 
@@ -152,9 +160,14 @@ class Linux {
             continue;
           }
 
-          runCommand(
-              "pkexec ${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.APT)} install $appCode -y",
-              environment: {"DEBIAN_FRONTEND": "noninteractive"});
+          commandQueue.add(
+            LinuxCommand(
+              command:
+                  "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.APT)} install $appCode -y",
+              userId: 0,
+              environment: {"DEBIAN_FRONTEND": "noninteractive"},
+            ),
+          );
           return;
         }
 
@@ -165,8 +178,13 @@ class Linux {
             continue;
           }
 
-          runCommand(
-              "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.FLATPAK)} install $repo $appCode --system -y --noninteractive");
+          commandQueue.add(
+            LinuxCommand(
+              command:
+                  "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.FLATPAK)} install $repo $appCode --system -y --noninteractive",
+              userId: currentEnviroment.currentUserId,
+            ),
+          );
           return;
         }
 
@@ -177,8 +195,14 @@ class Linux {
             continue;
           }
 
-          runCommand(
-              "pkexec ${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.SNAP)} install $appCode");
+          commandQueue.add(
+            LinuxCommand(
+              command:
+                  "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.SNAP)} install $appCode",
+              userId: 0,
+              environment: {"DEBIAN_FRONTEND": "noninteractive"},
+            ),
+          );
           return;
         }
       }
@@ -208,7 +232,7 @@ class Linux {
 
   /// Tries to uninstall all appCodes.
   /// If you don't specify the softwareManager it will be tried to remove the application with all Software Managers
-  static void removeApplications(List<String> appCodes,
+  static Future<void> removeApplications(List<String> appCodes,
       {SOFTWARE_MANAGERS? softwareManager}) async {
     for (String appCode in appCodes) {
       // Deb Package
@@ -217,9 +241,14 @@ class Linux {
       if ((softwareManager == null ||
               softwareManager == SOFTWARE_MANAGERS.APT) &&
           isDebianPackageInstalled) {
-        Linux.runCommand(
-            "pkexec ${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.APT)} remove $appCode -y",
-            environment: {"DEBIAN_FRONTEND": "noninteractive"});
+        commandQueue.add(
+          LinuxCommand(
+            userId: 0,
+            command:
+                "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.APT)} remove $appCode -y",
+            environment: {"DEBIAN_FRONTEND": "noninteractive"},
+          ),
+        );
       }
 
       // Flatpak
@@ -228,9 +257,13 @@ class Linux {
       if ((softwareManager == null ||
               softwareManager == SOFTWARE_MANAGERS.FLATPAK) &&
           isFlatpakInstalled) {
-        print("HUHUU");
-        Linux.runCommand(
-            "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.FLATPAK)} remove $appCode -y --noninteractive");
+        commandQueue.add(
+          LinuxCommand(
+            userId: currentEnviroment.currentUserId,
+            command:
+                "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.FLATPAK)} remove $appCode -y --noninteractive",
+          ),
+        );
       }
 
       // Snap
@@ -238,8 +271,13 @@ class Linux {
       if ((softwareManager == null ||
               softwareManager == SOFTWARE_MANAGERS.SNAP) &&
           isSnapInstalled) {
-        Linux.runCommand(
-            "pkexec ${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.SNAP)} remove $appCode -y");
+        commandQueue.add(
+          LinuxCommand(
+            userId: 0,
+            command:
+                "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.SNAP)} remove $appCode",
+          ),
+        );
       }
     }
   }
@@ -322,14 +360,15 @@ class Linux {
   /// If [installed] == true, it will be ensured that the app will be installed on the system
   ///
   /// Tries to install at least one appCode in [appCodes] or tries to remove all appCodes
-  static void ensureApplicationInstallation(List<String> appCodes,
+  /// Doesn't run the command instantly, only puts the commands in to the commandQueue.
+  static Future<void> ensureApplicationInstallation(List<String> appCodes,
       {bool installed = true}) async {
     bool initial = await areApplicationsInstalled(appCodes);
     print("App: $appCodes initial: $initial installed: $installed");
     if (installed && !initial) {
-      installApplications(appCodes);
+      await installApplications(appCodes);
     } else if (!installed && initial) {
-      removeApplications(appCodes);
+      await removeApplications(appCodes);
     }
   }
 
@@ -510,6 +549,10 @@ class Linux {
       }
     }
 
+    // Get user id
+    String output = await Linux.getUserIdOfCurrentUser();
+    newEnvironment.currentUserId = int.parse(output);
+
     return newEnvironment;
   }
 
@@ -547,7 +590,7 @@ class Linux {
     return returnValue;
   }
 
-  static Future<String> installMultimediaCodecs() async {
+  static void installMultimediaCodecs() async {
     switch (currentEnviroment.distribution) {
       case DISTROS.DEBIAN:
         // await Linux.runCommandAndGetStdout(
@@ -559,32 +602,49 @@ class Linux {
         //     environment: {"DEBIAN_FRONTEND": "noninteractive"});
 
         // Currently do not add other repositories without warning, so we won't install libdvd-pkg
-        return Linux.runCommandAndGetStdout(
-            "pkexec ${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.APT)} install vlc libavcodec-extra -y",
-            environment: {"DEBIAN_FRONTEND": "noninteractive"});
+        commandQueue.add(LinuxCommand(
+            userId: 0,
+            command:
+                "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.APT)} install vlc libavcodec-extra -y",
+            environment: {"DEBIAN_FRONTEND": "noninteractive"}));
+        break;
       case DISTROS.LINUX_MINT:
-        return Linux.runCommandAndGetStdout(
-            "pkexec ${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.APT)} install mint-meta-codecs -y",
-            environment: {"DEBIAN_FRONTEND": "noninteractive"});
+        commandQueue.add(LinuxCommand(
+            userId: 0,
+            command:
+                "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.APT)} install mint-meta-codecs -y",
+            environment: {"DEBIAN_FRONTEND": "noninteractive"}));
+        break;
       case DISTROS.UBUNTU:
-        return Linux.runCommandAndGetStdout(
-            "pkexec ${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.APT)} install ubuntu-restricted-extras -y",
-            environment: {"DEBIAN_FRONTEND": "noninteractive"});
+        commandQueue.add(LinuxCommand(
+            userId: 0,
+            command:
+                "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.APT)} install ubuntu-restricted-extras -y",
+            environment: {"DEBIAN_FRONTEND": "noninteractive"}));
+        break;
+
       default:
-        return "";
     }
   }
 
   /// Python script has to be in the additional/python folder.
   /// Example: [filename] = example.py
   static Future<String> runPythonScript(String filename,
-      {bool root = false}) async {
+      {bool root = false, List<String> arguments = const []}) async {
+    List<String> commandList = [];
+    String executable = "";
     if (root) {
-      return runCommandWithCustomArgumentsAndGetStdOut("pkexec",
-          ["python3", "${executableFolder}additional/python/$filename"]);
+      executable = "pkexec";
+      commandList.add("/usr/bin/python3");
+    } else {
+      executable = "/usr/bin/python3";
     }
-    return runCommandWithCustomArgumentsAndGetStdOut(
-        "python3", ["${executableFolder}additional/python/$filename"]);
+    commandList.add("${executableFolder}additional/python/$filename");
+
+    commandList.addAll(arguments);
+
+    return runCommandWithCustomArgumentsAndGetStdOut(executable, commandList,
+        getErrorMessages: true);
   }
 
   static Future<bool> isNvidiaCardInstalledOnSystem() async {
@@ -593,22 +653,32 @@ class Linux {
     return output.contains("nvidia");
   }
 
+  /// Puts all commands into [Linux.commandQueue]
   static void applyAutomaticConfigurationAfterInstallation(
       {bool installMultimediaCodecs_ = true,
       bool setupAutomaticSnapshots = true,
       bool installNvidiaDriversAutomatically = true,
       bool setupAutomaticUpdates = true}) async {
     if (installMultimediaCodecs_) {
-      await installMultimediaCodecs();
+      installMultimediaCodecs();
     }
     if (setupAutomaticSnapshots) {
-      await runPythonScript("setup_automatic_snapshots.py", root: true);
+      commandQueue.add(LinuxCommand(
+          userId: 0,
+          command:
+              "python3 ${executableFolder}additional/python/setup_automatic_snapshots.py"));
     }
     if (installNvidiaDriversAutomatically) {
-      await runPythonScript("install_nvidia_driver.py", root: true);
+      commandQueue.add(LinuxCommand(
+          userId: 0,
+          command:
+              "python3 ${executableFolder}additional/python/install_nvidia_driver.py"));
     }
     if (setupAutomaticUpdates) {
-      await runPythonScript("setup_automatic_updates.py.py", root: true);
+      commandQueue.add(LinuxCommand(
+          userId: 0,
+          command:
+              "python3 ${executableFolder}additional/python/setup_automatic_updates.py"));
     }
   }
 
@@ -626,5 +696,38 @@ class Linux {
       actionEntries.add(actionEntry);
     }
     return actionEntries;
+  }
+
+  static Future<String> executeCommandQueue() async {
+    if (commandQueue.length == 0) {
+      return "No actions in queue.";
+    }
+
+    String string = "";
+    for (LinuxCommand command in commandQueue) {
+      String line = "\"${command.userId}\";\"${command.command}\";";
+      command.environment?.forEach((key, value) {
+        line += "\"$key='$value'\";";
+      });
+      string += "$line\n";
+    }
+
+    // Example of a line:
+    // "0";"apt update";"DEBIAN_NONINTERACTIVE='true'";
+    commandQueue.clear();
+
+    String checksum = Hashing.getMd5OfString(string);
+
+    File file = File('/tmp/linux_assistant_commands');
+    file.writeAsString(string);
+
+    String output = await runPythonScript("run_multiple_commands.py",
+        arguments: ["--md5=$checksum"], root: true);
+
+    return output;
+  }
+
+  static Future<String> getUserIdOfCurrentUser() {
+    return Linux.runCommandAndGetStdout("id -u");
   }
 }

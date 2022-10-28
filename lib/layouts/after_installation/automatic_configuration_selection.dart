@@ -2,6 +2,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
 import 'package:linux_assistant/layouts/mintY.dart';
+import 'package:linux_assistant/layouts/run_command_queue.dart';
 import 'package:linux_assistant/layouts/system_icon.dart';
 import 'package:linux_assistant/services/after_installation_service.dart';
 import 'package:linux_assistant/services/linux.dart';
@@ -87,7 +88,12 @@ class AfterInstallationAutomaticConfiguration extends StatelessWidget {
         ),
       ],
       bottom: MintYButtonNext(
-        route: const MainSearchLoader(),
+        route: RunCommandQueue(
+          title: "Welcome to your new system!",
+          message:
+              "Your system is setting up and applying your software configuration.\nThis process could take many minutes depending on what actions and software you selected...",
+          route: const MainSearchLoader(),
+        ),
         onPressed: () {
           AfterInstallationService.applyAutomaticConfiguration();
         },

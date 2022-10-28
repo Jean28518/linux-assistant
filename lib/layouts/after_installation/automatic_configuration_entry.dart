@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:linux_assistant/enums/distros.dart';
 import 'package:linux_assistant/layouts/after_installation/automatic_configuration_selection.dart';
 import 'package:linux_assistant/layouts/mintY.dart';
+import 'package:linux_assistant/layouts/run_command_queue.dart';
 import 'package:linux_assistant/services/linux.dart';
 import 'package:linux_assistant/services/main_search_loader.dart';
 
@@ -35,7 +36,13 @@ class AfterInstallationAutomaticConfigurationEntry extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const MainSearchLoader()),
+                    builder: (context) => RunCommandQueue(
+                      title: "Apply software configuration",
+                      message:
+                          "This process could take many minutes depending on what software configuration you selected...",
+                      route: const MainSearchLoader(),
+                    ),
+                  ),
                 );
               },
             ),

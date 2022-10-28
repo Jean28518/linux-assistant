@@ -22,16 +22,17 @@ class AfterInstallationService {
   static bool installNvidiaDrivers = false;
   static bool setupAutomaticUpdates = true;
 
-  static void applyCurrentBrowserSituation() async {
-    Linux.ensureApplicationInstallation(["firefox", "firefox-esr"],
+  static Future<void> applyCurrentBrowserSituation() async {
+    await Linux.ensureApplicationInstallation(["firefox", "firefox-esr"],
         installed: firefox);
-    Linux.ensureApplicationInstallation(["chromium"], installed: chromium);
-    Linux.ensureApplicationInstallation(
+    await Linux.ensureApplicationInstallation(["chromium"],
+        installed: chromium);
+    await Linux.ensureApplicationInstallation(
         ["google-chrome-stable", "com.google.Chrome"],
         installed: googleChrome);
   }
 
-  static void applyCurrentOfficeSituation() async {
+  static Future<void> applyCurrentOfficeSituation() async {
     Linux.ensureApplicationInstallation(["libreoffice-common"],
         installed: libreOffice);
     Linux.ensureApplicationInstallation(
@@ -41,7 +42,7 @@ class AfterInstallationService {
         installed: wpsOffice);
   }
 
-  static void applyCommunicationSituation() async {
+  static Future<void> applyCommunicationSituation() async {
     Linux.ensureApplicationInstallation(["thunderbird"],
         installed: thunderbird);
     Linux.ensureApplicationInstallation(["org.jitsi.jitsi-meet"],
@@ -58,7 +59,7 @@ class AfterInstallationService {
         installed: microsoftTeams);
   }
 
-  static void applyAutomaticConfiguration() async {
+  static void applyAutomaticConfiguration() {
     Linux.applyAutomaticConfigurationAfterInstallation(
         installMultimediaCodecs_: installMultimediaCodecs,
         installNvidiaDriversAutomatically: installNvidiaDrivers,

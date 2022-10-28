@@ -175,8 +175,8 @@ class AfterInstallationCommunicationSoftwareSelection extends StatelessWidget {
         ),
         bottom: MintYButtonNext(
           route: const AfterInstallationAutomaticConfigurationEntry(),
-          onPressed: () {
-            AfterInstallationService.applyCommunicationSituation();
+          onPressedFuture: () async {
+            await AfterInstallationService.applyCommunicationSituation();
           },
         ),
       ),

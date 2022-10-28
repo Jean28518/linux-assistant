@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class MintY {
@@ -280,12 +281,16 @@ class MintYButtonNavigate extends StatelessWidget {
 
 class MintYButtonNext extends StatelessWidget {
   late Widget route;
+
+  /// will be called before the button navigates
   late VoidCallback? onPressed;
 
-  MintYButtonNext({required Widget route, VoidCallback? onPressed, Key? key}) {
-    this.route = route;
-    this.onPressed = onPressed;
-  }
+  /// will be called before the button navigates
+  late AsyncCallback? onPressedFuture;
+
+  MintYButtonNext(
+      {required this.route, this.onPressed, this.onPressedFuture, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -295,8 +300,9 @@ class MintYButtonNext extends StatelessWidget {
         style: MintY.heading2White,
       ),
       color: MintY.currentColor,
-      onPressed: () {
+      onPressed: () async {
         onPressed?.call();
+        await onPressedFuture?.call();
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => route),
@@ -616,10 +622,12 @@ class MintYProgressIndicatorCircle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: CircularProgressIndicator(color: MintY.currentColor),
-      height: 80,
-      width: 80,
+    return Center(
+      child: Container(
+        child: CircularProgressIndicator(color: MintY.currentColor),
+        height: 80,
+        width: 80,
+      ),
     );
   }
 }
