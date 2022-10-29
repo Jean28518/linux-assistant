@@ -37,6 +37,9 @@ class _MainSearchState extends State<MainSearch> {
 
   var selectedIndex = 0;
   var selectedIndexInView = 0;
+
+  /// Only describes the technical possible amount of visible entries depending
+  /// at the screen size
   late int visibleEntries;
 
   final searchBarController = TextEditingController();
@@ -50,7 +53,7 @@ class _MainSearchState extends State<MainSearch> {
   Widget build(BuildContext context) {
     // Complete height of a search entry is 64 + 8 (padding)
     visibleEntries =
-        ((MediaQuery.of(context).size.height - 40 - 60) / 72).round();
+        ((MediaQuery.of(context).size.height - 40 - 70) / 72).round();
     return Scaffold(
       body: Container(
         padding: EdgeInsets.all(20),
