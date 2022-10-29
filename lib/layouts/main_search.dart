@@ -55,54 +55,92 @@ class _MainSearchState extends State<MainSearch> {
     visibleEntries =
         ((MediaQuery.of(context).size.height - 40 - 70) / 72).round();
     return Scaffold(
-      body: Container(
-        padding: EdgeInsets.all(20),
-        child: Center(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _foundEntries.length == 0
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      DiskSpace(),
-                      SizedBox(width: 10),
-                      MemoryStatus(),
-                    ],
-                  )
-                : Container(),
-            SizedBox(
-              height: 10,
-            ),
-            TextField(
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: "Enter a search term..."),
-              controller: searchBarController,
-              autofocus: true,
-              onChanged: (value) => _runFilter(value),
-              onSubmitted: (value) {
-                if (_foundEntries.length > 0) {
-                  ActionHandler.handleActionEntry(
-                      _foundEntries[selectedIndex], clear, context);
-                }
-              },
-            ),
-            _foundEntries.length == 0
-                ? RecommendationCard()
-                : Expanded(
-                    child: ListView(
-                      controller: scrollController,
-                      children: List.generate(
-                          _foundEntries.length,
-                          (index) => ActionEntryCard(
-                              actionEntry: _foundEntries[index],
-                              callback: clear,
-                              selected: selectedIndex == index)),
+      body: Column(
+        children: [
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.all(20),
+              child: Center(
+                  child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _foundEntries.isEmpty
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            DiskSpace(),
+                            SizedBox(width: 16),
+                            MemoryStatus(),
+                          ],
+                        )
+                      : Container(),
+                  _foundEntries.isEmpty
+                      ? SizedBox(
+                          height: 16,
+                        )
+                      : Container(),
+                  Container(
+                    width: MediaQuery.of(context).size.width > 750
+                        ? 600
+                        : MediaQuery.of(context).size.width - 50,
+                    child: TextField(
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.only(
+                            bottom: -20.0, left: 8, right: 3),
+                        border: const OutlineInputBorder(),
+                        hintText: "Enter a search term...",
+                        suffix: _foundEntries.isEmpty
+                            ? Container()
+                            : IconButton(
+                                iconSize: 14,
+                                splashRadius: 14,
+                                icon: Icon(Icons.clear),
+                                onPressed: () => clear(minimze: false),
+                                padding: EdgeInsets.zero,
+                              ),
+                      ),
+                      controller: searchBarController,
+                      autofocus: true,
+                      onChanged: (value) => _runFilter(value),
+                      onSubmitted: (value) {
+                        if (_foundEntries.length > 0) {
+                          ActionHandler.handleActionEntry(
+                              _foundEntries[selectedIndex], clear, context);
+                        }
+                      },
                     ),
-                  )
-          ],
-        )),
+                  ),
+                  _foundEntries.isEmpty
+                      ? SizedBox(
+                          height: 50,
+                        )
+                      : SizedBox(
+                          height: 10,
+                        ),
+                  _foundEntries.isEmpty
+                      ? Container()
+                      : Expanded(
+                          child: ListView(
+                            controller: scrollController,
+                            children: List.generate(
+                                _foundEntries.length,
+                                (index) => ActionEntryCard(
+                                    actionEntry: _foundEntries[index],
+                                    callback: clear,
+                                    selected: selectedIndex == index)),
+                          ),
+                        )
+                ],
+              )),
+            ),
+          ),
+          _foundEntries.isEmpty
+              ? Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: RecommendationCard(),
+                )
+              : Container(),
+        ],
       ),
     );
   }
