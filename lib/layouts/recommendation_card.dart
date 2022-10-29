@@ -24,7 +24,7 @@ class RecommendationCard extends StatelessWidget {
           height: 100,
           padding: EdgeInsets.all(10),
           child: Row(children: [
-            entry.iconWidget,
+            entry.iconWidget!,
             Container(
               width: 40,
             ),
@@ -36,7 +36,10 @@ class RecommendationCard extends StatelessWidget {
                   entry.name,
                   style: TextStyle(fontSize: 24),
                 ),
-                Text(entry.description)
+                Container(
+                  child: Text(entry.description),
+                  width: 290,
+                ),
               ],
             )
           ]),

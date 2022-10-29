@@ -14,7 +14,7 @@ final recommendations = [
   ActionEntry(
     name: "Warpinator",
     description:
-        "Send files quickly over the local network.\nTo android, iOS and Windows.",
+        "Send files quickly over the local network. To android, iOS and Windows.",
     action: "send_files_via_warpinator",
     iconWidget: const Icon(
       Icons.send,

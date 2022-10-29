@@ -31,6 +31,9 @@ class ActionEntryCard extends StatelessWidget {
           hoverColor: Colors.grey,
           title: Text(actionEntry.name),
           subtitle: Text(actionEntry.description),
+          // For debugging search index:
+          // subtitle: Text(
+          //     "${actionEntry.description} | ${actionEntry.priority} | ${actionEntry.tmpPriority}"),
           leading: icon,
         ),
         onTap: () {
@@ -41,6 +44,9 @@ class ActionEntryCard extends StatelessWidget {
   }
 
   Widget getIcon() {
+    if (actionEntry.iconWidget != null) {
+      return actionEntry.iconWidget!;
+    }
     if (actionEntry.action.startsWith("openfolder:")) {
       return Icon(
         Icons.folder,

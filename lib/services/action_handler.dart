@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:linux_assistant/enums/desktops.dart';
+import 'package:linux_assistant/enums/softwareManagers.dart';
 import 'package:linux_assistant/layouts/after_installation/after_installation_entry.dart';
 import 'package:linux_assistant/layouts/main_search.dart';
+import 'package:linux_assistant/layouts/run_command_queue.dart';
 import 'package:linux_assistant/layouts/security_check/overview.dart';
 import 'package:linux_assistant/models/action_entry.dart';
 import 'package:linux_assistant/services/linux.dart';
+import 'package:linux_assistant/services/main_search_loader.dart';
 
 class ActionHandler {
-  static void handleActionEntry(
-      ActionEntry actionEntry, VoidCallback callback, BuildContext context) {
+  /// The callback is usually the clear function.
+  static Future<void> handleActionEntry(ActionEntry actionEntry,
+      VoidCallback callback, BuildContext context) async {
     print(actionEntry.action);
 
     switch (actionEntry.action) {
@@ -69,6 +73,21 @@ class ActionHandler {
       String file = actionEntry.action.replaceFirst("openfile:", "");
       Linux.runCommandWithCustomArguments("xdg-open", [file]);
       callback();
+    }
+
+    if (actionEntry.action.startsWith("apt-install:")) {
+      String pkg = actionEntry.action.replaceFirst("apt-install:", "");
+      await Linux.installApplications([pkg],
+          preferredSoftwareManager: SOFTWARE_MANAGERS.APT);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => RunCommandQueue(
+                  title: "APT",
+                  message: "Your package will be installed in a few moments...",
+                  route: MainSearchLoader(),
+                )),
+      );
     }
 
     if (actionEntry.action.startsWith("openapp:")) {

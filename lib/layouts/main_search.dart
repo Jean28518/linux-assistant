@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:hotkey_manager/hotkey_manager.dart';
 import 'package:linux_assistant/content/top_level_domains.dart';
 import 'package:linux_assistant/enums/browsers.dart';
+import 'package:linux_assistant/enums/softwareManagers.dart';
 import 'package:linux_assistant/layouts/action_entry_card.dart';
 import 'package:linux_assistant/layouts/disk_space.dart';
 import 'package:linux_assistant/layouts/memory_status.dart';
@@ -44,6 +47,8 @@ class _MainSearchState extends State<MainSearch> {
 
   final searchBarController = TextEditingController();
   final scrollController = ScrollController();
+
+  Timer? searchOnStoppedTyping;
 
   _MainSearchState({required this.actionEntries}) {
     initHotkeysForKeyboardUse();
@@ -156,7 +161,12 @@ class _MainSearchState extends State<MainSearch> {
     _runFilter("");
   }
 
-  void _runFilter(String keyword, {bool runSetState = true}) {
+  void _runFilter(String keyword) {
+    // Heavy search
+    const duration = Duration(milliseconds: 800);
+    searchOnStoppedTyping?.cancel();
+    searchOnStoppedTyping = Timer(duration, () => _runHeavyFilter(keyword));
+
     _lastKeyword = keyword;
     keyword = keyword.toLowerCase();
     List<String> keys = keyword.split(" ");
@@ -206,21 +216,6 @@ class _MainSearchState extends State<MainSearch> {
       results.last.priority = -50;
     }
 
-    for (ActionEntry result in results) {
-      result.tmpPriority = 0;
-      for (String key in keys) {
-        if (result.name.toLowerCase().contains(key)) {
-          result.tmpPriority += 10;
-          if (result.name.toLowerCase().startsWith(key)) {
-            result.tmpPriority += 10;
-          }
-        }
-        if (result.description.toLowerCase().contains(keyword)) {
-          result.tmpPriority += 5;
-        }
-      }
-    }
-
     if (selectedIndex >= results.length) {
       selectedIndex = results.length - 1;
     } else if (results.length > 0 && selectedIndex == -1) {
@@ -229,16 +224,59 @@ class _MainSearchState extends State<MainSearch> {
     }
 
     // Sort:
-    results.sort((a, b) => (a.name).compareTo(b.name));
-
-    results.sort((a, b) =>
-        (b.priority + b.tmpPriority).compareTo(a.priority + a.tmpPriority));
-
     _foundEntries = results;
+    _sortFoundEntries();
 
-    if (runSetState) {
-      setState(() {});
+    setState(() {});
+  }
+
+  /// This filter is only runs, if the user has stopped typing.
+  void _runHeavyFilter(String keyword) async {
+    if (keyword.trim() == "") {
+      return;
     }
+
+    List<ActionEntry> heavyEntries = [];
+
+    // Search through apt
+    if (Linux.currentEnviroment.installedSoftwareManagers
+        .contains(SOFTWARE_MANAGERS.APT)) {
+      List<ActionEntry> pckgs =
+          await Linux.getInstallableAptPackagesForKeyword(keyword);
+
+      heavyEntries.addAll(pckgs);
+    }
+
+    setState(() {
+      _foundEntries.addAll(heavyEntries);
+      _sortFoundEntries();
+    });
+  }
+
+  void _sortFoundEntries() {
+    List<String> keys = _lastKeyword.toLowerCase().split(" ");
+
+    print(keys);
+
+    for (ActionEntry result in _foundEntries) {
+      result.tmpPriority = 0;
+      for (String key in keys) {
+        if (result.name.toLowerCase().contains(key)) {
+          result.tmpPriority += 10;
+          if (result.name.toLowerCase().startsWith(key)) {
+            result.tmpPriority += 10;
+          }
+        }
+        if (result.description.toLowerCase().contains(_lastKeyword)) {
+          result.tmpPriority += 5;
+        }
+      }
+    }
+
+    _foundEntries.sort((a, b) => (a.name).compareTo(b.name));
+
+    _foundEntries.sort((a, b) =>
+        (b.priority + b.tmpPriority).compareTo(a.priority + a.tmpPriority));
   }
 
   void initHotkeysForKeyboardUse() {

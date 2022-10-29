@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:linux_assistant/enums/browsers.dart';
 import 'package:linux_assistant/enums/desktops.dart';
 import 'package:linux_assistant/enums/distros.dart';
@@ -630,7 +632,9 @@ class Linux {
   /// Python script has to be in the additional/python folder.
   /// Example: [filename] = example.py
   static Future<String> runPythonScript(String filename,
-      {bool root = false, List<String> arguments = const []}) async {
+      {bool root = false,
+      List<String> arguments = const [],
+      bool getErrorMessages = true}) async {
     List<String> commandList = [];
     String executable = "";
     if (root) {
@@ -644,7 +648,7 @@ class Linux {
     commandList.addAll(arguments);
 
     return runCommandWithCustomArgumentsAndGetStdOut(executable, commandList,
-        getErrorMessages: true);
+        getErrorMessages: getErrorMessages);
   }
 
   static Future<bool> isNvidiaCardInstalledOnSystem() async {
@@ -729,5 +733,39 @@ class Linux {
 
   static Future<String> getUserIdOfCurrentUser() {
     return Linux.runCommandAndGetStdout("id -u");
+  }
+
+  /// Only returns results if keyword is longer than 3 and there are under 100 results.
+  static Future<List<ActionEntry>> getInstallableAptPackagesForKeyword(
+      String keyword) async {
+    if (keyword.length <= 3) {
+      return [];
+    }
+    String output = await runPythonScript("search_available_apt_packages.py",
+        arguments: ["--keyword='$keyword'"], getErrorMessages: false);
+    output = output.trim();
+    List<String> lines = output.split("\n");
+
+    // Cancel search, if too many search results.
+    if (lines.length > 100) {
+      return [];
+    }
+
+    List<ActionEntry> results = [];
+    for (String line in lines) {
+      if (line.trim() == "") {
+        continue;
+      }
+      results.add(ActionEntry(
+          iconWidget: Icon(
+            Icons.archive,
+            size: 48,
+          ),
+          name: "Install $line",
+          description: "Install via apt",
+          action: "apt-install:$line",
+          priority: -20));
+    }
+    return results;
   }
 }

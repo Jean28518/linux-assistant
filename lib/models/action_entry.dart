@@ -7,8 +7,8 @@ class ActionEntry {
   late String iconURI;
   late double priority;
   late List<String> keywords;
-  late Widget iconWidget; // Currently only used by recommendation_cards
-  double tmpPriority = 0;
+  late Widget? iconWidget; // Currently only used by recommendation_cards
+  late double tmpPriority;
 
   ActionEntry({
     required this.name,
@@ -17,6 +17,7 @@ class ActionEntry {
     this.iconURI = "",
     this.priority = 0,
     this.keywords = const [],
-    this.iconWidget = const Text(""),
-  }) {}
+    this.iconWidget,
+    this.tmpPriority = 0,
+  });
 }
