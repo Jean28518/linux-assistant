@@ -35,7 +35,9 @@ class _MainSearchState extends State<MainSearch> {
 
   List<ActionEntry> _foundEntries = [];
 
-  var selectedIndex = 1;
+  var selectedIndex = 0;
+  var selectedIndexInView = 0;
+  late int visibleEntries;
 
   final searchBarController = TextEditingController();
   final scrollController = ScrollController();
@@ -46,6 +48,9 @@ class _MainSearchState extends State<MainSearch> {
 
   @override
   Widget build(BuildContext context) {
+    // Complete height of a search entry is 64 + 8 (padding)
+    visibleEntries =
+        ((MediaQuery.of(context).size.height - 40 - 60) / 72).round();
     return Scaffold(
       body: Container(
         padding: EdgeInsets.all(20),
@@ -106,6 +111,7 @@ class _MainSearchState extends State<MainSearch> {
     _lastKeyword = "";
     searchBarController.clear();
     selectedIndex = 0;
+    selectedIndexInView = 0;
     _runFilter("");
   }
 
@@ -178,6 +184,7 @@ class _MainSearchState extends State<MainSearch> {
       selectedIndex = results.length - 1;
     } else if (results.length > 0 && selectedIndex == -1) {
       selectedIndex = 0;
+      selectedIndexInView = 0;
     }
 
     // Sort:
@@ -204,8 +211,10 @@ class _MainSearchState extends State<MainSearch> {
         if (selectedIndex + 1 < _foundEntries.length) {
           setState(() {
             selectedIndex += 1;
-            if (_foundEntries.length > 10) {
-              scrollController.jumpTo(scrollController.offset + 70);
+            selectedIndexInView += 1;
+            if (selectedIndexInView >= visibleEntries) {
+              scrollController.jumpTo(scrollController.offset + 72);
+              selectedIndexInView -= 1;
             }
           });
         }
@@ -222,8 +231,10 @@ class _MainSearchState extends State<MainSearch> {
         if (selectedIndex - 1 >= 0) {
           setState(() {
             selectedIndex -= 1;
-            if (_foundEntries.length > 10) {
-              scrollController.jumpTo(scrollController.offset - 70);
+            selectedIndexInView -= 1;
+            if (selectedIndexInView < 0) {
+              scrollController.jumpTo(scrollController.offset - 72);
+              selectedIndexInView += 1;
             }
           });
         }
