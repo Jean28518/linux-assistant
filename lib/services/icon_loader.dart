@@ -20,11 +20,14 @@ class IconLoader {
     if (cache.containsKey(cacheKeyword)) {
       return cache[cacheKeyword];
     }
-    String iconPath = await Linux.runCommandWithCustomArgumentsAndGetStdOut(
-        "/usr/bin/python3", [
-      "${Linux.executableFolder}additional/python/get_icon_path.py",
-      "--icon=$appCode"
-    ]);
+    String iconPath = "not found";
+    if (appCode != "") {
+      iconPath = await Linux.runCommandWithCustomArgumentsAndGetStdOut(
+          "/usr/bin/python3", [
+        "${Linux.executableFolder}additional/python/get_icon_path.py",
+        "--icon=$appCode"
+      ]);
+    }
 
     if (iconPath.contains("not found")) {
       if (cache.containsKey("!default!-$iconSize")) {
