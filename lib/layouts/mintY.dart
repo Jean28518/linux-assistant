@@ -63,39 +63,51 @@ class MintY {
 
   static const heading1White = TextStyle(
       color: Colors.white,
-      fontSize: 48,
-      fontWeight: FontWeight.w400,
+      fontSize: 32,
+      fontWeight: FontWeight.w500,
       decoration: TextDecoration.none);
 
   static const heading1 = TextStyle(
       color: Colors.black87,
-      fontSize: 48,
-      fontWeight: FontWeight.w400,
+      fontSize: 32,
+      fontWeight: FontWeight.w500,
       decoration: TextDecoration.none);
 
   static const heading2White = TextStyle(
       color: Colors.white,
-      fontSize: 32,
-      fontWeight: FontWeight.w300,
+      fontSize: 24,
+      fontWeight: FontWeight.w400,
       decoration: TextDecoration.none);
 
   static const heading2 = TextStyle(
       color: Colors.black87,
-      fontSize: 32,
-      fontWeight: FontWeight.w300,
+      fontSize: 24,
+      fontWeight: FontWeight.w400,
+      decoration: TextDecoration.none);
+
+  static const heading3White = TextStyle(
+      color: Colors.white,
+      fontSize: 20,
+      fontWeight: FontWeight.w400,
+      decoration: TextDecoration.none);
+
+  static const heading3 = TextStyle(
+      color: Colors.black87,
+      fontSize: 20,
+      fontWeight: FontWeight.w400,
       decoration: TextDecoration.none);
 
   static const paragraph = TextStyle(
       fontWeight: FontWeight.w300,
       color: Colors.black87,
       decoration: TextDecoration.none,
-      fontSize: 20);
+      fontSize: 16);
 
   static const paragraphWhite = TextStyle(
       fontWeight: FontWeight.w300,
       color: Colors.white,
       decoration: TextDecoration.none,
-      fontSize: 20);
+      fontSize: 16);
 
   static ThemeData theme() => ThemeData(
         primaryColor: currentColor,
@@ -215,8 +227,8 @@ class MintYButton extends StatelessWidget {
       {Text text = const Text(""),
       Color color = const Color.fromARGB(255, 232, 232, 232),
       VoidCallback? onPressed,
-      double width = 160,
-      double height = 60}) {
+      double width = 110,
+      double height = 40}) {
     this.text = text;
     this.color = color;
     this.onPressed = onPressed;

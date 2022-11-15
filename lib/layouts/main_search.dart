@@ -8,6 +8,7 @@ import 'package:linux_assistant/enums/browsers.dart';
 import 'package:linux_assistant/enums/softwareManagers.dart';
 import 'package:linux_assistant/layouts/action_entry_card.dart';
 import 'package:linux_assistant/layouts/disk_space.dart';
+import 'package:linux_assistant/layouts/feedback_form.dart';
 import 'package:linux_assistant/layouts/memory_status.dart';
 import 'package:linux_assistant/layouts/mintY.dart';
 import 'package:linux_assistant/layouts/recommendation_card.dart';
@@ -97,7 +98,7 @@ class _MainSearchState extends State<MainSearch> {
                             contentPadding: _foundEntries.isEmpty
                                 ? null
                                 : const EdgeInsets.only(
-                                    bottom: -20.0, left: 8, right: 3),
+                                    bottom: -20.0, left: 12, right: 3),
                             border: const OutlineInputBorder(),
                             hintText: "Enter a search term...",
                             prefixIcon: _foundEntries.isEmpty
@@ -117,7 +118,7 @@ class _MainSearchState extends State<MainSearch> {
                                     tooltip: "Clear",
                                   ),
                           ),
-                          // style: MintY.paragraph,
+                          style: MintY.paragraph,
                           controller: searchBarController,
                           autofocus: true,
                           onChanged: (value) => _runFilter(value),
@@ -143,7 +144,13 @@ class _MainSearchState extends State<MainSearch> {
                                 Icons.feedback,
                                 color: Colors.black45,
                               ),
-                              onPressed: () => print("Pressed"),
+                              onPressed: () => showDialog(
+                                context: context,
+                                builder: (context) => FeedbackDialog(
+                                    environment: Linux.currentEnviroment,
+                                    foundEntries: _foundEntries,
+                                    searchText: _lastKeyword),
+                              ),
                               padding: EdgeInsets.zero,
                               tooltip: "Send feedback",
                             ),
