@@ -98,7 +98,10 @@ class _MainSearchState extends State<MainSearch> {
                         border: const OutlineInputBorder(),
                         hintText: "Enter a search term...",
                         prefixIcon: _foundEntries.isEmpty
-                            ? const Icon(Icons.search)
+                            ? const Icon(
+                                Icons.search,
+                                color: Colors.grey,
+                              )
                             : null,
                         suffix: _foundEntries.isEmpty
                             ? null
