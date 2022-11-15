@@ -9,6 +9,7 @@ import 'package:linux_assistant/enums/softwareManagers.dart';
 import 'package:linux_assistant/layouts/action_entry_card.dart';
 import 'package:linux_assistant/layouts/disk_space.dart';
 import 'package:linux_assistant/layouts/memory_status.dart';
+import 'package:linux_assistant/layouts/mintY.dart';
 import 'package:linux_assistant/layouts/recommendation_card.dart';
 import 'package:linux_assistant/main.dart';
 import 'package:linux_assistant/models/action_entry.dart';
@@ -90,12 +91,17 @@ class _MainSearchState extends State<MainSearch> {
                         : MediaQuery.of(context).size.width - 50,
                     child: TextField(
                       decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.only(
-                            bottom: -20.0, left: 8, right: 3),
+                        contentPadding: _foundEntries.isEmpty
+                            ? null
+                            : const EdgeInsets.only(
+                                bottom: -20.0, left: 8, right: 3),
                         border: const OutlineInputBorder(),
                         hintText: "Enter a search term...",
+                        prefixIcon: _foundEntries.isEmpty
+                            ? const Icon(Icons.search)
+                            : null,
                         suffix: _foundEntries.isEmpty
-                            ? Container()
+                            ? null
                             : IconButton(
                                 iconSize: 14,
                                 splashRadius: 14,
@@ -104,6 +110,7 @@ class _MainSearchState extends State<MainSearch> {
                                 padding: EdgeInsets.zero,
                               ),
                       ),
+                      // style: MintY.paragraph,
                       controller: searchBarController,
                       autofocus: true,
                       onChanged: (value) => _runFilter(value),
