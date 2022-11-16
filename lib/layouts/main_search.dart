@@ -147,7 +147,6 @@ class _MainSearchState extends State<MainSearch> {
                               onPressed: () => showDialog(
                                 context: context,
                                 builder: (context) => FeedbackDialog(
-                                    environment: Linux.currentEnviroment,
                                     foundEntries: _foundEntries,
                                     searchText: _lastKeyword),
                               ),

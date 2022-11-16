@@ -20,4 +20,9 @@ class ActionEntry {
     this.iconWidget,
     this.tmpPriority = 0,
   });
+
+  @override
+  String toString() {
+    return "ActionEntry: (name: $name; description: $description; action: $action, iconURI: $iconURI, priority: $priority, tmpPriority: $tmpPriority, iconWidget: $iconWidget)";
+  }
 }
