@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:linux_assistant/layouts/feedback/feedback_send.dart';
 import 'package:linux_assistant/layouts/mintY.dart';
 import 'package:linux_assistant/models/action_entry.dart';
 import 'package:linux_assistant/models/enviroment.dart';
@@ -107,12 +108,21 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
                     "Submit",
                     style: MintY.heading3White,
                   ),
-                  onPressed: () => FeedbackService.send_feedback(
-                      messageController.text,
-                      widget.foundEntries,
-                      widget.searchText,
-                      widget.includeBasicSystemInformation,
-                      widget.includeSearchTermAndResults),
+                  onPressed: () {
+                    Future<bool> success = FeedbackService.send_feedback(
+                        messageController.text,
+                        widget.foundEntries,
+                        widget.searchText,
+                        widget.includeBasicSystemInformation,
+                        widget.includeSearchTermAndResults);
+                    Navigator.of(context).pop();
+                    showDialog(
+                      context: context,
+                      builder: (context) => FeedbackSent(
+                        success: success,
+                      ),
+                    );
+                  },
                 )
               ],
             )

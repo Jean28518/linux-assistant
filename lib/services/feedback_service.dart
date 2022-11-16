@@ -6,12 +6,12 @@ import 'package:linux_assistant/models/enviroment.dart';
 import 'package:linux_assistant/services/linux.dart';
 
 class FeedbackService {
-  static void send_feedback(
+  static Future<bool> send_feedback(
       String message,
       List<ActionEntry> entries,
       String searchTerm,
       bool includeBasicSystemInformation,
-      bool includeSearchTermnAndSearchResults) {
+      bool includeSearchTermnAndSearchResults) async {
     List<Map<String, dynamic>> entriesJson = [];
 
     if (!includeSearchTermnAndSearchResults) {
@@ -29,17 +29,21 @@ class FeedbackService {
       environment = Linux.currentEnviroment.toJson();
     }
 
-    http.post(
-      Uri.parse('http://localhost:8000/submit/'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, dynamic>{
-        'message': message,
-        'entries': entriesJson,
-        'searchTerm': searchTerm,
-        'environment': environment,
-      }),
-    );
+    http.Response response = await http
+        .post(
+          Uri.parse('http://localhost:8000/submit/'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(<String, dynamic>{
+            'message': message,
+            'entries': entriesJson,
+            'searchTerm': searchTerm,
+            'environment': environment,
+          }),
+        )
+        .timeout(Duration(seconds: 10));
+
+    return (response.statusCode == 200);
   }
 }

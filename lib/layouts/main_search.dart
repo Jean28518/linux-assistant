@@ -8,7 +8,7 @@ import 'package:linux_assistant/enums/browsers.dart';
 import 'package:linux_assistant/enums/softwareManagers.dart';
 import 'package:linux_assistant/layouts/action_entry_card.dart';
 import 'package:linux_assistant/layouts/disk_space.dart';
-import 'package:linux_assistant/layouts/feedback_form.dart';
+import 'package:linux_assistant/layouts/feedback/feedback_form.dart';
 import 'package:linux_assistant/layouts/memory_status.dart';
 import 'package:linux_assistant/layouts/mintY.dart';
 import 'package:linux_assistant/layouts/recommendation_card.dart';
