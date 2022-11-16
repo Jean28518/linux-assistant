@@ -25,4 +25,16 @@ class ActionEntry {
   String toString() {
     return "ActionEntry: (name: $name; description: $description; action: $action, iconURI: $iconURI, priority: $priority, tmpPriority: $tmpPriority, iconWidget: $iconWidget)";
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "name": name,
+      "description": description,
+      "action": action,
+      "iconURI": iconURI,
+      "priority": priority,
+      "tmpPriority": priority,
+      "iconWidget": iconWidget.toString(),
+    };
+  }
 }
