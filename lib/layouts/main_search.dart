@@ -8,6 +8,7 @@ import 'package:linux_assistant/enums/browsers.dart';
 import 'package:linux_assistant/enums/softwareManagers.dart';
 import 'package:linux_assistant/layouts/action_entry_card.dart';
 import 'package:linux_assistant/layouts/disk_space.dart';
+import 'package:linux_assistant/layouts/feedback/feedback_form.dart';
 import 'package:linux_assistant/layouts/memory_status.dart';
 import 'package:linux_assistant/layouts/mintY.dart';
 import 'package:linux_assistant/layouts/recommendation_card.dart';
@@ -85,45 +86,74 @@ class _MainSearchState extends State<MainSearch> {
                           height: 16,
                         )
                       : Container(),
-                  Container(
-                    width: MediaQuery.of(context).size.width > 750
-                        ? 600
-                        : MediaQuery.of(context).size.width - 50,
-                    child: TextField(
-                      decoration: InputDecoration(
-                        contentPadding: _foundEntries.isEmpty
-                            ? null
-                            : const EdgeInsets.only(
-                                bottom: -20.0, left: 8, right: 3),
-                        border: const OutlineInputBorder(),
-                        hintText: "Enter a search term...",
-                        prefixIcon: _foundEntries.isEmpty
-                            ? const Icon(
-                                Icons.search,
-                                color: Colors.grey,
-                              )
-                            : null,
-                        suffix: _foundEntries.isEmpty
-                            ? null
-                            : IconButton(
-                                iconSize: 14,
-                                splashRadius: 14,
-                                icon: Icon(Icons.clear),
-                                onPressed: () => clear(minimze: false),
-                                padding: EdgeInsets.zero,
-                              ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width > 750
+                            ? 600
+                            : MediaQuery.of(context).size.width - 50,
+                        child: TextField(
+                          decoration: InputDecoration(
+                            contentPadding: _foundEntries.isEmpty
+                                ? null
+                                : const EdgeInsets.only(
+                                    bottom: -20.0, left: 12, right: 3),
+                            border: const OutlineInputBorder(),
+                            hintText: "Enter a search term...",
+                            prefixIcon: _foundEntries.isEmpty
+                                ? const Icon(
+                                    Icons.search,
+                                    color: Colors.grey,
+                                  )
+                                : null,
+                            suffix: _foundEntries.isEmpty
+                                ? null
+                                : IconButton(
+                                    iconSize: 14,
+                                    splashRadius: 14,
+                                    icon: const Icon(Icons.clear),
+                                    onPressed: () => clear(minimze: false),
+                                    padding: EdgeInsets.zero,
+                                    tooltip: "Clear",
+                                  ),
+                          ),
+                          style: MintY.paragraph,
+                          controller: searchBarController,
+                          autofocus: true,
+                          onChanged: (value) => _runFilter(value),
+                          onSubmitted: (value) {
+                            if (_foundEntries.length > 0) {
+                              ActionHandler.handleActionEntry(
+                                  _foundEntries[selectedIndex], clear, context);
+                            }
+                          },
+                        ),
                       ),
-                      // style: MintY.paragraph,
-                      controller: searchBarController,
-                      autofocus: true,
-                      onChanged: (value) => _runFilter(value),
-                      onSubmitted: (value) {
-                        if (_foundEntries.length > 0) {
-                          ActionHandler.handleActionEntry(
-                              _foundEntries[selectedIndex], clear, context);
-                        }
-                      },
-                    ),
+                      _foundEntries.isEmpty
+                          ? Container()
+                          : const SizedBox(
+                              width: 10,
+                            ),
+                      _foundEntries.isEmpty
+                          ? Container()
+                          : IconButton(
+                              iconSize: 24,
+                              splashRadius: 24,
+                              icon: const Icon(
+                                Icons.feedback,
+                                color: Colors.black45,
+                              ),
+                              onPressed: () => showDialog(
+                                context: context,
+                                builder: (context) => FeedbackDialog(
+                                    foundEntries: _foundEntries,
+                                    searchText: _lastKeyword),
+                              ),
+                              padding: EdgeInsets.zero,
+                              tooltip: "Send feedback",
+                            ),
+                    ],
                   ),
                   _foundEntries.isEmpty
                       ? SizedBox(
