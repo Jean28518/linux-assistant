@@ -17,6 +17,9 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
   late Future<ActionEntryList> futureActionEntryList;
 
   Future<ActionEntryList> prepare() async {
+    // rescan regular environment
+    Linux.updateEnvironmentAtNormalStartUp();
+
     // prepare Action Entries
     ActionEntryList returnValue = ActionEntryList(entries: []);
     returnValue.entries.addAll(recommendations);

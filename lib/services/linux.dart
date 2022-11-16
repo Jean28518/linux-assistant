@@ -10,6 +10,7 @@ import 'package:linux_assistant/enums/softwareManagers.dart';
 import 'package:linux_assistant/models/action_entry.dart';
 import 'package:linux_assistant/models/enviroment.dart';
 import 'package:linux_assistant/models/linux_command.dart';
+import 'package:linux_assistant/services/config_handler.dart';
 import 'package:linux_assistant/services/hashing.dart';
 
 class Linux {
@@ -372,6 +373,18 @@ class Linux {
     } else if (!installed && initial) {
       await removeApplications(appCodes);
     }
+  }
+
+  /// After calling this function the command queue should be run
+  static Future<void> setUpFlatpak() async {
+    await ensureApplicationInstallation(["flatpak"]);
+    commandQueue.add(LinuxCommand(
+        userId: 0,
+        command:
+            "flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo"));
+    // We set this temporally to easily add flatpaks to the system. It will be written to config at next startup (if the installation of flatpak really succeded)
+    Linux.currentEnviroment.installedSoftwareManagers
+        .add(SOFTWARE_MANAGERS.FLATPAK);
   }
 
   static void openWebbrowserSeach(String searchterm) {
@@ -767,5 +780,25 @@ class Linux {
           priority: -20));
     }
     return results;
+  }
+
+  static Future<Environment> recognizeEnvironmentFirstInitialization() async {
+    ConfigHandler configHandler = ConfigHandler();
+    Environment environment = await Linux.getCurrentEnviroment();
+    Linux.currentEnviroment = environment;
+    configHandler.setValue("environment", environment.toJson());
+    return environment;
+  }
+
+  static Future<void> updateEnvironmentAtNormalStartUp() async {
+    Environment environment = await Linux.getCurrentEnviroment();
+    Linux.currentEnviroment.browser = environment.browser;
+    Linux.currentEnviroment.currentUserId = environment.currentUserId;
+    Linux.currentEnviroment.desktop = environment.desktop;
+    Linux.currentEnviroment.installedSoftwareManagers =
+        environment.installedSoftwareManagers;
+
+    ConfigHandler configHandler = ConfigHandler();
+    configHandler.setValue("environment", Linux.currentEnviroment.toJson());
   }
 }

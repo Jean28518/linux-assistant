@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:linux_assistant/layouts/after_installation/browser_selection.dart';
+import 'package:linux_assistant/layouts/after_installation/flatpak_check.dart';
 import 'package:linux_assistant/layouts/mintY.dart';
 
 class AfterInstallationEntry extends StatelessWidget {
@@ -37,7 +38,7 @@ class AfterInstallationEntry extends StatelessWidget {
             children: [
               MintYButtonNavigate(
                 text: Text("Let's start!", style: MintY.heading2White),
-                route: AfterInstallationBrowserSelection(),
+                route: AfterInstallationFlatpakCheck(),
                 color: MintY.currentColor,
                 // width: 400,
               ),

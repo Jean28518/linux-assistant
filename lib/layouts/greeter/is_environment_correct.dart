@@ -14,7 +14,8 @@ class IsYourEnvironmentCorrectView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future<Environment> environment = recognizeEnvironment();
+    Future<Environment> environment =
+        Linux.recognizeEnvironmentFirstInitialization();
     return FutureBuilder<Environment>(
       future: environment,
       builder: ((context, snapshot) {
@@ -84,13 +85,5 @@ class IsYourEnvironmentCorrectView extends StatelessWidget {
         }
       }),
     );
-  }
-
-  Future<Environment> recognizeEnvironment() async {
-    ConfigHandler configHandler = ConfigHandler();
-    Environment environment = await Linux.getCurrentEnviroment();
-    Linux.currentEnviroment = environment;
-    configHandler.setValue("environment", environment.toJson());
-    return environment;
   }
 }
