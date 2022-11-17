@@ -6,6 +6,8 @@ import 'package:linux_assistant/layouts/greeter/start_screen.dart';
 import 'package:linux_assistant/layouts/mintY.dart';
 import 'package:linux_assistant/services/linux.dart';
 import 'package:window_manager/window_manager.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,7 +27,16 @@ class MyApp extends StatelessWidget {
     Linux.executableFolder = Linux.getExecutableFolder();
     initHotkeyToShowUp();
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Linux Assistant',
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: [
+        Locale('en', ''),
+        Locale('de', ''),
+      ],
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),

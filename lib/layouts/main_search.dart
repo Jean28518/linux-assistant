@@ -17,6 +17,7 @@ import 'package:linux_assistant/models/action_entry.dart';
 import 'package:linux_assistant/services/action_handler.dart';
 import 'package:linux_assistant/services/linux.dart';
 import 'package:window_manager/window_manager.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MainSearch extends StatefulWidget {
   late List<ActionEntry> actionEntries;
@@ -100,7 +101,8 @@ class _MainSearchState extends State<MainSearch> {
                                 : const EdgeInsets.only(
                                     bottom: -20.0, left: 12, right: 3),
                             border: const OutlineInputBorder(),
-                            hintText: "Enter a search term...",
+                            hintText:
+                                AppLocalizations.of(context)!.enterASearchTerm,
                             prefixIcon: _foundEntries.isEmpty
                                 ? const Icon(
                                     Icons.search,
@@ -115,7 +117,8 @@ class _MainSearchState extends State<MainSearch> {
                                     icon: const Icon(Icons.clear),
                                     onPressed: () => clear(minimze: false),
                                     padding: EdgeInsets.zero,
-                                    tooltip: "Clear",
+                                    tooltip:
+                                        AppLocalizations.of(context)!.clear,
                                   ),
                           ),
                           style: MintY.paragraph,
@@ -151,7 +154,8 @@ class _MainSearchState extends State<MainSearch> {
                                     searchText: _lastKeyword),
                               ),
                               padding: EdgeInsets.zero,
-                              tooltip: "Send feedback",
+                              tooltip:
+                                  AppLocalizations.of(context)!.sendFeedback,
                             ),
                     ],
                   ),
@@ -241,7 +245,7 @@ class _MainSearchState extends State<MainSearch> {
 
     if (uri_recognized) {
       ActionEntry actionEntry = ActionEntry(
-          name: "Open " + keyword,
+          name: "${AppLocalizations.of(context)!.openX} $keyword",
           description: "Open with default webbrowser",
           action: "openwebsite:" + keyword);
       actionEntry.priority = 10;
@@ -250,8 +254,8 @@ class _MainSearchState extends State<MainSearch> {
 
     if (keyword != "" && Linux.currentEnviroment.browser == BROWSERS.FIREFOX) {
       results.add(ActionEntry(
-          name: "Search in web for " + keyword,
-          description: "look for online results..",
+          name: "${AppLocalizations.of(context)!.searchInWebFor} $keyword",
+          description: AppLocalizations.of(context)!.lookForOnlineResults,
           action: "websearch:" + keyword));
       results.last.priority = -50;
     }

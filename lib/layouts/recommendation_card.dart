@@ -12,8 +12,8 @@ class RecommendationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int rand = Random().nextInt(recommendations.length);
-    ActionEntry entry = recommendations[rand];
+    int rand = Random().nextInt(getRecommendations(context).length);
+    ActionEntry entry = getRecommendations(context)[rand];
     return Card(
       child: InkWell(
         onTap: () {

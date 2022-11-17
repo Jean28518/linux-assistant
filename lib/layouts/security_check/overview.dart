@@ -8,6 +8,7 @@ import 'package:linux_assistant/layouts/loading_indicator.dart';
 import 'package:linux_assistant/layouts/mintY.dart';
 import 'package:linux_assistant/services/linux.dart';
 import 'package:linux_assistant/services/main_search_loader.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SecurityCheckOverview extends StatelessWidget {
   const SecurityCheckOverview({Key? key}) : super(key: key);
@@ -35,10 +36,11 @@ class SecurityCheckOverview extends StatelessWidget {
               lines[0].contains("Request dismissed")) {
             return Scaffold(
                 body: MintYPage(
-              title: "Security Check",
+              title: AppLocalizations.of(context)!.securityCheck,
               contentElements: [
                 Text(
-                  "That didn't work. You need root rights to run the security check.",
+                  AppLocalizations.of(context)!
+                      .securityCheckFailedBecauseNoRoot,
                   style: MintY.heading2,
                   textAlign: TextAlign.center,
                 )
@@ -48,13 +50,15 @@ class SecurityCheckOverview extends StatelessWidget {
                 children: [
                   MintYButtonNavigate(
                     route: const MainSearchLoader(),
-                    text: Text("Cancel", style: MintY.heading2),
+                    text: Text(AppLocalizations.of(context)!.cancel,
+                        style: MintY.heading2),
                     color: Colors.white,
                   ),
                   SizedBox(width: 16),
                   MintYButtonNavigate(
                     route: const SecurityCheckOverview(),
-                    text: Text("Retry", style: MintY.heading2White),
+                    text: Text(AppLocalizations.of(context)!.retry,
+                        style: MintY.heading2White),
                     color: Colors.blue,
                   ),
                 ],
@@ -102,7 +106,7 @@ class SecurityCheckOverview extends StatelessWidget {
 
           return Scaffold(
               body: MintYPage(
-            title: "Security Check",
+            title: AppLocalizations.of(context)!.securityCheck,
             contentElements: [
               AdditionSoftwareSources(additionalSources: additionalSources),
               SizedBox(height: 16),
@@ -122,20 +126,23 @@ class SecurityCheckOverview extends StatelessWidget {
               children: [
                 MintYButtonNavigate(
                   route: const MainSearchLoader(),
-                  text: Text("Back to search", style: MintY.heading2),
+                  text: Text(AppLocalizations.of(context)!.backToSearch,
+                      style: MintY.heading3),
                   color: Colors.white,
                 ),
                 SizedBox(width: 16),
                 MintYButtonNavigate(
                   route: const SecurityCheckOverview(),
-                  text: Text("Reload", style: MintY.heading2White),
+                  text: Text(AppLocalizations.of(context)!.reload,
+                      style: MintY.heading3White),
                   color: Colors.blue,
                 ),
               ],
             ),
           ));
         } else {
-          return LoadingIndicator(text: "Analysing system security...");
+          return LoadingIndicator(
+              text: AppLocalizations.of(context)!.analysingSystemSecurity);
         }
       },
     );
@@ -153,19 +160,19 @@ class UpdateCheck extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      const Text(
-        "Updates",
+      Text(
+        AppLocalizations.of(context)!.updates,
         style: MintY.heading2,
       ),
       Padding(
           padding: EdgeInsets.all(8.0),
           child: availableUpdatePackages == 0
               ? SecuritySuccessMessage(
-                  text: "Great! Your system is up to date.",
+                  text: AppLocalizations.of(context)!.systemIsUpToDate,
                 )
               : SecurityWarningMessage(
                   text:
-                      "${availableUpdatePackages} Packages could be updated."))
+                      "${availableUpdatePackages} ${AppLocalizations.of(context)!.xPackagesShouldBeUpdated}"))
     ]);
   }
 }
@@ -181,20 +188,18 @@ class HomeFolderSecurityCheck extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      const Text(
-        "Home Folder",
+      Text(
+        AppLocalizations.of(context)!.homeFolder,
         style: MintY.heading2,
       ),
       Padding(
           padding: EdgeInsets.all(8.0),
           child: homeFolderSecure
               ? SecuritySuccessMessage(
-                  text:
-                      "Your home folder rights are okay. Others can't see your files.",
+                  text: AppLocalizations.of(context)!.homeFolderRightsOkay,
                 )
               : SecurityWarningMessage(
-                  text:
-                      "Your home folder is not secure. Other users could see your files."))
+                  text: AppLocalizations.of(context)!.homeFolderRightsNotOkay))
     ]);
   }
 }
@@ -218,8 +223,8 @@ class NetworkSecurityCheck extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      const Text(
-        "Network Security",
+      Text(
+        AppLocalizations.of(context)!.networkSecurity,
         style: MintY.heading2,
       ),
       Padding(
@@ -228,32 +233,30 @@ class NetworkSecurityCheck extends StatelessWidget {
             children: [
               firewallNotInstalled
                   ? SecurityWarningMessage(
-                      text:
-                          "No firewall recognized on your system.\nA firewall is recommended for computers with access from the internet.",
+                      text: AppLocalizations.of(context)!.noFirewallRecognized,
                     )
                   : firewallRunning
                       ? SecuritySuccessMessage(
-                          text: "Your firewall is up and running. Great job!")
+                          text: AppLocalizations.of(context)!.firewallIsRunning)
                       : SecurityWarningMessage(
                           text:
-                              "Your firewall is inactive.\nA firewall is recommended for computers with access from the internet."),
+                              AppLocalizations.of(context)!.firewallIsInactive),
               SizedBox(height: 8),
               sshRunning
                   ? SecurityWarningMessage(
                       text:
-                          "SSH server found on your computer. Your computer could be accessible from the outside.\nUninstall ssh-server if you don't need it.")
+                          AppLocalizations.of(context)!.sshFoundOnYourComputer)
                   : Container(),
               SizedBox(height: 8),
               (sshRunning && !fail2banRunning)
                   ? SecurityWarningMessage(
-                      text:
-                          "No fail2ban instance found on your computer.\nWith it your computer is more imune to ssh brute force attacks.")
+                      text: AppLocalizations.of(context)!.noFail2BanFound)
                   : Container(),
               SizedBox(height: 8),
               xrdpRunning
                   ? SecurityWarningMessage(
-                      text:
-                          "Xrdp is running at your computer. It's recommended to uninstall if you don't really need it.")
+                      text: AppLocalizations.of(context)!
+                          .xrdpRunningOnYourComputer)
                   : Container(),
             ],
           ))
@@ -275,7 +278,7 @@ class AdditionSoftwareSources extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Additional Software Sources",
+          AppLocalizations.of(context)!.additionalSoftwareSources,
           style: MintY.heading2,
         ),
         Padding(
@@ -285,8 +288,8 @@ class AdditionSoftwareSources extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SecurityWarningMessage(
-                        text:
-                            "Some additional software sources where found. These are potentially unsafe.\nIf you don't need security updates from these it is recommended to deactivate them."),
+                        text: AppLocalizations.of(context)!
+                            .additionalSoftwareSourcesDetected),
                     SizedBox(
                       height: 8,
                     ),
@@ -307,7 +310,8 @@ class AdditionSoftwareSources extends StatelessWidget {
                   ],
                 )
               : SecuritySuccessMessage(
-                  text: "Good! No additional software sources found."),
+                  text: AppLocalizations.of(context)!
+                      .noAdditionalSoftwareSourcesFound),
         )
       ],
     );

@@ -14,6 +14,7 @@ import 'package:linux_assistant/models/linux_command.dart';
 import 'package:linux_assistant/services/config_handler.dart';
 import 'package:linux_assistant/services/hashing.dart';
 import 'package:linux_assistant/services/main_search_loader.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Linux {
   static Environment currentEnviroment = Environment();
@@ -420,7 +421,8 @@ class Linux {
     }
   }
 
-  static Future<List<ActionEntry>> getAllFolderEntriesOfUser() async {
+  static Future<List<ActionEntry>> getAllFolderEntriesOfUser(
+      BuildContext context) async {
     String foldersString = await runCommandWithCustomArgumentsAndGetStdOut(
         "python3",
         ["${executableFolder}additional/python/get_folder_structure.py"]);
@@ -461,7 +463,7 @@ class Linux {
       }
       ActionEntry entry = ActionEntry(
           name: folderName,
-          description: 'Open ' + folder,
+          description: AppLocalizations.of(context)!.openX + " " + folder,
           action: "openfolder:" + folder);
       entry.priority = -10;
       actionEntries.add(entry);
@@ -518,7 +520,7 @@ class Linux {
     return filter;
   }
 
-  static Future<List<ActionEntry>> getRecentFiles() async {
+  static Future<List<ActionEntry>> getRecentFiles(BuildContext context) async {
     String recentFileString = await runCommandWithCustomArgumentsAndGetStdOut(
         "/usr/bin/python3",
         ["${executableFolder}additional/python/get_recent_files.py"]);
@@ -528,7 +530,7 @@ class Linux {
       String fileName = recentFile.split("/").last;
       ActionEntry actionEntry = ActionEntry(
           name: fileName,
-          description: "Open " + recentFile,
+          description: AppLocalizations.of(context)!.openX + " " + recentFile,
           action: "openfile:" + recentFile);
       actionEntry.priority = -15;
       actionEntries.add(actionEntry);
@@ -727,7 +729,8 @@ class Linux {
     }
   }
 
-  static Future<List<ActionEntry>> getFavoriteFiles() async {
+  static Future<List<ActionEntry>> getFavoriteFiles(
+      BuildContext context) async {
     String output = await runPythonScript("get_favorite_files.py");
     output = output.trim();
     List<String> list = output.split("\n");
@@ -736,7 +739,9 @@ class Linux {
     for (String e in list) {
       String fileName = e.split("/").last;
       ActionEntry actionEntry = ActionEntry(
-          name: fileName, description: "Open " + e, action: "openfile:" + e);
+          name: fileName,
+          description: AppLocalizations.of(context)!.openX + " " + e,
+          action: "openfile:" + e);
       actionEntry.priority = -5;
       actionEntries.add(actionEntry);
     }
@@ -832,7 +837,7 @@ class Linux {
 
   /// Returns new list of found folder entries.
   static List<ActionEntry> getFoldersOfActionEntries(
-      List<ActionEntry> currentEntries) {
+      BuildContext context, List<ActionEntry> currentEntries) {
     List<String> allPaths = [];
 
     currentEntries.forEach((element) {
@@ -862,7 +867,9 @@ class Linux {
       if (elements.length > 1) {
         String name = elements[elements.length - 2];
         ActionEntry newEntry = ActionEntry(
-            name: name, description: "Open $path", action: "openfolder:$path");
+            name: name,
+            description: AppLocalizations.of(context)!.openX + " $path",
+            action: "openfolder:$path");
         newEntries.add(newEntry);
       }
     });

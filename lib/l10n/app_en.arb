@@ -1,0 +1,232 @@
+{
+  "@@locale": "en",
+  "@@last_modified": "2022-11-17T17:31:16.074",
+  "helloWorld": "Hello World!",
+  "enterASearchTerm": "Enter a search term...",
+  "securityCheckDescription": "Keep the security of your computer in track.",
+  "warpinatorDescription": "Send files quickly over the local network. To Linux, Android, iOS and Windows.",
+  "securityCheck": "Security Check",
+  "afterInstallation": "After Installation",
+  "afterInstallationDescription": "Set up your linux machine to your needs.",
+  "openX": "Open",
+  "searchInWebFor": "Search in web for",
+  "lookForOnlineResults": "Look for online results..",
+  "sendFeedback": "Send Feedback",
+  "clear": "Clear",
+  "loading": "Loading...",
+  "preparingSearch": "Preparing search...",
+  "analysingSystemSecurity": "Analysing System Security ...",
+  "additionalSoftwareSources": "Additional Software Sources",
+  "securityCheckFailedBecauseNoRoot": "That didn't work. You need root rights to run the security check.",
+  "cancel": "Cancel",
+  "retry": "Retry",
+  "backToSearch": "Back to search",
+  "reload": "Reload",
+  "analyzingSystemScurity": "Analysing system security...",
+  "updates": "Updates",
+  "systemIsUpToDate": "Great! Your system is up to date.",
+  "xPackagesShouldBeUpdated": "packages should be updated.",
+  "homeFolder": "Home folder",
+  "homeFolderRightsOkay": "Your home folder rights are okay. Other users can't see your files.",
+  "homeFolderRightsNotOkay": "Your home folder is not secure. Other users could see your files.",
+  "networkSecurity": "Network security",
+  "noFirewallRecognized": "No firewall recognized on your system.\\nA firewall is recommended for computers with access from the internet.",
+  "firewallIsRunning": "Your firewall is up and running. Great job!",
+  "undefined": "Your firewall is inactive.A firewall is recommended for computers with access from the internet.",
+  "firewallIsInactive": "Your firewall is inactive. A firewall is recommended for computers with access from the internet.",
+  "sshFoundOnYourComputer": "SSH server found on your computer. Your computer could be accessible from the outside. Uninstall ssh-server if you don't need it.",
+  "noFail2BanFound": "No fail2ban instance found on your computer. With it your computer is more imune to ssh brute force attacks.",
+  "xrdpRunningOnYourComputer": "Xrdp is running at your computer. It's recommended to uninstall if you don't really need it.",
+  "additionalSoftwareSourcesDetected": "Some additional software sources where found. These are potentially unsafe.\\nIf you don't need security updates from these it is recommended to deactivate them.",
+  "noAdditionalSoftwareSourcesFound": "Good! No additional software sources found.",
+  "@helloWorld": {
+    "placeholders": {},
+    "description": "The conventional newborn programmer greeting",
+    "type": "text"
+  },
+  "@enterASearchTerm": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@securityCheckDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@warpinatorDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@securityCheck": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@afterInstallation": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@afterInstallationDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@openX": {
+    "placeholders": {},
+    "description": "open folder/ open file/, ...",
+    "type": "text"
+  },
+  "@searchInWebFor": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@lookForOnlineResults": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@sendFeedback": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@clear": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@loading": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@preparingSearch": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@analysingSystemSecurity": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@additionalSoftwareSources": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@securityCheckFailedBecauseNoRoot": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@cancel": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@retry": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@backToSearch": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@reload": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@analyzingSystemScurity": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@updates": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@systemIsUpToDate": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@xPackagesShouldBeUpdated": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@homeFolder": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@homeFolderRightsOkay": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@homeFolderRightsNotOkay": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@networkSecurity": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@noFirewallRecognized": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@firewallIsRunning": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@undefined": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@firewallIsInactive": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@sshFoundOnYourComputer": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@noFail2BanFound": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@xrdpRunningOnYourComputer": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@additionalSoftwareSourcesDetected": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@noAdditionalSoftwareSourcesFound": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  }
+}

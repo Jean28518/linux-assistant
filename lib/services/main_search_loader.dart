@@ -5,6 +5,7 @@ import 'package:linux_assistant/layouts/loading_indicator.dart';
 import 'package:linux_assistant/layouts/main_search.dart';
 import 'package:linux_assistant/models/action_entry_list.dart';
 import 'package:linux_assistant/services/linux.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MainSearchLoader extends StatefulWidget {
   const MainSearchLoader({Key? key}) : super(key: key);
@@ -22,18 +23,18 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
 
     // prepare Action Entries
     ActionEntryList returnValue = ActionEntryList(entries: []);
-    returnValue.entries.addAll(recommendations);
+    returnValue.entries.addAll(getRecommendations(context));
     returnValue.entries.addAll(basicEntries);
-    var folderEntries = await Linux.getAllFolderEntriesOfUser();
+    var folderEntries = await Linux.getAllFolderEntriesOfUser(context);
     returnValue.entries.addAll(folderEntries);
     var applicationEntries = await Linux.getAllAvailableApplications();
     returnValue.entries.addAll(applicationEntries);
-    var recentFiles = await Linux.getRecentFiles();
+    var recentFiles = await Linux.getRecentFiles(context);
     returnValue.entries.addAll(recentFiles);
-    var favoriteFiles = await Linux.getFavoriteFiles();
+    var favoriteFiles = await Linux.getFavoriteFiles(context);
     returnValue.entries.addAll(favoriteFiles);
     var additionalFolders =
-        Linux.getFoldersOfActionEntries(returnValue.entries);
+        Linux.getFoldersOfActionEntries(context, returnValue.entries);
     returnValue.entries.addAll(additionalFolders);
 
     return returnValue;
@@ -48,7 +49,8 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
         if (snapshot.hasData) {
           return (MainSearch(actionEntries: snapshot.data!.entries));
         } else {
-          return LoadingIndicator(text: "Preparing search...");
+          return LoadingIndicator(
+              text: AppLocalizations.of(context)!.preparingSearch);
         }
       },
     );

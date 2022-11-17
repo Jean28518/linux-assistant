@@ -1,0 +1,226 @@
+{
+  "@@locale": "de",
+  "@@last_modified": "2022-11-17T17:31:16.072",
+  "helloWorld": "Hallo Welt!",
+  "enterASearchTerm": "Suchbegriff eingeben...",
+  "securityCheckDescription": "Behalte die Sicherheit Deines Computers im Auge.",
+  "warpinatorDescription": "Sende Dateien schnell über das lokale Netzwerk. Zu Linux, Android, iOS und Windows.",
+  "sendFeedback": "Sende Feedback",
+  "securityCheck": "Sicherheitsüberprüfung",
+  "afterInstallation": "Nach der Installation",
+  "afterInstallationDescription": "Setze Deinen Linux-Rechner nach Deinen Bedürfnissen auf.",
+  "openX": "Öffne",
+  "searchInWebFor": "Suche im Internet nach",
+  "lookForOnlineResults": "Sehe nach Online-Ergebnissen..",
+  "clear": "Leeren",
+  "loading": "Lade...",
+  "preparingSearch": "Bereite Suche vor...",
+  "analysingSystemSecurity": "Analysiere System-Sicherheit...",
+  "additionalSoftwareSources": "Zusätzliche Paketquellen",
+  "securityCheckFailedBecauseNoRoot": "Das hat leider nicht funktioniert. Du benötigst Root-Reche, um die Sicherheits-Überprüfung durchzuführen.",
+  "cancel": "Abbrechen",
+  "retry": "Erneut versuchen",
+  "backToSearch": "Zurück zur Suche",
+  "reload": "Neu laden",
+  "analyzingSystemScurity": "Analysiere System-Sicherheit...",
+  "updates": "Aktualisierungen",
+  "systemIsUpToDate": "Super! Dein System ist auf dem neuesten Stand.",
+  "xPackagesShouldBeUpdated": "Pakete sollten aktualisiert werden.",
+  "homeFolder": "Persönlicher Ordner",
+  "homeFolderRightsOkay": "Die Rechte Deines persönlichen Ordners sind korrekt. Keine anderen Benutzer können Deine Dateien sehen.",
+  "homeFolderRightsNotOkay": "Dein persönlicher Ordner ist nicht sicher. Andere Benutzer könnten deine Dateien sehen.",
+  "networkSecurity": "Netzwerk-Sicherheit",
+  "noFirewallRecognized": "Es wurde keine Firewall auf Deinem System gefunden. Eine Firewall ist für Rechner mit Zugriff vom Internet empfohlen.",
+  "firewallIsRunning": "Deine Firewall ist aktiv. Guter Job!",
+  "firewallIsInactive": "Deine Firewall ist inaktiv. Eine Firewall ist für Rechner mit Zugriff vom Internet empfohlen.",
+  "sshFoundOnYourComputer": "Ein SSH-Server wurde auf Deinem Rechner gefunden. Dein Computer könnte von außen erreichbar sein. Bitte deinstalliere ssh-server, wenn Du diesen nicht benötigst. ",
+  "noFail2BanFound": "Es wurde leider keine fail2ban Instanz auf Deinem Rechner gefunden. Mit diesem Dienst ist Dein Rechner sicherer vor SSH-Brute-Force Attacken.",
+  "xrdpRunningOnYourComputer": "Xrdp wurde auf Deinem Computer gefunden. Es wird stärkstens empfohlen, diesen zu deinstallieren, wenn Du ihn nicht benötigst.",
+  "additionalSoftwareSourcesDetected": "Es wurden zusätzliche Paketquellen gefunden. Diese könnten potentiell schädlich sein. Wenn Du nicht auf Sicherheitsupdates von den entsprechenden Programmen angewiesen bist, wird empfohlen, diese zu deaktivieren.",
+  "noAdditionalSoftwareSourcesFound": "Super! Es wurden keine zusätzlichen Paketquellen gefunden.",
+  "@helloWorld": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@enterASearchTerm": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@securityCheckDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@warpinatorDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@sendFeedback": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@securityCheck": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@afterInstallation": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@afterInstallationDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@openX": {
+    "placeholders": {},
+    "description": "open folder/ open file/, ...",
+    "type": "text"
+  },
+  "@searchInWebFor": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@lookForOnlineResults": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@clear": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@loading": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@preparingSearch": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@analysingSystemSecurity": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@additionalSoftwareSources": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@securityCheckFailedBecauseNoRoot": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@cancel": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@retry": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@backToSearch": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@reload": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@analyzingSystemScurity": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@updates": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@systemIsUpToDate": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@xPackagesShouldBeUpdated": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@homeFolder": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@homeFolderRightsOkay": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@homeFolderRightsNotOkay": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@networkSecurity": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@noFirewallRecognized": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@firewallIsRunning": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@firewallIsInactive": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@sshFoundOnYourComputer": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@noFail2BanFound": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@xrdpRunningOnYourComputer": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@additionalSoftwareSourcesDetected": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@noAdditionalSoftwareSourcesFound": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  }
+}

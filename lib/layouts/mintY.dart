@@ -267,8 +267,8 @@ class MintYButtonNavigate extends StatelessWidget {
       {required this.route,
       this.text = const Text("Text"),
       this.color = const Color.fromARGB(255, 232, 232, 232),
-      this.width = 160,
-      this.height = 60,
+      this.width = 110,
+      this.height = 40,
       Key? key})
       : super(key: key);
 
