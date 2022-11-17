@@ -423,14 +423,29 @@ class Linux {
       for (String bookmarkCandidate in bookmarkCandidates) {
         String bookmark = bookmarkCandidate.split(" ")[0];
         if (bookmark.startsWith("file://")) {
-          folders.add(bookmark.replaceFirst("file://", ""));
+          if (!bookmark.endsWith("/")) {
+            bookmark = "$bookmark/";
+          }
+          String folder = bookmark.replaceFirst("file://", "");
+
+          // Sometimes broken bookmarks are also available at systems. Filter them out.
+          if (Directory(folder).existsSync()) {
+            folders.add(folder);
+          }
         }
       }
     }
 
     List<ActionEntry> actionEntries = [];
     for (String folder in folders) {
-      String folderName = folder.split('/').last;
+      List<String> elements = folder.split("/");
+      if (elements.length < 2) {
+        continue;
+      }
+      String folderName = elements[elements.length - 1];
+      if (folderName.trim() == "") {
+        folderName = elements[elements.length - 2];
+      }
       ActionEntry entry = ActionEntry(
           name: folderName,
           description: 'Open ' + folder,
@@ -800,5 +815,44 @@ class Linux {
 
     ConfigHandler configHandler = ConfigHandler();
     configHandler.setValue("environment", Linux.currentEnviroment.toJson());
+  }
+
+  /// Returns new list of found folder entries.
+  static List<ActionEntry> getFoldersOfActionEntries(
+      List<ActionEntry> currentEntries) {
+    List<String> allPaths = [];
+
+    currentEntries.forEach((element) {
+      if (element.action.startsWith("openfile:")) {
+        String path = element.action.replaceFirst("openfile:", "");
+        List<String> singleFolders = path.split("/");
+        singleFolders.removeLast(); // We don't need the filename.
+
+        // Build every path.
+        for (int i = 0; i < singleFolders.length; i++) {
+          String path = "/";
+          for (int j = 0; j <= i; j++) {
+            if ((singleFolders[j] != "")) {
+              path += "${singleFolders[j]}/";
+            }
+          }
+          if (!allPaths.contains(path)) {
+            allPaths.add(path);
+          }
+        }
+      }
+    });
+
+    List<ActionEntry> newEntries = [];
+    allPaths.forEach((path) {
+      List<String> elements = path.split("/");
+      if (elements.length > 1) {
+        String name = elements[elements.length - 2];
+        ActionEntry newEntry = ActionEntry(
+            name: name, description: "Open $path", action: "openfolder:$path");
+        newEntries.add(newEntry);
+      }
+    });
+    return newEntries;
   }
 }

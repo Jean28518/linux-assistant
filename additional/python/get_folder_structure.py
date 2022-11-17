@@ -18,7 +18,7 @@ def get_folders_in(folder_path):
             continue
         # Only add folders
         if (os.path.isdir(folder_path + entry_name)):
-            return_value.append(folder_path + entry_name)
+            return_value.append(folder_path + entry_name + "/")
     return return_value
 
 def add_arrays(arr1, arr2):
