@@ -124,16 +124,20 @@ class Linux {
     }
   }
 
-  static void openOrInstallWarpinator(BuildContext context) async {
+  /// [callback] is used for clearing and reoading the search.
+  static void openOrInstallWarpinator(
+      BuildContext context, VoidCallback callback) async {
     bool does_warpinator_exist = await File("/usr/bin/warpinator").exists();
     if (does_warpinator_exist) {
       runCommand("/usr/bin/warpinator");
+      callback();
       return;
     } else {
       does_warpinator_exist =
           await isSpecificFlatpakInstalled("org.x.Warpinator");
       if (does_warpinator_exist) {
         runCommand("/usr/bin/flatpak run org.x.Warpinator");
+        callback();
         return;
       }
     }

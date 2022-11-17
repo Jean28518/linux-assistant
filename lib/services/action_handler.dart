@@ -29,8 +29,7 @@ class ActionHandler {
         callback();
         break;
       case "send_files_via_warpinator":
-        Linux.openOrInstallWarpinator(context);
-        callback();
+        Linux.openOrInstallWarpinator(context, callback);
         break;
       case "security_check":
         MainSearch.unregisterHotkeysForKeyboardUse();
