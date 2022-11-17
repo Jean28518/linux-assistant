@@ -7,11 +7,13 @@ import 'package:linux_assistant/enums/browsers.dart';
 import 'package:linux_assistant/enums/desktops.dart';
 import 'package:linux_assistant/enums/distros.dart';
 import 'package:linux_assistant/enums/softwareManagers.dart';
+import 'package:linux_assistant/layouts/run_command_queue.dart';
 import 'package:linux_assistant/models/action_entry.dart';
 import 'package:linux_assistant/models/enviroment.dart';
 import 'package:linux_assistant/models/linux_command.dart';
 import 'package:linux_assistant/services/config_handler.dart';
 import 'package:linux_assistant/services/hashing.dart';
+import 'package:linux_assistant/services/main_search_loader.dart';
 
 class Linux {
   static Environment currentEnviroment = Environment();
@@ -122,7 +124,7 @@ class Linux {
     }
   }
 
-  static void openOrInstallWarpinator() async {
+  static void openOrInstallWarpinator(BuildContext context) async {
     bool does_warpinator_exist = await File("/usr/bin/warpinator").exists();
     if (does_warpinator_exist) {
       runCommand("/usr/bin/warpinator");
@@ -136,7 +138,14 @@ class Linux {
       }
     }
     // if no warpinator is installed at all:
-    installApplications(["warpinator"]);
+    await installApplications(["warpinator", "org.x.Warpinator"]);
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => RunCommandQueue(
+          title: "Install Warpinator",
+          route: MainSearchLoader(),
+          message:
+              "Installing Warpinator...\nYou have to reopen the Warpinator entry after."),
+    ));
   }
 
   /// Tries to install one of the appCodes. Stops after one was successfully found.
