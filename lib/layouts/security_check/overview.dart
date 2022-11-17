@@ -334,14 +334,13 @@ class SecuritySuccessMessage extends StatelessWidget {
         const SizedBox(
           width: 8,
         ),
-        Column(children: [
-          Text(
+        Flexible(
+          child: Text(
             text,
             style: MintY.paragraph,
             textAlign: TextAlign.left,
-            overflow: TextOverflow.fade,
-          )
-        ]),
+          ),
+        )
       ],
     );
   }
@@ -363,9 +362,11 @@ class SecurityWarningMessage extends StatelessWidget {
         const SizedBox(
           width: 8,
         ),
-        Text(
-          text,
-          style: MintY.paragraph,
+        Flexible(
+          child: Text(
+            text,
+            style: MintY.paragraph,
+          ),
         ),
       ],
     );
