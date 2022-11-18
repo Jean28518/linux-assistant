@@ -6,6 +6,7 @@ import 'package:linux_assistant/models/enviroment.dart';
 import 'package:linux_assistant/services/config_handler.dart';
 import 'package:linux_assistant/services/linux.dart';
 import 'package:linux_assistant/services/main_search_loader.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class StartScreen extends StatelessWidget {
   const StartScreen({Key? key}) : super(key: key);
@@ -54,7 +55,7 @@ class StartScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                "Your. Linux. Assistant.",
+                AppLocalizations.of(context)!.yourLinuxAssistant,
                 style: MintY.heading1,
               ),
               SizedBox(
@@ -63,7 +64,7 @@ class StartScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(32.0),
                 child: Text(
-                  "Linux Helper is a distribution indenpendent assistant to help and guide you through your daily usage. Just enter some keywords into the search field and find whatever you desire! Linux Helper comes with useful shotcuts to files, folders and applications and also has some routines. Links to settings and e.g. the included PC-Security checker are also available.",
+                  AppLocalizations.of(context)!.linuxAssistantLongDescription,
                   style: MintY.paragraph,
                   overflow: TextOverflow.visible,
                 ),

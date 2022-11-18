@@ -38,6 +38,24 @@
   "xrdpRunningOnYourComputer": "Xrdp wurde auf Deinem Computer gefunden. Es wird stärkstens empfohlen, diesen zu deinstallieren, wenn Du ihn nicht benötigst.",
   "additionalSoftwareSourcesDetected": "Es wurden zusätzliche Paketquellen gefunden. Diese könnten potentiell schädlich sein. Wenn Du nicht auf Sicherheitsupdates von den entsprechenden Programmen angewiesen bist, wird empfohlen, diese zu deaktivieren.",
   "noAdditionalSoftwareSourcesFound": "Super! Es wurden keine zusätzlichen Paketquellen gefunden.",
+  "password": "Passwort",
+  "changePasswordDescription": "Passwort des aktuellen Nutzers ändern",
+  "userProfile": "Benutzerprofil",
+  "changeUserProfile": "Ändere Benutzerdetails",
+  "systemInformation": "Systeminformation",
+  "distribution": "Distribution",
+  "version": "Version",
+  "desktop": "Benutzeroberfläche",
+  "language": "Sprache",
+  "next": "Weiter",
+  "selectYourDistribution": "Wähle Deine Distribution",
+  "selectYourDesktop": "Wähle Deine Benutzeroberfläche",
+  "isTheRecognizedSystemCorrect": "Ist das erkennte System korrekt?",
+  "noIWantToChange": "Nein, ich möchte es ändern",
+  "yes": "Ja",
+  "recognizingSystem": "Systemerkennung...",
+  "yourLinuxAssistant": "Dein. Linux. Assistent.",
+  "linuxAssistantLongDescription": "Linux Assistant ist distributionsunabhängig und wurde dazu entwickelt, um Dir bei der täglichen Arbeit zu helfen und Tipps zu geben. Gib einfach ein paar Wörter in das Suchfeld ein und finde, was Du auch immer suchst! Der Linux Assistent kommt mit nützlichen Links zu Dateien, Ordnern und Anwendungen und hat ebenfalls einige Routinen, die Dir das Leben einfacher machen. Links zu Einstellungen und z.B. der mitgelieferten Sicherheitsüberprüfung sind ebenfalls vorhanden.",
   "@helloWorld": {
     "placeholders": {},
     "description": "",
@@ -221,6 +239,96 @@
   "@noAdditionalSoftwareSourcesFound": {
     "placeholders": {},
     "description": "",
+    "type": "text"
+  },
+  "@password": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@changePasswordDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@userProfile": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@changeUserProfile": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@systemInformation": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@distribution": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@version": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@desktop": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@language": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@next": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@selectYourDistribution": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@selectYourDesktop": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@isTheRecognizedSystemCorrect": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@noIWantToChange": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@yes": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@recognizingSystem": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@yourLinuxAssistant": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@linuxAssistantLongDescription": {
+    "placeholders": {},
+    "description": "description at start screen",
     "type": "text"
   }
 }

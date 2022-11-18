@@ -24,7 +24,7 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
     // prepare Action Entries
     ActionEntryList returnValue = ActionEntryList(entries: []);
     returnValue.entries.addAll(getRecommendations(context));
-    returnValue.entries.addAll(basicEntries);
+    returnValue.entries.addAll(getBasicEntries(context));
     var folderEntries = await Linux.getAllFolderEntriesOfUser(context);
     returnValue.entries.addAll(folderEntries);
     var applicationEntries = await Linux.getAllAvailableApplications();

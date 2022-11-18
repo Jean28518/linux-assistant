@@ -32,13 +32,30 @@
   "networkSecurity": "Network security",
   "noFirewallRecognized": "No firewall recognized on your system.\\nA firewall is recommended for computers with access from the internet.",
   "firewallIsRunning": "Your firewall is up and running. Great job!",
-  "undefined": "Your firewall is inactive.A firewall is recommended for computers with access from the internet.",
+  "password": "Password",
   "firewallIsInactive": "Your firewall is inactive. A firewall is recommended for computers with access from the internet.",
   "sshFoundOnYourComputer": "SSH server found on your computer. Your computer could be accessible from the outside. Uninstall ssh-server if you don't need it.",
   "noFail2BanFound": "No fail2ban instance found on your computer. With it your computer is more imune to ssh brute force attacks.",
   "xrdpRunningOnYourComputer": "Xrdp is running at your computer. It's recommended to uninstall if you don't really need it.",
   "additionalSoftwareSourcesDetected": "Some additional software sources where found. These are potentially unsafe.\\nIf you don't need security updates from these it is recommended to deactivate them.",
   "noAdditionalSoftwareSourcesFound": "Good! No additional software sources found.",
+  "changePasswordDescription": "Change password of current user",
+  "userProfile": "User Profile",
+  "changeUserProfile": "Change userdetails",
+  "systemInformation": "System information",
+  "distribution": "Distribution",
+  "version": "Version",
+  "desktop": "Desktop",
+  "language": "Language",
+  "next": "Next",
+  "selectYourDistribution": "Select your distribution",
+  "selectYourDesktop": "Select your desktop",
+  "isTheRecognizedSystemCorrect": "Is your recognized system correct?",
+  "noIWantToChange": "No, I wan't to change",
+  "yes": "Yes",
+  "recognizingSystem": "Recognizing system...",
+  "yourLinuxAssistant": "Your. Linux. Assistant.",
+  "linuxAssistantLongDescription": "Linux Assistant is distribution indenpendent and designed to help and guide you through your daily usage. Just enter some keywords into the search field and find whatever you desire! Linux Assistant comes with useful shotcuts to files, folders and applications and also has some routines. Links to settings and e.g. the included PC-Security checker are also available.",
   "@helloWorld": {
     "placeholders": {},
     "description": "The conventional newborn programmer greeting",
@@ -194,7 +211,7 @@
     "description": "",
     "type": "text"
   },
-  "@undefined": {
+  "@password": {
     "placeholders": {},
     "description": "",
     "type": "text"
@@ -227,6 +244,91 @@
   "@noAdditionalSoftwareSourcesFound": {
     "placeholders": {},
     "description": "",
+    "type": "text"
+  },
+  "@changePasswordDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@userProfile": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@changeUserProfile": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@systemInformation": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@distribution": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@version": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@desktop": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@language": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@next": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@selectYourDistribution": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@selectYourDesktop": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@isTheRecognizedSystemCorrect": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@noIWantToChange": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@yes": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@recognizingSystem": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@yourLinuxAssistant": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@linuxAssistantLongDescription": {
+    "placeholders": {},
+    "description": "description at start screen",
     "type": "text"
   }
 }

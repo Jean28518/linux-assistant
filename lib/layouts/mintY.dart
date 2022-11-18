@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MintY {
   static Color currentColor = Color(0xff6db443);
@@ -308,7 +309,7 @@ class MintYButtonNext extends StatelessWidget {
   Widget build(BuildContext context) {
     return MintYButton(
       text: Text(
-        "Next",
+        AppLocalizations.of(context)!.next,
         style: MintY.heading2White,
       ),
       color: MintY.currentColor,

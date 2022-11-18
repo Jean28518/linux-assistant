@@ -8,6 +8,7 @@ import 'package:linux_assistant/models/enviroment.dart';
 import 'package:linux_assistant/services/config_handler.dart';
 import 'package:linux_assistant/services/linux.dart';
 import 'package:linux_assistant/services/main_search_loader.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class IsYourEnvironmentCorrectView extends StatelessWidget {
   const IsYourEnvironmentCorrectView({Key? key}) : super(key: key);
@@ -25,15 +26,15 @@ class IsYourEnvironmentCorrectView extends StatelessWidget {
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  "Is your recognized system correct?",
+                Text(
+                  AppLocalizations.of(context)!.isTheRecognizedSystemCorrect,
                   style: MintY.heading1,
                 ),
                 const SizedBox(
                   height: 16,
                 ),
                 Text(
-                  "System: ${getNiceStringOfDistrosEnum(snapshot.data!.distribution)} ${snapshot.data!.version}\nDesktop: ${getNiceStringOfDesktopsEnum(snapshot.data!.desktop)}\nLanguage: ${snapshot.data!.language}",
+                  "${AppLocalizations.of(context)!.distribution}: ${getNiceStringOfDistrosEnum(snapshot.data!.distribution)} ${snapshot.data!.version}\n${AppLocalizations.of(context)!.desktop}: ${getNiceStringOfDesktopsEnum(snapshot.data!.desktop)}\n${AppLocalizations.of(context)!.language}: ${snapshot.data!.language}",
                   style: MintY.heading2,
                 ),
                 const SizedBox(
@@ -43,8 +44,8 @@ class IsYourEnvironmentCorrectView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     MintYButton(
-                      text: const Text(
-                        "No, I wan't to change",
+                      text: Text(
+                        AppLocalizations.of(context)!.noIWantToChange,
                         style: MintY.heading2,
                       ),
                       onPressed: () {
@@ -60,8 +61,8 @@ class IsYourEnvironmentCorrectView extends StatelessWidget {
                       width: 32,
                     ),
                     MintYButton(
-                      text: const Text(
-                        "Yes",
+                      text: Text(
+                        AppLocalizations.of(context)!.yes,
                         style: MintY.heading2White,
                       ),
                       color: Colors.blue,
@@ -80,7 +81,7 @@ class IsYourEnvironmentCorrectView extends StatelessWidget {
           );
         } else {
           return LoadingIndicator(
-            text: "Recognizing system...",
+            text: AppLocalizations.of(context)!.recognizingSystem,
           );
         }
       }),

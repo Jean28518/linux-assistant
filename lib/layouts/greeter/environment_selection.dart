@@ -7,6 +7,7 @@ import 'package:linux_assistant/models/enviroment.dart';
 import 'package:linux_assistant/services/config_handler.dart';
 import 'package:linux_assistant/services/linux.dart';
 import 'package:linux_assistant/services/main_search_loader.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EnvironmentSelectionView extends StatefulWidget {
   const EnvironmentSelectionView({Key? key}) : super(key: key);
@@ -30,7 +31,7 @@ class _EnvironmentSelectionViewState extends State<EnvironmentSelectionView> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "Distribution: ",
+                "${AppLocalizations.of(context)!.distribution}: ",
                 style: MintY.heading1,
               ),
               SizedBox(
@@ -58,7 +59,7 @@ class _EnvironmentSelectionViewState extends State<EnvironmentSelectionView> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "Version: ",
+                "${AppLocalizations.of(context)!.version}: ",
                 style: MintY.heading1,
               ),
               SizedBox(
@@ -94,7 +95,7 @@ class _EnvironmentSelectionViewState extends State<EnvironmentSelectionView> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "Desktop: ",
+                "${AppLocalizations.of(context)!.desktop}: ",
                 style: MintY.heading1,
               ),
               SizedBox(
@@ -122,7 +123,7 @@ class _EnvironmentSelectionViewState extends State<EnvironmentSelectionView> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "Language code: ",
+                "${AppLocalizations.of(context)!.language}: ",
                 style: MintY.heading1,
               ),
               SizedBox(
@@ -156,8 +157,8 @@ class _EnvironmentSelectionViewState extends State<EnvironmentSelectionView> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               MintYButton(
-                text: const Text(
-                  "Cancel",
+                text: Text(
+                  AppLocalizations.of(context)!.cancel,
                   style: MintY.heading2,
                 ),
                 onPressed: () {
@@ -173,8 +174,8 @@ class _EnvironmentSelectionViewState extends State<EnvironmentSelectionView> {
                 width: 32,
               ),
               MintYButton(
-                text: const Text(
-                  "Next",
+                text: Text(
+                  AppLocalizations.of(context)!.next,
                   style: MintY.heading2White,
                 ),
                 color: Colors.blue,
@@ -204,8 +205,8 @@ class _EnvironmentSelectionViewState extends State<EnvironmentSelectionView> {
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Text(
-                "Select your distribution:",
+              Text(
+                "${AppLocalizations.of(context)!.selectYourDistribution}:",
                 style: MintY.heading1,
               ),
               const SizedBox(
@@ -248,8 +249,8 @@ class _EnvironmentSelectionViewState extends State<EnvironmentSelectionView> {
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Text(
-                "Select your desktop:",
+              Text(
+                "${AppLocalizations.of(context)!.selectYourDesktop}:",
                 style: MintY.heading1,
               ),
               const SizedBox(
