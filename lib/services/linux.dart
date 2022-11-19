@@ -700,6 +700,12 @@ class Linux {
     return output.contains("nvidia");
   }
 
+  static Future<bool> isNouveauCurrentGraphicsDriver() async {
+    String output = await runCommandAndGetStdout("lspci -nnk");
+    output = output.toLowerCase();
+    return output.contains("kernel driver in use: nouveau");
+  }
+
   /// Puts all commands into [Linux.commandQueue]
   static void applyAutomaticConfigurationAfterInstallation(
       {bool installMultimediaCodecs_ = true,
@@ -833,6 +839,11 @@ class Linux {
 
     ConfigHandler configHandler = ConfigHandler();
     configHandler.setValue("environment", Linux.currentEnviroment.toJson());
+
+    bool nvidiaCardInstalled = await isNvidiaCardInstalledOnSystem();
+    bool nouveauRunning = await isNouveauCurrentGraphicsDriver();
+    currentEnviroment.nvidiaCardAndNouveauRunning =
+        nvidiaCardInstalled && nouveauRunning;
   }
 
   /// Returns new list of found folder entries.

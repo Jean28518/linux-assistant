@@ -15,6 +15,9 @@ class Environment {
   /// POSIX User ID.
   var currentUserId = 1000;
 
+  // Loaded at runtime:
+  bool nvidiaCardAndNouveauRunning = false;
+
   Map<String, dynamic> toJson() {
     return {
       'distribution': distribution.toString(),
