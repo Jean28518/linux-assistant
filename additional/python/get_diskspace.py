@@ -11,6 +11,8 @@ def main():
             continue
         if line.startswith("/dev/loop"):
             continue
+        if line.startswith("revokefs-fuse"):
+            continue
         if line.startswith("Filesystem"):
             continue
         line : str = line
