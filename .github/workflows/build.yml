@@ -25,8 +25,15 @@ jobs:
       - run: flutter build linux
       - run: cp -r additional build/linux/x64/release/bundle/
       - run: chmod +x build/linux/x64/release/bundle/linux_assistant
-      - name: Upload Artifact
+      - name: Upload bundle
         uses: actions/upload-artifact@v1
         with:
           name: linux-assistant-bundle
           path: build/linux/x64/release/bundle/
+      - run: bash build-deb.sh
+      - name: Upload deb
+        uses: actions/upload-artifact@v1
+        with:
+          name: linux-assistant-deb
+          path: linux-assistant.deb
+
