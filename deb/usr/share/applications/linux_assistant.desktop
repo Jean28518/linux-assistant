@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Linux-Assistant
+Comment=Helper for daily use with integrated search
+Comment[de]=Alltags-Helfer mit integrierter Suche
+Exec=linux-assistant
+Icon=/usr/share/icons/hicolor/256x256/apps/linux-assistant.png
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=System;Utility
