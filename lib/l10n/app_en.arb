@@ -59,7 +59,7 @@
   "welcomeToYourLinuxMachine": "Welcome to your new linux machine!",
   "afterInstallationGreetingDescription": "In the next minutes you will configure your linux machine to your needs.",
   "letsStart": "Let's start!",
-  "setUpXWithRecommendedRoutines": "Setup $currentDistribution with recommended settings?",
+  "includeBasicSystemInformation": "Include basic system information",
   "setUpXWithRecommendedSettings": "Setup",
   "setUpXWithRecommendedSettingsPart2": "with recommended settings?",
   "manualConfiguration": "Manual Configuration",
@@ -75,7 +75,7 @@
   "automaticNvidiaDriverInstallation": "Automatic Nividia-Driver installation",
   "automaticNvidiaDriverInstallationDesciption": "All recommended drivers will be installed.",
   "automaticUpdateManagerConfiguration": "Automatic Update Manager Configuration",
-  "undefined": "",
+  "feedbackPlaceholder": "Are you missing a search result? For what are you searching? Do you have suggestions for improvement?...",
   "automaticUpdateManagerConfigurationDescription": "Automatic updates and (if included) maintainance will be configured.",
   "welcomeToYourNewSystem": "Welcome to your new system!",
   "automaticConfigurationIsRunningDescription": "Your system is setting up and applying your software configuration. This process could take many minutes depending on what actions and software you selected...",
@@ -98,6 +98,13 @@
   "libreOfficeDescription": "Open Source Office Suite from The Document Foundation. Great for the Open Document Format (.odt, .ods, .odp).",
   "onlyOfficeDescription": "Open Source Office Suite. Good for the Microsoft Document Format (.docx, .xls, .ppt).",
   "wpsOfficeDescription": "Proprietary Office Suite. Good for the Microsoft Document Format (.docx, .xls, .ppt).",
+  "includeSearchTermAndResults": "Include search term and search results",
+  "submit": "Submit",
+  "thankYouForTheFeedback": "Thank you very much for your feedback!",
+  "feedbackSentSuccessfully": "Your feedback was sent to the developers successfully.",
+  "close": "Close",
+  "sendingFeedbackFailed": "Sending feedback failed.",
+  "sendingFeedback": "Sending feedback...",
   "@helloWorld": {
     "placeholders": {},
     "description": "The conventional newborn programmer greeting",
@@ -388,7 +395,7 @@
     "description": "",
     "type": "text"
   },
-  "@setUpXWithRecommendedRoutines": {
+  "@includeBasicSystemInformation": {
     "placeholders": {},
     "description": "",
     "type": "text"
@@ -468,7 +475,7 @@
     "description": "",
     "type": "text"
   },
-  "@undefined": {
+  "@feedbackPlaceholder": {
     "placeholders": {},
     "description": "",
     "type": "text"
@@ -579,6 +586,41 @@
     "type": "text"
   },
   "@wpsOfficeDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@includeSearchTermAndResults": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@submit": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@thankYouForTheFeedback": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@feedbackSentSuccessfully": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@close": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@sendingFeedbackFailed": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@sendingFeedback": {
     "placeholders": {},
     "description": "",
     "type": "text"

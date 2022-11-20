@@ -96,6 +96,15 @@
   "libreOfficeDescription": "Open Source Office Suite veröffentlicht von 'The Document Foundation'. Genial für das Open Document Format (.odt, .ods, .odp).",
   "onlyOfficeDescription": "Open Source Office Suite. Geeignet für das Microsoft Document Format (.docx, .xls, .ppt).",
   "wpsOfficeDescription": "Proprietäre Office Suite. Gut geeignet für das Microsoft Document Format (.docx, .xls, .ppt).",
+  "feedbackPlaceholder": "Vermisst Du ein Suchergebnis? Nach was suchst Du? Hast Du Verbesserungsvorschläge?",
+  "includeSearchTermAndResults": "Versende ebenfalls den eingegeben Such-Text und die Such-Ergbnisse.",
+  "includeBasicSystemInformation": "Sende ebenfalls grundlegende Systeminformationen",
+  "submit": "Einsenden",
+  "thankYouForTheFeedback": "Vielen Dank für Dein Feedback!",
+  "feedbackSentSuccessfully": "Dein Feedback wurde den Entwicklern erfolgreich zugesendet.",
+  "close": "Schließen",
+  "sendingFeedbackFailed": "Das Versenden Deines Feedbacks hat leider nicht geklappt.",
+  "sendingFeedback": "Sende Feedback...",
   "@helloWorld": {
     "placeholders": {},
     "description": "",
@@ -567,6 +576,51 @@
     "type": "text"
   },
   "@wpsOfficeDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@feedbackPlaceholder": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@includeSearchTermAndResults": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@includeBasicSystemInformation": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@submit": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@thankYouForTheFeedback": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@feedbackSentSuccessfully": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@close": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@sendingFeedbackFailed": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@sendingFeedback": {
     "placeholders": {},
     "description": "",
     "type": "text"

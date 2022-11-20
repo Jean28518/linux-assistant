@@ -6,6 +6,7 @@ import 'package:linux_assistant/layouts/mintY.dart';
 import 'package:linux_assistant/models/action_entry.dart';
 import 'package:linux_assistant/models/enviroment.dart';
 import 'package:linux_assistant/services/feedback_service.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FeedbackDialog extends StatefulWidget {
   String searchText;
@@ -38,9 +39,9 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 Text(
-                  "Your Feedback",
+                  AppLocalizations.of(context)!.sendFeedback,
                   style: MintY.heading2,
                   textAlign: TextAlign.center,
                 ),
@@ -51,10 +52,9 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
             ),
             TextField(
               maxLines: 10,
-              decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText:
-                      "Are you missing a search result?\nFor what are you searching?\nDo you have suggestions for improvement?\n..."),
+              decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
+                  hintText: AppLocalizations.of(context)!.feedbackPlaceholder),
               style: MintY.paragraph,
               controller: messageController,
             ),
@@ -65,8 +65,8 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
                     onChanged: ((value) => setState(() {
                           widget.includeSearchTermAndResults = value!;
                         }))),
-                const Text(
-                  "Include search term and search results",
+                Text(
+                  AppLocalizations.of(context)!.includeSearchTermAndResults,
                   style: MintY.paragraph,
                 ),
               ],
@@ -78,8 +78,8 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
                     onChanged: ((value) => setState(() {
                           widget.includeBasicSystemInformation = value!;
                         }))),
-                const Text(
-                  "Include basic system information",
+                Text(
+                  AppLocalizations.of(context)!.includeBasicSystemInformation,
                   style: MintY.paragraph,
                 ),
               ],
@@ -91,8 +91,8 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 MintYButton(
-                  text: const Text(
-                    "Cancel",
+                  text: Text(
+                    AppLocalizations.of(context)!.cancel,
                     style: MintY.heading3,
                   ),
                   onPressed: () {
@@ -104,8 +104,8 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
                 ),
                 MintYButton(
                   color: Colors.blue,
-                  text: const Text(
-                    "Submit",
+                  text: Text(
+                    AppLocalizations.of(context)!.submit,
                     style: MintY.heading3White,
                   ),
                   onPressed: () {

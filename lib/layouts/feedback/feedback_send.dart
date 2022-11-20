@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:linux_assistant/layouts/mintY.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FeedbackSent extends StatelessWidget {
   Future<bool> success;
@@ -26,18 +27,18 @@ class FeedbackSent extends StatelessWidget {
                     size: 128,
                     color: MintY.currentColor,
                   ),
-                  const Text(
-                    "Thank you very much for your feedback!",
+                  Text(
+                    AppLocalizations.of(context)!.thankYouForTheFeedback,
                     style: MintY.heading2,
                   ),
-                  const Text(
-                    "Your feedback was sent to the developers successfully.",
+                  Text(
+                    AppLocalizations.of(context)!.feedbackSentSuccessfully,
                     style: MintY.heading3,
                   ),
                   const SizedBox(height: 32),
                   MintYButton(
-                    text: const Text(
-                      "Close",
+                    text: Text(
+                      AppLocalizations.of(context)!.close,
                       style: MintY.heading3White,
                     ),
                     color: MintY.currentColor,
@@ -55,14 +56,14 @@ class FeedbackSent extends StatelessWidget {
                     size: 128,
                     color: MintY.currentColor,
                   ),
-                  const Text(
-                    "Sending feedback failed.",
+                  Text(
+                    AppLocalizations.of(context)!.sendingFeedbackFailed,
                     style: MintY.heading2,
                   ),
                   const SizedBox(height: 32),
                   MintYButton(
-                    text: const Text(
-                      "Close",
+                    text: Text(
+                      AppLocalizations.of(context)!.close,
                       style: MintY.heading3White,
                     ),
                     color: MintY.currentColor,
@@ -73,13 +74,13 @@ class FeedbackSent extends StatelessWidget {
             } else {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  MintYProgressIndicatorCircle(),
-                  SizedBox(
+                children: [
+                  const MintYProgressIndicatorCircle(),
+                  const SizedBox(
                     height: 32,
                   ),
                   Text(
-                    "Sending feedback...",
+                    AppLocalizations.of(context)!.sendingFeedback,
                     style: MintY.heading2,
                   )
                 ],
