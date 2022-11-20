@@ -45,3 +45,10 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+linux-assistant.deb
+deb/usr/additional
+deb/usr/data
+deb/usr/lib
+deb/usr/linux_assistant
+

@@ -14,7 +14,7 @@ icon = icon_theme.lookup_icon(icon_name, 96, 0)
 if icon:
     print(icon.get_filename())
 else:
-    logo_folder_path = f"{os.getcwd()}/additional/logos/"
+    logo_folder_path = jessentials.get_value_from_arguments('path-to-alternative-logos')
     for entry in jfolders.get_folder_entries(logo_folder_path):
         if entry.replace(".png", "").split("/")[-1] == icon_name:
             print(entry)

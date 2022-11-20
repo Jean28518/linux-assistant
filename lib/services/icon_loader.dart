@@ -33,7 +33,8 @@ class IconLoader {
       iconPath = await Linux.runCommandWithCustomArgumentsAndGetStdOut(
           "/usr/bin/python3", [
         "${Linux.executableFolder}additional/python/get_icon_path.py",
-        "--icon=$appCode"
+        "--icon=$appCode",
+        "--path-to-alternative-logos=${Linux.executableFolder}additional/logos/"
       ]);
     }
 
@@ -45,7 +46,8 @@ class IconLoader {
             await Linux.runCommandWithCustomArgumentsAndGetStdOut(
                 "/usr/bin/python3", [
           "${Linux.executableFolder}additional/python/get_icon_path.py",
-          "--icon=applications-system"
+          "--icon=applications-system",
+          "--path-to-alternative-logos=${Linux.executableFolder}additional/logos/"
         ]);
         Image image = Image.file(
           File(defaultIconPath.replaceAll("\n", "")),
