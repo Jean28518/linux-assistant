@@ -105,6 +105,9 @@
   "close": "Close",
   "sendingFeedbackFailed": "Sending feedback failed.",
   "sendingFeedback": "Sending feedback...",
+  "startAfterInstallationRoutine": "Start initial setup of computer",
+  "timeToSetupYourComputer": "Time to setup your computer",
+  "timeToSetupYourComputerDescription": "Configure your linux machine to your needs.",
   "@helloWorld": {
     "placeholders": {},
     "description": "The conventional newborn programmer greeting",

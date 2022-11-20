@@ -50,7 +50,7 @@
   "next": "Weiter",
   "selectYourDistribution": "Wähle Deine Distribution",
   "selectYourDesktop": "Wähle Deine Benutzeroberfläche",
-  "isTheRecognizedSystemCorrect": "Ist das erkennte System korrekt?",
+  "isTheRecognizedSystemCorrect": "Ist das erkannte System korrekt?",
   "noIWantToChange": "Nein, ich möchte es ändern",
   "yes": "Ja",
   "recognizingSystem": "Systemerkennung...",
@@ -105,6 +105,9 @@
   "close": "Schließen",
   "sendingFeedbackFailed": "Das Versenden Deines Feedbacks hat leider nicht geklappt.",
   "sendingFeedback": "Sende Feedback...",
+  "startAfterInstallationRoutine": "Starte Einrichtung des Rechners",
+  "timeToSetupYourComputer": "Zeit, Deinen Rechner einzurichten",
+  "timeToSetupYourComputerDescription": "Konfiguriere Deinen Linux-Rechner nach Deinen Bedürfnissen.",
   "@helloWorld": {
     "placeholders": {},
     "description": "",
