@@ -29,7 +29,12 @@ def get_environment_variable(key):
 # example for enviroment={'DEBIAN_FRONTEND': 'noninteractive'}
 # if return_output==true: function returns a array of strings
 def run_command(command, print_output=True, return_output=False, enviroment = {}, user=None):
-    process = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE, env=enviroment, user=user)
+    if sys.version_info < (3, 9):
+        if user == None:
+            user = os.getuid()
+        process = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE, env=enviroment, preexec_fn=_demote(user, user))
+    else:
+        process = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE, env=enviroment, user=user)
     output_lines = [] # In this the output is saved line per line
     if print_output or return_output:
         while True:
@@ -49,6 +54,13 @@ def run_command(command, print_output=True, return_output=False, enviroment = {}
     else:
         process.communicate()
         return process.poll()
+
+def _demote(user_uid, user_gid):
+    def result():
+        os.setgid(user_gid)
+        os.setuid(user_uid)
+    return result
+
 
 def get_arguments():
     return sys.argv
