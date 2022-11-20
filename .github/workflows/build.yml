@@ -24,3 +24,8 @@ jobs:
       - run: flutter config --enable-linux-desktop
       - run: flutter build linux
       - run: cp -r additional build/linux/x64/release/bundle/
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: linuux-assistant-bundle
+          path: build/linux/x64/release/bundle/
