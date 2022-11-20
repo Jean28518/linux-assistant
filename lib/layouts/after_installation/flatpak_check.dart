@@ -9,6 +9,7 @@ import 'package:linux_assistant/layouts/mintY.dart';
 import 'package:linux_assistant/layouts/run_command_queue.dart';
 import 'package:linux_assistant/services/config_handler.dart';
 import 'package:linux_assistant/services/linux.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AfterInstallationFlatpakCheck extends StatelessWidget {
   const AfterInstallationFlatpakCheck({super.key});
@@ -22,17 +23,13 @@ class AfterInstallationFlatpakCheck extends StatelessWidget {
     return MintYPage(
       title: "Flatpak",
       contentElements: [
-        const Text(
-          "Flatpak isn't installed on your system.",
+        Text(
+          AppLocalizations.of(context)!.flatpakIsNotInstalled,
           style: MintY.heading1,
           textAlign: TextAlign.center,
         ),
-        const Text(
-          """For easy access to many popular apps Flatpak is highly recommended.
-        Flatpak is a new utility for packet management for Linux.
-        It is offering a sandbox environment in which apps can run in isolation of the rest of the system.
-        By binding the 'Flathub' (biggest repository for flatpaks) you get access to over 1800 different Linux apps.
-        As a downside Flatpaks require more diskpace.""",
+        Text(
+          AppLocalizations.of(context)!.flatpakDescription,
           style: MintY.paragraph,
           textAlign: TextAlign.center,
         )
@@ -43,7 +40,7 @@ class AfterInstallationFlatpakCheck extends StatelessWidget {
           MintYButton(
             color: Colors.grey,
             text: Text(
-              "Skip",
+              AppLocalizations.of(context)!.skip,
               style: MintY.heading3,
             ),
             onPressed: () {
@@ -58,7 +55,7 @@ class AfterInstallationFlatpakCheck extends StatelessWidget {
           MintYButton(
             color: MintY.currentColor,
             text: Text(
-              "Setup Flatpak",
+              AppLocalizations.of(context)!.settingUpFlatpak,
               style: MintY.heading3White,
             ),
             onPressed: () async {
@@ -66,8 +63,9 @@ class AfterInstallationFlatpakCheck extends StatelessWidget {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: ((context) => RunCommandQueue(
                         route: AfterInstallationBrowserSelection(),
-                        title: "Setup Flatpak",
-                        message: "Setting up flatpak...",
+                        title: AppLocalizations.of(context)!.settingUpFlatpak,
+                        message:
+                            "${AppLocalizations.of(context)!.settingUpFlatpak}...",
                       ))));
             },
           )

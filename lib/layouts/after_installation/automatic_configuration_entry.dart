@@ -7,6 +7,7 @@ import 'package:linux_assistant/layouts/mintY.dart';
 import 'package:linux_assistant/layouts/run_command_queue.dart';
 import 'package:linux_assistant/services/linux.dart';
 import 'package:linux_assistant/services/main_search_loader.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AfterInstallationAutomaticConfigurationEntry extends StatelessWidget {
   const AfterInstallationAutomaticConfigurationEntry({Key? key})
@@ -17,7 +18,11 @@ class AfterInstallationAutomaticConfigurationEntry extends StatelessWidget {
     String currentDistribution =
         getNiceStringOfDistrosEnum(Linux.currentEnviroment.distribution);
     return MintYPage(
-      title: "Setup $currentDistribution with recommended settings?",
+      title: AppLocalizations.of(context)!.setUpXWithRecommendedSettings +
+          " " +
+          currentDistribution +
+          " " +
+          AppLocalizations.of(context)!.setUpXWithRecommendedSettingsPart2,
       customContentElement: Expanded(
           child: Center(
         child: Row(
@@ -29,17 +34,17 @@ class AfterInstallationAutomaticConfigurationEntry extends StatelessWidget {
                 color: MintY.currentColor,
                 size: 150,
               ),
-              title: "Manual Configuration",
-              text:
-                  "Exit this routine and keep the full control of every change on your pc.",
+              title: AppLocalizations.of(context)!.manualConfiguration,
+              text: AppLocalizations.of(context)!
+                  .afterInstallationManualConfigurationDescription,
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => RunCommandQueue(
-                      title: "Apply software configuration",
-                      message:
-                          "This process could take many minutes depending on what software configuration you selected...",
+                      title: AppLocalizations.of(context)!.applyConfiguration,
+                      message: AppLocalizations.of(context)!
+                          .thisProcessCouldTakeManyMinutesDependingSoftwareChoosed,
                       route: const MainSearchLoader(),
                     ),
                   ),
@@ -55,8 +60,9 @@ class AfterInstallationAutomaticConfigurationEntry extends StatelessWidget {
                 color: MintY.currentColor,
                 size: 150,
               ),
-              title: "Automatic Configuration",
-              text: "Select the specific automatic actions on the next page.",
+              title: AppLocalizations.of(context)!.automaticConfiguration,
+              text: AppLocalizations.of(context)!
+                  .selectSpecificActionsOnTheNextSite,
               onPressed: () {
                 Navigator.push(
                   context,

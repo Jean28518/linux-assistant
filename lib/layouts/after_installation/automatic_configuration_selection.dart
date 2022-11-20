@@ -7,6 +7,7 @@ import 'package:linux_assistant/layouts/system_icon.dart';
 import 'package:linux_assistant/services/after_installation_service.dart';
 import 'package:linux_assistant/services/linux.dart';
 import 'package:linux_assistant/services/main_search_loader.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AfterInstallationAutomaticConfiguration extends StatelessWidget {
   AfterInstallationAutomaticConfiguration({Key? key}) : super(key: key);
@@ -17,35 +18,34 @@ class AfterInstallationAutomaticConfiguration extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MintYPage(
-      title: "Automatic Configuration",
+      title: AppLocalizations.of(context)!.automaticConfiguration,
       contentElements: [
         MintYSelectableEntryWithIconHorizontal(
           icon: SystemIcon(
             iconString: "multimedia",
             iconSize: 128,
           ),
-          title: "Install Multimedia Codecs",
+          title: AppLocalizations.of(context)!.installMultimediaCodecs,
           selected: true,
           onPressed: () {
             AfterInstallationService.installMultimediaCodecs =
                 !AfterInstallationService.installMultimediaCodecs;
           },
           text:
-              "Additional proprietary multimedia codes for playing videos and music.",
+              AppLocalizations.of(context)!.installMultimediaCodecsDescription,
         ),
         MintYSelectableEntryWithIconHorizontal(
           icon: SystemIcon(
             iconString: "disks",
             iconSize: 128,
           ),
-          title: "Automatic Snapshots",
+          title: AppLocalizations.of(context)!.automaticSnapshots,
           selected: true,
           onPressed: () {
             AfterInstallationService.setupAutomaticSnapshots =
                 !AfterInstallationService.setupAutomaticSnapshots;
           },
-          text:
-              "Configure automatic snapshots with timeshift. Timeshift will be configured to 2 monthly automatic snapshots on your root partition. It will not backup your personal files.",
+          text: AppLocalizations.of(context)!.automaticSnapshotsDescription,
         ),
         FutureBuilder<bool>(
           future: isNvidiaCardInstalledOnSystem,
@@ -58,13 +58,15 @@ class AfterInstallationAutomaticConfiguration extends StatelessWidget {
                     iconString: "cs-drivers",
                     iconSize: 128,
                   ),
-                  title: "Automatic Nividia-Driver installation",
+                  title: AppLocalizations.of(context)!
+                      .automaticNvidiaDriverInstallation,
                   selected: true,
                   onPressed: () {
                     AfterInstallationService.installNvidiaDrivers =
                         !AfterInstallationService.installNvidiaDrivers;
                   },
-                  text: "All recommended drivers will be installed.",
+                  text: AppLocalizations.of(context)!
+                      .automaticNvidiaDriverInstallationDesciption,
                 );
               } else {
                 AfterInstallationService.installNvidiaDrivers = false;
@@ -78,20 +80,22 @@ class AfterInstallationAutomaticConfiguration extends StatelessWidget {
             iconString: "update-manager",
             iconSize: 128,
           ),
-          title: "Automatic Update Manager Configuration",
+          title:
+              AppLocalizations.of(context)!.automaticUpdateManagerConfiguration,
           selected: true,
           onPressed: () {
             AfterInstallationService.setupAutomaticUpdates =
                 !AfterInstallationService.setupAutomaticUpdates;
           },
-          text: "Automatic updates and maintainance will be configured.",
+          text: AppLocalizations.of(context)!
+              .automaticUpdateManagerConfigurationDescription,
         ),
       ],
       bottom: MintYButtonNext(
         route: RunCommandQueue(
-          title: "Welcome to your new system!",
-          message:
-              "Your system is setting up and applying your software configuration.\nThis process could take many minutes depending on what actions and software you selected...",
+          title: AppLocalizations.of(context)!.welcomeToYourNewSystem,
+          message: AppLocalizations.of(context)!
+              .automaticConfigurationIsRunningDescription,
           route: const MainSearchLoader(),
         ),
         onPressed: () {

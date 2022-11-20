@@ -9,6 +9,7 @@ import 'package:linux_assistant/services/after_installation_service.dart';
 import 'package:linux_assistant/services/icon_loader.dart';
 import 'package:linux_assistant/services/linux.dart';
 import 'package:linux_assistant/services/main_search_loader.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AfterInstallationBrowserSelection extends StatelessWidget {
   AfterInstallationBrowserSelection({super.key});
@@ -25,7 +26,7 @@ class AfterInstallationBrowserSelection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: MintYPage(
-        title: "Browser Selection",
+        title: AppLocalizations.of(context)!.browserSelection,
         contentElements: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -40,8 +41,7 @@ class AfterInstallationBrowserSelection extends StatelessWidget {
                       icon: const SystemIcon(
                           iconString: "firefox", iconSize: 150),
                       title: "Firefox",
-                      text:
-                          "Open Source browser with focus on privacy by Mozilla.",
+                      text: AppLocalizations.of(context)!.firefoxDescription,
                       selected: snapshot.data.toString() == 'true',
                       onPressed: () {
                         AfterInstallationService.firefox =
@@ -66,7 +66,7 @@ class AfterInstallationBrowserSelection extends StatelessWidget {
                       icon: const SystemIcon(
                           iconString: "chromium", iconSize: 150),
                       title: "Chromium",
-                      text: "Open Source browser. Free base of Google Chrome.",
+                      text: AppLocalizations.of(context)!.chromiumDescription,
                       selected: snapshot.data.toString() == 'true',
                       onPressed: () {
                         AfterInstallationService.chromium =
@@ -91,7 +91,7 @@ class AfterInstallationBrowserSelection extends StatelessWidget {
                       icon: const SystemIcon(
                           iconString: "google-chrome", iconSize: 150),
                       title: "Google Chrome",
-                      text: "Proprietary browser from Google.",
+                      text: AppLocalizations.of(context)!.chromeDescription,
                       selected: snapshot.data.toString() == 'true',
                       onPressed: () {
                         AfterInstallationService.googleChrome =

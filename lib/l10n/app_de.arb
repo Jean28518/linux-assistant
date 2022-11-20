@@ -56,6 +56,46 @@
   "recognizingSystem": "Systemerkennung...",
   "yourLinuxAssistant": "Dein. Linux. Assistent.",
   "linuxAssistantLongDescription": "Linux Assistant ist distributionsunabhängig und wurde dazu entwickelt, um Dir bei der täglichen Arbeit zu helfen und Tipps zu geben. Gib einfach ein paar Wörter in das Suchfeld ein und finde, was Du auch immer suchst! Der Linux Assistent kommt mit nützlichen Links zu Dateien, Ordnern und Anwendungen und hat ebenfalls einige Routinen, die Dir das Leben einfacher machen. Links zu Einstellungen und z.B. der mitgelieferten Sicherheitsüberprüfung sind ebenfalls vorhanden.",
+  "welcomeToYourLinuxMachine": "Willkommen auf Deinem neuen Linux-Rechner!",
+  "afterInstallationGreetingDescription": "In den nächsten Minuten werden wir Deinen Linux-Rechner nach Deinen Bedürfnissen einrichten.",
+  "letsStart": "Lasst uns loslegen!",
+  "setUpXWithRecommendedSettings": "Konfiguriere",
+  "setUpXWithRecommendedSettingsPart2": "mit empfohlenen Einstellungen?",
+  "manualConfiguration": "Manuelle Konfiguration",
+  "afterInstallationManualConfigurationDescription": "Beende diese Routine hier und behalte jede Änderung auf dem Computer in den eigenen Händen.",
+  "applyConfiguration": "Wende Software-Konfiguration an",
+  "thisProcessCouldTakeManyMinutesDependingSoftwareChoosed": "Dieser Prozess kann einige Minuten in Anspruch nehmen. Dieser Prozess ist abhängig von der ausgewählten Konfiguration...",
+  "automaticConfiguration": "Automatische Konfiguration",
+  "selectSpecificActionsOnTheNextSite": "Wähle spezifische automatische Aktionen auf der nächste Seite aus.",
+  "installMultimediaCodecs": "Installiere Multimedia-Codecs",
+  "installMultimediaCodecsDescription": "Installiere zusätzliche Multimedia-Codecs zum Abspielen von Videos und Musik.",
+  "automaticSnapshots": "Automatische Systemschnappschüsse",
+  "automaticSnapshotsDescription": "Konfiguriere automatische Systemschnappschüsse. Timeshift wird so konfiguriert, dass zwei monatliche Schnappschüsse auf Deiner Root-Partition abgespeichert werden.",
+  "automaticNvidiaDriverInstallation": "Automatische Nvidia-Treiber installation",
+  "automaticNvidiaDriverInstallationDesciption": "Alle empohlenen Treiber werden installiert.",
+  "automaticUpdateManagerConfiguration": "Automatische Konfiguration der Aktualisierungsverwaltung",
+  "automaticUpdateManagerConfigurationDescription": "Es werden automatische Updates und (wenn vorhanden) automatische Wartung konfiguriert.",
+  "welcomeToYourNewSystem": "Willkommen auf Ihrem neuen System!",
+  "automaticConfigurationIsRunningDescription": "Dein Rechner wird eingerichtet und neue Software wird unter Umständen installiert. Dieser Prozess kann einige Minuten dauern...",
+  "browserSelection": "Browser-Auswahl",
+  "firefoxDescription": "Open Source Browser von Mozilla mit Fokus auf Privatsphäre.",
+  "chromiumDescription": "Open Source Browser. Freie Basis von Google Chrome.",
+  "chromeDescription": "Proprietärer Browser von Google.",
+  "thunderbirdDescription": "Open Source E-Mail Client von Mozilla.",
+  "jitsiDescription": "Open Source Video-Konferenz-Tool",
+  "elementDescription": "Open Source Messenger Tool basierend auf dem Matrix-Protokoll",
+  "discordDescription": "Proprietäre Community-Chat-Software",
+  "zoomDescription": "Proprietäre Konferenz-Software",
+  "teamsDescription": "Proprietäre Team-Kommunikations-Software.",
+  "communicationSoftware": "Kommunikations-Software",
+  "flatpakIsNotInstalled": "Flatpak ist nicht auf Deinem System installiert.",
+  "flatpakDescription": "Für den einfachen Zugriff auf viele beliebte Anwendungen ist Flatpak sehr zu empfehlen. Flatpak ist ein neuer Ansatz zur Paketverwaltung für Linux. Es bietet eine Sandbox-Umgebung, in der Anwendungen isoliert vom Rest des Systems laufen können. Durch die Einbindung des 'Flathub' (größtes Repository für Flatpaks) erhältst Du Zugang zu über 1800 verschiedenen Linux-Anwendungen. Ein Nachteil ist, dass Flatpaks mehr Speicherplatz benötigen.",
+  "skip": "Überspringen",
+  "settingUpFlatpak": "Einrichten von Flatpak",
+  "officeSelection": "Büro-Auswahl",
+  "libreOfficeDescription": "Open Source Office Suite veröffentlicht von 'The Document Foundation'. Genial für das Open Document Format (.odt, .ods, .odp).",
+  "onlyOfficeDescription": "Open Source Office Suite. Geeignet für das Microsoft Document Format (.docx, .xls, .ppt).",
+  "wpsOfficeDescription": "Proprietäre Office Suite. Gut geeignet für das Microsoft Document Format (.docx, .xls, .ppt).",
   "@helloWorld": {
     "placeholders": {},
     "description": "",
@@ -329,6 +369,206 @@
   "@linuxAssistantLongDescription": {
     "placeholders": {},
     "description": "description at start screen",
+    "type": "text"
+  },
+  "@welcomeToYourLinuxMachine": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@afterInstallationGreetingDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@letsStart": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@setUpXWithRecommendedSettings": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@setUpXWithRecommendedSettingsPart2": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@manualConfiguration": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@afterInstallationManualConfigurationDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@applyConfiguration": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@thisProcessCouldTakeManyMinutesDependingSoftwareChoosed": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@automaticConfiguration": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@selectSpecificActionsOnTheNextSite": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@installMultimediaCodecs": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@installMultimediaCodecsDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@automaticSnapshots": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@automaticSnapshotsDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@automaticNvidiaDriverInstallation": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@automaticNvidiaDriverInstallationDesciption": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@automaticUpdateManagerConfiguration": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@automaticUpdateManagerConfigurationDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@welcomeToYourNewSystem": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@automaticConfigurationIsRunningDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@browserSelection": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@firefoxDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@chromiumDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@chromeDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@thunderbirdDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@jitsiDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@elementDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@discordDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@zoomDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@teamsDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@communicationSoftware": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@flatpakIsNotInstalled": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@flatpakDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@skip": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@settingUpFlatpak": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@officeSelection": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@libreOfficeDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@onlyOfficeDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@wpsOfficeDescription": {
+    "placeholders": {},
+    "description": "",
     "type": "text"
   }
 }

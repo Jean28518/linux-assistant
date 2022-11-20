@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:linux_assistant/layouts/after_installation/browser_selection.dart';
 import 'package:linux_assistant/layouts/after_installation/flatpak_check.dart';
 import 'package:linux_assistant/layouts/mintY.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AfterInstallationEntry extends StatelessWidget {
   const AfterInstallationEntry({Key? key}) : super(key: key);
@@ -12,10 +13,10 @@ class AfterInstallationEntry extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: MintYPage(
-        title: "After installation",
+        title: AppLocalizations.of(context)!.afterInstallation,
         contentElements: [
           Text(
-            "Welcome to your new linux machine!",
+            AppLocalizations.of(context)!.welcomeToYourLinuxMachine,
             style: MintY.heading1,
             textAlign: TextAlign.center,
           ),
@@ -23,7 +24,7 @@ class AfterInstallationEntry extends StatelessWidget {
             height: 16,
           ),
           Text(
-            "In the next minutes you will configure your linux machine to your needs.",
+            AppLocalizations.of(context)!.afterInstallationGreetingDescription,
             style: MintY.paragraph,
             textAlign: TextAlign.center,
           ),
@@ -37,7 +38,8 @@ class AfterInstallationEntry extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               MintYButtonNavigate(
-                text: Text("Let's start!", style: MintY.heading2White),
+                text: Text(AppLocalizations.of(context)!.letsStart,
+                    style: MintY.heading2White),
                 route: AfterInstallationFlatpakCheck(),
                 color: MintY.currentColor,
                 // width: 400,

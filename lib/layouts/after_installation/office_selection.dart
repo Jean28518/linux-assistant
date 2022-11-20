@@ -8,6 +8,7 @@ import 'package:linux_assistant/services/after_installation_service.dart';
 import 'package:linux_assistant/services/icon_loader.dart';
 import 'package:linux_assistant/services/linux.dart';
 import 'package:linux_assistant/services/main_search_loader.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AfterInstallationOfficeSelection extends StatelessWidget {
   const AfterInstallationOfficeSelection({super.key});
@@ -23,7 +24,7 @@ class AfterInstallationOfficeSelection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: MintYPage(
-        title: "Office Selection",
+        title: AppLocalizations.of(context)!.officeSelection,
         contentElements: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -38,8 +39,8 @@ class AfterInstallationOfficeSelection extends StatelessWidget {
                         icon: const SystemIcon(
                             iconString: "libreoffice", iconSize: 150),
                         title: "Libre Office",
-                        text:
-                            "Open Source Office Suite from The Document Foundation.\nGreat for the Open Document Format (.odt, .ods, .odp).",
+                        text: AppLocalizations.of(context)!
+                            .libreOfficeDescription,
                         selected: snapshot.data.toString() == 'true',
                         onPressed: () {
                           AfterInstallationService.libreOffice =
@@ -63,7 +64,7 @@ class AfterInstallationOfficeSelection extends StatelessWidget {
                             iconString: "onlyoffice", iconSize: 150),
                         title: "Only Office",
                         text:
-                            "Open Source Office Suite. Good for the Microsoft Document Format (docx, .xls, .ppt).",
+                            AppLocalizations.of(context)!.onlyOfficeDescription,
                         selected: snapshot.data.toString() == 'true',
                         onPressed: () {
                           AfterInstallationService.onlyOffice =
@@ -86,8 +87,7 @@ class AfterInstallationOfficeSelection extends StatelessWidget {
                       icon: const SystemIcon(
                           iconString: "wps-office", iconSize: 150),
                       title: "WPS Office",
-                      text:
-                          "Proprietary Office Suite.\nGood for the Microsoft Document Format (.docx, .xls, .ppt)",
+                      text: AppLocalizations.of(context)!.wpsOfficeDescription,
                       selected: snapshot.data.toString() == 'true',
                       onPressed: () {
                         AfterInstallationService.wpsOffice =

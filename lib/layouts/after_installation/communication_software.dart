@@ -8,6 +8,7 @@ import 'package:linux_assistant/services/after_installation_service.dart';
 import 'package:linux_assistant/services/icon_loader.dart';
 import 'package:linux_assistant/services/linux.dart';
 import 'package:linux_assistant/services/main_search_loader.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AfterInstallationCommunicationSoftwareSelection extends StatelessWidget {
   AfterInstallationCommunicationSoftwareSelection({super.key});
@@ -41,7 +42,7 @@ class AfterInstallationCommunicationSoftwareSelection extends StatelessWidget {
                 icon:
                     const SystemIcon(iconString: "thunderbird", iconSize: 150),
                 title: "Thunderbird",
-                text: "Open Source E-Mail Client from Mozilla.",
+                text: AppLocalizations.of(context)!.thunderbirdDescription,
                 selected: snapshot.data.toString() == 'true',
                 onPressed: () {
                   AfterInstallationService.thunderbird =
@@ -60,7 +61,7 @@ class AfterInstallationCommunicationSoftwareSelection extends StatelessWidget {
             return MintYSelectableCardWithIcon(
                 icon: const SystemIcon(iconString: "jitsi", iconSize: 150),
                 title: "Jitsi Meet",
-                text: "Open Source video conference tool.",
+                text: AppLocalizations.of(context)!.jitsiDescription,
                 selected: snapshot.data.toString() == 'true',
                 onPressed: () {
                   AfterInstallationService.jitsiMeet =
@@ -79,7 +80,7 @@ class AfterInstallationCommunicationSoftwareSelection extends StatelessWidget {
             return MintYSelectableCardWithIcon(
                 icon: const SystemIcon(iconString: "element", iconSize: 150),
                 title: "Element",
-                text: "Open Source messaging tool based on matrix protocol.",
+                text: AppLocalizations.of(context)!.elementDescription,
                 selected: snapshot.data.toString() == 'true',
                 onPressed: () {
                   AfterInstallationService.element =
@@ -98,7 +99,7 @@ class AfterInstallationCommunicationSoftwareSelection extends StatelessWidget {
             return MintYSelectableCardWithIcon(
                 icon: const SystemIcon(iconString: "discord", iconSize: 150),
                 title: "Discord",
-                text: "Proprietary community chat software",
+                text: AppLocalizations.of(context)!.discordDescription,
                 selected: snapshot.data.toString() == 'true',
                 onPressed: () {
                   AfterInstallationService.discord =
@@ -116,7 +117,7 @@ class AfterInstallationCommunicationSoftwareSelection extends StatelessWidget {
             return MintYSelectableCardWithIcon(
                 icon: const SystemIcon(iconString: "zoom-zoom", iconSize: 150),
                 title: "Zoom",
-                text: "Proprietary conference software.",
+                text: AppLocalizations.of(context)!.zoomDescription,
                 selected: snapshot.data.toString() == 'true',
                 onPressed: () {
                   AfterInstallationService.zoom =
@@ -136,7 +137,7 @@ class AfterInstallationCommunicationSoftwareSelection extends StatelessWidget {
                 icon: const SystemIcon(
                     iconString: "microsoft-teams", iconSize: 150),
                 title: "Microsoft Teams",
-                text: "Proprietary team communication software.",
+                text: AppLocalizations.of(context)!.teamsDescription,
                 selected: snapshot.data.toString() == 'true',
                 onPressed: () {
                   AfterInstallationService.microsoftTeams =
@@ -162,7 +163,7 @@ class AfterInstallationCommunicationSoftwareSelection extends StatelessWidget {
     }
     return Scaffold(
       body: MintYPage(
-        title: "Communication Software",
+        title: AppLocalizations.of(context)!.communicationSoftware,
         customContentElement: Expanded(
           child: GridView.count(
             // mainAxisAlignment: MainAxisAlignment.center,
