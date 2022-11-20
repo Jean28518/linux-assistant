@@ -300,20 +300,24 @@ class _MainSearchState extends State<MainSearch> {
   void _sortFoundEntries() {
     List<String> keys = _lastKeyword.toLowerCase().split(" ");
 
-    print(keys);
-
     for (ActionEntry result in _foundEntries) {
       result.tmpPriority = 0;
       for (String key in keys) {
+        if (key.trim() == "") {
+          continue;
+        }
         if (result.name.toLowerCase().contains(key)) {
           result.tmpPriority += 10;
           if (result.name.toLowerCase().startsWith(key)) {
-            result.tmpPriority += 10;
+            result.tmpPriority += 20;
           }
         }
         if (result.description.toLowerCase().contains(_lastKeyword)) {
           result.tmpPriority += 5;
         }
+      }
+      if (_lastKeyword == result.name) {
+        result.tmpPriority += 20;
       }
     }
 

@@ -880,7 +880,8 @@ class Linux {
         ActionEntry newEntry = ActionEntry(
             name: name,
             description: AppLocalizations.of(context)!.openX + " $path",
-            action: "openfolder:$path");
+            action: "openfolder:$path",
+            priority: -10.0);
         newEntries.add(newEntry);
       }
     });
