@@ -21,7 +21,11 @@ cd linux-assistant
 flutter build linux
 cp -r additional build/linux/x64/release/bundle/
 
-# Run: 
+# Build and install .deb package:
+bash ./build-deb.sh
+sudo dpkg --install linux-assistant.deb
+
+# Or altnertively run manually: 
 cd build/linux/x64/release/bundle/
 ./linux_assistant
 ```
