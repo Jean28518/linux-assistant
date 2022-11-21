@@ -938,4 +938,24 @@ class Linux {
     }
     return returnValue;
   }
+
+  static Future<bool> isDarkThemeEnabled() async {
+    switch (currentenvironment.desktop) {
+      case DESKTOPS.CINNAMON:
+        String output = await runCommandAndGetStdout(
+            "gsettings get org.cinnamon.desktop.interface gtk-theme");
+        return output.toLowerCase().contains("dark");
+      case DESKTOPS.GNOME:
+        String output = await runCommandAndGetStdout(
+            "gsettings get org.gnome.desktop.interface gtk-theme");
+        return output.toLowerCase().contains("dark");
+      case DESKTOPS.XFCE:
+        String output = await runCommandAndGetStdout(
+            "xfconf-query -c xfwm4 -p /general/theme");
+        return output.toLowerCase().contains("dark");
+
+      default:
+        return false;
+    }
+  }
 }

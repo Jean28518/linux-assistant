@@ -121,7 +121,7 @@ class _MainSearchState extends State<MainSearch> {
                                         AppLocalizations.of(context)!.clear,
                                   ),
                           ),
-                          style: MintY.paragraph,
+                          style: Theme.of(context).textTheme.bodyText1,
                           controller: searchBarController,
                           autofocus: true,
                           onChanged: (value) => _runFilter(value),
@@ -143,9 +143,8 @@ class _MainSearchState extends State<MainSearch> {
                           : IconButton(
                               iconSize: 24,
                               splashRadius: 24,
-                              icon: const Icon(
+                              icon: Icon(
                                 Icons.feedback,
-                                color: Colors.black45,
                               ),
                               onPressed: () => showDialog(
                                 context: context,

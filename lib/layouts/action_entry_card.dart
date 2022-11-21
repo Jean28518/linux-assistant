@@ -43,7 +43,7 @@ class _ActionEntryCardState extends State<ActionEntryCard> {
           key: UniqueKey(),
           tileColor: widget.selected
               ? Theme.of(context).focusColor
-              : Theme.of(context).cardColor,
+              : Color.fromARGB(0, 0, 0, 0),
           hoverColor: Colors.grey,
           title: Text(widget.actionEntry.name),
           subtitle: Text(widget.actionEntry.description),

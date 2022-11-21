@@ -45,7 +45,7 @@ class _MemoryStatusState extends State<MemoryStatus> {
             List<String> values = convertLineToList(lines[1]);
             widgets.add(SingleBarChart(
               value: double.parse(values[2]) / double.parse(values[1]),
-              fillColor: Colors.blue,
+              fillColor: Color.fromARGB(255, 70, 153, 221),
               tooltip: convertToGB(values[2]) + "/" + convertToGB(values[1]),
               text: "RAM",
             ));
@@ -60,7 +60,7 @@ class _MemoryStatusState extends State<MemoryStatus> {
             List<String> values = convertLineToList(lines[2]);
             widgets.add(SingleBarChart(
               value: double.parse(values[2]) / double.parse(values[1]),
-              fillColor: Colors.orange,
+              fillColor: Color.fromARGB(255, 223, 157, 58),
               tooltip: convertToGB(values[2]) + "/" + convertToGB(values[1]),
               text: "Swap",
             ));

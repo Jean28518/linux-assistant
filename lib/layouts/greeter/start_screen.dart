@@ -56,7 +56,7 @@ class StartScreen extends StatelessWidget {
             children: [
               Text(
                 AppLocalizations.of(context)!.yourLinuxAssistant,
-                style: MintY.heading1,
+                style: Theme.of(context).textTheme.headline1,
               ),
               SizedBox(
                 height: 10,
@@ -65,7 +65,7 @@ class StartScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(32.0),
                 child: Text(
                   AppLocalizations.of(context)!.linuxAssistantLongDescription,
-                  style: MintY.paragraph,
+                  style: Theme.of(context).textTheme.bodyText1,
                   overflow: TextOverflow.visible,
                 ),
               ),

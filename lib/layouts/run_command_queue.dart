@@ -32,15 +32,15 @@ class RunCommandQueue extends StatelessWidget {
             contentElements: [
               Text(
                 message,
-                style: MintY.heading2,
+                style: Theme.of(context).textTheme.headline2,
                 textAlign: TextAlign.center,
               ),
               SizedBox(
                 height: 16,
               ),
-              const Text(
+              Text(
                 "Complete.",
-                style: MintY.paragraph,
+                style: Theme.of(context).textTheme.bodyText1,
                 textAlign: TextAlign.center,
               ),
             ],
@@ -110,7 +110,7 @@ class RunCommandQueue extends StatelessWidget {
             contentElements: [
               Text(
                 message,
-                style: MintY.heading2,
+                style: Theme.of(context).textTheme.headline2,
                 textAlign: TextAlign.center,
               ),
               SizedBox(

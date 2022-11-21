@@ -33,7 +33,7 @@ class _EnvironmentSelectionViewState extends State<EnvironmentSelectionView> {
             children: [
               Text(
                 "${AppLocalizations.of(context)!.distribution}: ",
-                style: MintY.heading1,
+                style: Theme.of(context).textTheme.headline1,
               ),
               SizedBox(
                 width: 16,
@@ -61,7 +61,7 @@ class _EnvironmentSelectionViewState extends State<EnvironmentSelectionView> {
             children: [
               Text(
                 "${AppLocalizations.of(context)!.version}: ",
-                style: MintY.heading1,
+                style: Theme.of(context).textTheme.headline1,
               ),
               SizedBox(
                 width: 16,
@@ -105,7 +105,7 @@ class _EnvironmentSelectionViewState extends State<EnvironmentSelectionView> {
               MintYButton(
                 text: Text(
                   getNiceStringOfDesktopsEnum(environment.desktop),
-                  style: MintY.heading2,
+                  style: Theme.of(context).textTheme.headline2,
                 ),
                 onPressed: () {
                   showDialog(
@@ -209,7 +209,7 @@ class _EnvironmentSelectionViewState extends State<EnvironmentSelectionView> {
             children: [
               Text(
                 "${AppLocalizations.of(context)!.selectYourDistribution}:",
-                style: MintY.heading1,
+                style: Theme.of(context).textTheme.headline1,
               ),
               const SizedBox(
                 height: 32,
@@ -253,7 +253,7 @@ class _EnvironmentSelectionViewState extends State<EnvironmentSelectionView> {
             children: [
               Text(
                 "${AppLocalizations.of(context)!.selectYourDesktop}:",
-                style: MintY.heading1,
+                style: Theme.of(context).textTheme.headline1,
               ),
               const SizedBox(
                 height: 32,

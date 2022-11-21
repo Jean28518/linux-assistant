@@ -41,7 +41,7 @@ class SecurityCheckOverview extends StatelessWidget {
                 Text(
                   AppLocalizations.of(context)!
                       .securityCheckFailedBecauseNoRoot,
-                  style: MintY.heading2,
+                  style: Theme.of(context).textTheme.headline2,
                   textAlign: TextAlign.center,
                 )
               ],
@@ -162,7 +162,7 @@ class UpdateCheck extends StatelessWidget {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text(
         AppLocalizations.of(context)!.updates,
-        style: MintY.heading2,
+        style: Theme.of(context).textTheme.headline2,
       ),
       Padding(
           padding: EdgeInsets.all(8.0),
@@ -190,7 +190,7 @@ class HomeFolderSecurityCheck extends StatelessWidget {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text(
         AppLocalizations.of(context)!.homeFolder,
-        style: MintY.heading2,
+        style: Theme.of(context).textTheme.headline2,
       ),
       Padding(
           padding: EdgeInsets.all(8.0),
@@ -225,7 +225,7 @@ class NetworkSecurityCheck extends StatelessWidget {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text(
         AppLocalizations.of(context)!.networkSecurity,
-        style: MintY.heading2,
+        style: Theme.of(context).textTheme.headline2,
       ),
       Padding(
           padding: EdgeInsets.all(8.0),
@@ -279,7 +279,7 @@ class AdditionSoftwareSources extends StatelessWidget {
       children: [
         Text(
           AppLocalizations.of(context)!.additionalSoftwareSources,
-          style: MintY.heading2,
+          style: Theme.of(context).textTheme.headline2,
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
@@ -337,7 +337,7 @@ class SecuritySuccessMessage extends StatelessWidget {
         Flexible(
           child: Text(
             text,
-            style: MintY.paragraph,
+            style: Theme.of(context).textTheme.bodyText1,
             textAlign: TextAlign.left,
           ),
         )
@@ -365,7 +365,7 @@ class SecurityWarningMessage extends StatelessWidget {
         Flexible(
           child: Text(
             text,
-            style: MintY.paragraph,
+            style: Theme.of(context).textTheme.bodyText1,
           ),
         ),
       ],

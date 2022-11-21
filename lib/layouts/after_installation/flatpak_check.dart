@@ -25,12 +25,12 @@ class AfterInstallationFlatpakCheck extends StatelessWidget {
       contentElements: [
         Text(
           AppLocalizations.of(context)!.flatpakIsNotInstalled,
-          style: MintY.heading1,
+          style: Theme.of(context).textTheme.headline1,
           textAlign: TextAlign.center,
         ),
         Text(
           AppLocalizations.of(context)!.flatpakDescription,
-          style: MintY.paragraph,
+          style: Theme.of(context).textTheme.bodyText1,
           textAlign: TextAlign.center,
         )
       ],

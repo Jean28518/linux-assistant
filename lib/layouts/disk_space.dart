@@ -34,6 +34,7 @@ class DiskSpace extends StatelessWidget {
                       100,
                   text: getDisklabel(values[5]) + ": " + values[4],
                   tooltip: values[2] + "/" + values[1],
+                  fillColor: Color.fromARGB(255, 141, 141, 141),
                 ),
               );
               barCharts.add(SizedBox(

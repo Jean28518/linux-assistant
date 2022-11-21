@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
@@ -16,7 +17,7 @@ class StartAfterInstallationRoutineQuestion extends StatelessWidget {
       contentElements: [
         Text(
           AppLocalizations.of(context)!.timeToSetupYourComputer,
-          style: MintY.heading1,
+          style: Theme.of(context).textTheme.headline1,
           textAlign: TextAlign.center,
         ),
         const SizedBox(
@@ -24,7 +25,7 @@ class StartAfterInstallationRoutineQuestion extends StatelessWidget {
         ),
         Text(
           AppLocalizations.of(context)!.timeToSetupYourComputerDescription,
-          style: MintY.heading3,
+          style: Theme.of(context).textTheme.headline3,
           textAlign: TextAlign.center,
         ),
       ],

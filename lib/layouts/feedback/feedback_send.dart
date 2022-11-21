@@ -29,11 +29,11 @@ class FeedbackSent extends StatelessWidget {
                   ),
                   Text(
                     AppLocalizations.of(context)!.thankYouForTheFeedback,
-                    style: MintY.heading2,
+                    style: Theme.of(context).textTheme.headline2,
                   ),
                   Text(
                     AppLocalizations.of(context)!.feedbackSentSuccessfully,
-                    style: MintY.heading3,
+                    style: Theme.of(context).textTheme.headline3,
                   ),
                   const SizedBox(height: 32),
                   MintYButton(
@@ -58,7 +58,7 @@ class FeedbackSent extends StatelessWidget {
                   ),
                   Text(
                     AppLocalizations.of(context)!.sendingFeedbackFailed,
-                    style: MintY.heading2,
+                    style: Theme.of(context).textTheme.headline2,
                   ),
                   const SizedBox(height: 32),
                   MintYButton(
@@ -81,7 +81,7 @@ class FeedbackSent extends StatelessWidget {
                   ),
                   Text(
                     AppLocalizations.of(context)!.sendingFeedback,
-                    style: MintY.heading2,
+                    style: Theme.of(context).textTheme.headline2,
                   )
                 ],
               );

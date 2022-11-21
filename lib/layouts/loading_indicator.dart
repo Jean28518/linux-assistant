@@ -24,7 +24,7 @@ class LoadingIndicator extends StatelessWidget {
             ),
             Text(
               text == "" ? AppLocalizations.of(context)!.loading : text,
-              style: MintY.heading2,
+              style: Theme.of(context).textTheme.headline2,
             )
           ],
         ),

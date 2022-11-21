@@ -17,7 +17,7 @@ class AfterInstallationEntry extends StatelessWidget {
         contentElements: [
           Text(
             AppLocalizations.of(context)!.welcomeToYourLinuxMachine,
-            style: MintY.heading1,
+            style: Theme.of(context).textTheme.headline1,
             textAlign: TextAlign.center,
           ),
           SizedBox(
@@ -25,7 +25,7 @@ class AfterInstallationEntry extends StatelessWidget {
           ),
           Text(
             AppLocalizations.of(context)!.afterInstallationGreetingDescription,
-            style: MintY.paragraph,
+            style: Theme.of(context).textTheme.bodyText1,
             textAlign: TextAlign.center,
           ),
           SizedBox(

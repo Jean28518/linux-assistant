@@ -17,11 +17,16 @@ void main() async {
   // For hot reload, `unregisterAll()` needs to be called.
   await HotKeyManager.instance.unregisterAll();
 
-  runApp(const MyApp());
+  bool darkTheme = await Linux.isDarkThemeEnabled();
+
+  runApp(MyApp(
+    darkTheme: darkTheme,
+  ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  late bool darkTheme;
+  MyApp({Key? key, this.darkTheme = false}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     MintY.currentColor = Colors.blue;
@@ -38,9 +43,7 @@ class MyApp extends StatelessWidget {
         Locale('en', ''),
         Locale('de', ''),
       ],
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: darkTheme ? MintY.themeDark() : MintY.theme(),
       home: StartScreen(),
     );
   }

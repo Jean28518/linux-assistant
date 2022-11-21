@@ -42,7 +42,7 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
               children: [
                 Text(
                   AppLocalizations.of(context)!.sendFeedback,
-                  style: MintY.heading2,
+                  style: Theme.of(context).textTheme.headline2,
                   textAlign: TextAlign.center,
                 ),
               ],
@@ -55,7 +55,7 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
               decoration: InputDecoration(
                   border: const OutlineInputBorder(),
                   hintText: AppLocalizations.of(context)!.feedbackPlaceholder),
-              style: MintY.paragraph,
+              style: Theme.of(context).textTheme.bodyText1,
               controller: messageController,
             ),
             Row(
@@ -67,7 +67,7 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
                         }))),
                 Text(
                   AppLocalizations.of(context)!.includeSearchTermAndResults,
-                  style: MintY.paragraph,
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
               ],
             ),
@@ -80,7 +80,7 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
                         }))),
                 Text(
                   AppLocalizations.of(context)!.includeBasicSystemInformation,
-                  style: MintY.paragraph,
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
               ],
             ),

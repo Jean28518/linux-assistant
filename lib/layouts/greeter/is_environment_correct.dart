@@ -26,7 +26,7 @@ class IsYourEnvironmentCorrectView extends StatelessWidget {
             contentElements: [
               Text(
                 AppLocalizations.of(context)!.isTheRecognizedSystemCorrect,
-                style: MintY.heading1,
+                style: Theme.of(context).textTheme.headline1,
                 textAlign: TextAlign.center,
               ),
               const SizedBox(
@@ -34,7 +34,7 @@ class IsYourEnvironmentCorrectView extends StatelessWidget {
               ),
               Text(
                 "${AppLocalizations.of(context)!.distribution}: ${getNiceStringOfDistrosEnum(snapshot.data!.distribution)} ${snapshot.data!.version}\n${AppLocalizations.of(context)!.desktop}: ${getNiceStringOfDesktopsEnum(snapshot.data!.desktop)}\n${AppLocalizations.of(context)!.language}: ${snapshot.data!.language}",
-                style: MintY.heading3,
+                style: Theme.of(context).textTheme.headline3,
                 textAlign: TextAlign.center,
               ),
             ],

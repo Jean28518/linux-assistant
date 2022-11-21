@@ -1,4 +1,5 @@
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -17,8 +18,8 @@ class SingleBarChart extends StatelessWidget {
     Key? key,
     this.value = 0.5,
     this.size = 100,
-    this.backgroundColor = const Color.fromARGB(122, 158, 158, 158),
-    this.fillColor = const Color.fromARGB(255, 58, 58, 58),
+    this.backgroundColor = const Color.fromARGB(255, 211, 211, 211),
+    this.fillColor = const Color.fromARGB(255, 73, 73, 73),
     this.text = "",
     this.textStyle = const TextStyle(),
     this.tooltip = "",
@@ -26,6 +27,11 @@ class SingleBarChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (Theme.of(context).brightness == Brightness.dark) {
+      if (backgroundColor == const Color.fromARGB(255, 211, 211, 211)) {
+        backgroundColor = const Color.fromARGB(255, 87, 87, 87);
+      }
+    }
     return Column(
       children: [
         SizedBox(
@@ -74,16 +80,16 @@ class SingleBarChart extends StatelessWidget {
       groupVertically: true,
       barRods: [
         BarChartRodData(
-          fromY: 2.5,
-          toY: value * (size - 5) + 2.5,
-          color: fillColor,
-          width: 15,
-        ),
-        BarChartRodData(
           fromY: 0,
           toY: size,
           color: backgroundColor,
           width: 20,
+        ),
+        BarChartRodData(
+          fromY: 2.5,
+          toY: value * (size - 5) + 2.5,
+          color: fillColor,
+          width: 15,
         ),
       ],
     );

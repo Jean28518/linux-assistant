@@ -5,6 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class MintY {
   static Color currentColor = Color(0xff6db443);
 
+  static bool dark = false;
   static MaterialColor currentColorTheme = green;
 
   static Color colors(String color) {
@@ -62,8 +63,10 @@ class MintY {
     ),
   );
 
+  static const Color _white = Color.fromARGB(255, 218, 218, 218);
+
   static const heading1White = TextStyle(
-      color: Colors.white,
+      color: _white,
       fontSize: 32,
       fontWeight: FontWeight.w500,
       decoration: TextDecoration.none);
@@ -75,7 +78,7 @@ class MintY {
       decoration: TextDecoration.none);
 
   static const heading2White = TextStyle(
-      color: Colors.white,
+      color: _white,
       fontSize: 24,
       fontWeight: FontWeight.w400,
       decoration: TextDecoration.none);
@@ -87,7 +90,7 @@ class MintY {
       decoration: TextDecoration.none);
 
   static const heading3White = TextStyle(
-      color: Colors.white,
+      color: _white,
       fontSize: 20,
       fontWeight: FontWeight.w400,
       decoration: TextDecoration.none);
@@ -106,7 +109,7 @@ class MintY {
 
   static const paragraphWhite = TextStyle(
       fontWeight: FontWeight.w300,
-      color: Colors.white,
+      color: _white,
       decoration: TextDecoration.none,
       fontSize: 16);
 
@@ -117,18 +120,22 @@ class MintY {
         textTheme: const TextTheme(
           headline1: heading1,
           headline2: heading2,
+          headline3: heading3,
           bodyText1: paragraph,
         ),
       );
 
   static ThemeData themeDark() => ThemeData(
         primaryColor: currentColor,
-        canvasColor: Colors.black87,
+        canvasColor: const Color.fromARGB(255, 31, 31, 31),
         brightness: Brightness.dark,
-        backgroundColor: Colors.black87,
+        backgroundColor: const Color.fromARGB(255, 31, 31, 31),
+        cardColor: const Color.fromARGB(255, 45, 45, 45),
+        highlightColor: _white,
         textTheme: const TextTheme(
           headline1: heading1White,
           headline2: heading2White,
+          headline3: heading3White,
           bodyText1: paragraphWhite,
         ),
       );
@@ -181,12 +188,11 @@ class MintYPage extends StatelessWidget {
                 ],
               ),
             ),
-            Container(height: 8, color: Theme.of(context).canvasColor),
+            Container(height: 8),
             contentElements.length != 0
                 ? Expanded(
                     child: Container(
                       padding: EdgeInsets.all(16.0),
-                      color: Theme.of(context).canvasColor,
                       child: Center(
                         child: ListView(
                           shrinkWrap: true,
@@ -196,18 +202,11 @@ class MintYPage extends StatelessWidget {
                     ),
                   )
                 : customContentElement,
-            Container(height: 8, color: Theme.of(context).canvasColor),
+            Container(height: 8),
             bottom != null
                 ? Container(
                     height: 80,
                     child: Center(child: bottom),
-                    // color: Theme.of(context).backgroundColor,
-                    color:
-                        // scrollController.position.maxScrollExtent + 80.0 + 89.0 >
-                        //         MediaQuery.of(context).size.height
-                        //     ? Colors.red
-                        //     : Colors.green,  // Does not work!
-                        Theme.of(context).canvasColor,
                   )
                 : Container()
           ],
@@ -388,14 +387,15 @@ class _MintYSelectableCardWithIconState
                 height: 30,
               ),
               Text(widget.title,
-                  style: MintY.heading2, textAlign: TextAlign.center),
+                  style: Theme.of(context).textTheme.headline2,
+                  textAlign: TextAlign.center),
               SizedBox(
                 height: 30,
               ),
               Text(
                 widget.text,
                 textAlign: TextAlign.center,
-                style: MintY.paragraph,
+                style: Theme.of(context).textTheme.bodyText1,
               )
             ]),
           ),
@@ -461,14 +461,14 @@ class _MintYSelectableEntryWithIconHorizontalState
                       ),
                       Text(
                         widget.title,
-                        style: MintY.heading2,
+                        style: Theme.of(context).textTheme.headline2,
                       ),
                       SizedBox(
                         height: 10,
                       ),
                       Text(
                         widget.text,
-                        style: MintY.paragraph,
+                        style: Theme.of(context).textTheme.bodyText1,
                         maxLines: 100,
                       )
                     ],
@@ -538,12 +538,14 @@ class MintYButtonBigWithIcon extends StatelessWidget {
               SizedBox(height: 15),
               icon,
               SizedBox(height: 20),
-              Text(title, style: MintY.heading2, textAlign: TextAlign.center),
+              Text(title,
+                  style: Theme.of(context).textTheme.headline2,
+                  textAlign: TextAlign.center),
               SizedBox(height: 20),
               Text(
                 text,
                 textAlign: TextAlign.center,
-                style: MintY.paragraph,
+                style: Theme.of(context).textTheme.bodyText1,
               )
             ],
           ),
@@ -614,7 +616,7 @@ class MintYCardWithIconAndAction extends StatelessWidget {
                 child: MintYButton(
                   text: Text(
                     buttonText,
-                    style: MintY.heading2White,
+                    style: MintY.heading3White,
                   ),
                   color: MintY.currentColor,
                   onPressed: () {
