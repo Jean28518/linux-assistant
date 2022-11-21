@@ -103,6 +103,12 @@ class Linux {
       case DESKTOPS.CINNAMON:
         openUserSettings();
         break;
+      case DESKTOPS.GNOME:
+        openUserSettings();
+        break;
+      case DESKTOPS.XFCE:
+        openUserSettings();
+        break;
       default:
     }
   }
@@ -112,6 +118,12 @@ class Linux {
       case DESKTOPS.CINNAMON:
         runCommand("cinnamon-settings user");
         break;
+      case DESKTOPS.GNOME:
+        runCommand("gnome-control-center user-accounts");
+        break;
+      case DESKTOPS.XFCE:
+        runCommand("users-admin");
+        break;
       default:
     }
   }
@@ -119,7 +131,13 @@ class Linux {
   static void openSystemInformation() {
     switch (currentEnviroment.desktop) {
       case DESKTOPS.CINNAMON:
-        runCommand("cinnamon-settings info &");
+        runCommand("cinnamon-settings info");
+        break;
+      case DESKTOPS.GNOME:
+        runCommand("gnome-control-center info-overview");
+        break;
+      case DESKTOPS.XFCE:
+        runCommand("xfce4-about");
         break;
       default:
     }

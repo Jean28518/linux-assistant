@@ -25,7 +25,8 @@ class AfterInstallationService {
   static Future<void> applyCurrentBrowserSituation() async {
     await Linux.ensureApplicationInstallation(["firefox", "firefox-esr"],
         installed: firefox);
-    await Linux.ensureApplicationInstallation(["chromium"],
+    await Linux.ensureApplicationInstallation(
+        ["chromium-browser", "chromium", "org.chromium.Chromium"],
         installed: chromium);
     await Linux.ensureApplicationInstallation(
         ["google-chrome-stable", "com.google.Chrome"],
@@ -33,7 +34,8 @@ class AfterInstallationService {
   }
 
   static Future<void> applyCurrentOfficeSituation() async {
-    Linux.ensureApplicationInstallation(["libreoffice-common"],
+    Linux.ensureApplicationInstallation(
+        ["libreoffice-common", "org.libreoffice.LibreOffice"],
         installed: libreOffice);
     Linux.ensureApplicationInstallation(
         ["org.onlyoffice.desktopeditors", "onlyoffice-desktopeditors"],
@@ -43,7 +45,8 @@ class AfterInstallationService {
   }
 
   static Future<void> applyCommunicationSituation() async {
-    Linux.ensureApplicationInstallation(["thunderbird"],
+    Linux.ensureApplicationInstallation(
+        ["thunderbird", "org.mozilla.Thunderbird"],
         installed: thunderbird);
     Linux.ensureApplicationInstallation(["org.jitsi.jitsi-meet"],
         installed: jitsiMeet);
