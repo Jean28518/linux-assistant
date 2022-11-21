@@ -13,12 +13,15 @@ def main():
             if not entry.endswith(".default"):
                 continue
 
-            connection = sqlite3.connect(f"{entry}/places.sqlite")
-            
+            connection = sqlite3.connect(f"{entry}/places.sqlite", timeout=0.5)
             cursor = connection.cursor()
 
-            for row in cursor.execute("SELECT moz_bookmarks.title, moz_places.url FROM moz_bookmarks JOIN moz_places WHERE moz_bookmarks.fk == moz_places.id"):
-                print(row[0] + "\t" + row[1])
+            try:
+                for row in cursor.execute("SELECT moz_bookmarks.title, moz_places.url FROM moz_bookmarks JOIN moz_places WHERE moz_bookmarks.fk == moz_places.id"):
+                    print(row[0] + "\t" + row[1])
+            except:
+                # Database busy
+                pass
  
     # Chromium/Chrome
     entires = []
