@@ -75,7 +75,7 @@
   "automaticNvidiaDriverInstallationDesciption": "Alle empohlenen Treiber werden installiert.",
   "automaticUpdateManagerConfiguration": "Automatische Konfiguration der Aktualisierungsverwaltung",
   "automaticUpdateManagerConfigurationDescription": "Es werden automatische Updates und (wenn vorhanden) automatische Wartung konfiguriert.",
-  "welcomeToYourNewSystem": "Willkommen auf Ihrem neuen System!",
+  "welcomeToYourNewSystem": "Willkommen auf Deinem neuen System!",
   "automaticConfigurationIsRunningDescription": "Dein Rechner wird eingerichtet und neue Software wird unter Umständen installiert. Dieser Prozess kann einige Minuten dauern...",
   "browserSelection": "Browser-Auswahl",
   "firefoxDescription": "Open Source Browser von Mozilla mit Fokus auf Privatsphäre.",
