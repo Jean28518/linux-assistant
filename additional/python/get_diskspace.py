@@ -13,6 +13,8 @@ def main():
             continue
         if line.startswith("revokefs-fuse"):
             continue
+        if line.startswith("cgroup"):
+            continue
         if line.startswith("Filesystem"):
             continue
         line : str = line

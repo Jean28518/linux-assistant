@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:linux_assistant/enums/desktops.dart';
 import 'package:linux_assistant/enums/distros.dart';
 import 'package:linux_assistant/layouts/greeter/is_environment_correct.dart';
+import 'package:linux_assistant/layouts/greeter/start_after_installation.dart';
 import 'package:linux_assistant/layouts/mintY.dart';
 import 'package:linux_assistant/models/enviroment.dart';
 import 'package:linux_assistant/services/config_handler.dart';
@@ -186,7 +187,8 @@ class _EnvironmentSelectionViewState extends State<EnvironmentSelectionView> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const MainSearchLoader()),
+                        builder: (context) =>
+                            const StartAfterInstallationRoutineQuestion()),
                   );
                 },
               ),

@@ -99,6 +99,12 @@ class Linux {
   }
 
   static void changeUserPasswordDialog() {
+    switch (currentEnviroment.distribution) {
+      case DISTROS.MXLINUX:
+        openUserSettings();
+        break;
+      default:
+    }
     switch (currentEnviroment.desktop) {
       case DESKTOPS.CINNAMON:
         openUserSettings();
@@ -114,6 +120,12 @@ class Linux {
   }
 
   static void openUserSettings() {
+    switch (currentEnviroment.distribution) {
+      case DISTROS.MXLINUX:
+        runCommand("mx-user");
+        break;
+      default:
+    }
     switch (currentEnviroment.desktop) {
       case DESKTOPS.CINNAMON:
         runCommand("cinnamon-settings user");
@@ -129,6 +141,12 @@ class Linux {
   }
 
   static void openSystemInformation() {
+    switch (currentEnviroment.distribution) {
+      case DISTROS.MXLINUX:
+        runCommand("quick-system-info-gui");
+        break;
+      default:
+    }
     switch (currentEnviroment.desktop) {
       case DESKTOPS.CINNAMON:
         runCommand("cinnamon-settings info");

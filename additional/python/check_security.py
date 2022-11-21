@@ -7,8 +7,13 @@ import jfiles
 def get_additional_sources():
     entries = jfolders.get_folder_entries("/etc/apt/sources.list.d")
     for entry in entries:
-        # Disable mint sources
-        if "official-package-repositories.list" in entry:
+        if "official-package-repositories.list" in entry: # Linux Mint
+            continue
+        if "debian.list" in entry: # MX Linux
+            continue
+        if "debian-stable-updates.list" in entry: # MX Linux
+            continue
+        if "mx.list" in entry: # MX Linux
             continue
         lines = jfiles.get_all_lines_from_file(entry)
 
