@@ -371,7 +371,8 @@ class Linux {
   static Future<bool> isDebPackageAvailable(String appCode) async {
     String output = await runCommandAndGetStdout(
         "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.APT)} show $appCode");
-    return output.contains("Package: ");
+    return output.contains("Package: ") &&
+        !output.contains("No packages found");
   }
 
   /// returns the source under which the Flatpak is available, otherwise empty String
@@ -577,7 +578,7 @@ class Linux {
       newEnvironment.distribution = DISTROS.DEBIAN;
     } else if (lines[0].toLowerCase().contains("mxlinux")) {
       newEnvironment.distribution = DISTROS.MXLINUX;
-    } else if (lines[0].toLowerCase().contains("popos")) {
+    } else if (lines[0].toLowerCase().contains("pop!_os")) {
       newEnvironment.distribution = DISTROS.POPOS;
     }
 

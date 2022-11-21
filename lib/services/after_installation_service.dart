@@ -1,3 +1,4 @@
+import 'package:linux_assistant/enums/distros.dart';
 import 'package:linux_assistant/services/linux.dart';
 
 class AfterInstallationService {
@@ -25,9 +26,19 @@ class AfterInstallationService {
   static Future<void> applyCurrentBrowserSituation() async {
     await Linux.ensureApplicationInstallation(["firefox", "firefox-esr"],
         installed: firefox);
-    await Linux.ensureApplicationInstallation(
-        ["chromium-browser", "chromium", "org.chromium.Chromium"],
-        installed: chromium);
+
+    if (Linux.currentEnviroment.distribution == DISTROS.UBUNTU) {
+      // Chromium for Ubuntu:
+      await Linux.ensureApplicationInstallation(
+          ["chromium-browser", "org.chromium.Chromium"],
+          installed: chromium);
+    } else {
+      // Chromium for others:
+      await Linux.ensureApplicationInstallation(
+          ["chromium", "org.chromium.Chromium"],
+          installed: chromium);
+    }
+
     await Linux.ensureApplicationInstallation(
         ["google-chrome-stable", "com.google.Chrome"],
         installed: googleChrome);
