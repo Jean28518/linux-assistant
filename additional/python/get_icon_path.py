@@ -10,7 +10,7 @@ import jfiles
 
 icon_name = jessentials.get_value_from_arguments("icon")
 icon_theme = Gtk.IconTheme.get_default()
-icon = icon_theme.lookup_icon(icon_name, 96, 0)
+icon = icon_theme.lookup_icon(icon_name, 128, 0)
 if icon:
     print(icon.get_filename())
 else:
