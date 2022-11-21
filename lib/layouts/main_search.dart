@@ -270,8 +270,18 @@ class _MainSearchState extends State<MainSearch> {
     // Sort:
     _foundEntries = results;
     _sortFoundEntries();
+    _removeDuplicatedEntries();
 
     setState(() {});
+  }
+
+  /// This runs fast but only removes direct neighbours.
+  void _removeDuplicatedEntries() {
+    for (int i = 0; i < _foundEntries.length - 1; i++) {
+      if (_foundEntries[i].action == _foundEntries[i + 1].action) {
+        _foundEntries.removeAt(i);
+      }
+    }
   }
 
   /// This filter is only runs, if the user has stopped typing.
