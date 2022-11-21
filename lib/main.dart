@@ -54,7 +54,8 @@ class MyApp extends StatelessWidget {
     hotKeyManager.register(
       _hotKey,
       keyDownHandler: (hotKey) {
-        Linux.runCommand("wmctrl -a linux_assistant");
+        Linux.runCommandWithCustomArguments(
+            "wmctrl", ["-a", "Linux Assistant"]);
       },
     );
 
