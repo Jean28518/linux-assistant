@@ -33,6 +33,9 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
     returnValue.entries.addAll(recentFiles);
     var favoriteFiles = await Linux.getFavoriteFiles(context);
     returnValue.entries.addAll(favoriteFiles);
+    var browserBookmarks = await Linux.getBrowserBookmarks(context);
+    returnValue.entries.addAll(browserBookmarks);
+
     var additionalFolders =
         Linux.getFoldersOfActionEntries(context, returnValue.entries);
     returnValue.entries.addAll(additionalFolders);

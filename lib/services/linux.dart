@@ -919,4 +919,23 @@ class Linux {
     });
     return newEntries;
   }
+
+  static Future<List<ActionEntry>> getBrowserBookmarks(
+      BuildContext context) async {
+    String outputString = await runPythonScript("get_bookmarks.py");
+    List<String> lines = outputString.split("\n");
+    List<ActionEntry> returnValue = [];
+    for (String line in lines) {
+      List<String> elements = line.split("\t");
+      if (elements.length == 2) {
+        returnValue.add(ActionEntry(
+            name: elements[0],
+            description:
+                "${AppLocalizations.of(context)!.openX} ${elements[1]}",
+            action: "openwebsite:${elements[1]}",
+            priority: -5.0));
+      }
+    }
+    return returnValue;
+  }
 }
