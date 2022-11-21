@@ -21,6 +21,10 @@ def main():
         values = line.split(" ")
         while("" in values):
             values.remove("")
+
+        # Ignore disks which are smaller than 1G.
+        if values[1].endswith("M"):
+            continue
         
         print("%s\t%s\t%s\t%s\t%s\t%s" % (values[0], values[1], values[2], values[3], values[4], values[5], ))
 
