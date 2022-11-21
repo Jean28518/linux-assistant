@@ -2,6 +2,8 @@ enum DISTROS {
   UBUNTU,
   LINUX_MINT,
   DEBIAN,
+  POPOS,
+  MXLINUX,
 }
 
 String getNiceStringOfDistrosEnum(var distro) {
@@ -12,6 +14,10 @@ String getNiceStringOfDistrosEnum(var distro) {
       return "Linux Mint";
     case DISTROS.DEBIAN:
       return "Debian";
+    case DISTROS.POPOS:
+      return "Pop!_OS";
+    case DISTROS.MXLINUX:
+      return "MX Linux";
     default:
       return "";
   }

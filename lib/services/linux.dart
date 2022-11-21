@@ -499,7 +499,6 @@ class Linux {
 
     List<String> applications = applicationsString.split('\n');
     List<ActionEntry> actionEntries = [];
-    List<String> filter = _getApplicationEntryFilter();
     for (String applicationString in applications) {
       List<String> values = applicationString.split('\t');
 
@@ -508,10 +507,7 @@ class Linux {
       }
 
       String app_id = values[0].split("/").last.replaceAll(".desktop", "");
-      // Apply Filter:
-      if (filter.contains(app_id)) {
-        continue;
-      }
+
       ActionEntry entry = ActionEntry(
           name: values[1],
           description: values[2],
@@ -528,14 +524,6 @@ class Linux {
       actionEntries.add(entry);
     }
     return actionEntries;
-  }
-
-  static List<String> _getApplicationEntryFilter() {
-    // Add here the filename of the desktop files (without .desktop)
-    List<String> filter = [];
-
-    // ---------------------------------------------------------------------- //
-    return filter;
   }
 
   static Future<List<ActionEntry>> getRecentFiles(BuildContext context) async {
@@ -569,6 +557,10 @@ class Linux {
       newEnvironment.distribution = DISTROS.UBUNTU;
     } else if (lines[0].toLowerCase().contains("debian")) {
       newEnvironment.distribution = DISTROS.DEBIAN;
+    } else if (lines[0].toLowerCase().contains("mxlinux")) {
+      newEnvironment.distribution = DISTROS.MXLINUX;
+    } else if (lines[0].toLowerCase().contains("popos")) {
+      newEnvironment.distribution = DISTROS.POPOS;
     }
 
     // get version:
@@ -656,6 +648,7 @@ class Linux {
   static void installMultimediaCodecs() async {
     switch (currentEnviroment.distribution) {
       case DISTROS.DEBIAN:
+      case DISTROS.MXLINUX:
         // await Linux.runCommandAndGetStdout(
         //     "pkexec /usr/bin/apt-add-repository contrib");
         // await Linux.runCommandAndGetStdout(
@@ -679,6 +672,7 @@ class Linux {
             environment: {"DEBIAN_FRONTEND": "noninteractive"}));
         break;
       case DISTROS.UBUNTU:
+      case DISTROS.POPOS:
         commandQueue.add(LinuxCommand(
             userId: 0,
             command:
