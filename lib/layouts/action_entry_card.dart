@@ -69,10 +69,8 @@ class _ActionEntryCardState extends State<ActionEntryCard> {
     IconLoader iconLoader = IconLoader();
     if (widget.actionEntry.action.startsWith("openapp:") &&
         iconLoader.isIconLoaded(widget.actionEntry.iconURI, iconSize: 48)) {
-      return SystemIcon(
-        iconString: widget.actionEntry.iconURI,
-        iconSize: 48,
-      );
+      return iconLoader.getIconFromCache(widget.actionEntry.iconURI,
+          iconSize: 48);
     }
 
     // Only cancel and start loading new if the action changed.
@@ -132,6 +130,7 @@ class _ActionEntryCardState extends State<ActionEntryCard> {
       icon = SystemIcon(
         iconString: widget.actionEntry.iconURI,
         iconSize: 48,
+        spinner: false,
       );
       systemIconLoaded = true;
       setState(() {});

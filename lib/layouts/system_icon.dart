@@ -2,13 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
+import 'package:linux_assistant/layouts/mintY.dart';
 import 'package:linux_assistant/services/icon_loader.dart';
 import 'package:linux_assistant/services/linux.dart';
 
 class SystemIcon extends StatelessWidget {
-  const SystemIcon({required this.iconString, this.iconSize = 100});
+  const SystemIcon({
+    required this.iconString,
+    this.iconSize = 100,
+    this.spinner = true,
+  });
   final String iconString;
   final double iconSize;
+  final bool spinner;
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +36,12 @@ class SystemIcon extends StatelessWidget {
           if (snapshot.hasData) {
             return snapshot.data!;
           }
-          return Icon(
-            Icons.settings,
-            size: iconSize,
-          );
+          return spinner
+              ? MintYProgressIndicatorCircle()
+              : Icon(
+                  Icons.settings,
+                  size: iconSize,
+                );
         },
       );
     }
