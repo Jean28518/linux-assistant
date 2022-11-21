@@ -13,12 +13,12 @@ class IconLoader {
   }
   IconLoader._privateConstructor();
 
-  Map cache = {};
+  Map<String, Widget> cache = {};
 
   Future<Widget> getIconForApp(appCode, {double iconSize = 48}) async {
     String cacheKeyword = "$appCode-$iconSize";
     if (cache.containsKey(cacheKeyword)) {
-      return cache[cacheKeyword];
+      return cache[cacheKeyword]!;
     }
     String iconPath = "not found";
     if (appCode != "") {
@@ -32,25 +32,17 @@ class IconLoader {
 
     if (iconPath.contains("not found")) {
       if (cache.containsKey("!default!-$iconSize")) {
-        cache[cacheKeyword] = cache['!default!-$iconSize'];
+        cache[cacheKeyword] = cache['!default!-$iconSize']!;
       } else {
-        String defaultIconPath =
-            await Linux.runCommandWithCustomArgumentsAndGetStdOut(
-                "/usr/bin/python3", [
-          "${Linux.executableFolder}additional/python/get_icon_path.py",
-          "--icon=applications-system",
-          "--path-to-alternative-logos=${Linux.executableFolder}additional/logos/"
-        ]);
-        Image image = Image.file(
-          File(defaultIconPath.replaceAll("\n", "")),
-          width: iconSize,
-          height: iconSize,
+        Icon icon = Icon(
+          Icons.settings,
+          size: iconSize,
         );
 
-        cache['!default!-$iconSize'] = image;
-        cache[cacheKeyword] = image;
+        cache['!default!-$iconSize'] = icon;
+        cache[cacheKeyword] = icon;
       }
-      return cache[cacheKeyword];
+      return cache[cacheKeyword]!;
     }
 
     File file = await File(iconPath.replaceAll("\n", ""));
@@ -77,8 +69,8 @@ class IconLoader {
     return (cache.containsKey(cacheKey));
   }
 
-  Image getIconFromCache(appCode, {double iconSize = 48}) {
+  Widget getIconFromCache(appCode, {double iconSize = 48}) {
     String cacheKey = "$appCode-$iconSize";
-    return cache[cacheKey];
+    return cache[cacheKey]!;
   }
 }
