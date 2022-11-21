@@ -16,14 +16,6 @@ class IconLoader {
   Map cache = {};
 
   Future<Widget> getIconForApp(appCode, {double iconSize = 48}) async {
-    // Because of bug: https://github.com/flutter/flutter/issues/94869
-    if (Linux.currentenvironment.nvidiaCardAndNouveauRunning) {
-      return Icon(
-        Icons.settings,
-        size: iconSize,
-      );
-    }
-
     String cacheKeyword = "$appCode-$iconSize";
     if (cache.containsKey(cacheKeyword)) {
       return cache[cacheKeyword];

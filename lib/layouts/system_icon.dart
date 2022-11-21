@@ -3,6 +3,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
 import 'package:linux_assistant/services/icon_loader.dart';
+import 'package:linux_assistant/services/linux.dart';
 
 class SystemIcon extends StatelessWidget {
   const SystemIcon({required this.iconString, this.iconSize = 100});
@@ -11,6 +12,14 @@ class SystemIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Because of bug: https://github.com/flutter/flutter/issues/94869
+    if (Linux.currentenvironment.nvidiaCardAndNouveauRunning) {
+      return Icon(
+        Icons.settings,
+        size: iconSize,
+      );
+    }
+
     IconLoader iconLoader = IconLoader();
     if (iconLoader.isIconLoaded(iconString, iconSize: iconSize)) {
       return iconLoader.getIconFromCache(iconString, iconSize: iconSize);
@@ -21,7 +30,10 @@ class SystemIcon extends StatelessWidget {
           if (snapshot.hasData) {
             return snapshot.data!;
           }
-          return const CircularProgressIndicator();
+          return Icon(
+            Icons.settings,
+            size: iconSize,
+          );
         },
       );
     }
