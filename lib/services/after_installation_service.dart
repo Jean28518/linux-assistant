@@ -27,8 +27,8 @@ class AfterInstallationService {
     await Linux.ensureApplicationInstallation(["firefox", "firefox-esr"],
         installed: firefox);
 
-    if (Linux.currentEnviroment.distribution == DISTROS.UBUNTU ||
-        Linux.currentEnviroment.distribution == DISTROS.POPOS) {
+    if (Linux.currentenvironment.distribution == DISTROS.UBUNTU ||
+        Linux.currentenvironment.distribution == DISTROS.POPOS) {
       // Chromium for Ubuntu (snap):
       await Linux.ensureApplicationInstallation(
           ["chromium-browser", "org.chromium.Chromium"],

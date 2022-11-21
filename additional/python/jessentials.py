@@ -26,15 +26,15 @@ def replace_tilde_to_home(folder_path):
 def get_environment_variable(key):
     return os.environ[key]
 
-# example for enviroment={'DEBIAN_FRONTEND': 'noninteractive'}
+# example for environment={'DEBIAN_FRONTEND': 'noninteractive'}
 # if return_output==true: function returns a array of strings
-def run_command(command, print_output=True, return_output=False, enviroment = {}, user=None):
+def run_command(command, print_output=True, return_output=False, environment = {}, user=None):
     if sys.version_info < (3, 9):
         if user == None:
             user = os.getuid()
-        process = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE, env=enviroment, preexec_fn=_demote(user, user))
+        process = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE, env=environment, preexec_fn=_demote(user, user))
     else:
-        process = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE, env=enviroment, user=user)
+        process = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE, env=environment, user=user)
     output_lines = [] # In this the output is saved line per line
     if print_output or return_output:
         while True:

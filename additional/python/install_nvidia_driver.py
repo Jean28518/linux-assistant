@@ -20,4 +20,4 @@ if len(numbers) == 0:
 numbers.sort()
 highest_number = numbers[-1]
 
-jessentials.run_command(f"apt install -y nvidia-driver-{highest_number}", enviroment={'DEBIAN_FRONTEND': 'noninteractive'})
+jessentials.run_command(f"apt install -y nvidia-driver-{highest_number}", environment={'DEBIAN_FRONTEND': 'noninteractive'})

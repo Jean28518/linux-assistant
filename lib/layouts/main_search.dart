@@ -252,7 +252,7 @@ class _MainSearchState extends State<MainSearch> {
       results.add(actionEntry);
     }
 
-    if (keyword != "" && Linux.currentEnviroment.browser == BROWSERS.FIREFOX) {
+    if (keyword != "" && Linux.currentenvironment.browser == BROWSERS.FIREFOX) {
       results.add(ActionEntry(
           name: "${AppLocalizations.of(context)!.searchInWebFor} $keyword",
           description: AppLocalizations.of(context)!.lookForOnlineResults,
@@ -283,7 +283,7 @@ class _MainSearchState extends State<MainSearch> {
     List<ActionEntry> heavyEntries = [];
 
     // Search through apt
-    if (Linux.currentEnviroment.installedSoftwareManagers
+    if (Linux.currentenvironment.installedSoftwareManagers
         .contains(SOFTWARE_MANAGERS.APT)) {
       List<ActionEntry> pckgs =
           await Linux.getInstallableAptPackagesForKeyword(keyword);

@@ -16,7 +16,7 @@ class SecurityCheckOverview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Linux.executableFolder = Linux.getExecutableFolder();
-    print(Linux.currentEnviroment);
+    print(Linux.currentenvironment);
     Future<String> checkerOutputString =
         Linux.runCommandWithCustomArgumentsAndGetStdOut(
             "pkexec",

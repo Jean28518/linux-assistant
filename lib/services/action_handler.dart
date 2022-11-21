@@ -90,7 +90,7 @@ class ActionHandler {
     }
 
     if (actionEntry.action.startsWith("openapp:")) {
-      if (Linux.currentEnviroment.desktop == DESKTOPS.KDE) {
+      if (Linux.currentenvironment.desktop == DESKTOPS.KDE) {
         Linux.runCommand("kioclient exec " +
             actionEntry.action.replaceFirst("openapp:", ""));
       } else {

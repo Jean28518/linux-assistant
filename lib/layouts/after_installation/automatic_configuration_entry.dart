@@ -16,7 +16,7 @@ class AfterInstallationAutomaticConfigurationEntry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String currentDistribution =
-        getNiceStringOfDistrosEnum(Linux.currentEnviroment.distribution);
+        getNiceStringOfDistrosEnum(Linux.currentenvironment.distribution);
     return MintYPage(
       title: AppLocalizations.of(context)!.setUpXWithRecommendedSettings +
           " " +

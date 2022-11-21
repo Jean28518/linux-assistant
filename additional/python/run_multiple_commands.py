@@ -42,6 +42,6 @@ for line in lines:
         env[key] = value
 
     print(f"-- COMMAND: '{command}' ".ljust(128, "-"))
-    jessentials.run_command(command=command, enviroment=env, user=user_id)
+    jessentials.run_command(command=command, environment=env, user=user_id)
 
 print(" FINISHED ".center(128, "-"))

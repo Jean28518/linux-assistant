@@ -17,7 +17,7 @@ class IconLoader {
 
   Future<Widget> getIconForApp(appCode, {double iconSize = 48}) async {
     // Because of bug: https://github.com/flutter/flutter/issues/94869
-    if (Linux.currentEnviroment.nvidiaCardAndNouveauRunning) {
+    if (Linux.currentenvironment.nvidiaCardAndNouveauRunning) {
       return Icon(
         Icons.settings,
         size: iconSize,

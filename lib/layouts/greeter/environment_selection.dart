@@ -4,7 +4,7 @@ import 'package:linux_assistant/enums/distros.dart';
 import 'package:linux_assistant/layouts/greeter/is_environment_correct.dart';
 import 'package:linux_assistant/layouts/greeter/start_after_installation.dart';
 import 'package:linux_assistant/layouts/mintY.dart';
-import 'package:linux_assistant/models/enviroment.dart';
+import 'package:linux_assistant/models/environment.dart';
 import 'package:linux_assistant/services/config_handler.dart';
 import 'package:linux_assistant/services/linux.dart';
 import 'package:linux_assistant/services/main_search_loader.dart';
@@ -19,8 +19,8 @@ class EnvironmentSelectionView extends StatefulWidget {
 }
 
 class _EnvironmentSelectionViewState extends State<EnvironmentSelectionView> {
-  Environment environment = Linux.currentEnviroment;
-  Environment oldEnvironment = Linux.currentEnviroment;
+  Environment environment = Linux.currentenvironment;
+  Environment oldEnvironment = Linux.currentenvironment;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -181,7 +181,7 @@ class _EnvironmentSelectionViewState extends State<EnvironmentSelectionView> {
                 ),
                 color: Colors.blue,
                 onPressed: () {
-                  Linux.currentEnviroment = environment;
+                  Linux.currentenvironment = environment;
                   ConfigHandler configHandler = ConfigHandler();
                   configHandler.setValue("environment", environment.toJson());
                   Navigator.push(

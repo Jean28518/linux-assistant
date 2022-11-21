@@ -16,7 +16,7 @@ class AfterInstallationFlatpakCheck extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (Linux.currentEnviroment.installedSoftwareManagers
+    if (Linux.currentenvironment.installedSoftwareManagers
         .contains(SOFTWARE_MANAGERS.FLATPAK)) {
       return AfterInstallationBrowserSelection();
     }

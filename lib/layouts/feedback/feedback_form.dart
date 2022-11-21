@@ -4,7 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:linux_assistant/layouts/feedback/feedback_send.dart';
 import 'package:linux_assistant/layouts/mintY.dart';
 import 'package:linux_assistant/models/action_entry.dart';
-import 'package:linux_assistant/models/enviroment.dart';
+import 'package:linux_assistant/models/environment.dart';
 import 'package:linux_assistant/services/feedback_service.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

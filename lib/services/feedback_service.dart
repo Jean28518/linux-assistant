@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:linux_assistant/models/action_entry.dart';
 import 'package:http/http.dart' as http;
-import 'package:linux_assistant/models/enviroment.dart';
+import 'package:linux_assistant/models/environment.dart';
 import 'package:linux_assistant/services/linux.dart';
 
 class FeedbackService {
@@ -26,7 +26,7 @@ class FeedbackService {
     if (!includeBasicSystemInformation) {
       environment = Map<String, dynamic>();
     } else {
-      environment = Linux.currentEnviroment.toJson();
+      environment = Linux.currentenvironment.toJson();
     }
 
     http.Response response = await http

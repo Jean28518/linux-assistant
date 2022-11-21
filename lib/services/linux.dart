@@ -9,7 +9,7 @@ import 'package:linux_assistant/enums/distros.dart';
 import 'package:linux_assistant/enums/softwareManagers.dart';
 import 'package:linux_assistant/layouts/run_command_queue.dart';
 import 'package:linux_assistant/models/action_entry.dart';
-import 'package:linux_assistant/models/enviroment.dart';
+import 'package:linux_assistant/models/environment.dart';
 import 'package:linux_assistant/models/linux_command.dart';
 import 'package:linux_assistant/services/config_handler.dart';
 import 'package:linux_assistant/services/hashing.dart';
@@ -17,7 +17,7 @@ import 'package:linux_assistant/services/main_search_loader.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Linux {
-  static Environment currentEnviroment = Environment();
+  static Environment currentenvironment = Environment();
   static String executableFolder = "";
 
   /// Commands in it can be run at once by [Linux.executeCommandQueue()]
@@ -99,13 +99,13 @@ class Linux {
   }
 
   static void changeUserPasswordDialog() {
-    switch (currentEnviroment.distribution) {
+    switch (currentenvironment.distribution) {
       case DISTROS.MXLINUX:
         openUserSettings();
         break;
       default:
     }
-    switch (currentEnviroment.desktop) {
+    switch (currentenvironment.desktop) {
       case DESKTOPS.CINNAMON:
         openUserSettings();
         break;
@@ -120,13 +120,13 @@ class Linux {
   }
 
   static void openUserSettings() {
-    switch (currentEnviroment.distribution) {
+    switch (currentenvironment.distribution) {
       case DISTROS.MXLINUX:
         runCommand("mx-user");
         break;
       default:
     }
-    switch (currentEnviroment.desktop) {
+    switch (currentenvironment.desktop) {
       case DESKTOPS.CINNAMON:
         runCommand("cinnamon-settings user");
         break;
@@ -141,13 +141,13 @@ class Linux {
   }
 
   static void openSystemInformation() {
-    switch (currentEnviroment.distribution) {
+    switch (currentenvironment.distribution) {
       case DISTROS.MXLINUX:
         runCommand("quick-system-info-gui");
         break;
       default:
     }
-    switch (currentEnviroment.desktop) {
+    switch (currentenvironment.desktop) {
       case DESKTOPS.CINNAMON:
         runCommand("cinnamon-settings info");
         break;
@@ -194,18 +194,18 @@ class Linux {
   /// Doesn't run the command instantly, only puts the commands in to [Linux.commandQueue].
   static Future<void> installApplications(List<String> appCodes,
       {SOFTWARE_MANAGERS? preferredSoftwareManager}) async {
-    preferredSoftwareManager ??= currentEnviroment.preferredSoftwareManager;
+    preferredSoftwareManager ??= currentenvironment.preferredSoftwareManager;
 
     // Move preferred software manager to the start of the list
-    currentEnviroment.installedSoftwareManagers
+    currentenvironment.installedSoftwareManagers
         .insert(0, preferredSoftwareManager!);
-    currentEnviroment.installedSoftwareManagers.removeAt(currentEnviroment
+    currentenvironment.installedSoftwareManagers.removeAt(currentenvironment
         .installedSoftwareManagers
         .lastIndexOf(preferredSoftwareManager));
 
     for (String appCode in appCodes) {
       for (SOFTWARE_MANAGERS softwareManager
-          in currentEnviroment.installedSoftwareManagers) {
+          in currentenvironment.installedSoftwareManagers) {
         if (softwareManager == SOFTWARE_MANAGERS.APT) {
           // Check, if package is available:
           bool available = await isDebPackageAvailable(appCode);
@@ -235,7 +235,7 @@ class Linux {
             LinuxCommand(
               command:
                   "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.FLATPAK)} install $repo $appCode --system -y --noninteractive",
-              userId: currentEnviroment.currentUserId,
+              userId: currentenvironment.currentUserId,
             ),
           );
           return;
@@ -312,7 +312,7 @@ class Linux {
           isFlatpakInstalled) {
         commandQueue.add(
           LinuxCommand(
-            userId: currentEnviroment.currentUserId,
+            userId: currentenvironment.currentUserId,
             command:
                 "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.FLATPAK)} remove $appCode -y --noninteractive",
           ),
@@ -337,7 +337,7 @@ class Linux {
 
   // Returns true, if one of these application is installed.
   static Future<bool> areApplicationsInstalled(List<String> appCodes) async {
-    if (currentEnviroment.installedSoftwareManagers
+    if (currentenvironment.installedSoftwareManagers
         .contains(SOFTWARE_MANAGERS.APT)) {
       for (String appCode in appCodes) {
         bool isDebianPackageInstalled =
@@ -347,7 +347,7 @@ class Linux {
         }
       }
     }
-    if (currentEnviroment.installedSoftwareManagers
+    if (currentenvironment.installedSoftwareManagers
         .contains(SOFTWARE_MANAGERS.FLATPAK)) {
       for (String appCode in appCodes) {
         bool isFlatpakInstalled = await isSpecificFlatpakInstalled(appCode);
@@ -356,7 +356,7 @@ class Linux {
         }
       }
     }
-    if (currentEnviroment.installedSoftwareManagers
+    if (currentenvironment.installedSoftwareManagers
         .contains(SOFTWARE_MANAGERS.SNAP)) {
       for (String appCode in appCodes) {
         bool isSnapInstalled = await isSpecificSnapInstalled(appCode);
@@ -434,7 +434,7 @@ class Linux {
         command:
             "flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo"));
     // We set this temporally to easily add flatpaks to the system. It will be written to config at next startup (if the installation of flatpak really succeded)
-    Linux.currentEnviroment.installedSoftwareManagers
+    Linux.currentenvironment.installedSoftwareManagers
         .add(SOFTWARE_MANAGERS.FLATPAK);
   }
 
@@ -444,7 +444,8 @@ class Linux {
 
   static void openWebbrowserWithSite(String website) {
     assert(Uri.parse(website).isAbsolute);
-    runCommand(getWebbrowserCommand(currentEnviroment.browser) + " " + website);
+    runCommand(
+        getWebbrowserCommand(currentenvironment.browser) + " " + website);
   }
 
   static String getWebbrowserCommand(var browser) {
@@ -466,7 +467,7 @@ class Linux {
     List<String> folders = foldersString.split('\n');
 
     // Get Bookmarks:
-    if (currentEnviroment.desktop != DESKTOPS.KDE) {
+    if (currentenvironment.desktop != DESKTOPS.KDE) {
       String home = await getHomeDirectory();
       String bookmarksLocation = home + "/.config/gtk-3.0/bookmarks";
       String bookmarksString =
@@ -512,8 +513,8 @@ class Linux {
     String applicationsString =
         await runCommandWithCustomArgumentsAndGetStdOut("python3", [
       "${executableFolder}additional/python/get_applications.py",
-      "--lang=${currentEnviroment.language}",
-      "--desktop=${currentEnviroment.desktop.toString()}"
+      "--lang=${currentenvironment.language}",
+      "--desktop=${currentenvironment.desktop.toString()}"
     ]);
 
     List<String> applications = applicationsString.split('\n');
@@ -563,9 +564,9 @@ class Linux {
     return actionEntries;
   }
 
-  static Future<Environment> getCurrentEnviroment() async {
+  static Future<Environment> getCurrentenvironment() async {
     String commandOutput = await runCommandWithCustomArgumentsAndGetStdOut(
-        "python3", ["${executableFolder}additional/python/get_enviroment.py"]);
+        "python3", ["${executableFolder}additional/python/get_environment.py"]);
     List<String> lines = commandOutput.split("\n");
     Environment newEnvironment = Environment();
 
@@ -665,7 +666,7 @@ class Linux {
   }
 
   static void installMultimediaCodecs() async {
-    switch (currentEnviroment.distribution) {
+    switch (currentenvironment.distribution) {
       case DISTROS.DEBIAN:
       case DISTROS.MXLINUX:
         // await Linux.runCommandAndGetStdout(
@@ -854,26 +855,26 @@ class Linux {
 
   static Future<Environment> recognizeEnvironmentFirstInitialization() async {
     ConfigHandler configHandler = ConfigHandler();
-    Environment environment = await Linux.getCurrentEnviroment();
-    Linux.currentEnviroment = environment;
+    Environment environment = await Linux.getCurrentenvironment();
+    Linux.currentenvironment = environment;
     configHandler.setValue("environment", environment.toJson());
     return environment;
   }
 
   static Future<void> updateEnvironmentAtNormalStartUp() async {
-    Environment environment = await Linux.getCurrentEnviroment();
-    Linux.currentEnviroment.browser = environment.browser;
-    Linux.currentEnviroment.currentUserId = environment.currentUserId;
-    Linux.currentEnviroment.desktop = environment.desktop;
-    Linux.currentEnviroment.installedSoftwareManagers =
+    Environment environment = await Linux.getCurrentenvironment();
+    Linux.currentenvironment.browser = environment.browser;
+    Linux.currentenvironment.currentUserId = environment.currentUserId;
+    Linux.currentenvironment.desktop = environment.desktop;
+    Linux.currentenvironment.installedSoftwareManagers =
         environment.installedSoftwareManagers;
 
     ConfigHandler configHandler = ConfigHandler();
-    configHandler.setValue("environment", Linux.currentEnviroment.toJson());
+    configHandler.setValue("environment", Linux.currentenvironment.toJson());
 
     bool nvidiaCardInstalled = await isNvidiaCardInstalledOnSystem();
     bool nouveauRunning = await isNouveauCurrentGraphicsDriver();
-    currentEnviroment.nvidiaCardAndNouveauRunning =
+    currentenvironment.nvidiaCardAndNouveauRunning =
         nvidiaCardInstalled && nouveauRunning;
   }
 
