@@ -17,4 +17,4 @@ if jfiles.does_file_exist("/usr/bin/mintupdate-automation"):
 
 jessentials.run_command("apt install unattended-upgrades")
 jessentials.run_command("echo unattended-upgrades unattended-upgrades/enable_auto_updates boolean true | debconf-set-selections")
-jessentials.run_command("dpkg-reconfigure -f noninteractive unattended-upgrades")
+jessentials.run_command("/usr/sbin/dpkg-reconfigure -f noninteractive unattended-upgrades")
