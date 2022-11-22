@@ -3,19 +3,20 @@ import jessentials
 import json
 import os
 
-CUSTOM_KEYS_PARENT_SCHEMA = "org.cinnamon.desktop.keybindings"
-CUSTOM_KEYS_BASENAME = "/org/cinnamon/desktop/keybindings/custom-keybindings"
-CUSTOM_KEYS_SCHEMA = "org.cinnamon.desktop.keybindings.custom-keybinding"
-DUMMY_CUSTOM_ENTRY = "__dummy__"
+# Cinnamon ----------------------------------------------------------------------------------
+CUSTOM_KEYS_PARENT_SCHEMA_CINNAMON = "org.cinnamon.desktop.keybindings"
+CUSTOM_KEYS_BASENAME_CINNAMON = "/org/cinnamon/desktop/keybindings/custom-keybindings"
+CUSTOM_KEYS_SCHEMA_CINNAMON = "org.cinnamon.desktop.keybindings.custom-keybinding"
+DUMMY_CUSTOM_ENTRY_CINNAMON = "__dummy__"
 
 def add_linux_assistant_keybinding_cinnamon():
-    parent = Gio.Settings.new(CUSTOM_KEYS_PARENT_SCHEMA)
+    parent = Gio.Settings.new(CUSTOM_KEYS_PARENT_SCHEMA_CINNAMON)
 
     # Generate new name
     array = parent.get_strv("custom-list")
     num_array = []
     for entry in array:
-        if entry == DUMMY_CUSTOM_ENTRY:
+        if entry == DUMMY_CUSTOM_ENTRY_CINNAMON:
             continue
         num_array.append(int(entry.replace("custom", "")))
     num_array.sort()
@@ -31,8 +32,8 @@ def add_linux_assistant_keybinding_cinnamon():
     custom_name = f"custom{i}"
 
     # Insert new keybinding entry
-    custom_path = f"{CUSTOM_KEYS_BASENAME}/{custom_name}/"
-    new_schema = Gio.Settings.new_with_path(CUSTOM_KEYS_SCHEMA, custom_path)
+    custom_path = f"{CUSTOM_KEYS_BASENAME_CINNAMON}/{custom_name}/"
+    new_schema = Gio.Settings.new_with_path(CUSTOM_KEYS_SCHEMA_CINNAMON, custom_path)
     new_schema.set_string("name", "linux-assistant")
     new_schema.set_string("command", "linux-assistant")
     new_schema.set_strv("binding", ['<Alt>q'])
@@ -40,15 +41,56 @@ def add_linux_assistant_keybinding_cinnamon():
     new_schema.apply()
 
     # Touch the custom-list key, this will trigger a rebuild in cinnamon
-    parent = Gio.Settings.new(CUSTOM_KEYS_PARENT_SCHEMA)
+    parent = Gio.Settings.new(CUSTOM_KEYS_PARENT_SCHEMA_CINNAMON)
     custom_list = parent.get_strv("custom-list")
     custom_list.reverse()
     parent.set_strv("custom-list", custom_list)
+
+# Gnome ----------------------------------------------------------------------------------
+CUSTOM_KEYS_PARENT_SCHEMA_GNOME = "org.gnome.settings-daemon.plugins.media-keys"
+CUSTOM_KEYS_BASENAME_GNOME = "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
+CUSTOM_KEYS_SCHEMA_GNOME = "org.gnome.settings-daemon.plugins.media-keys.custom-keybinding"
+
+def add_linux_assistant_keybinding_gnome():
+    parent = Gio.Settings.new(CUSTOM_KEYS_PARENT_SCHEMA_GNOME)
+
+    # Generate new name
+    array = parent.get_strv("custom-keybindings")
+    num_array = []
+    for entry in array:
+        num_array.append(int(entry.replace("/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom", "").replace("/", "")))
+    num_array.sort()
+    i = 0
+    while True:
+        if i in num_array:
+            i += 1
+        else:
+            break
+    custom_name = f"custom{i}"
+    array.append(f"/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/{custom_name}/")
+    parent.set_strv("custom-keybindings", array)
+
+    # Insert new keybinding entry
+    custom_path = f"{CUSTOM_KEYS_BASENAME_GNOME}/{custom_name}/"
+    new_schema = Gio.Settings.new_with_path(CUSTOM_KEYS_SCHEMA_GNOME, custom_path)
+    new_schema.set_string("name", "linux-assistant")
+    new_schema.set_string("command", "linux-assistant")
+    new_schema.set_string("binding", "<Alt>q")
+    new_schema.sync()
+    new_schema.apply()
+
+    # Touch the custom-list key, this will trigger a rebuild in gnome
+    parent = Gio.Settings.new(CUSTOM_KEYS_PARENT_SCHEMA_GNOME)
+    custom_list = parent.get_strv("custom-keybindings")
+    custom_list.reverse()
+    parent.set_strv("custom-keybindings", custom_list)
 
 
 def main():
     if "cinnamon" in os.getenv("XDG_CURRENT_DESKTOP").lower():
         add_linux_assistant_keybinding_cinnamon()
+    if "gnome" in os.getenv("XDG_CURRENT_DESKTOP").lower():
+        add_linux_assistant_keybinding_gnome()
 
 if __name__ == "__main__":
     main()
