@@ -17,6 +17,7 @@ void main() async {
   // For hot reload, `unregisterAll()` needs to be called.
   await HotKeyManager.instance.unregisterAll();
 
+  Linux.executableFolder = Linux.getExecutableFolder();
   await Linux.updateEnvironmentAtNormalStartUp();
   bool darkTheme = await Linux.isDarkThemeEnabled();
 
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MintY.currentColor = Colors.blue;
-    Linux.executableFolder = Linux.getExecutableFolder();
+
     initHotkeyToShowUp();
     return MaterialApp(
       title: 'Linux Assistant',

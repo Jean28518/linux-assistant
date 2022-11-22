@@ -564,7 +564,7 @@ class Linux {
     return actionEntries;
   }
 
-  static Future<Environment> getCurrentenvironment() async {
+  static Future<Environment> getCurrentEnvironment() async {
     String commandOutput = await runCommandWithCustomArgumentsAndGetStdOut(
         "python3", ["${executableFolder}additional/python/get_environment.py"]);
     List<String> lines = commandOutput.split("\n");
@@ -855,14 +855,14 @@ class Linux {
 
   static Future<Environment> recognizeEnvironmentFirstInitialization() async {
     ConfigHandler configHandler = ConfigHandler();
-    Environment environment = await Linux.getCurrentenvironment();
+    Environment environment = await Linux.getCurrentEnvironment();
     Linux.currentenvironment = environment;
     configHandler.setValue("environment", environment.toJson());
     return environment;
   }
 
   static Future<void> updateEnvironmentAtNormalStartUp() async {
-    Environment environment = await Linux.getCurrentenvironment();
+    Environment environment = await Linux.getCurrentEnvironment();
     Linux.currentenvironment.browser = environment.browser;
     Linux.currentenvironment.currentUserId = environment.currentUserId;
     Linux.currentenvironment.desktop = environment.desktop;
