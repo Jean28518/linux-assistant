@@ -13,15 +13,15 @@ class StartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future<bool> configAvailable = isConfigAvailable();
+    Future<bool> runFirstStartup = shouldRunFirstStartUp();
     return FutureBuilder<bool>(
-      future: configAvailable,
+      future: runFirstStartup,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data!) {
-            return MainSearchLoader();
-          } else {
             return getStartScreenView(context);
+          } else {
+            return MainSearchLoader();
           }
         } else {
           return LoadingIndicator();
@@ -30,20 +30,12 @@ class StartScreen extends StatelessWidget {
     );
   }
 
-  Future<bool> isConfigAvailable() async {
+  Future<bool> shouldRunFirstStartUp() async {
     // prepare config
     ConfigHandler configHandler = ConfigHandler();
-    await configHandler.loadConfigFromFile();
-
-    // Load environment
-    Map<String, dynamic> environmentMap =
-        configHandler.getValueUnsafe("environment", <String, dynamic>{});
-    if (environmentMap.isEmpty) {
-      return false;
-    } else {
-      Linux.currentenvironment = Environment.fromJson(environmentMap);
-      return true;
-    }
+    bool runFirstStartUp =
+        await configHandler.getValue("runFirstStartUp", true);
+    return runFirstStartUp;
   }
 
   Scaffold getStartScreenView(context) {

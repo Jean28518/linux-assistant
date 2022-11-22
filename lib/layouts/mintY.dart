@@ -63,7 +63,7 @@ class MintY {
     ),
   );
 
-  static const Color _white = Color.fromARGB(255, 218, 218, 218);
+  static const Color _white = Color.fromARGB(255, 255, 255, 255);
 
   static const heading1White = TextStyle(
       color: _white,
@@ -258,6 +258,10 @@ class MintYButton extends StatelessWidget {
 
 class MintYButtonNavigate extends StatelessWidget {
   late Widget route;
+
+  /// will be called before the button navigates
+  late VoidCallback? onPressed;
+
   late Text text;
   late Color color;
   late double width;
@@ -269,6 +273,7 @@ class MintYButtonNavigate extends StatelessWidget {
       this.color = const Color.fromARGB(255, 232, 232, 232),
       this.width = 110,
       this.height = 40,
+      this.onPressed,
       Key? key})
       : super(key: key);
 
@@ -281,6 +286,7 @@ class MintYButtonNavigate extends StatelessWidget {
       height: height,
       onPressed: () {
         if (route != null) {
+          onPressed?.call();
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => route),

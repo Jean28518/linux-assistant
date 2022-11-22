@@ -4,6 +4,7 @@ import 'package:linux_assistant/content/recommendations.dart';
 import 'package:linux_assistant/layouts/loading_indicator.dart';
 import 'package:linux_assistant/layouts/main_search.dart';
 import 'package:linux_assistant/models/action_entry_list.dart';
+import 'package:linux_assistant/services/config_handler.dart';
 import 'package:linux_assistant/services/linux.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -36,6 +37,9 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
     var additionalFolders =
         Linux.getFoldersOfActionEntries(context, returnValue.entries);
     returnValue.entries.addAll(additionalFolders);
+
+    ConfigHandler configHandler = ConfigHandler();
+    configHandler.setValue("runFirstStartUp", false);
 
     return returnValue;
   }

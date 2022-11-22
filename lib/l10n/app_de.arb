@@ -108,6 +108,10 @@
   "startAfterInstallationRoutine": "Starte Einrichtung des Rechners",
   "timeToSetupYourComputer": "Zeit, Deinen Rechner einzurichten",
   "timeToSetupYourComputerDescription": "Konfiguriere Deinen Linux-Rechner nach Deinen Bedürfnissen.",
+  "activateHotkey": "Aktiviere Tastenkürzel",
+  "openLinuxAssistantFaster": "Öffne Linux Assistant schneller.",
+  "openLinuxAssistantFasterDescription": "Mit der Tastenkombination <Alt> + <Q> könntest Du direkt deinen Assistenten schneller öffnen.\nUm mit Deinem Rechner produktiver zu arbeiten, wird dieser Schritt wärmstens empfohlen.",
+  "yesSetUpHotkey": "Ja, aktiviere Tastenkürzel",
   "@helloWorld": {
     "placeholders": {},
     "description": "",

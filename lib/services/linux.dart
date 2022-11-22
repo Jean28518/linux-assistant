@@ -958,4 +958,8 @@ class Linux {
         return false;
     }
   }
+
+  static void activateSystemHotkeyForLinuxAssistant() {
+    Linux.runPythonScript("setup_keybinding.py");
+  }
 }

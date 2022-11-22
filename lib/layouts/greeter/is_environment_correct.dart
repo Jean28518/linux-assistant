@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:linux_assistant/enums/desktops.dart';
 import 'package:linux_assistant/enums/distros.dart';
+import 'package:linux_assistant/layouts/greeter/activate_hotkey.dart';
 import 'package:linux_assistant/layouts/greeter/environment_selection.dart';
-import 'package:linux_assistant/layouts/greeter/start_after_installation.dart';
 import 'package:linux_assistant/layouts/loading_indicator.dart';
 import 'package:linux_assistant/layouts/mintY.dart';
 import 'package:linux_assistant/models/environment.dart';
-import 'package:linux_assistant/services/config_handler.dart';
 import 'package:linux_assistant/services/linux.dart';
-import 'package:linux_assistant/services/main_search_loader.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class IsYourEnvironmentCorrectView extends StatelessWidget {
@@ -57,7 +55,7 @@ class IsYourEnvironmentCorrectView extends StatelessWidget {
                     style: MintY.heading3White,
                   ),
                   color: Colors.blue,
-                  route: const StartAfterInstallationRoutineQuestion(),
+                  route: const ActivateHotkeyQuestion(),
                 ),
               ],
             ),
