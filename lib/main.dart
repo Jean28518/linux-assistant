@@ -18,7 +18,7 @@ void main() async {
   await HotKeyManager.instance.unregisterAll();
 
   Linux.executableFolder = Linux.getExecutableFolder();
-  await Linux.updateEnvironmentAtNormalStartUp();
+  await Linux.loadCurrentEnvironment();
   bool darkTheme = await Linux.isDarkThemeEnabled();
 
   runApp(MyApp(

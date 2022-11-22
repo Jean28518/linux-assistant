@@ -14,58 +14,45 @@ class IsYourEnvironmentCorrectView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future<Environment> environment =
-        Linux.recognizeEnvironmentFirstInitialization();
-    return FutureBuilder<Environment>(
-      future: environment,
-      builder: ((context, snapshot) {
-        if (snapshot.hasData) {
-          return MintYPage(
-            contentElements: [
-              Text(
-                AppLocalizations.of(context)!.isTheRecognizedSystemCorrect,
-                style: Theme.of(context).textTheme.headline1,
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              Text(
-                "${AppLocalizations.of(context)!.distribution}: ${getNiceStringOfDistrosEnum(snapshot.data!.distribution)} ${snapshot.data!.version}\n${AppLocalizations.of(context)!.desktop}: ${getNiceStringOfDesktopsEnum(snapshot.data!.desktop)}\n${AppLocalizations.of(context)!.language}: ${snapshot.data!.language}",
-                style: Theme.of(context).textTheme.headline3,
-                textAlign: TextAlign.center,
-              ),
-            ],
-            bottom: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                MintYButtonNavigate(
-                  text: Text(
-                    AppLocalizations.of(context)!.noIWantToChange,
-                    style: MintY.heading3,
-                  ),
-                  route: const EnvironmentSelectionView(),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                MintYButtonNavigate(
-                  text: Text(
-                    AppLocalizations.of(context)!.yes,
-                    style: MintY.heading3White,
-                  ),
-                  color: Colors.blue,
-                  route: const ActivateHotkeyQuestion(),
-                ),
-              ],
+    return MintYPage(
+      contentElements: [
+        Text(
+          AppLocalizations.of(context)!.isTheRecognizedSystemCorrect,
+          style: Theme.of(context).textTheme.headline1,
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+        Text(
+          "${AppLocalizations.of(context)!.distribution}: ${getNiceStringOfDistrosEnum(Linux.currentenvironment.distribution)} ${Linux.currentenvironment.version}\n${AppLocalizations.of(context)!.desktop}: ${getNiceStringOfDesktopsEnum(Linux.currentenvironment.desktop)}\n${AppLocalizations.of(context)!.language}: ${Linux.currentenvironment.language}",
+          style: Theme.of(context).textTheme.headline3,
+          textAlign: TextAlign.center,
+        ),
+      ],
+      bottom: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          MintYButtonNavigate(
+            text: Text(
+              AppLocalizations.of(context)!.noIWantToChange,
+              style: MintY.heading3,
             ),
-          );
-        } else {
-          return LoadingIndicator(
-            text: AppLocalizations.of(context)!.recognizingSystem,
-          );
-        }
-      }),
+            route: const EnvironmentSelectionView(),
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+          MintYButtonNavigate(
+            text: Text(
+              AppLocalizations.of(context)!.yes,
+              style: MintY.heading3White,
+            ),
+            color: MintY.currentColor,
+            route: const ActivateHotkeyQuestion(),
+          ),
+        ],
+      ),
     );
   }
 }

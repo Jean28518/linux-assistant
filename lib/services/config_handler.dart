@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:linux_assistant/services/linux.dart';
 
 class ConfigHandler {
-  // handle IconLoader as a singleton
+  /// handle IconLoader as a singleton
   static final ConfigHandler _instance = ConfigHandler._privateConstructor();
   factory ConfigHandler() {
     return _instance;
@@ -20,8 +20,8 @@ class ConfigHandler {
     return getValueUnsafe(key, defaultValue);
   }
 
-  // ensure that the config is loaded into memory before!! (call ensureConfigIsLoaded() before)
-  // that has only to be done once per programm start
+  /// ensure that the config is loaded into memory before!! (call ensureConfigIsLoaded() before)
+  /// that has only to be done once per programm start
   dynamic getValueUnsafe(key, defaultValue) {
     if (configMap.containsKey(key)) {
       return configMap[key];
@@ -36,14 +36,14 @@ class ConfigHandler {
     await saveConfigToFile();
   }
 
-  // ensure that the config is loaded into memory before!! (call ensureConfigIsLoaded() before)
-  // that has only to be done once per programm start
-  // also ensure that saveConfigToFile() is called once before programm exit
+  /// ensure that the config is loaded into memory before!! (call ensureConfigIsLoaded() before)
+  /// that has only to be done once per programm start
+  /// also ensure that saveConfigToFile() is called once before programm exit
   void setValueUnsafe(key, value) {
     configMap[key] = value;
   }
 
-  dynamic ensureConfigIsLoaded() async {
+  Future<void> ensureConfigIsLoaded() async {
     if (!configMap["config_initialized"]) {
       await loadConfigFromFile();
     }

@@ -20,6 +20,7 @@ class EnvironmentSelectionView extends StatefulWidget {
 class _EnvironmentSelectionViewState extends State<EnvironmentSelectionView> {
   Environment environment = Linux.currentenvironment;
   Environment oldEnvironment = Linux.currentenvironment;
+  ConfigHandler configHandler = ConfigHandler();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,6 +80,7 @@ class _EnvironmentSelectionViewState extends State<EnvironmentSelectionView> {
                     if (value.isNotEmpty) {
                       if (double.tryParse(value) != null) {
                         environment.version = double.parse(value);
+                        configHandler.setValue("version", environment.version);
                       }
                     } else {
                       environment.version = oldEnvironment.version;
@@ -180,9 +182,6 @@ class _EnvironmentSelectionViewState extends State<EnvironmentSelectionView> {
                 ),
                 color: Colors.blue,
                 onPressed: () {
-                  Linux.currentenvironment = environment;
-                  ConfigHandler configHandler = ConfigHandler();
-                  configHandler.setValue("environment", environment.toJson());
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -227,6 +226,8 @@ class _EnvironmentSelectionViewState extends State<EnvironmentSelectionView> {
                           onPressed: (() {
                             setState(() {
                               environment.distribution = DISTROS.values[index];
+                              configHandler.setValue(
+                                  "distribution", environment.distribution);
                               Navigator.of(context).pop();
                             });
                           }),
@@ -272,6 +273,8 @@ class _EnvironmentSelectionViewState extends State<EnvironmentSelectionView> {
                           onPressed: (() {
                             setState(() {
                               environment.desktop = DESKTOPS.values[index];
+                              configHandler.setValue(
+                                  "desktop", environment.desktop);
                               Navigator.of(context).pop();
                             });
                           }),

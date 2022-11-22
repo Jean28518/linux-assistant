@@ -853,24 +853,25 @@ class Linux {
     return results;
   }
 
-  static Future<Environment> recognizeEnvironmentFirstInitialization() async {
+  /// Used while startup of the application
+  static Future<void> loadCurrentEnvironment() async {
     ConfigHandler configHandler = ConfigHandler();
     Environment environment = await Linux.getCurrentEnvironment();
-    Linux.currentenvironment = environment;
-    configHandler.setValue("environment", environment.toJson());
-    return environment;
-  }
-
-  static Future<void> updateEnvironmentAtNormalStartUp() async {
-    Environment environment = await Linux.getCurrentEnvironment();
-    Linux.currentenvironment.browser = environment.browser;
+    configHandler.ensureConfigIsLoaded();
+    Linux.currentenvironment.distribution = await configHandler.getValueUnsafe(
+        "distribution", environment.distribution);
+    Linux.currentenvironment.version =
+        configHandler.getValueUnsafe("version", environment.version);
+    Linux.currentenvironment.desktop =
+        configHandler.getValueUnsafe("desktop", environment.desktop);
+    Linux.currentenvironment.browser =
+        configHandler.getValueUnsafe("browser", environment.browser);
+    Linux.currentenvironment.language =
+        configHandler.getValueUnsafe("language", environment.language);
     Linux.currentenvironment.currentUserId = environment.currentUserId;
     Linux.currentenvironment.desktop = environment.desktop;
     Linux.currentenvironment.installedSoftwareManagers =
         environment.installedSoftwareManagers;
-
-    ConfigHandler configHandler = ConfigHandler();
-    configHandler.setValue("environment", Linux.currentenvironment.toJson());
 
     bool nvidiaCardInstalled = await isNvidiaCardInstalledOnSystem();
     bool nouveauRunning = await isNouveauCurrentGraphicsDriver();
