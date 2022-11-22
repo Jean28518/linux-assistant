@@ -85,11 +85,15 @@ def add_linux_assistant_keybinding_gnome():
     custom_list.reverse()
     parent.set_strv("custom-keybindings", custom_list)
 
+def add_linux_assistant_keybinding_gnome():
+    jessentials.run_command("xfconf-query -c xfce4-keyboard-shortcuts -p '/commands/custom/<Alt>q' -n -t string -s linux-assistant")
 
 def main():
     if "cinnamon" in os.getenv("XDG_CURRENT_DESKTOP").lower():
         add_linux_assistant_keybinding_cinnamon()
     if "gnome" in os.getenv("XDG_CURRENT_DESKTOP").lower():
+        add_linux_assistant_keybinding_gnome()
+    if "xfce" in os.getenv("XDG_CURRENT_DESKTOP").lower():
         add_linux_assistant_keybinding_gnome()
 
 if __name__ == "__main__":

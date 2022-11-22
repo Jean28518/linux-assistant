@@ -1,0 +1,6 @@
+#!/bin/bash
+if wmctrl -l | grep -q 'Linux Assistant'; then
+  wmctrl -a 'Linux Assistant'
+else
+  /usr/lib/linux-assistant/linux_assistant
+fi
