@@ -17,6 +17,7 @@ void main() async {
   // For hot reload, `unregisterAll()` needs to be called.
   await HotKeyManager.instance.unregisterAll();
 
+  await Linux.updateEnvironmentAtNormalStartUp();
   bool darkTheme = await Linux.isDarkThemeEnabled();
 
   runApp(MyApp(
@@ -34,12 +35,12 @@ class MyApp extends StatelessWidget {
     initHotkeyToShowUp();
     return MaterialApp(
       title: 'Linux Assistant',
-      localizationsDelegates: [
+      localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
-      supportedLocales: [
+      supportedLocales: const [
         Locale('en', ''),
         Locale('de', ''),
       ],
