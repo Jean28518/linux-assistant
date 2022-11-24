@@ -19,78 +19,81 @@ class AfterInstallationAutomaticConfiguration extends StatelessWidget {
   Widget build(BuildContext context) {
     return MintYPage(
       title: AppLocalizations.of(context)!.automaticConfiguration,
-      contentElements: [
-        MintYSelectableEntryWithIconHorizontal(
-          icon: SystemIcon(
-            iconString: "multimedia",
-            iconSize: 128,
+      customContentElement: MintYGrid(
+        widgetSize: 700,
+        children: [
+          MintYSelectableEntryWithIconHorizontal(
+            icon: SystemIcon(
+              iconString: "multimedia",
+              iconSize: 128,
+            ),
+            title: AppLocalizations.of(context)!.installMultimediaCodecs,
+            selected: true,
+            onPressed: () {
+              AfterInstallationService.installMultimediaCodecs =
+                  !AfterInstallationService.installMultimediaCodecs;
+            },
+            text: AppLocalizations.of(context)!
+                .installMultimediaCodecsDescription,
           ),
-          title: AppLocalizations.of(context)!.installMultimediaCodecs,
-          selected: true,
-          onPressed: () {
-            AfterInstallationService.installMultimediaCodecs =
-                !AfterInstallationService.installMultimediaCodecs;
-          },
-          text:
-              AppLocalizations.of(context)!.installMultimediaCodecsDescription,
-        ),
-        MintYSelectableEntryWithIconHorizontal(
-          icon: SystemIcon(
-            iconString: "disks",
-            iconSize: 128,
+          MintYSelectableEntryWithIconHorizontal(
+            icon: SystemIcon(
+              iconString: "disks",
+              iconSize: 128,
+            ),
+            title: AppLocalizations.of(context)!.automaticSnapshots,
+            selected: true,
+            onPressed: () {
+              AfterInstallationService.setupAutomaticSnapshots =
+                  !AfterInstallationService.setupAutomaticSnapshots;
+            },
+            text: AppLocalizations.of(context)!.automaticSnapshotsDescription,
           ),
-          title: AppLocalizations.of(context)!.automaticSnapshots,
-          selected: true,
-          onPressed: () {
-            AfterInstallationService.setupAutomaticSnapshots =
-                !AfterInstallationService.setupAutomaticSnapshots;
-          },
-          text: AppLocalizations.of(context)!.automaticSnapshotsDescription,
-        ),
-        FutureBuilder<bool>(
-          future: isNvidiaCardInstalledOnSystem,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              if (snapshot.data.toString() == "true") {
-                AfterInstallationService.installNvidiaDrivers = true;
-                return MintYSelectableEntryWithIconHorizontal(
-                  icon: SystemIcon(
-                    iconString: "cs-drivers",
-                    iconSize: 128,
-                  ),
-                  title: AppLocalizations.of(context)!
-                      .automaticNvidiaDriverInstallation,
-                  selected: true,
-                  onPressed: () {
-                    AfterInstallationService.installNvidiaDrivers =
-                        !AfterInstallationService.installNvidiaDrivers;
-                  },
-                  text: AppLocalizations.of(context)!
-                      .automaticNvidiaDriverInstallationDesciption,
-                );
-              } else {
-                AfterInstallationService.installNvidiaDrivers = false;
+          FutureBuilder<bool>(
+            future: isNvidiaCardInstalledOnSystem,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                if (snapshot.data.toString() == "true") {
+                  AfterInstallationService.installNvidiaDrivers = true;
+                  return MintYSelectableEntryWithIconHorizontal(
+                    icon: SystemIcon(
+                      iconString: "cs-drivers",
+                      iconSize: 128,
+                    ),
+                    title: AppLocalizations.of(context)!
+                        .automaticNvidiaDriverInstallation,
+                    selected: true,
+                    onPressed: () {
+                      AfterInstallationService.installNvidiaDrivers =
+                          !AfterInstallationService.installNvidiaDrivers;
+                    },
+                    text: AppLocalizations.of(context)!
+                        .automaticNvidiaDriverInstallationDesciption,
+                  );
+                } else {
+                  AfterInstallationService.installNvidiaDrivers = false;
+                }
               }
-            }
-            return Container();
-          },
-        ),
-        MintYSelectableEntryWithIconHorizontal(
-          icon: SystemIcon(
-            iconString: "update-manager",
-            iconSize: 128,
+              return Container();
+            },
           ),
-          title:
-              AppLocalizations.of(context)!.automaticUpdateManagerConfiguration,
-          selected: true,
-          onPressed: () {
-            AfterInstallationService.setupAutomaticUpdates =
-                !AfterInstallationService.setupAutomaticUpdates;
-          },
-          text: AppLocalizations.of(context)!
-              .automaticUpdateManagerConfigurationDescription,
-        ),
-      ],
+          MintYSelectableEntryWithIconHorizontal(
+            icon: SystemIcon(
+              iconString: "update-manager",
+              iconSize: 128,
+            ),
+            title: AppLocalizations.of(context)!
+                .automaticUpdateManagerConfiguration,
+            selected: true,
+            onPressed: () {
+              AfterInstallationService.setupAutomaticUpdates =
+                  !AfterInstallationService.setupAutomaticUpdates;
+            },
+            text: AppLocalizations.of(context)!
+                .automaticUpdateManagerConfigurationDescription,
+          ),
+        ],
+      ),
       bottom: MintYButtonNext(
         route: RunCommandQueue(
           title: AppLocalizations.of(context)!.welcomeToYourNewSystem,

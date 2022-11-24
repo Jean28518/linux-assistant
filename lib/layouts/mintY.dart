@@ -450,9 +450,12 @@ class _MintYSelectableEntryWithIconHorizontalState
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
-                  children: [widget.icon],
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [widget.icon],
+                    mainAxisAlignment: MainAxisAlignment.center,
+                  ),
                 ),
                 SizedBox(
                   width: 10,
@@ -461,13 +464,14 @@ class _MintYSelectableEntryWithIconHorizontalState
                   fit: FlexFit.tight,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(
                         height: 16,
                       ),
                       Text(
                         widget.title,
-                        style: Theme.of(context).textTheme.headline2,
+                        style: Theme.of(context).textTheme.headline3,
                       ),
                       SizedBox(
                         height: 10,
@@ -633,6 +637,47 @@ class MintYCardWithIconAndAction extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class MintYGrid extends StatelessWidget {
+  List<Widget> children;
+  double padding;
+  double ratio;
+  double widgetSize;
+  MintYGrid(
+      {super.key,
+      required this.children,
+      this.padding = 10.0,
+      this.ratio = 350 / 150,
+      this.widgetSize = 450});
+
+  @override
+  Widget build(BuildContext context) {
+    List<Widget> childrenCopy = List.from(children);
+    int columsCount =
+        ((MediaQuery.of(context).size.width - (2 * padding)) / (widgetSize))
+            .round();
+
+    // Insert space Elements for last row, that the elements are something like centered
+    if ((childrenCopy.length % columsCount) != 0) {
+      int spacingCounts =
+          ((columsCount - (childrenCopy.length % columsCount)) / 2).floor();
+      for (int i = 0; i < spacingCounts; i++) {
+        childrenCopy.insert(
+            childrenCopy.length - childrenCopy.length % columsCount,
+            Container());
+      }
+    }
+    return Expanded(
+      child: GridView.count(
+        // mainAxisAlignment: MainAxisAlignment.center,
+        padding: EdgeInsets.all(padding),
+        crossAxisCount: columsCount,
+        childAspectRatio: ratio,
+        children: childrenCopy,
       ),
     );
   }
