@@ -11,6 +11,7 @@ class Environment {
   var language = "";
   List<SOFTWARE_MANAGERS> installedSoftwareManagers = [];
   var preferredSoftwareManager = SOFTWARE_MANAGERS.APT;
+  bool wayland = false;
 
   /// POSIX User ID.
   var currentUserId = 1000;
@@ -27,7 +28,8 @@ class Environment {
       'language': language,
       'installedSoftwareManagers': installedSoftwareManagers.join(";"),
       'preferredSoftwareManager': preferredSoftwareManager.toString(),
-      'currentUserId': currentUserId
+      'currentUserId': currentUserId,
+      'wayland': wayland
     };
   }
 

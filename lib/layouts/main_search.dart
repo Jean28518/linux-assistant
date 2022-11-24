@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -195,7 +196,16 @@ class _MainSearchState extends State<MainSearch> {
 
   void clear({minimze = true}) {
     if (minimze) {
-      windowManager.minimize();
+      /// On wayland sessions we currently can't issue 'wmctrl -a'
+      /// So if we want to get the hotkey working we need to close the app after
+      /// a single use. Because otherwise everytime the user presses the hotkey
+      /// an additional window would open.
+      /// On x11 sessions we don't have the issue.
+      if (Linux.currentenvironment.wayland) {
+        exit(0);
+      } else {
+        windowManager.minimize();
+      }
     }
     _lastKeyword = "";
     searchBarController.clear();

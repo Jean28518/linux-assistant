@@ -614,6 +614,7 @@ class Linux {
     } else if (lines[4].toLowerCase().contains("opera")) {
       newEnvironment.browser = BROWSERS.OPERA;
     }
+    newEnvironment.wayland = lines[5].contains("wayland");
 
     for (int i = 0; i < SOFTWARE_MANAGERS.values.length; i++) {
       if (await File(
@@ -855,23 +856,19 @@ class Linux {
 
   /// Used while startup of the application
   static Future<void> loadCurrentEnvironment() async {
+    currentenvironment = await getCurrentEnvironment();
     ConfigHandler configHandler = ConfigHandler();
-    Environment environment = await Linux.getCurrentEnvironment();
-    configHandler.ensureConfigIsLoaded();
-    Linux.currentenvironment.distribution = await configHandler.getValueUnsafe(
-        "distribution", environment.distribution);
-    Linux.currentenvironment.version =
-        configHandler.getValueUnsafe("version", environment.version);
-    Linux.currentenvironment.desktop =
-        configHandler.getValueUnsafe("desktop", environment.desktop);
-    Linux.currentenvironment.browser =
-        configHandler.getValueUnsafe("browser", environment.browser);
-    Linux.currentenvironment.language =
-        configHandler.getValueUnsafe("language", environment.language);
-    Linux.currentenvironment.currentUserId = environment.currentUserId;
-    Linux.currentenvironment.desktop = environment.desktop;
-    Linux.currentenvironment.installedSoftwareManagers =
-        environment.installedSoftwareManagers;
+    await configHandler.ensureConfigIsLoaded();
+    currentenvironment.distribution = configHandler.getValueUnsafe(
+        "distribution", currentenvironment.distribution);
+    currentenvironment.version =
+        configHandler.getValueUnsafe("version", currentenvironment.version);
+    currentenvironment.desktop =
+        configHandler.getValueUnsafe("desktop", currentenvironment.desktop);
+    currentenvironment.browser =
+        configHandler.getValueUnsafe("browser", currentenvironment.browser);
+    currentenvironment.language =
+        configHandler.getValueUnsafe("language", currentenvironment.language);
 
     bool nvidiaCardInstalled = await isNvidiaCardInstalledOnSystem();
     bool nouveauRunning = await isNouveauCurrentGraphicsDriver();
