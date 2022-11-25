@@ -58,7 +58,8 @@ def add_linux_assistant_keybinding_gnome():
     array = parent.get_strv("custom-keybindings")
     num_array = []
     for entry in array:
-        num_array.append(int(entry.replace("/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom", "").replace("/", "")))
+        if "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom" in entry:
+            num_array.append(int(entry.replace("/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom", "").replace("/", "")))
     num_array.sort()
     i = 0
     while True:
