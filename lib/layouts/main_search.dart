@@ -101,7 +101,6 @@ class _MainSearchState extends State<MainSearch> {
                                 ? null
                                 : const EdgeInsets.only(
                                     bottom: -20.0, left: 12, right: 3),
-                            border: const OutlineInputBorder(),
                             hintText:
                                 AppLocalizations.of(context)!.enterASearchTerm,
                             prefixIcon: _foundEntries.isEmpty
@@ -123,6 +122,7 @@ class _MainSearchState extends State<MainSearch> {
                                   ),
                           ),
                           style: Theme.of(context).textTheme.bodyText1,
+                          cursorColor: MintY.currentColor,
                           controller: searchBarController,
                           autofocus: true,
                           onChanged: (value) => _runFilter(value),

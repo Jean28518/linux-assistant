@@ -17,7 +17,7 @@ class LoadingIndicator extends StatelessWidget {
             const SizedBox(
               height: 80,
               width: 80,
-              child: CircularProgressIndicator(),
+              child: MintYProgressIndicatorCircle(),
             ),
             const SizedBox(
               height: 30,

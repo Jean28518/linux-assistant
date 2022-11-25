@@ -61,6 +61,7 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
             Row(
               children: [
                 Checkbox(
+                    activeColor: MintY.currentColor,
                     value: widget.includeSearchTermAndResults,
                     onChanged: ((value) => setState(() {
                           widget.includeSearchTermAndResults = value!;
@@ -74,6 +75,7 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
             Row(
               children: [
                 Checkbox(
+                    activeColor: MintY.currentColor,
                     value: widget.includeBasicSystemInformation,
                     onChanged: ((value) => setState(() {
                           widget.includeBasicSystemInformation = value!;
@@ -103,7 +105,7 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
                   width: 10,
                 ),
                 MintYButton(
-                  color: Colors.blue,
+                  color: MintY.currentColor,
                   text: Text(
                     AppLocalizations.of(context)!.submit,
                     style: MintY.heading3White,

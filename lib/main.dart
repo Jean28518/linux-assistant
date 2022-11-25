@@ -1,9 +1,10 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:hotkey_manager/hotkey_manager.dart';
+import 'package:linux_assistant/enums/distros.dart';
 import 'package:linux_assistant/layouts/greeter/start_screen.dart';
 import 'package:linux_assistant/layouts/mintY.dart';
+import 'package:linux_assistant/services/config_handler.dart';
 import 'package:linux_assistant/services/linux.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -31,8 +32,7 @@ class MyApp extends StatelessWidget {
   MyApp({Key? key, this.darkTheme = false}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    MintY.currentColor = Colors.blue;
-
+    setMainColor();
     initHotkeyToShowUp();
     return MaterialApp(
       title: 'Linux Assistant',
@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  static initHotkeyToShowUp() {
+  static void initHotkeyToShowUp() {
     HotKey _hotKey = HotKey(
       KeyCode.keyQ,
       modifiers: [KeyModifier.alt],
@@ -76,5 +76,32 @@ class MyApp extends StatelessWidget {
         // insert here function calls to debug
       },
     );
+  }
+
+  static void setMainColor() {
+    switch (Linux.currentenvironment.distribution) {
+      case DISTROS.DEBIAN:
+        MintY.currentColor = const Color.fromARGB(255, 208, 7, 78);
+        break;
+      case DISTROS.LINUX_MINT:
+        MintY.currentColor = const Color.fromARGB(255, 139, 177, 88);
+        break;
+      case DISTROS.MXLINUX:
+        MintY.currentColor = const Color.fromARGB(255, 34, 34, 34);
+        break;
+      case DISTROS.POPOS:
+        MintY.currentColor = const Color.fromARGB(255, 72, 185, 199);
+        break;
+      case DISTROS.UBUNTU:
+        MintY.currentColor = const Color.fromARGB(255, 233, 84, 32);
+        break;
+      default:
+        MintY.currentColor = Colors.blue;
+    }
+    ConfigHandler configHandler = ConfigHandler();
+    String colorString = configHandler.getValueUnsafe("color", "");
+    if (colorString.isNotEmpty) {
+      MintY.currentColor = HexColor(colorString);
+    }
   }
 }

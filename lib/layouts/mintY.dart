@@ -54,12 +54,12 @@ class MintY {
     },
   );
 
-  static const BoxDecoration colorfulBackground = BoxDecoration(
+  static BoxDecoration colorfulBackground = BoxDecoration(
     gradient: LinearGradient(
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
       stops: [0, 1],
-      colors: [Colors.blue, Color(0xff2ab9a4)],
+      colors: [MintY.currentColor, Color(0xff2ab9a4)],
     ),
   );
 
@@ -108,37 +108,58 @@ class MintY {
       fontSize: 16);
 
   static const paragraphWhite = TextStyle(
-      fontWeight: FontWeight.w300,
-      color: _white,
-      decoration: TextDecoration.none,
-      fontSize: 16);
+    fontWeight: FontWeight.w300,
+    color: _white,
+    decoration: TextDecoration.none,
+    fontSize: 16,
+  );
 
   static ThemeData theme() => ThemeData(
-        primaryColor: currentColor,
-        brightness: Brightness.light,
-        backgroundColor: Colors.white70,
-        textTheme: const TextTheme(
-          headline1: heading1,
-          headline2: heading2,
-          headline3: heading3,
-          bodyText1: paragraph,
+      primaryColor: currentColor,
+      brightness: Brightness.light,
+      backgroundColor: Colors.white70,
+      textTheme: const TextTheme(
+        headline1: heading1,
+        headline2: heading2,
+        headline3: heading3,
+        bodyText1: paragraph,
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        border: OutlineInputBorder(
+          borderSide: BorderSide(color: MintY.currentColor),
         ),
-      );
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+              color: MintY.currentColor, width: 2, style: BorderStyle.solid),
+        ),
+      ),
+      textSelectionTheme:
+          TextSelectionThemeData(selectionColor: MintY.currentColor));
 
   static ThemeData themeDark() => ThemeData(
-        primaryColor: currentColor,
-        canvasColor: const Color.fromARGB(255, 31, 31, 31),
-        brightness: Brightness.dark,
-        backgroundColor: const Color.fromARGB(255, 31, 31, 31),
-        cardColor: const Color.fromARGB(255, 45, 45, 45),
-        highlightColor: _white,
-        textTheme: const TextTheme(
-          headline1: heading1White,
-          headline2: heading2White,
-          headline3: heading3White,
-          bodyText1: paragraphWhite,
+      primaryColor: currentColor,
+      canvasColor: const Color.fromARGB(255, 31, 31, 31),
+      brightness: Brightness.dark,
+      backgroundColor: const Color.fromARGB(255, 31, 31, 31),
+      cardColor: const Color.fromARGB(255, 45, 45, 45),
+      highlightColor: _white,
+      textTheme: const TextTheme(
+        headline1: heading1White,
+        headline2: heading2White,
+        headline3: heading3White,
+        bodyText1: paragraphWhite,
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        border: OutlineInputBorder(
+          borderSide: BorderSide(color: MintY.currentColor),
         ),
-      );
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+              color: MintY.currentColor, width: 2, style: BorderStyle.solid),
+        ),
+      ),
+      textSelectionTheme:
+          TextSelectionThemeData(selectionColor: MintY.currentColor));
 }
 
 class MintYPage extends StatelessWidget {
