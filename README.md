@@ -29,3 +29,9 @@ sudo dpkg --install linux-assistant.deb
 cd build/linux/x64/release/bundle/
 ./linux_assistant
 ```
+
+## Features
+| Feature                   | Debian | Ubuntu | Linux Mint | PopOS | MX Linux | Gnome | Xfce | Cinnamon | Notes |
+| ------------------------- | ------ | ------ | ---------- | ----- | -------- | ----- | ---- | -------- | ----- |
+| App Search                | :V:    | :v:    | :v:        | :v:   | :v:      | :v:   | :v:  | :v:      |       |
+| File Search               | :v:    | :v:    | :v:        | :v:   | :v:      | :v:   | :v:  | :v:      |       |
