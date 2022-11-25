@@ -33,5 +33,6 @@ cd build/linux/x64/release/bundle/
 ## Features
 | Feature                   | Debian | Ubuntu | Linux Mint | PopOS | MX Linux | Gnome | Xfce | Cinnamon | Notes |
 | ------------------------- | ------ | ------ | ---------- | ----- | -------- | ----- | ---- | -------- | ----- |
-| App Search                | :V:    | :v:    | :v:        | :v:   | :v:      | :v:   | :v:  | :v:      |       |
-| File Search               | :v:    | :v:    | :v:        | :v:   | :v:      | :v:   | :v:  | :v:      |       |
+| App Search  | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |    |
+| Folder Structure Search  | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |    |
+| Recent File Search               | :heavy_check_mark:    | :heavy_check_mark:    | :heavy_check_mark:        | :heavy_check_mark:   | :heavy_check_mark:      | :heavy_check_mark:   | :heavy_check_mark:  | :heavy_check_mark:      |   |
