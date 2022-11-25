@@ -15,6 +15,10 @@ def get_additional_sources():
             continue
         if "mx.list" in entry: # MX Linux
             continue
+        if "pop-os" in entry: # Pop!_OS
+            continue
+        if "system.sources" in entry: # Pop!_OS
+            continue
         lines = jfiles.get_all_lines_from_file(entry)
 
         for line in lines:
