@@ -32,7 +32,8 @@ cd build/linux/x64/release/bundle/
 
 ## Features
 | Feature                   | Debian | Ubuntu | Linux Mint | PopOS | MX Linux | Gnome | Xfce | Cinnamon | Notes |
-| ------------------------- | ------ | ------ | ---------- | ----- | -------- | ----- | ---- | -------- | ----- |
-| App Search  | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |    |
-| Folder Structure Search  | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |    |
-| Recent File Search               | :heavy_check_mark:    | :heavy_check_mark:    | :heavy_check_mark:        | :heavy_check_mark:   | :heavy_check_mark:      | :heavy_check_mark:   | :heavy_check_mark:  | :heavy_check_mark:      |   |
+| ------------------------- | :----: | :----: | :--------: | :---: | :------: | :---: | :---: | :-----: | :---: |
+| App Search  | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |    |
+| Folder Structure Search  | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |    |
+| Recent File Search | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark:  | :heavy_check_mark:      |   |
+| Favorite File Search | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :x: | :heavy_check_mark: | :x: | :heavy_check_mark: |   |
