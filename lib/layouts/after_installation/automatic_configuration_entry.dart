@@ -3,6 +3,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:linux_assistant/enums/distros.dart';
 import 'package:linux_assistant/layouts/after_installation/automatic_configuration_selection.dart';
+import 'package:linux_assistant/layouts/greeter/introduction.dart';
 import 'package:linux_assistant/layouts/mintY.dart';
 import 'package:linux_assistant/layouts/run_command_queue.dart';
 import 'package:linux_assistant/services/linux.dart';
@@ -45,7 +46,7 @@ class AfterInstallationAutomaticConfigurationEntry extends StatelessWidget {
                       title: AppLocalizations.of(context)!.applyConfiguration,
                       message: AppLocalizations.of(context)!
                           .thisProcessCouldTakeManyMinutesDependingSoftwareChoosed,
-                      route: const MainSearchLoader(),
+                      route: GreeterIntroduction(),
                     ),
                   ),
                 );

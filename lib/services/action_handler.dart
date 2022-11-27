@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:linux_assistant/enums/desktops.dart';
 import 'package:linux_assistant/enums/softwareManagers.dart';
 import 'package:linux_assistant/layouts/after_installation/after_installation_entry.dart';
+import 'package:linux_assistant/layouts/greeter/introduction.dart';
 import 'package:linux_assistant/layouts/main_search.dart';
 import 'package:linux_assistant/layouts/run_command_queue.dart';
 import 'package:linux_assistant/layouts/security_check/overview.dart';
@@ -27,6 +28,14 @@ class ActionHandler {
       case "open_usersettings":
         Linux.openUserSettings();
         callback();
+        break;
+      case "open_introduction":
+        MainSearch.unregisterHotkeysForKeyboardUse();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => GreeterIntroduction(forceOpen: true)),
+        );
         break;
       case "send_files_via_warpinator":
         Linux.openOrInstallWarpinator(context, callback);

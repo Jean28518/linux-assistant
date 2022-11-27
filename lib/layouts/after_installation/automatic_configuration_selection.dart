@@ -1,6 +1,7 @@
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
+import 'package:linux_assistant/layouts/greeter/introduction.dart';
 import 'package:linux_assistant/layouts/mintY.dart';
 import 'package:linux_assistant/layouts/run_command_queue.dart';
 import 'package:linux_assistant/layouts/system_icon.dart';
@@ -99,7 +100,7 @@ class AfterInstallationAutomaticConfiguration extends StatelessWidget {
           title: AppLocalizations.of(context)!.welcomeToYourNewSystem,
           message: AppLocalizations.of(context)!
               .automaticConfigurationIsRunningDescription,
-          route: const MainSearchLoader(),
+          route: GreeterIntroduction(),
         ),
         onPressed: () {
           AfterInstallationService.applyAutomaticConfiguration();

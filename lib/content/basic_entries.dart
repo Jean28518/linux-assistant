@@ -35,5 +35,15 @@ List<ActionEntry> getBasicEntries(BuildContext context) {
         size: 48,
       ),
     ),
+    ActionEntry(
+      name: AppLocalizations.of(context)!.introductionToLinuxAssistant,
+      description:
+          AppLocalizations.of(context)!.introductionToLinuxAssistantDescription,
+      action: "open_introduction",
+      iconWidget: const Icon(
+        Icons.question_mark,
+        size: 48,
+      ),
+    ),
   ];
 }

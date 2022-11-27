@@ -704,6 +704,49 @@ class MintYGrid extends StatelessWidget {
   }
 }
 
+/// Icon on the left side, on the right side heading with description.
+class MintYFeature extends StatelessWidget {
+  String heading;
+  String description;
+  Widget icon;
+  MintYFeature(
+      {super.key,
+      required this.heading,
+      required this.description,
+      required this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: icon,
+        ),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                heading,
+                style: Theme.of(context).textTheme.headline3,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4.0),
+                child: Text(
+                  description,
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+              ),
+            ],
+          ),
+        )
+      ],
+    );
+  }
+}
+
 class MintYProgressIndicatorCircle extends StatelessWidget {
   const MintYProgressIndicatorCircle({Key? key}) : super(key: key);
 

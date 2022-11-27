@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linux_assistant/layouts/greeter/introduction.dart';
 import 'package:linux_assistant/layouts/greeter/is_environment_correct.dart';
 import 'package:linux_assistant/layouts/loading_indicator.dart';
 import 'package:linux_assistant/layouts/mintY.dart';
@@ -21,7 +22,7 @@ class StartScreen extends StatelessWidget {
           if (snapshot.data!) {
             return getStartScreenView(context);
           } else {
-            return MainSearchLoader();
+            return GreeterIntroduction();
           }
         } else {
           return LoadingIndicator();
