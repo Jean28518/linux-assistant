@@ -17,14 +17,20 @@ import 'package:linux_assistant/layouts/recommendation_card.dart';
 import 'package:linux_assistant/main.dart';
 import 'package:linux_assistant/models/action_entry.dart';
 import 'package:linux_assistant/services/action_handler.dart';
+import 'package:linux_assistant/services/config_handler.dart';
 import 'package:linux_assistant/services/linux.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MainSearch extends StatefulWidget {
   late List<ActionEntry> actionEntries;
+  late bool colorfulBackground;
 
-  MainSearch({Key? key, required this.actionEntries}) : super(key: key);
+  MainSearch({Key? key, required this.actionEntries}) {
+    ConfigHandler configHandler = ConfigHandler();
+    colorfulBackground =
+        configHandler.getValueUnsafe("colorfulBackground", true);
+  }
 
   @override
   State<MainSearch> createState() =>
@@ -71,93 +77,199 @@ class _MainSearchState extends State<MainSearch> {
     visibleEntries =
         ((MediaQuery.of(context).size.height - 40 - 70) / 72).round();
     return Scaffold(
-      body: Column(
-        children: [
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.all(20),
-              child: Center(
-                  child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _foundEntries.isEmpty
-                      ? Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            DiskSpace(),
-                            SizedBox(width: 16),
-                            MemoryStatus(),
-                          ],
-                        )
-                      : Container(),
-                  _foundEntries.isEmpty
-                      ? SizedBox(
-                          height: 16,
-                        )
-                      : Container(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width > 750
-                            ? 600
-                            : MediaQuery.of(context).size.width - 50,
-                        child: TextField(
-                          decoration: InputDecoration(
-                            contentPadding: _foundEntries.isEmpty
-                                ? null
-                                : const EdgeInsets.only(
-                                    bottom: -20.0, left: 12, right: 3),
-                            hintText: suggestion != null
-                                ? suggestion!.name
-                                : AppLocalizations.of(context)!
-                                    .enterASearchTerm,
-                            prefixIcon: _foundEntries.isEmpty
-                                ? const Icon(
-                                    Icons.search,
-                                    color: Colors.grey,
-                                  )
-                                : null,
-                            suffix: _foundEntries.isEmpty
-                                ? null
-                                : IconButton(
-                                    iconSize: 14,
-                                    splashRadius: 14,
-                                    icon: const Icon(Icons.clear),
-                                    onPressed: () => clear(minimze: false),
-                                    padding: EdgeInsets.zero,
-                                    tooltip:
-                                        AppLocalizations.of(context)!.clear,
-                                  ),
-                          ),
-                          style: Theme.of(context).textTheme.bodyText1,
-                          cursorColor: MintY.currentColor,
-                          controller: searchBarController,
-                          autofocus: true,
-                          onChanged: (value) => _runFilter(value),
-                          onSubmitted: (value) {
-                            if (_foundEntries.isNotEmpty) {
-                              ActionHandler.handleActionEntry(
-                                  _foundEntries[selectedIndex], clear, context);
-                            } else if (suggestion != null) {
-                              ActionHandler.handleActionEntry(
-                                  suggestion!, clear, context);
-                            }
-                          },
-                        ),
-                      ),
-                      _foundEntries.isEmpty
-                          ? Container()
-                          : const SizedBox(
-                              width: 10,
+      body: Container(
+        decoration: widget.colorfulBackground ? MintY.colorfulBackground : null,
+        child: Column(
+          children: [
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.all(20),
+                child: Center(
+                    child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _foundEntries.isEmpty
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              DiskSpace(),
+                              SizedBox(width: 16),
+                              MemoryStatus(),
+                            ],
+                          )
+                        : Container(),
+                    _foundEntries.isEmpty
+                        ? SizedBox(
+                            height: 16,
+                          )
+                        : Container(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width > 750
+                              ? 600
+                              : MediaQuery.of(context).size.width - 50,
+                          child: TextField(
+                            decoration: InputDecoration(
+                              fillColor: Theme.of(context).canvasColor,
+                              filled: true,
+                              // border: const OutlineInputBorder(
+                              //     borderSide: BorderSide(color: Colors.white)),
+                              contentPadding: _foundEntries.isEmpty
+                                  ? null
+                                  : const EdgeInsets.only(
+                                      bottom: -20.0, left: 12, right: 3),
+                              hintText: suggestion != null
+                                  ? suggestion!.name
+                                  : AppLocalizations.of(context)!
+                                      .enterASearchTerm,
+                              prefixIcon: _foundEntries.isEmpty
+                                  ? const Icon(
+                                      Icons.search,
+                                      color: Colors.grey,
+                                    )
+                                  : null,
+                              suffix: _foundEntries.isEmpty
+                                  ? null
+                                  : IconButton(
+                                      iconSize: 14,
+                                      splashRadius: 14,
+                                      icon: const Icon(Icons.clear),
+                                      onPressed: () => clear(minimze: false),
+                                      padding: EdgeInsets.zero,
+                                      tooltip:
+                                          AppLocalizations.of(context)!.clear,
+                                    ),
                             ),
-                      _foundEntries.isEmpty
-                          ? Container()
-                          : IconButton(
+                            style: Theme.of(context).textTheme.bodyText1,
+                            cursorColor: MintY.currentColor,
+                            controller: searchBarController,
+                            autofocus: true,
+                            onChanged: (value) => _runFilter(value),
+                            onSubmitted: (value) {
+                              if (_foundEntries.isNotEmpty) {
+                                ActionHandler.handleActionEntry(
+                                    _foundEntries[selectedIndex],
+                                    clear,
+                                    context);
+                              } else if (suggestion != null) {
+                                ActionHandler.handleActionEntry(
+                                    suggestion!, clear, context);
+                              }
+                            },
+                          ),
+                        ),
+                        _foundEntries.isEmpty
+                            ? Container()
+                            : const SizedBox(
+                                width: 10,
+                              ),
+                        _foundEntries.isEmpty
+                            ? Container()
+                            : IconButton(
+                                iconSize: 24,
+                                splashRadius: 24,
+                                icon: Icon(
+                                  Icons.feedback,
+                                  color: widget.colorfulBackground
+                                      ? Colors.white
+                                      : Theme.of(context)
+                                          .textTheme
+                                          .headline1!
+                                          .color,
+                                ),
+                                onPressed: () => showDialog(
+                                  context: context,
+                                  builder: (context) => FeedbackDialog(
+                                      foundEntries: _foundEntries,
+                                      searchText: _lastKeyword),
+                                ),
+                                padding: EdgeInsets.zero,
+                                tooltip:
+                                    AppLocalizations.of(context)!.sendFeedback,
+                              ),
+                      ],
+                    ),
+                    _foundEntries.isEmpty
+                        ? SizedBox(
+                            height: 50,
+                          )
+                        : SizedBox(
+                            height: 10,
+                          ),
+                    _foundEntries.isEmpty
+                        ? Container()
+                        : Expanded(
+                            child: ListView(
+                              controller: scrollController,
+                              children: List.generate(
+                                  _foundEntries.length,
+                                  (index) => ActionEntryCard(
+                                      actionEntry: _foundEntries[index],
+                                      callback: clear,
+                                      selected: selectedIndex == index)),
+                            ),
+                          )
+                  ],
+                )),
+              ),
+            ),
+            _foundEntries.isEmpty
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Expanded(child: Container()),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: RecommendationCard(),
+                      ),
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            // Background Button at start page
+                            IconButton(
+                              iconSize: 24,
+                              splashRadius: 24,
+                              icon: Icon(
+                                widget.colorfulBackground
+                                    ? Icons.circle
+                                    : Icons.blur_circular,
+                                color: widget.colorfulBackground
+                                    ? Colors.white
+                                    : Theme.of(context)
+                                        .textTheme
+                                        .headline1!
+                                        .color,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  widget.colorfulBackground =
+                                      !widget.colorfulBackground;
+                                });
+                                ConfigHandler().setValue("colorfulBackground",
+                                    widget.colorfulBackground);
+                              },
+                              padding: EdgeInsets.zero,
+                              tooltip: AppLocalizations.of(context)!
+                                  .changeBackground,
+                            ),
+                            // Feedback Button at start page
+                            IconButton(
                               iconSize: 24,
                               splashRadius: 24,
                               icon: Icon(
                                 Icons.feedback,
+                                color: widget.colorfulBackground
+                                    ? Colors.white
+                                    : Theme.of(context)
+                                        .textTheme
+                                        .headline1!
+                                        .color,
                               ),
                               onPressed: () => showDialog(
                                 context: context,
@@ -169,39 +281,14 @@ class _MainSearchState extends State<MainSearch> {
                               tooltip:
                                   AppLocalizations.of(context)!.sendFeedback,
                             ),
-                    ],
-                  ),
-                  _foundEntries.isEmpty
-                      ? SizedBox(
-                          height: 50,
-                        )
-                      : SizedBox(
-                          height: 10,
+                          ],
                         ),
-                  _foundEntries.isEmpty
-                      ? Container()
-                      : Expanded(
-                          child: ListView(
-                            controller: scrollController,
-                            children: List.generate(
-                                _foundEntries.length,
-                                (index) => ActionEntryCard(
-                                    actionEntry: _foundEntries[index],
-                                    callback: clear,
-                                    selected: selectedIndex == index)),
-                          ),
-                        )
-                ],
-              )),
-            ),
-          ),
-          _foundEntries.isEmpty
-              ? Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: RecommendationCard(),
-                )
-              : Container(),
-        ],
+                      ),
+                    ],
+                  )
+                : Container(),
+          ],
+        ),
       ),
     );
   }

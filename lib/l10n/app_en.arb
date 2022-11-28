@@ -128,6 +128,7 @@
   "youCanOpenThisWindowBySearchingForIntroduction": "You can reopen this site by searching for 'Introduction to Linux-Assistant'.",
   "introductionToLinuxAssistant": "Introduction to Linux-Assistant",
   "introductionToLinuxAssistantDescription": "Presentation of of all possibilites and search entries of Linux-Assistant.",
+  "changeBackground": "Change background",
   "@helloWorld": {
     "placeholders": {},
     "description": "The conventional newborn programmer greeting",
