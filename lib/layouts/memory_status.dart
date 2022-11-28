@@ -15,21 +15,6 @@ class MemoryStatus extends StatefulWidget {
 }
 
 class _MemoryStatusState extends State<MemoryStatus> {
-  late Timer _everySecond;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _everySecond = Timer.periodic(Duration(seconds: 5), (Timer t) {
-      if (mounted) {
-        setState(() {});
-      } else {
-        _everySecond.cancel();
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     late Future<String> memoryText = Linux.runCommandAndGetStdout("free -m");

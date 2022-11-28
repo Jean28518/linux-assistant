@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -53,6 +54,9 @@ class _MainSearchState extends State<MainSearch> {
   final scrollController = ScrollController();
 
   Timer? searchOnStoppedTyping;
+  Timer? suggestionTimer;
+
+  ActionEntry? suggestion;
 
   _MainSearchState({required this.actionEntries}) {
     initHotkeysForKeyboardUse();
@@ -60,6 +64,9 @@ class _MainSearchState extends State<MainSearch> {
 
   @override
   Widget build(BuildContext context) {
+    suggestionTimer ??= Timer.periodic(
+        const Duration(seconds: 5), ((timer) => _handleSuggestions()));
+
     // Complete height of a search entry is 64 + 8 (padding)
     visibleEntries =
         ((MediaQuery.of(context).size.height - 40 - 70) / 72).round();
@@ -101,8 +108,10 @@ class _MainSearchState extends State<MainSearch> {
                                 ? null
                                 : const EdgeInsets.only(
                                     bottom: -20.0, left: 12, right: 3),
-                            hintText:
-                                AppLocalizations.of(context)!.enterASearchTerm,
+                            hintText: suggestion != null
+                                ? suggestion!.name
+                                : AppLocalizations.of(context)!
+                                    .enterASearchTerm,
                             prefixIcon: _foundEntries.isEmpty
                                 ? const Icon(
                                     Icons.search,
@@ -127,9 +136,12 @@ class _MainSearchState extends State<MainSearch> {
                           autofocus: true,
                           onChanged: (value) => _runFilter(value),
                           onSubmitted: (value) {
-                            if (_foundEntries.length > 0) {
+                            if (_foundEntries.isNotEmpty) {
                               ActionHandler.handleActionEntry(
                                   _foundEntries[selectedIndex], clear, context);
+                            } else if (suggestion != null) {
+                              ActionHandler.handleActionEntry(
+                                  suggestion!, clear, context);
                             }
                           },
                         ),
@@ -397,5 +409,14 @@ class _MainSearchState extends State<MainSearch> {
         clear(minimze: false);
       },
     );
+  }
+
+  void _handleSuggestions() {
+    if (_foundEntries.isEmpty) {
+      int random = Random().nextInt(widget.actionEntries.length - 1);
+      setState(() {
+        suggestion = actionEntries[random];
+      });
+    }
   }
 }
