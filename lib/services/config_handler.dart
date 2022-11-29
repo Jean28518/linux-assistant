@@ -85,7 +85,6 @@ class ConfigHandler {
           if (dateString.trim() == "") {
             continue;
           }
-          print(dateString.length);
           DateTime date = DateTime.parse(dateString);
 
           /// oldestDate is after date:
