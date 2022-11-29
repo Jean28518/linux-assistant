@@ -30,7 +30,7 @@ class ConfigHandler {
     }
   }
 
-  void setValue(key, value) async {
+  Future<void> setValue(key, value) async {
     await ensureConfigIsLoaded();
     setValueUnsafe(key, value);
     await saveConfigToFile();
@@ -70,5 +70,36 @@ class ConfigHandler {
     String homeDir = Linux.getHomeDirectory();
     File configFile = File(homeDir + ".config/linux-assistant/config.json");
     await configFile.writeAsString(configString);
+  }
+
+  /// removes dates of open times, which are older than 28 days.
+  Future<void> clearOldDatesOfOpenendEntries() async {
+    DateTime oldestDate = DateTime.now().subtract(const Duration(days: 28));
+    await ensureConfigIsLoaded();
+    for (String key in configMap.keys) {
+      if (key.startsWith("opened.")) {
+        String newDateString = "";
+
+        List<String> dateStrings = configMap[key].split(";");
+        for (String dateString in dateStrings) {
+          if (dateString.trim() == "") {
+            continue;
+          }
+          print(dateString.length);
+          DateTime date = DateTime.parse(dateString);
+
+          /// oldestDate is after date:
+          if (oldestDate.compareTo(date) > 0) {
+            /// do nothing, don't add it again.
+          } else {
+            newDateString = "$newDateString$dateString;";
+          }
+        }
+
+        configMap[key] = newDateString;
+      }
+    }
+    configMap.removeWhere((key, value) => value == "");
+    await saveConfigToFile();
   }
 }

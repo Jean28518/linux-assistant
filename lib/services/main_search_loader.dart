@@ -39,7 +39,8 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
     returnValue.entries.addAll(additionalFolders);
 
     ConfigHandler configHandler = ConfigHandler();
-    configHandler.setValue("runFirstStartUp", false);
+    await configHandler.setValue("runFirstStartUp", false);
+    await configHandler.clearOldDatesOfOpenendEntries();
 
     return returnValue;
   }

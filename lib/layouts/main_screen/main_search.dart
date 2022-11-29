@@ -437,6 +437,12 @@ class _MainSearchState extends State<MainSearch> {
       if (_lastKeyword == result.name) {
         result.tmpPriority += 20;
       }
+
+      int openTimes = ConfigHandler()
+          .getValueUnsafe("opened.${result.action}", "")
+          .allMatches(";")
+          .length;
+      result.tmpPriority += openTimes * 2;
     }
 
     _foundEntries.sort((a, b) => (a.name).compareTo(b.name));

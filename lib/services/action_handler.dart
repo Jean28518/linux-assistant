@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:linux_assistant/enums/desktops.dart';
 import 'package:linux_assistant/enums/softwareManagers.dart';
 import 'package:linux_assistant/layouts/after_installation/after_installation_entry.dart';
@@ -8,6 +9,7 @@ import 'package:linux_assistant/layouts/main_screen/main_search.dart';
 import 'package:linux_assistant/layouts/run_command_queue.dart';
 import 'package:linux_assistant/layouts/security_check/overview.dart';
 import 'package:linux_assistant/models/action_entry.dart';
+import 'package:linux_assistant/services/config_handler.dart';
 import 'package:linux_assistant/services/linux.dart';
 import 'package:linux_assistant/services/main_search_loader.dart';
 
@@ -16,6 +18,13 @@ class ActionHandler {
   static Future<void> handleActionEntry(ActionEntry actionEntry,
       VoidCallback callback, BuildContext context) async {
     print(actionEntry.action);
+
+    // Save opened for intelligent search
+    ConfigHandler configHandler = ConfigHandler();
+    String newDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    String oldList =
+        configHandler.getValueUnsafe("opened.${actionEntry.action}", "");
+    configHandler.setValue("opened.${actionEntry.action}", "$oldList$newDate;");
 
     switch (actionEntry.action) {
       case "change_user_password":
