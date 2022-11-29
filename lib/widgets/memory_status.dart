@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
-import 'package:linux_assistant/layouts/single_bar_chart.dart';
+import 'package:linux_assistant/widgets/single_bar_chart.dart';
 import 'package:linux_assistant/services/linux.dart';
 
 class MemoryStatus extends StatefulWidget {

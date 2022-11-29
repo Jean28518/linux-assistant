@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:linux_assistant/layouts/greeter/introduction.dart';
 import 'package:linux_assistant/layouts/mintY.dart';
 import 'package:linux_assistant/layouts/run_command_queue.dart';
-import 'package:linux_assistant/layouts/system_icon.dart';
+import 'package:linux_assistant/widgets/system_icon.dart';
 import 'package:linux_assistant/services/after_installation_service.dart';
 import 'package:linux_assistant/services/linux.dart';
 import 'package:linux_assistant/services/main_search_loader.dart';

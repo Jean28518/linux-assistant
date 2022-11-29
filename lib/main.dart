@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
   static void initHotkeyToShowUp() {
     HotKey _hotKey = HotKey(
       KeyCode.keyQ,
-      modifiers: [KeyModifier.alt],
+      modifiers: [KeyModifier.meta],
       scope: HotKeyScope.system,
     );
     hotKeyManager.register(

@@ -31,5 +31,14 @@ List<ActionEntry> getRecommendations(BuildContext context) {
         size: 48,
       ),
     ),
+    ActionEntry(
+      name: AppLocalizations.of(context)!.linuxHealth,
+      description: AppLocalizations.of(context)!.linuxHealthDescription,
+      action: "linux_health",
+      iconWidget: const Icon(
+        Icons.monitor_heart,
+        size: 48,
+      ),
+    ),
   ];
 }

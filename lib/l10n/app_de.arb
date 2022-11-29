@@ -129,6 +129,55 @@
   "introductionToLinuxAssistant": "Einführung des Linux-Assistants",
   "introductionToLinuxAssistantDescription": "Vorstellung aller Möglichkeiten und Suchergebnisse von Linux-Assistant.",
   "changeBackground": "Wechsle Hintergrund",
+  "analysingLinuxHealth": "Analysiere Linux-Gesundheit...",
+  "linuxHealth": "Linux-Gesundheit",
+  "linuxHealthDescription": "Überprüfe den aktuellen Status deines Linux-Systems.",
+  "uptimeWarning": "Dein Linux-System wurde schon lange nicht mehr neugestartet. Um potentielle Fehler zu vermeiden werden regelmäßige Neustarts empfohlen. Der letzte Neustart war vor {hours} Stunden.",
+  "@uptimeWarning": {
+    "placeholders": {
+      "hours" : {}
+    },
+    "description": "",
+    "type": "text"
+  },
+  "uptimePass": "Dein Linux-System läuft erst seit {hours} Stunden. Das ist gut!",
+  "@uptimePass": {
+    "placeholders": {
+      "hours" : {}
+    },
+    "description": "",
+    "type": "text"
+  },
+  "diskspaceWarning1": "Die Partition '",
+  "diskspaceWarning2": "' ist sehr voll! Versuche, etwas Speicherplatz freizugeben. Restlich verfügbarer Speicherplatz: ",
+  "diskspacePass": "Deine Partitionen sind nicht überfüllt. Dies resultiert zu besserer Performance. Sehr gut!",
+  "processesWithZombiesMessage": "Aktuell laufen {processes} Prozesse. Von diesen wurden {zombies} Zombies gefunden.",
+  "@processesWithZombiesMessage": {
+    "placeholders": {
+      "processes" : {},
+      "zombies" : {}
+    },
+    "description": "",
+    "type": "text"
+  },
+  "removableDevicesWarning": "Es wurden {removableDevices} entfernbare Speicher-Geräte/(Partitionen) gefunden. Wenn Du diese aktuell nicht benötigst, wird aufgrund Sicherheitsgründen und der Gesundheit dieser Geräte empfohlen, diese zu entfernen.",
+  "@removableDevicesWarning": {
+    "placeholders": {
+      "removableDevices" : {}
+    },
+    "description": "",
+    "type": "text"
+  },
+  "removableDevicesPass": "Es wurden keine entfernbare Speichermedien entdeckt.",
+  "swapsPass": "Dein System nutzt Auslagerungsspeicher (Swap). Du musst in dieser Hinsicht nichts unternehmen.",
+  "swapsWarning": "Deinem System fehlt ein Auslagerungsspeicher (Swap). Wenn Dein Arbeitsspeicher voll sein sollte, hat Dein System keine weitere Möglichkeit, Speicher auszulagern. Füge Deinem System entweder einen Swapfile oder eine Swappartiion hinzu.",
+  "topMemoryProcesses": "Aktuell speicherintensivste Prozesse",
+  "topCPUProcesses": "Aktuell rechenintensivste Prozesse",
+  "cpuUsage": "CPU-Auslastung",
+  "memoryUsage": "RAM-Auslastung",
+  "process": "Prozess",
+  "runtime": "Laufzeit",
+  "memoryAndStorage": "Speicher",
   "@helloWorld": {
     "placeholders": {},
     "description": "",

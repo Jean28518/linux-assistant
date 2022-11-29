@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:linux_assistant/content/basic_entries.dart';
 import 'package:linux_assistant/content/recommendations.dart';
 import 'package:linux_assistant/layouts/loading_indicator.dart';
-import 'package:linux_assistant/layouts/main_search.dart';
+import 'package:linux_assistant/layouts/main_screen/main_search.dart';
 import 'package:linux_assistant/models/action_entry_list.dart';
 import 'package:linux_assistant/services/config_handler.dart';
 import 'package:linux_assistant/services/linux.dart';

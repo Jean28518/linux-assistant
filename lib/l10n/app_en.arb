@@ -129,6 +129,55 @@
   "introductionToLinuxAssistant": "Introduction to Linux-Assistant",
   "introductionToLinuxAssistantDescription": "Presentation of of all possibilites and search entries of Linux-Assistant.",
   "changeBackground": "Change background",
+  "analysingLinuxHealth": "Analysing linux health...",
+  "linuxHealth": "Linux health",
+  "linuxHealthDescription": "Check the current status of your linux system.",
+  "uptimeWarning": "Your Linux system has not been rebooted for a long time. To avoid potential errors, regular reboots are recommended. The last reboot was {hours} ago.",
+  "@uptimeWarning": {
+    "placeholders": {
+      "hours" : {}
+    },
+    "description": "",
+    "type": "text"
+  },
+  "uptimePass": "Your Linux system has only been running for {hours}. That's good!",
+  "@uptimePass": {
+    "placeholders": {
+      "hours" : {}
+    },
+    "description": "",
+    "type": "text"
+  },
+  "diskspaceWarning1": "Your partition '",
+  "diskspaceWarning2": "' is very full! Try to free up some memory. Remaining available memory: ",
+  "diskspacePass": "Your partitions are not overfilled. This results in better performance. Very good!",
+  "processesWithZombiesMessage": "Currently {processes} processes are running. Of these {zombies} zombies where found.",
+  "@processesWithZombiesMessage": {
+    "placeholders": {
+      "processes" : {},
+      "zombies" : {}
+    },
+    "description": "",
+    "type": "text"
+  },
+  "removableDevicesWarning": "{removableDevices} removable storage devices/(partitions) were found. If you do not currently need them, it is recommended to remove them due to security reasons and the health of these devices.",
+  "@removableDevicesWarning": {
+    "placeholders": {
+      "removableDevices" : {}
+    },
+    "description": "",
+    "type": "text"
+  },
+  "removableDevicesPass": "No removable storage devices were detected.",
+  "swapsPass": "Your system uses swap space. You do not need to do anything in this regard.",
+  "swapsWarning": "Your system doesn't have swap memory. If your memory is full, your system has no further possibility to swap it. Add either a swap file or a swap partition to your system.",
+  "topMemoryProcesses": "Currently most memory-intensive processes",
+  "topCPUProcesses": "Currently most computationally intensive processes",
+  "cpuUsage": "CPU usage",
+  "memoryUsage": "RAM usage",
+  "process": "Process",
+  "runtime": "Runtime",
+  "memoryAndStorage": "Memory and storage",
   "@helloWorld": {
     "placeholders": {},
     "description": "The conventional newborn programmer greeting",

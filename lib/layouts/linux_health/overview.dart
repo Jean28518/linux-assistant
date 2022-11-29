@@ -1,0 +1,218 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/container.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/widgets.dart';
+import 'package:linux_assistant/layouts/loading_indicator.dart';
+import 'package:linux_assistant/layouts/mintY.dart';
+import 'package:linux_assistant/services/linux.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:linux_assistant/services/main_search_loader.dart';
+import 'package:linux_assistant/widgets/success_message.dart';
+import 'package:linux_assistant/widgets/warning_message.dart';
+
+class LinuxHealthOverview extends StatelessWidget {
+  LinuxHealthOverview({super.key});
+  Future<String> output = Linux.runPythonScript("check_linux_health.py");
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<String>(
+      future: output,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          List<String> lines = snapshot.data!.split("\n");
+
+          String uptimeLength = "";
+          bool uptimeWarning = false;
+          List<Widget> diskWarnings = [];
+          int processes = 0;
+          int zombies = 0;
+          int removableDevices = 0;
+          int swaps = 0;
+          List<List<dynamic>> topMemoryProcesses = [];
+          List<List<dynamic>> topCPUProcesses = [];
+          for (int i = 0; i < lines.length; i++) {
+            String line = lines[i];
+            if (line.startsWith("uptime: ")) {
+              uptimeLength = line.replaceAll("uptime: ", "");
+              if (uptimeLength.length > 4) {
+                uptimeWarning = true;
+              }
+
+              // Read Diskspaces
+              for (int j = i + 1; true; j++) {
+                String line = lines[j];
+                if (line.startsWith("processes: ")) {
+                  break;
+                }
+                List<String> values = line.split("\t");
+                if (int.parse(values[4].replaceAll("%", "")) > 90) {
+                  WarningMessage warningMessage = WarningMessage(
+                      text: AppLocalizations.of(context)!.diskspaceWarning1 +
+                          values[0] +
+                          " " +
+                          values[5] +
+                          AppLocalizations.of(context)!.diskspaceWarning2 +
+                          values[3]);
+                  diskWarnings.add(warningMessage);
+                }
+              }
+            }
+
+            if (line.startsWith("processes: ")) {
+              processes = int.parse(line.replaceAll("processes: ", ""));
+            }
+            if (line.startsWith("zombies: ")) {
+              zombies = int.parse(line.replaceAll("zombies: ", ""));
+            }
+            if (line.startsWith("removable_devices: ")) {
+              removableDevices =
+                  int.parse(line.replaceAll("removable_devices: ", ""));
+            }
+            if (line.startsWith("swaps: ")) {
+              swaps = int.parse(line.replaceAll("swaps: ", ""));
+            }
+
+            if (line.startsWith("Top 3 Memory:")) {
+              topMemoryProcesses.add([
+                AppLocalizations.of(context)!.memoryUsage,
+                AppLocalizations.of(context)!.process
+              ]);
+              // Read Top 3 Memory
+              for (int j = 1; j <= 3; j++) {
+                String line = lines[j + i];
+                List<String> values = line.split(" ");
+                topMemoryProcesses.add(["${values[0]}%", values[1]]);
+              }
+            }
+
+            if (line.startsWith("Top 3 CPU:")) {
+              topCPUProcesses.add([
+                AppLocalizations.of(context)!.cpuUsage,
+                AppLocalizations.of(context)!.process
+              ]);
+              // Read Top 3 Memory
+              for (int j = 1; j <= 3; j++) {
+                String line = lines[j + i];
+                List<String> values = line.split(" ");
+                topCPUProcesses.add(["${values[0]}%", values[1]]);
+              }
+            }
+          }
+
+          return MintYPage(
+            title: AppLocalizations.of(context)!.linuxHealth,
+            contentElements: [
+              Text(
+                AppLocalizations.of(context)!.runtime,
+                style: Theme.of(context).textTheme.headline2,
+              ),
+              uptimeWarning
+                  ? WarningMessage(
+                      text: AppLocalizations.of(context)!
+                          .uptimeWarning(uptimeLength))
+                  : SuccessMessage(
+                      text: AppLocalizations.of(context)!
+                          .uptimePass(uptimeLength)),
+              zombies == 0
+                  ? SuccessMessage(
+                      text: AppLocalizations.of(context)!
+                          .processesWithZombiesMessage(processes, zombies))
+                  : WarningMessage(
+                      text: AppLocalizations.of(context)!
+                          .processesWithZombiesMessage(processes, zombies)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)!.topMemoryProcesses,
+                            style: Theme.of(context).textTheme.headline3,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: MintYTable(data: topMemoryProcesses),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)!.topCPUProcesses,
+                            style: Theme.of(context).textTheme.headline3,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: MintYTable(data: topCPUProcesses),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Text(
+                AppLocalizations.of(context)!.memoryAndStorage,
+                style: Theme.of(context).textTheme.headline2,
+              ),
+              diskWarnings.isEmpty
+                  ? SuccessMessage(
+                      text: AppLocalizations.of(context)!.diskspacePass,
+                    )
+                  : Column(
+                      children: diskWarnings,
+                    ),
+              removableDevices == 0
+                  ? SuccessMessage(
+                      text: AppLocalizations.of(context)!.removableDevicesPass)
+                  : WarningMessage(
+                      text: AppLocalizations.of(context)!
+                          .removableDevicesWarning(removableDevices)),
+              swaps == 0
+                  ? WarningMessage(
+                      text: AppLocalizations.of(context)!.swapsWarning)
+                  : SuccessMessage(
+                      text: AppLocalizations.of(context)!.swapsPass),
+            ],
+            bottom: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                MintYButtonNavigate(
+                  route: LinuxHealthOverview(),
+                  text: Text(
+                    AppLocalizations.of(context)!.reload,
+                    style: MintY.heading3,
+                  ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                MintYButtonNavigate(
+                  route: MainSearchLoader(),
+                  color: MintY.currentColor,
+                  text: Text(
+                    AppLocalizations.of(context)!.backToSearch,
+                    style: MintY.heading3White,
+                  ),
+                )
+              ],
+            ),
+          );
+        } else if (snapshot.hasError) {
+          return Text(snapshot.error.toString());
+        } else {
+          return LoadingIndicator(
+              text: AppLocalizations.of(context)!.analysingLinuxHealth);
+        }
+      },
+    );
+  }
+}
+
+class Test {}

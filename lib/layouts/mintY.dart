@@ -101,6 +101,18 @@ class MintY {
       fontWeight: FontWeight.w400,
       decoration: TextDecoration.none);
 
+  static const heading4White = TextStyle(
+      color: _white,
+      fontSize: 17,
+      fontWeight: FontWeight.w400,
+      decoration: TextDecoration.none);
+
+  static const heading4 = TextStyle(
+      color: Colors.black87,
+      fontSize: 17,
+      fontWeight: FontWeight.w400,
+      decoration: TextDecoration.none);
+
   static const paragraph = TextStyle(
       fontWeight: FontWeight.w300,
       color: Colors.black87,
@@ -122,6 +134,7 @@ class MintY {
         headline1: heading1,
         headline2: heading2,
         headline3: heading3,
+        headline4: heading4,
         bodyText1: paragraph,
       ),
       inputDecorationTheme: InputDecorationTheme(
@@ -147,6 +160,7 @@ class MintY {
         headline1: heading1White,
         headline2: heading2White,
         headline3: heading3White,
+        headline4: heading4White,
         bodyText1: paragraphWhite,
       ),
       inputDecorationTheme: InputDecorationTheme(
@@ -758,6 +772,43 @@ class MintYProgressIndicatorCircle extends StatelessWidget {
         height: 80,
         width: 80,
       ),
+    );
+  }
+}
+
+/// data should be a 2D list
+/// First row are headings
+class MintYTable extends StatelessWidget {
+  List<List<dynamic>> data;
+  MintYTable({super.key, required this.data});
+
+  @override
+  Widget build(BuildContext context) {
+    List<TableRow> tableRows = [];
+    for (int i = 0; i < data.length; i++) {
+      List<TableCell> cells = [];
+      for (int j = 0; j < data[i].length; j++) {
+        cells.add(
+          TableCell(
+            child: Text(
+              data[i][j].toString(),
+              style: i == 0
+                  ? Theme.of(context).textTheme.headline4
+                  : Theme.of(context).textTheme.bodyText1,
+              textAlign: TextAlign.center,
+            ),
+          ),
+        );
+      }
+      tableRows.add(
+        TableRow(
+          children: cells,
+        ),
+      );
+    }
+    return Table(
+      defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+      children: tableRows,
     );
   }
 }

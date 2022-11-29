@@ -3,7 +3,8 @@ import 'package:linux_assistant/enums/desktops.dart';
 import 'package:linux_assistant/enums/softwareManagers.dart';
 import 'package:linux_assistant/layouts/after_installation/after_installation_entry.dart';
 import 'package:linux_assistant/layouts/greeter/introduction.dart';
-import 'package:linux_assistant/layouts/main_search.dart';
+import 'package:linux_assistant/layouts/linux_health/overview.dart';
+import 'package:linux_assistant/layouts/main_screen/main_search.dart';
 import 'package:linux_assistant/layouts/run_command_queue.dart';
 import 'package:linux_assistant/layouts/security_check/overview.dart';
 import 'package:linux_assistant/models/action_entry.dart';
@@ -46,6 +47,13 @@ class ActionHandler {
           context,
           MaterialPageRoute(
               builder: (context) => const SecurityCheckOverview()),
+        );
+        break;
+      case "linux_health":
+        MainSearch.unregisterHotkeysForKeyboardUse();
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => LinuxHealthOverview()),
         );
         break;
       case "after_installation":

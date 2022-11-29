@@ -9,6 +9,8 @@ import 'package:linux_assistant/layouts/mintY.dart';
 import 'package:linux_assistant/services/linux.dart';
 import 'package:linux_assistant/services/main_search_loader.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:linux_assistant/widgets/success_message.dart';
+import 'package:linux_assistant/widgets/warning_message.dart';
 
 class SecurityCheckOverview extends StatelessWidget {
   const SecurityCheckOverview({Key? key}) : super(key: key);
@@ -167,10 +169,10 @@ class UpdateCheck extends StatelessWidget {
       Padding(
           padding: EdgeInsets.all(8.0),
           child: availableUpdatePackages == 0
-              ? SecuritySuccessMessage(
+              ? SuccessMessage(
                   text: AppLocalizations.of(context)!.systemIsUpToDate,
                 )
-              : SecurityWarningMessage(
+              : WarningMessage(
                   text:
                       "${availableUpdatePackages} ${AppLocalizations.of(context)!.xPackagesShouldBeUpdated}"))
     ]);
@@ -195,10 +197,10 @@ class HomeFolderSecurityCheck extends StatelessWidget {
       Padding(
           padding: EdgeInsets.all(8.0),
           child: homeFolderSecure
-              ? SecuritySuccessMessage(
+              ? SuccessMessage(
                   text: AppLocalizations.of(context)!.homeFolderRightsOkay,
                 )
-              : SecurityWarningMessage(
+              : WarningMessage(
                   text: AppLocalizations.of(context)!.homeFolderRightsNotOkay))
     ]);
   }
@@ -232,29 +234,29 @@ class NetworkSecurityCheck extends StatelessWidget {
           child: Column(
             children: [
               firewallNotInstalled
-                  ? SecurityWarningMessage(
+                  ? WarningMessage(
                       text: AppLocalizations.of(context)!.noFirewallRecognized,
                     )
                   : firewallRunning
-                      ? SecuritySuccessMessage(
+                      ? SuccessMessage(
                           text: AppLocalizations.of(context)!.firewallIsRunning)
-                      : SecurityWarningMessage(
+                      : WarningMessage(
                           text:
                               AppLocalizations.of(context)!.firewallIsInactive),
               SizedBox(height: 8),
               sshRunning
-                  ? SecurityWarningMessage(
+                  ? WarningMessage(
                       text:
                           AppLocalizations.of(context)!.sshFoundOnYourComputer)
                   : Container(),
               SizedBox(height: 8),
               (sshRunning && !fail2banRunning)
-                  ? SecurityWarningMessage(
+                  ? WarningMessage(
                       text: AppLocalizations.of(context)!.noFail2BanFound)
                   : Container(),
               SizedBox(height: 8),
               xrdpRunning
-                  ? SecurityWarningMessage(
+                  ? WarningMessage(
                       text: AppLocalizations.of(context)!
                           .xrdpRunningOnYourComputer)
                   : Container(),
@@ -287,7 +289,7 @@ class AdditionSoftwareSources extends StatelessWidget {
               ? Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SecurityWarningMessage(
+                    WarningMessage(
                         text: AppLocalizations.of(context)!
                             .additionalSoftwareSourcesDetected),
                     SizedBox(
@@ -309,65 +311,10 @@ class AdditionSoftwareSources extends StatelessWidget {
                     ),
                   ],
                 )
-              : SecuritySuccessMessage(
+              : SuccessMessage(
                   text: AppLocalizations.of(context)!
                       .noAdditionalSoftwareSourcesFound),
         )
-      ],
-    );
-  }
-}
-
-class SecuritySuccessMessage extends StatelessWidget {
-  late String text;
-  SecuritySuccessMessage({Key? key, this.text = ""}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const Icon(
-          Icons.check,
-          size: 32,
-          color: Colors.green,
-        ),
-        const SizedBox(
-          width: 8,
-        ),
-        Flexible(
-          child: Text(
-            text,
-            style: Theme.of(context).textTheme.bodyText1,
-            textAlign: TextAlign.left,
-          ),
-        )
-      ],
-    );
-  }
-}
-
-class SecurityWarningMessage extends StatelessWidget {
-  late String text;
-  SecurityWarningMessage({Key? key, this.text = ""}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const Icon(
-          Icons.warning,
-          size: 32,
-          color: Colors.orange,
-        ),
-        const SizedBox(
-          width: 8,
-        ),
-        Flexible(
-          child: Text(
-            text,
-            style: Theme.of(context).textTheme.bodyText1,
-          ),
-        ),
       ],
     );
   }
