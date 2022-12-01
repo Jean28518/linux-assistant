@@ -658,8 +658,11 @@ class Linux {
     String wholePath = Platform.resolvedExecutable;
     List<String> parts = wholePath.split("/");
     parts.removeLast(); // remove executable file
-    String returnValue = "/";
+    String returnValue = "";
     for (String part in parts) {
+      if (part.trim().isEmpty) {
+        continue;
+      }
       returnValue = "${returnValue}/${part}";
     }
     returnValue = "${returnValue}/";
@@ -715,11 +718,11 @@ class Linux {
     String executable = "";
     if (root) {
       executable = "pkexec";
-      commandList.add("/usr/bin/python3");
+      commandList.add("${executableFolder}additional/python/run_script.py");
     } else {
-      executable = "/usr/bin/python3";
+      executable = "${executableFolder}additional/python/run_script.py";
     }
-    commandList.add("${executableFolder}additional/python/$filename");
+    commandList.add(filename);
 
     commandList.addAll(arguments);
 

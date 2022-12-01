@@ -17,17 +17,11 @@ class SecurityCheckOverview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Linux.executableFolder = Linux.getExecutableFolder();
-    print(Linux.currentenvironment);
-    Future<String> checkerOutputString =
-        Linux.runCommandWithCustomArgumentsAndGetStdOut(
-            "pkexec",
-            [
-              "/usr/bin/python3",
-              "${Linux.executableFolder}additional/python/check_security.py",
-              "--home=${Platform.environment['HOME']}",
-            ],
-            getErrorMessages: true);
+    Future<String> checkerOutputString = Linux.runPythonScript(
+        "check_security.py",
+        root: true,
+        arguments: ["--home=${Platform.environment['HOME']}"],
+        getErrorMessages: true);
     return FutureBuilder<String>(
       future: checkerOutputString,
       builder: (context, snapshot) {
