@@ -31,7 +31,7 @@ class FeedbackService {
 
     http.Response response = await http
         .post(
-          Uri.parse('http://localhost:8000/submit/'),
+          Uri.parse('https://feedback.server-jean.de/submit/'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
