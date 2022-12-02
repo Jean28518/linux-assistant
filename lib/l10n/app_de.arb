@@ -110,7 +110,7 @@
   "timeToSetupYourComputerDescription": "Konfiguriere Deinen Linux-Rechner nach Deinen Bedürfnissen.",
   "activateHotkey": "Aktiviere Tastenkürzel",
   "openLinuxAssistantFaster": "Öffne Linux Assistant schneller.",
-  "openLinuxAssistantFasterDescription": "Mit der Tastenkombination <Alt> + <Q> könntest Du direkt deinen Assistenten schneller öffnen.\nUm mit Deinem Rechner produktiver zu arbeiten, wird dieser Schritt wärmstens empfohlen.",
+  "openLinuxAssistantFasterDescription": "Mit der Tastenkombination <Super> + <Q> könntest Du direkt deinen Assistenten schneller öffnen.\nUm mit Deinem Rechner produktiver zu arbeiten, wird dieser Schritt wärmstens empfohlen.",
   "yesSetUpHotkey": "Ja, aktiviere Tastenkürzel",
   "introduction": "Einführung",
   "theFollowingContentCanBeSearched": "Folgende Inhalte können durchsucht werden:",

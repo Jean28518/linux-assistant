@@ -110,7 +110,7 @@
   "timeToSetupYourComputerDescription": "Configure your linux machine to your needs.",
   "activateHotkey": "Activate hotkey",
   "openLinuxAssistantFaster": "Open Linux Assistant faster.",
-  "openLinuxAssistantFasterDescription": "You could open Linux Assistant with the keys <Alt> + <Q>.\nThis is higly recommended to maximize your productivity under linux.",
+  "openLinuxAssistantFasterDescription": "You could open Linux Assistant with the keys <Super> + <Q>.\nThis is higly recommended to maximize your productivity under linux.",
   "yesSetUpHotkey": "Yes, setup hotkey",
   "introduction": "Introduction",
   "theFollowingContentCanBeSearched": "You can search for following content:",
