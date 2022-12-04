@@ -18,6 +18,8 @@ class AfterInstallationBrowserSelection extends StatelessWidget {
       Linux.areApplicationsInstalled(["firefox", "firefox-esr"]);
   static Future<bool> chromiumInstalled =
       Linux.areApplicationsInstalled(["chromium"]);
+  static Future<bool> braveInstalled =
+      Linux.areApplicationsInstalled(["com.brave.Browser"]);
   static Future<bool> googleChromeStableInstalled =
       Linux.areApplicationsInstalled(
           ["google-chrome-stable", "com.google.Chrome"]);
@@ -27,85 +29,96 @@ class AfterInstallationBrowserSelection extends StatelessWidget {
     return Scaffold(
       body: MintYPage(
         title: AppLocalizations.of(context)!.browserSelection,
-        contentElements: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              FutureBuilder(
-                future: firefoxInstalled,
-                builder: (context, snapshot) {
-                  AfterInstallationService.firefox =
+        customContentElement: MintYGrid(
+          children: [
+            FutureBuilder(
+              future: firefoxInstalled,
+              builder: (context, snapshot) {
+                AfterInstallationService.firefox =
+                    snapshot.data.toString() == 'true';
+                if (snapshot.hasData) {
+                  return MintYSelectableEntryWithIconHorizontal(
+                    icon: const SystemIcon(iconString: "firefox", iconSize: 64),
+                    title: "Firefox",
+                    text: AppLocalizations.of(context)!.firefoxDescription,
+                    selected: snapshot.data.toString() == 'true',
+                    onPressed: () {
+                      AfterInstallationService.firefox =
+                          !AfterInstallationService.firefox;
+                    },
+                  );
+                } else {
+                  return const MintYProgressIndicatorCircle();
+                }
+              },
+            ),
+            FutureBuilder(
+              future: chromiumInstalled,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  AfterInstallationService.chromium =
                       snapshot.data.toString() == 'true';
-                  if (snapshot.hasData) {
-                    return MintYSelectableCardWithIcon(
-                      icon: const SystemIcon(
-                          iconString: "firefox", iconSize: 150),
-                      title: "Firefox",
-                      text: AppLocalizations.of(context)!.firefoxDescription,
-                      selected: snapshot.data.toString() == 'true',
-                      onPressed: () {
-                        AfterInstallationService.firefox =
-                            !AfterInstallationService.firefox;
-                      },
-                    );
-                  } else {
-                    return const MintYProgressIndicatorCircle();
-                  }
-                },
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              FutureBuilder(
-                future: chromiumInstalled,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    AfterInstallationService.chromium =
-                        snapshot.data.toString() == 'true';
-                    return MintYSelectableCardWithIcon(
-                      icon: const SystemIcon(
-                          iconString: "chromium", iconSize: 150),
-                      title: "Chromium",
-                      text: AppLocalizations.of(context)!.chromiumDescription,
-                      selected: snapshot.data.toString() == 'true',
-                      onPressed: () {
-                        AfterInstallationService.chromium =
-                            !AfterInstallationService.chromium;
-                      },
-                    );
-                  } else {
-                    return const MintYProgressIndicatorCircle();
-                  }
-                },
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              FutureBuilder(
-                future: googleChromeStableInstalled,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    AfterInstallationService.googleChrome =
-                        snapshot.data.toString() == 'true';
-                    return MintYSelectableCardWithIcon(
-                      icon: const SystemIcon(
-                          iconString: "google-chrome", iconSize: 150),
-                      title: "Google Chrome",
-                      text: AppLocalizations.of(context)!.chromeDescription,
-                      selected: snapshot.data.toString() == 'true',
-                      onPressed: () {
-                        AfterInstallationService.googleChrome =
-                            !AfterInstallationService.googleChrome;
-                      },
-                    );
-                  } else {
-                    return const MintYProgressIndicatorCircle();
-                  }
-                },
-              ),
-            ],
-          ),
-        ],
+                  return MintYSelectableEntryWithIconHorizontal(
+                    icon:
+                        const SystemIcon(iconString: "chromium", iconSize: 64),
+                    title: "Chromium",
+                    text: AppLocalizations.of(context)!.chromiumDescription,
+                    selected: snapshot.data.toString() == 'true',
+                    onPressed: () {
+                      AfterInstallationService.chromium =
+                          !AfterInstallationService.chromium;
+                    },
+                  );
+                } else {
+                  return const MintYProgressIndicatorCircle();
+                }
+              },
+            ),
+            FutureBuilder(
+              future: braveInstalled,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  AfterInstallationService.brave =
+                      snapshot.data.toString() == 'true';
+                  return MintYSelectableEntryWithIconHorizontal(
+                    icon: const SystemIcon(iconString: "brave", iconSize: 64),
+                    title: "Brave",
+                    text: AppLocalizations.of(context)!.braveDescription,
+                    selected: snapshot.data.toString() == 'true',
+                    onPressed: () {
+                      AfterInstallationService.brave =
+                          !AfterInstallationService.brave;
+                    },
+                  );
+                } else {
+                  return const MintYProgressIndicatorCircle();
+                }
+              },
+            ),
+            FutureBuilder(
+              future: googleChromeStableInstalled,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  AfterInstallationService.googleChrome =
+                      snapshot.data.toString() == 'true';
+                  return MintYSelectableEntryWithIconHorizontal(
+                    icon: const SystemIcon(
+                        iconString: "google-chrome", iconSize: 64),
+                    title: "Google Chrome",
+                    text: AppLocalizations.of(context)!.chromeDescription,
+                    selected: snapshot.data.toString() == 'true',
+                    onPressed: () {
+                      AfterInstallationService.googleChrome =
+                          !AfterInstallationService.googleChrome;
+                    },
+                  );
+                } else {
+                  return const MintYProgressIndicatorCircle();
+                }
+              },
+            ),
+          ],
+        ),
         bottom: MintYButtonNext(
           route: const AfterInstallationOfficeSelection(),
           onPressedFuture: () async {

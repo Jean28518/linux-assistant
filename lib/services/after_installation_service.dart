@@ -4,6 +4,7 @@ import 'package:linux_assistant/services/linux.dart';
 class AfterInstallationService {
   static bool firefox = false;
   static bool chromium = false;
+  static bool brave = false;
   static bool googleChrome = false;
 
   static bool libreOffice = false;
@@ -39,6 +40,9 @@ class AfterInstallationService {
           ["chromium", "org.chromium.Chromium"],
           installed: chromium);
     }
+
+    await Linux.ensureApplicationInstallation(["com.brave.Browser"],
+        installed: googleChrome);
 
     await Linux.ensureApplicationInstallation(
         ["google-chrome-stable", "com.google.Chrome"],

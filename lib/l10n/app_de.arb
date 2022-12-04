@@ -80,6 +80,7 @@
   "browserSelection": "Browser-Auswahl",
   "firefoxDescription": "Open Source Browser von Mozilla mit Fokus auf Privatsphäre.",
   "chromiumDescription": "Open Source Browser. Freie Basis von Google Chrome.",
+  "braveDescription": "Open Source Browser mit Fokus auf Privatsphäre.",
   "chromeDescription": "Proprietärer Browser von Google.",
   "thunderbirdDescription": "Open Source E-Mail Client von Mozilla.",
   "jitsiDescription": "Open Source Video-Konferenz-Tool",
