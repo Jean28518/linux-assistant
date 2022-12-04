@@ -13,8 +13,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class AfterInstallationCommunicationSoftwareSelection extends StatelessWidget {
   AfterInstallationCommunicationSoftwareSelection({super.key});
 
-  static Future<bool> thunderbirdInstalled =
-      Linux.areApplicationsInstalled(["thunderbird"]);
+  static Future<bool> thunderbirdInstalled = Linux.areApplicationsInstalled(
+      ["thunderbird", "org.mozilla.Thunderbird"]);
   static Future<bool> jitsiMeetInstalled =
       Linux.areApplicationsInstalled(["org.jitsi.jitsi-meet"]);
   static Future<bool> elementInstalled =
