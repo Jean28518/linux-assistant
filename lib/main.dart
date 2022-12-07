@@ -85,7 +85,7 @@ class MyApp extends StatelessWidget {
         MintY.currentColor = const Color.fromARGB(255, 208, 7, 78);
         break;
       case DISTROS.LINUX_MINT:
-        MintY.currentColor = const Color.fromARGB(255, 139, 177, 88);
+        MintY.currentColor = const Color.fromARGB(255, 53, 168, 84);
         break;
       case DISTROS.MXLINUX:
         MintY.currentColor = const Color.fromARGB(255, 34, 34, 34);
