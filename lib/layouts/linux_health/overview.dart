@@ -23,6 +23,7 @@ class LinuxHealthOverview extends StatelessWidget {
           List<String> lines = snapshot.data!.split("\n");
 
           String uptimeLength = "";
+          String uptimeUnit = "";
           bool uptimeWarning = false;
           List<Widget> diskWarnings = [];
           int processes = 0;
@@ -35,6 +36,11 @@ class LinuxHealthOverview extends StatelessWidget {
             String line = lines[i];
             if (line.startsWith("uptime: ")) {
               uptimeLength = line.replaceAll("uptime: ", "");
+              if (uptimeLength.length < 3) {
+                uptimeUnit = AppLocalizations.of(context)!.minutes;
+              } else {
+                uptimeUnit = AppLocalizations.of(context)!.hours;
+              }
               if (uptimeLength.length > 4) {
                 uptimeWarning = true;
               }
@@ -110,10 +116,10 @@ class LinuxHealthOverview extends StatelessWidget {
               uptimeWarning
                   ? WarningMessage(
                       text: AppLocalizations.of(context)!
-                          .uptimeWarning(uptimeLength))
+                          .uptimeWarning(uptimeLength, uptimeUnit))
                   : SuccessMessage(
                       text: AppLocalizations.of(context)!
-                          .uptimePass(uptimeLength)),
+                          .uptimePass(uptimeLength, uptimeUnit)),
               zombies == 0
                   ? SuccessMessage(
                       text: AppLocalizations.of(context)!

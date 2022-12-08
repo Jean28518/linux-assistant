@@ -133,18 +133,20 @@
   "analysingLinuxHealth": "Analysing linux health...",
   "linuxHealth": "Linux health",
   "linuxHealthDescription": "Check the current status of your linux system.",
-  "uptimeWarning": "Your Linux system has not been rebooted for a long time. To avoid potential errors, regular reboots are recommended. The last reboot was {hours} ago.",
+  "uptimeWarning": "Your Linux system has not been rebooted for a long time. To avoid potential errors, regular reboots are recommended. The last reboot was {time} {unit} ago.",
   "@uptimeWarning": {
     "placeholders": {
-      "hours" : {}
+      "time" : {},
+      "unit" : {}
     },
     "description": "",
     "type": "text"
   },
-  "uptimePass": "Your Linux system has only been running for {hours}. That's good!",
+  "uptimePass": "Your Linux system has only been running for {time} {unit}. That's good!",
   "@uptimePass": {
     "placeholders": {
-      "hours" : {}
+      "time" : {},
+      "unit" : {}
     },
     "description": "",
     "type": "text"
@@ -188,6 +190,8 @@
     "description": "",
     "type": "text"
   },
+  "minutes": "minutes",
+  "hours": "hours",
   "@helloWorld": {
     "placeholders": {},
     "description": "The conventional newborn programmer greeting",
