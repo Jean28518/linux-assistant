@@ -185,7 +185,7 @@ class _EnvironmentSelectionViewState extends State<EnvironmentSelectionView> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const ActivateHotkeyQuestion()),
+                        builder: (context) => ActivateHotkeyQuestion()),
                   );
                 },
               ),

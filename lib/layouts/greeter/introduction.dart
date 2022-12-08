@@ -79,8 +79,8 @@ class GreeterIntroduction extends StatelessWidget {
         ),
         MintYFeature(
           heading: AppLocalizations.of(context)!.hint,
-          description: AppLocalizations.of(context)!
-              .youCanOpenThisWindowBySearchingForIntroduction,
+          description:
+              AppLocalizations.of(context)!.youCanOpenLinuxAssistantWithHotkey,
           icon: Icon(
             Icons.lightbulb,
             size: 64,

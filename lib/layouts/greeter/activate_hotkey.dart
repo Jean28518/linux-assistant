@@ -5,10 +5,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:linux_assistant/services/linux.dart';
 
 class ActivateHotkeyQuestion extends StatelessWidget {
-  const ActivateHotkeyQuestion({super.key});
+  late Widget? route;
+  ActivateHotkeyQuestion({super.key, this.route});
 
   @override
   Widget build(BuildContext context) {
+    route ??= const StartAfterInstallationRoutineQuestion();
     return MintYPage(
       title: AppLocalizations.of(context)!.activateHotkey,
       contentElements: [
@@ -30,7 +32,7 @@ class ActivateHotkeyQuestion extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           MintYButtonNavigate(
-            route: const StartAfterInstallationRoutineQuestion(),
+            route: route!,
             text: Text(
               AppLocalizations.of(context)!.skip,
               style: MintY.heading3,
@@ -40,7 +42,7 @@ class ActivateHotkeyQuestion extends StatelessWidget {
             width: 16,
           ),
           MintYButtonNavigate(
-            route: const StartAfterInstallationRoutineQuestion(),
+            route: route!,
             text: Text(
               AppLocalizations.of(context)!.yesSetUpHotkey,
               style: MintY.heading3White,

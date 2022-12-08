@@ -45,5 +45,15 @@ List<ActionEntry> getBasicEntries(BuildContext context) {
         size: 48,
       ),
     ),
+    ActionEntry(
+      name: AppLocalizations.of(context)!.linuxAssistantKeyboardShortcut,
+      description:
+          AppLocalizations.of(context)!.setUpLinuxAssistantKeyboardShortcut,
+      action: "setup_linux_assistant_shortcut",
+      iconWidget: const Icon(
+        Icons.keyboard,
+        size: 48,
+      ),
+    ),
   ];
 }

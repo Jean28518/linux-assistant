@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:linux_assistant/enums/desktops.dart';
 import 'package:linux_assistant/enums/softwareManagers.dart';
 import 'package:linux_assistant/layouts/after_installation/after_installation_entry.dart';
+import 'package:linux_assistant/layouts/greeter/activate_hotkey.dart';
 import 'package:linux_assistant/layouts/greeter/introduction.dart';
 import 'package:linux_assistant/layouts/linux_health/overview.dart';
 import 'package:linux_assistant/layouts/main_screen/main_search.dart';
@@ -45,6 +46,16 @@ class ActionHandler {
           context,
           MaterialPageRoute(
               builder: (context) => GreeterIntroduction(forceOpen: true)),
+        );
+        break;
+      case "setup_linux_assistant_shortcut":
+        MainSearch.unregisterHotkeysForKeyboardUse();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ActivateHotkeyQuestion(
+                    route: const MainSearchLoader(),
+                  )),
         );
         break;
       case "send_files_via_warpinator":

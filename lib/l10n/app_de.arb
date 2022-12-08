@@ -127,6 +127,7 @@
   "specialFunctionsDescription": "Starte die Sicherheitsüberprüfung oder die Einrichtung nach der Installation, sowie wie viele weitere kleine Routinen, die Dir den Linux-Alltag vereinfachen. Diese werden in zufälliger Reihenfolge unter der Sucheleiste vorgestellt.",
   "hint": "Tipp",
   "youCanOpenThisWindowBySearchingForIntroduction": "Du kannst diese Seite immer wieder aufrufen, in dem Du nach 'Einführung des Linux-Assistants' suchst.",
+  "youCanOpenLinuxAssistantWithHotkey": "Du kannst den Linux Assistant immer mit der Tastenkombination <Super> + <Q> öffnen. Wenn dies noch nicht funktioniert, rufe in der Suche 'Tastatur Kurzbefehl' auf.",
   "introductionToLinuxAssistant": "Einführung des Linux-Assistants",
   "introductionToLinuxAssistantDescription": "Vorstellung aller Möglichkeiten und Suchergebnisse von Linux-Assistant.",
   "changeBackground": "Wechsle Hintergrund",
@@ -192,6 +193,8 @@
   },
   "minutes": "Minuten",
   "hours": "Stunden",
+  "linuxAssistantKeyboardShortcut": "Linux Assistant Tastatur Kurzbefehl",
+  "setUpLinuxAssistantKeyboardShortcut": "Richte die Tastatenkombination <Super> + <Q> ein um Linux-Assistant von überall aus schnell zu öffnen.",
   "@helloWorld": {
     "placeholders": {},
     "description": "",

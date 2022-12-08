@@ -49,7 +49,7 @@ class IsYourEnvironmentCorrectView extends StatelessWidget {
               style: MintY.heading3White,
             ),
             color: MintY.currentColor,
-            route: const ActivateHotkeyQuestion(),
+            route: ActivateHotkeyQuestion(),
           ),
         ],
       ),
