@@ -18,6 +18,7 @@ class AfterInstallationService {
   static bool zoom = false;
   static bool microsoftTeams = false;
 
+  static bool applyUpdatesSinceRelease = true;
   static bool installMultimediaCodecs = true;
   static bool setupAutomaticSnapshots = true;
   // This will only be automatically set to true, if nvidia card is installed on system:
@@ -80,6 +81,7 @@ class AfterInstallationService {
 
   static void applyAutomaticConfiguration() {
     Linux.applyAutomaticConfigurationAfterInstallation(
+        applyUpdatesSinceRelease: applyUpdatesSinceRelease,
         installMultimediaCodecs_: installMultimediaCodecs,
         installNvidiaDriversAutomatically: installNvidiaDrivers,
         setupAutomaticSnapshots: setupAutomaticSnapshots,

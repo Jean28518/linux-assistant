@@ -179,6 +179,15 @@
   "process": "Process",
   "runtime": "Runtime",
   "memoryAndStorage": "Memory and storage",
+  "applyUpdatesSinceRelease": "Update the system to the latest version",
+  "applyUpdatesSinceReleaseDescription": "Since the release of the current {distro} version, updates may be available. Apply these updates.",
+  "@applyUpdatesSinceReleaseDescription": {
+    "placeholders": {
+      "distro" : {}
+    },
+    "description": "",
+    "type": "text"
+  },
   "@helloWorld": {
     "placeholders": {},
     "description": "The conventional newborn programmer greeting",

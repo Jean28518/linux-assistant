@@ -744,10 +744,14 @@ class Linux {
 
   /// Puts all commands into [Linux.commandQueue]
   static void applyAutomaticConfigurationAfterInstallation(
-      {bool installMultimediaCodecs_ = true,
+      {bool applyUpdatesSinceRelease = true,
+      bool installMultimediaCodecs_ = true,
       bool setupAutomaticSnapshots = true,
       bool installNvidiaDriversAutomatically = true,
       bool setupAutomaticUpdates = true}) async {
+    if (applyUpdatesSinceRelease) {
+      updateAllPackages();
+    }
     if (installMultimediaCodecs_) {
       installMultimediaCodecs();
     }
@@ -769,6 +773,20 @@ class Linux {
           command:
               "python3 ${executableFolder}additional/python/setup_automatic_updates.py"));
     }
+  }
+
+  /// Only appends commands to [commandQueue]
+  static void updateAllPackages() {
+    commandQueue.add(LinuxCommand(
+      userId: 0,
+      command: "apt update",
+      environment: {"DEBIAN_FRONTEND": "noninteractive"},
+    ));
+    commandQueue.add(LinuxCommand(
+      userId: 0,
+      command: "apt dist-upgrade -y",
+      environment: {"DEBIAN_FRONTEND": "noninteractive"},
+    ));
   }
 
   static Future<List<ActionEntry>> getFavoriteFiles(

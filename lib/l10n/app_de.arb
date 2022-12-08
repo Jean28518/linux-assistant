@@ -179,6 +179,15 @@
   "process": "Prozess",
   "runtime": "Laufzeit",
   "memoryAndStorage": "Speicher",
+  "applyUpdatesSinceRelease": "Aktualisiere das System auf den neuesten Stand",
+  "applyUpdatesSinceReleaseDescription": "Seit der Veröffentlichung der aktuellen {distro}-Version sind unter Umständen Aktualisierungen verfügbar. Wende diese Aktualisierungen an.",
+  "@applyUpdatesSinceReleaseDescription": {
+    "placeholders": {
+      "distro" : {}
+    },
+    "description": "",
+    "type": "text"
+  },
   "@helloWorld": {
     "placeholders": {},
     "description": "",
