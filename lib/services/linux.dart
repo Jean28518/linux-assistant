@@ -439,13 +439,15 @@ class Linux {
   }
 
   static void openWebbrowserSeach(String searchterm) {
-    runCommandWithCustomArguments("firefox", ["--search", searchterm]);
+    searchterm = searchterm.replaceAll(" ", "+");
+    runCommand("/usr/bin/xdg-open https://duckduckgo.com/?q=$searchterm");
   }
 
   static void openWebbrowserWithSite(String website) {
-    assert(Uri.parse(website).isAbsolute);
-    runCommand(
-        getWebbrowserCommand(currentenvironment.browser) + " " + website);
+    if (!website.startsWith("http")) {
+      website = "https://$website";
+    }
+    runCommand("/usr/bin/xdg-open $website");
   }
 
   static String getWebbrowserCommand(var browser) {
