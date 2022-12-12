@@ -41,7 +41,6 @@ class ActionHandler {
         callback();
         break;
       case "open_introduction":
-        MainSearch.unregisterHotkeysForKeyboardUse();
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -49,7 +48,6 @@ class ActionHandler {
         );
         break;
       case "setup_linux_assistant_shortcut":
-        MainSearch.unregisterHotkeysForKeyboardUse();
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -62,7 +60,6 @@ class ActionHandler {
         Linux.openOrInstallWarpinator(context, callback);
         break;
       case "security_check":
-        MainSearch.unregisterHotkeysForKeyboardUse();
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -70,14 +67,12 @@ class ActionHandler {
         );
         break;
       case "linux_health":
-        MainSearch.unregisterHotkeysForKeyboardUse();
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => LinuxHealthOverview()),
         );
         break;
       case "after_installation":
-        MainSearch.unregisterHotkeysForKeyboardUse();
         Navigator.push(
           context,
           MaterialPageRoute(

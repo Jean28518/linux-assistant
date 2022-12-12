@@ -21,6 +21,7 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
   late Future<ActionEntryList> futureActionEntryList;
 
   Future<ActionEntryList> prepare() async {
+    MainSearch.unregisterHotkeysForKeyboardUse();
     const Duration timeoutDuration = Duration(seconds: 5);
 
     // prepare Action Entries

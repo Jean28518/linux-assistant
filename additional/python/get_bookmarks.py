@@ -10,7 +10,8 @@ def main():
     if jfolders.does_folder_exist("~/.mozilla/firefox/"):
         entries = jfolders.get_folder_entries("~/.mozilla/firefox/")
         for entry in entries:
-            if not entry.endswith(".default"):
+            # We are using not .endswith in here because some distros have custom .default profile folder names.
+            if not ".default" in entry:
                 continue
 
             connection = sqlite3.connect(f"{entry}/places.sqlite", timeout=0.5)

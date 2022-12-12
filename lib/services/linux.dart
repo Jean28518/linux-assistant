@@ -379,8 +379,13 @@ class Linux {
   static Future<String> isFlatpakAvailable(String appCode) async {
     String output = await Linux.runCommandAndGetStdout(
         "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.FLATPAK)} search $appCode");
-    if (output.split("\n").length == 2) {
-      return output.split("\t").last.replaceAll("\n", "");
+    if (output.split("\n").length >= 2) {
+      List<String> lines = output.split("\n");
+      for (String line in lines) {
+        if (line.split("\t").contains(appCode)) {
+          return line.split("\t").last.replaceAll("\n", "");
+        }
+      }
     }
     return "";
   }
@@ -575,14 +580,16 @@ class Linux {
     // get OS:
     if (lines[0].contains("Linux Mint")) {
       newEnvironment.distribution = DISTROS.LINUX_MINT;
+    } else if (lines[0].toLowerCase().contains("pop!_os")) {
+      newEnvironment.distribution = DISTROS.POPOS;
+    } else if (lines[0].toLowerCase().contains("mxlinux")) {
+      newEnvironment.distribution = DISTROS.MXLINUX;
+    } else if (lines[0].toLowerCase().contains("zorin")) {
+      newEnvironment.distribution = DISTROS.ZORINOS;
     } else if (lines[0].toLowerCase().contains("ubuntu")) {
       newEnvironment.distribution = DISTROS.UBUNTU;
     } else if (lines[0].toLowerCase().contains("debian")) {
       newEnvironment.distribution = DISTROS.DEBIAN;
-    } else if (lines[0].toLowerCase().contains("mxlinux")) {
-      newEnvironment.distribution = DISTROS.MXLINUX;
-    } else if (lines[0].toLowerCase().contains("pop!_os")) {
-      newEnvironment.distribution = DISTROS.POPOS;
     }
 
     // get version:
@@ -699,6 +706,7 @@ class Linux {
         break;
       case DISTROS.UBUNTU:
       case DISTROS.POPOS:
+      case DISTROS.ZORINOS:
         commandQueue.add(LinuxCommand(
             userId: 0,
             command:

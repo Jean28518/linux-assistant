@@ -43,7 +43,7 @@ class AfterInstallationService {
     }
 
     await Linux.ensureApplicationInstallation(["com.brave.Browser"],
-        installed: googleChrome);
+        installed: brave);
 
     await Linux.ensureApplicationInstallation(
         ["google-chrome-stable", "com.google.Chrome"],

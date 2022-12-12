@@ -93,8 +93,8 @@ class MyApp extends StatelessWidget {
       case DISTROS.POPOS:
         MintY.currentColor = const Color.fromARGB(255, 72, 185, 199);
         break;
-      case DISTROS.UBUNTU:
-        MintY.currentColor = const Color.fromARGB(255, 233, 84, 32);
+      case DISTROS.ZORINOS:
+        MintY.currentColor = const Color.fromARGB(255, 21, 166, 240);
         break;
       default:
         MintY.currentColor = Colors.blue;
