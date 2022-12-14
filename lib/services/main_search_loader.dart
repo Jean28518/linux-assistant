@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:hotkey_manager/hotkey_manager.dart';
 import 'package:linux_assistant/content/basic_entries.dart';
 import 'package:linux_assistant/content/recommendations.dart';
-import 'package:linux_assistant/layouts/loading_indicator.dart';
 import 'package:linux_assistant/layouts/main_screen/main_search.dart';
+import 'package:linux_assistant/layouts/mintY.dart';
 import 'package:linux_assistant/models/action_entry.dart';
 import 'package:linux_assistant/models/action_entry_list.dart';
 import 'package:linux_assistant/services/config_handler.dart';
@@ -75,7 +76,7 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
         if (snapshot.hasData) {
           return (MainSearch(actionEntries: snapshot.data!.entries));
         } else {
-          return LoadingIndicator(
+          return MintYLoadingPage(
               text: AppLocalizations.of(context)!.preparingSearch);
         }
       },

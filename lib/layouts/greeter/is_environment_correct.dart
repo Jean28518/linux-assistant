@@ -3,7 +3,6 @@ import 'package:linux_assistant/enums/desktops.dart';
 import 'package:linux_assistant/enums/distros.dart';
 import 'package:linux_assistant/layouts/greeter/activate_hotkey.dart';
 import 'package:linux_assistant/layouts/greeter/environment_selection.dart';
-import 'package:linux_assistant/layouts/loading_indicator.dart';
 import 'package:linux_assistant/layouts/mintY.dart';
 import 'package:linux_assistant/models/environment.dart';
 import 'package:linux_assistant/services/linux.dart';

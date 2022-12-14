@@ -14,4 +14,10 @@ class LinuxCommand {
     required this.command,
     this.environment,
   });
+
+  @override
+  String toString() {
+    // TODO: implement toString
+    return this.command;
+  }
 }

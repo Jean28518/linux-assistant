@@ -225,8 +225,10 @@ class Linux {
         }
 
         if (softwareManager == SOFTWARE_MANAGERS.FLATPAK) {
+          print("!228");
           // Check, if package is available:
           String repo = await isFlatpakAvailable(appCode);
+          print("Repo: $repo");
           if (repo == "") {
             continue;
           }

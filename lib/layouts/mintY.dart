@@ -355,7 +355,12 @@ class MintYButtonNext extends StatelessWidget {
       color: MintY.currentColor,
       onPressed: () async {
         onPressed?.call();
-        await onPressedFuture?.call();
+        if (onPressedFuture != null) {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => const MintYLoadingPage(),
+          ));
+          await onPressedFuture!.call();
+        }
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => route),
@@ -809,6 +814,37 @@ class MintYTable extends StatelessWidget {
     return Table(
       defaultVerticalAlignment: TableCellVerticalAlignment.middle,
       children: tableRows,
+    );
+  }
+}
+
+/// As default text "Loading..." will be taken.
+class MintYLoadingPage extends StatelessWidget {
+  final String text;
+  const MintYLoadingPage({Key? key, this.text = ""}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(
+              height: 80,
+              width: 80,
+              child: MintYProgressIndicatorCircle(),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            Text(
+              text == "" ? AppLocalizations.of(context)!.loading : text,
+              style: Theme.of(context).textTheme.headline2,
+            )
+          ],
+        ),
+      ),
     );
   }
 }

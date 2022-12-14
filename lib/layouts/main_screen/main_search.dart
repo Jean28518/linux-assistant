@@ -554,6 +554,23 @@ class _MainSearchState extends State<MainSearch> {
         clear(minimze: false);
       },
     );
+
+    // Debug Call
+    HotKey _hotKeyDebug = HotKey(
+      KeyCode.keyD,
+      modifiers: [KeyModifier.control],
+      scope: HotKeyScope.inapp,
+    );
+    hotKeyManager.register(
+      _hotKeyDebug,
+      keyDownHandler: (hotKey) async {
+        print("DEBUG");
+        Linux.ensureApplicationInstallation(
+            ["im.riot.Riot", "element-desktop"]);
+        print(Linux.commandQueue);
+        // insert here function calls to debug
+      },
+    );
   }
 
   void _handleSuggestions() {

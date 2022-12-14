@@ -26,57 +26,84 @@ class AfterInstallationService {
   static bool setupAutomaticUpdates = true;
 
   static Future<void> applyCurrentBrowserSituation() async {
-    await Linux.ensureApplicationInstallation(["firefox", "firefox-esr"],
+    /// Start the Functions for parallel use
+    Future fFirefox = Linux.ensureApplicationInstallation(
+        ["firefox", "firefox-esr"],
         installed: firefox);
+
+    Future? fChromium;
 
     if (Linux.currentenvironment.distribution == DISTROS.UBUNTU ||
         Linux.currentenvironment.distribution == DISTROS.POPOS) {
       // Chromium for Ubuntu (snap):
-      await Linux.ensureApplicationInstallation(
+      fChromium = Linux.ensureApplicationInstallation(
           ["chromium-browser", "org.chromium.Chromium"],
           installed: chromium);
     } else {
       // Chromium for others:
-      await Linux.ensureApplicationInstallation(
+      fChromium = Linux.ensureApplicationInstallation(
           ["chromium", "org.chromium.Chromium"],
           installed: chromium);
     }
 
-    await Linux.ensureApplicationInstallation(["com.brave.Browser"],
+    Future fBrave = Linux.ensureApplicationInstallation(["com.brave.Browser"],
         installed: brave);
 
-    await Linux.ensureApplicationInstallation(
+    Future fChrome = Linux.ensureApplicationInstallation(
         ["google-chrome-stable", "com.google.Chrome"],
         installed: googleChrome);
+
+    /// We need to wait until every function has finished,
+    /// because otherwise the command queue will get filled to late.
+    await fFirefox;
+    await fChromium;
+    await fBrave;
+    await fChrome;
   }
 
   static Future<void> applyCurrentOfficeSituation() async {
-    Linux.ensureApplicationInstallation(
+    Future fLibreOffice = Linux.ensureApplicationInstallation(
         ["libreoffice-common", "org.libreoffice.LibreOffice"],
         installed: libreOffice);
-    Linux.ensureApplicationInstallation(
+    Future fOnlyOffice = Linux.ensureApplicationInstallation(
         ["org.onlyoffice.desktopeditors", "onlyoffice-desktopeditors"],
         installed: onlyOffice);
-    Linux.ensureApplicationInstallation(["com.wps.Office"],
+    Future fWPSOffice = Linux.ensureApplicationInstallation(["com.wps.Office"],
         installed: wpsOffice);
+
+    await fLibreOffice;
+    await fOnlyOffice;
+    await fWPSOffice;
   }
 
   static Future<void> applyCommunicationSituation() async {
-    Linux.ensureApplicationInstallation(
+    Future fThunderbird = Linux.ensureApplicationInstallation(
         ["thunderbird", "org.mozilla.Thunderbird"],
         installed: thunderbird);
-    Linux.ensureApplicationInstallation(["org.jitsi.jitsi-meet"],
+    Future fJitsi = Linux.ensureApplicationInstallation(
+        ["org.jitsi.jitsi-meet"],
         installed: jitsiMeet);
-    Linux.ensureApplicationInstallation(["im.riot.Riot", "element-desktop"],
+    Future fElement = Linux.ensureApplicationInstallation(
+        ["im.riot.Riot", "element-desktop"],
         installed: element);
-    Linux.ensureApplicationInstallation(["com.discordapp.Discord", "discord"],
+    Future fDiscord = Linux.ensureApplicationInstallation(
+        ["com.discordapp.Discord", "discord"],
         installed: discord);
-    Linux.ensureApplicationInstallation(["us.zoom.Zoom", "zoom-client"],
+    Future fZoom = Linux.ensureApplicationInstallation(
+        ["us.zoom.Zoom", "zoom-client"],
         installed: zoom);
 
     /// Here the snap is preferred, because it is offically supported by Microsoft.
-    Linux.ensureApplicationInstallation(["teams", "com.microsoft.Teams"],
+    Future fTeams = Linux.ensureApplicationInstallation(
+        ["teams", "com.microsoft.Teams"],
         installed: microsoftTeams);
+
+    await fThunderbird;
+    await fJitsi;
+    await fElement;
+    await fDiscord;
+    await fZoom;
+    await fTeams;
   }
 
   static void applyAutomaticConfiguration() {

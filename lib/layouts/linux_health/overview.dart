@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
-import 'package:linux_assistant/layouts/loading_indicator.dart';
 import 'package:linux_assistant/layouts/mintY.dart';
 import 'package:linux_assistant/services/linux.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -213,7 +212,7 @@ class LinuxHealthOverview extends StatelessWidget {
         } else if (snapshot.hasError) {
           return Text(snapshot.error.toString());
         } else {
-          return LoadingIndicator(
+          return MintYLoadingPage(
               text: AppLocalizations.of(context)!.analysingLinuxHealth);
         }
       },

@@ -64,19 +64,6 @@ class MyApp extends StatelessWidget {
             "wmctrl", ["-a", "Linux Assistant"]);
       },
     );
-
-    // Debug Call
-    HotKey _hotKeyDebug = HotKey(
-      KeyCode.keyD,
-      modifiers: [KeyModifier.control],
-      scope: HotKeyScope.inapp,
-    );
-    hotKeyManager.register(
-      _hotKeyDebug,
-      keyDownHandler: (hotKey) async {
-        // insert here function calls to debug
-      },
-    );
   }
 
   static void setMainColor() {
