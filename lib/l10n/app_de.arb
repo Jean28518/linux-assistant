@@ -111,7 +111,14 @@
   "timeToSetupYourComputerDescription": "Konfiguriere Deinen Linux-Rechner nach Deinen Bedürfnissen.",
   "activateHotkey": "Aktiviere Tastenkürzel",
   "openLinuxAssistantFaster": "Öffne Linux Assistant schneller.",
-  "openLinuxAssistantFasterDescription": "Mit der Tastenkombination <Super> + <Q> könntest Du direkt deinen Assistenten schneller öffnen.\nUm mit Deinem Rechner produktiver zu arbeiten, wird dieser Schritt wärmstens empfohlen.",
+  "openLinuxAssistantFasterDescription": "Mit der Tastenkombination {modifier} + <Q> könntest Du direkt deinen Assistenten schneller öffnen.\nUm mit Deinem Rechner produktiver zu arbeiten, wird dieser Schritt wärmstens empfohlen.",
+  "@openLinuxAssistantFasterDescription": {
+    "placeholders": {
+      "modifier" : {}
+    },
+    "description": "",
+    "type": "text"
+  },
   "yesSetUpHotkey": "Ja, aktiviere Tastenkürzel",
   "introduction": "Einführung",
   "theFollowingContentCanBeSearched": "Folgende Inhalte können durchsucht werden:",
@@ -127,7 +134,14 @@
   "specialFunctionsDescription": "Starte die Sicherheitsüberprüfung oder die Einrichtung nach der Installation, sowie wie viele weitere kleine Routinen, die Dir den Linux-Alltag vereinfachen. Diese werden in zufälliger Reihenfolge unter der Sucheleiste vorgestellt.",
   "hint": "Tipp",
   "youCanOpenThisWindowBySearchingForIntroduction": "Du kannst diese Seite immer wieder aufrufen, in dem Du nach 'Einführung des Linux-Assistants' suchst.",
-  "youCanOpenLinuxAssistantWithHotkey": "Du kannst den Linux Assistant immer mit der Tastenkombination <Super> + <Q> öffnen. Wenn dies noch nicht funktioniert, rufe in der Suche 'Tastatur Kurzbefehl' auf.",
+  "youCanOpenLinuxAssistantWithHotkey": "Du kannst den Linux Assistant immer mit der Tastenkombination {modifier} + <Q> öffnen. Wenn dies noch nicht funktioniert, rufe in der Suche 'Tastatur Kurzbefehl' auf.",
+  "@youCanOpenLinuxAssistantWithHotkey": {
+    "placeholders": {
+      "modifier" : {}
+    },
+    "description": "",
+    "type": "text"
+  },
   "introductionToLinuxAssistant": "Einführung des Linux-Assistants",
   "introductionToLinuxAssistantDescription": "Vorstellung aller Möglichkeiten und Suchergebnisse von Linux-Assistant.",
   "changeBackground": "Wechsle Hintergrund",
@@ -194,7 +208,14 @@
   "minutes": "Minuten",
   "hours": "Stunden",
   "linuxAssistantKeyboardShortcut": "Linux Assistant Tastatur Kurzbefehl",
-  "setUpLinuxAssistantKeyboardShortcut": "Richte die Tastatenkombination <Super> + <Q> ein um Linux-Assistant von überall aus schnell zu öffnen.",
+  "setUpLinuxAssistantKeyboardShortcut": "Richte die Tastatenkombination {modifier} + <Q> ein um Linux-Assistant von überall aus schnell zu öffnen.",
+  "@setUpLinuxAssistantKeyboardShortcut": {
+    "placeholders": {
+      "modifier" : {}
+    },
+    "description": "",
+    "type": "text"
+  },
   "@helloWorld": {
     "placeholders": {},
     "description": "",

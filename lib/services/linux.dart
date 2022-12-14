@@ -989,6 +989,20 @@ class Linux {
   }
 
   static void activateSystemHotkeyForLinuxAssistant() {
-    Linux.runPythonScript("setup_keybinding.py");
+    if (get_hotkey_modifier() == "<Alt>") {
+      Linux.runPythonScript("setup_keybinding.py", arguments: ["--alt"]);
+    } else {
+      Linux.runPythonScript("setup_keybinding.py");
+    }
+  }
+
+  static String get_hotkey_modifier() {
+    switch (currentenvironment.distribution) {
+      case DISTROS.POPOS:
+      case DISTROS.ZORINOS:
+        return "<Alt>";
+      default:
+        return "<Super>";
+    }
   }
 }

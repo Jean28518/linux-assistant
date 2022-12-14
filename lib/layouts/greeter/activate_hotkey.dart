@@ -23,7 +23,8 @@ class ActivateHotkeyQuestion extends StatelessWidget {
           height: 16,
         ),
         Text(
-          AppLocalizations.of(context)!.openLinuxAssistantFasterDescription,
+          AppLocalizations.of(context)!
+              .openLinuxAssistantFasterDescription(Linux.get_hotkey_modifier()),
           style: Theme.of(context).textTheme.bodyText1,
           textAlign: TextAlign.center,
         ),

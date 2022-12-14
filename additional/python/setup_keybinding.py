@@ -9,6 +9,8 @@ CUSTOM_KEYS_BASENAME_CINNAMON = "/org/cinnamon/desktop/keybindings/custom-keybin
 CUSTOM_KEYS_SCHEMA_CINNAMON = "org.cinnamon.desktop.keybindings.custom-keybinding"
 DUMMY_CUSTOM_ENTRY_CINNAMON = "__dummy__"
 
+KEY_MODIFIER = "<Super>"
+
 def add_linux_assistant_keybinding_cinnamon():
     parent = Gio.Settings.new(CUSTOM_KEYS_PARENT_SCHEMA_CINNAMON)
 
@@ -36,7 +38,7 @@ def add_linux_assistant_keybinding_cinnamon():
     new_schema = Gio.Settings.new_with_path(CUSTOM_KEYS_SCHEMA_CINNAMON, custom_path)
     new_schema.set_string("name", "linux-assistant")
     new_schema.set_string("command", "linux-assistant")
-    new_schema.set_strv("binding", ['<Super>q'])
+    new_schema.set_strv("binding", [f"{KEY_MODIFIER}q"])
     new_schema.sync()
     new_schema.apply()
 
@@ -76,7 +78,7 @@ def add_linux_assistant_keybinding_gnome():
     new_schema = Gio.Settings.new_with_path(CUSTOM_KEYS_SCHEMA_GNOME, custom_path)
     new_schema.set_string("name", "linux-assistant")
     new_schema.set_string("command", "linux-assistant")
-    new_schema.set_string("binding", "<Super>q")
+    new_schema.set_string("binding", f"{KEY_MODIFIER}q")
     new_schema.sync()
     new_schema.apply()
 
@@ -87,9 +89,15 @@ def add_linux_assistant_keybinding_gnome():
     parent.set_strv("custom-keybindings", custom_list)
 
 def add_linux_assistant_keybinding_xfce():
-    jessentials.run_command("xfconf-query -c xfce4-keyboard-shortcuts -p '/commands/custom/<Super>q' -n -t string -s linux-assistant")
+    jessentials.run_command(f"xfconf-query -c xfce4-keyboard-shortcuts -p '/commands/custom/{KEY_MODIFIER}q' -n -t string -s linux-assistant")
 
 def main():
+    global KEY_MODIFIER
+    if jessentials.is_argument_option_given("alt", "a"):
+        KEY_MODIFIER = "<Alt>"
+    else:
+        pass
+    
     if "cinnamon" in os.getenv("XDG_CURRENT_DESKTOP").lower():
         add_linux_assistant_keybinding_cinnamon()
     if "gnome" in os.getenv("XDG_CURRENT_DESKTOP").lower():

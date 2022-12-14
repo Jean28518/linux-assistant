@@ -111,7 +111,14 @@
   "timeToSetupYourComputerDescription": "Configure your linux machine to your needs.",
   "activateHotkey": "Activate hotkey",
   "openLinuxAssistantFaster": "Open Linux Assistant faster.",
-  "openLinuxAssistantFasterDescription": "You could open Linux Assistant with the keys <Super> + <Q>.\nThis is higly recommended to maximize your productivity under linux.",
+  "openLinuxAssistantFasterDescription": "You could open Linux Assistant with the keys {modifier} + <Q>.\nThis is higly recommended to maximize your productivity under linux.",
+  "@openLinuxAssistantFasterDescription": {
+    "placeholders": {
+      "modifier" : {}
+    },
+    "description": "",
+    "type": "text"
+  },
   "yesSetUpHotkey": "Yes, setup hotkey",
   "introduction": "Introduction",
   "theFollowingContentCanBeSearched": "You can search for following content:",
@@ -127,7 +134,14 @@
   "specialFunctionsDescription": "Start the security check or the after installation service and also many other small routines which make your daily linux use easier. These are presented under the search bar in radomized order.",
   "hint": "Hint",
   "youCanOpenThisWindowBySearchingForIntroduction": "You can reopen this site by searching for 'Introduction to Linux-Assistant'.",
-  "youCanOpenLinuxAssistantWithHotkey": "You can always open Linux Assistant with the key combination <Super> + <Q>. If this does not work yet, call 'keyboard shortcut' in the search.",
+  "youCanOpenLinuxAssistantWithHotkey": "You can always open Linux Assistant with the key combination {modifier} + <Q>. If this does not work yet, call 'keyboard shortcut' in the search.",
+  "@youCanOpenLinuxAssistantWithHotkey": {
+    "placeholders": {
+      "modifier" : {}
+    },
+    "description": "",
+    "type": "text"
+  },
   "introductionToLinuxAssistant": "Introduction to Linux-Assistant",
   "introductionToLinuxAssistantDescription": "Presentation of of all possibilites and search entries of Linux-Assistant.",
   "changeBackground": "Change background",
@@ -194,7 +208,14 @@
   "minutes": "minutes",
   "hours": "hours",
   "linuxAssistantKeyboardShortcut": "Linux Assistant keyboard shortcut",
-  "setUpLinuxAssistantKeyboardShortcut": "Set up the keyboard combination <Super> + <Q> to quickly open Linux Assistant from anywhere.",
+  "setUpLinuxAssistantKeyboardShortcut": "Set up the keyboard combination {modifier} + <Q> to quickly open Linux Assistant from anywhere.",
+  "@setUpLinuxAssistantKeyboardShortcut": {
+    "placeholders": {
+      "modifier" : {}
+    },
+    "description": "",
+    "type": "text"
+  },
   "@helloWorld": {
     "placeholders": {},
     "description": "The conventional newborn programmer greeting",

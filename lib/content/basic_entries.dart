@@ -47,8 +47,8 @@ List<ActionEntry> getBasicEntries(BuildContext context) {
     ),
     ActionEntry(
       name: AppLocalizations.of(context)!.linuxAssistantKeyboardShortcut,
-      description:
-          AppLocalizations.of(context)!.setUpLinuxAssistantKeyboardShortcut,
+      description: AppLocalizations.of(context)!
+          .setUpLinuxAssistantKeyboardShortcut(Linux.get_hotkey_modifier()),
       action: "setup_linux_assistant_shortcut",
       iconWidget: const Icon(
         Icons.keyboard,

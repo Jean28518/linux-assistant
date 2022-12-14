@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:linux_assistant/layouts/mintY.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:linux_assistant/services/config_handler.dart';
+import 'package:linux_assistant/services/linux.dart';
 import 'package:linux_assistant/services/main_search_loader.dart';
 
 class GreeterIntroduction extends StatelessWidget {
@@ -79,8 +80,8 @@ class GreeterIntroduction extends StatelessWidget {
         ),
         MintYFeature(
           heading: AppLocalizations.of(context)!.hint,
-          description:
-              AppLocalizations.of(context)!.youCanOpenLinuxAssistantWithHotkey,
+          description: AppLocalizations.of(context)!
+              .youCanOpenLinuxAssistantWithHotkey(Linux.get_hotkey_modifier()),
           icon: Icon(
             Icons.lightbulb,
             size: 64,
