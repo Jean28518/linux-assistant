@@ -1,5 +1,5 @@
 Package: linux-assistant
-Version: 0.1.2
+Version: 0.1.3
 Depends: libkeybinder-3.0-0, wmctrl
 Maintainer: Jean28518
 Architecture: amd64
