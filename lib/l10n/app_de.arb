@@ -207,6 +207,7 @@
   },
   "minutes": "Minuten",
   "hours": "Stunden",
+  "days": "Tage",
   "linuxAssistantKeyboardShortcut": "Linux Assistant Tastatur Kurzbefehl",
   "setUpLinuxAssistantKeyboardShortcut": "Richte die Tastatenkombination {modifier} + <Q> ein um Linux-Assistant von überall aus schnell zu öffnen.",
   "@setUpLinuxAssistantKeyboardShortcut": {

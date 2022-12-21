@@ -9,6 +9,8 @@ output = jessentials.run_command("/usr/bin/uptime", return_output=True, print_ou
 output = output.strip()
 output = re.sub(' +', ' ', output)
 uptime = output.split(" ")[2].replace(",", "")
+if "day" in output:
+    uptime = f"{uptime}days"
 print(f"uptime: {uptime}")
 
 # Get diskspaces

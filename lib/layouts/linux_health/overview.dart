@@ -35,13 +35,17 @@ class LinuxHealthOverview extends StatelessWidget {
             String line = lines[i];
             if (line.startsWith("uptime: ")) {
               uptimeLength = line.replaceAll("uptime: ", "");
-              if (uptimeLength.length < 3) {
-                uptimeUnit = AppLocalizations.of(context)!.minutes;
-              } else {
-                uptimeUnit = AppLocalizations.of(context)!.hours;
-              }
               if (uptimeLength.length > 4) {
                 uptimeWarning = true;
+              }
+
+              if (uptimeLength.length < 3) {
+                uptimeUnit = AppLocalizations.of(context)!.minutes;
+              } else if (line.contains("days")) {
+                uptimeUnit = AppLocalizations.of(context)!.days;
+                uptimeLength = uptimeLength.replaceAll("days", "");
+              } else {
+                uptimeUnit = AppLocalizations.of(context)!.hours;
               }
 
               // Read Diskspaces
