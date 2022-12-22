@@ -94,7 +94,7 @@
   "flatpakIsNotInstalled": "Flatpak isn't installed on your system.",
   "flatpakDescription": "For easy access to many popular apps Flatpak is highly recommended. Flatpak is a new utility for packet management for Linux. It is offering a sandbox environment in which apps can run in isolation of the rest of the system. By binding the 'Flathub' (biggest repository for flatpaks) you get access to over 1800 different Linux apps. As a downside Flatpaks require more diskpace.",
   "skip": "Skip",
-  "settingUpFlatpak": "Setting up fatpak",
+  "settingUpFlatpak": "Setting up Flatpak",
   "officeSelection": "Office Selection",
   "libreOfficeDescription": "Open Source Office Suite from The Document Foundation. Great for the Open Document Format (.odt, .ods, .odp).",
   "onlyOfficeDescription": "Open Source Office Suite. Good for the Microsoft Document Format (.docx, .xls, .ppt).",
