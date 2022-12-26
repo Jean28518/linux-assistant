@@ -592,10 +592,16 @@ class Linux {
       newEnvironment.distribution = DISTROS.UBUNTU;
     } else if (lines[0].toLowerCase().contains("debian")) {
       newEnvironment.distribution = DISTROS.DEBIAN;
+    } else if (lines[0].toLowerCase().contains("arch")) {
+      newEnvironment.distribution = DISTROS.ARCH;
     }
 
     // get version:
-    newEnvironment.version = double.parse(lines[1]);
+    if (lines[0].toLowerCase().contains("arch")) {
+      newEnvironment.version = double.parse("1");
+    } else {
+      newEnvironment.version = double.parse(lines[1]);
+    }
 
     // get desktop:
     if (lines[2].toLowerCase().contains("gnome")) {

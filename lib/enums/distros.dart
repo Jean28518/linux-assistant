@@ -5,6 +5,7 @@ enum DISTROS {
   POPOS,
   MXLINUX,
   ZORINOS,
+  ARCH,
 }
 
 String getNiceStringOfDistrosEnum(var distro) {
@@ -21,6 +22,8 @@ String getNiceStringOfDistrosEnum(var distro) {
       return "MX Linux";
     case DISTROS.ZORINOS:
       return "Zorin OS";
+    case DISTROS.ARCH:
+      return "Arch";
     default:
       return "";
   }
