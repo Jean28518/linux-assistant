@@ -9,7 +9,7 @@ sudo apt install libkeybinder-3.0-0 libkeybinder-3.0-dev # For debian 11, Ubuntu
 sudo apt install wmctrl
 ```
 
-## Build
+## Build for Debian based distros
 ```bash
 # Install keybinder, see requirements
 sudo rm /etc/apt/preferences.d/nosnap.pref # (For Linux Mint)
@@ -30,6 +30,22 @@ cd build/linux/x64/release/bundle/
 bash ./build-deb.sh
 sudo dpkg --install linux-assistant.deb
 
+```
+
+### Build for Arch based distros
+<!--- Move to Wiki --->
+```bash
+# Requirements:
+sudo pacman -S libkeybinder3
+install flutter #(The way what do you want)
+git clone https://github.com/Jean28518/linux-assistant.git
+cd linux-assistant
+
+# Option 1: Option 1 for Debian based distros
+
+# Option 2: Build and install package:
+bash ./build-arch.sh
+cd arch && makepkg -si
 ```
 
 ## Features
