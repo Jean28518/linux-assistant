@@ -25,6 +25,9 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
     MainSearch.unregisterHotkeysForKeyboardUse();
     const Duration timeoutDuration = Duration(seconds: 5);
 
+    ConfigHandler configHandler = ConfigHandler();
+    Future clearOldEntries = configHandler.clearOldDatesOfOpenendEntries();
+
     // prepare Action Entries
     ActionEntryList returnValue = ActionEntryList(entries: []);
     returnValue.entries.addAll(getRecommendations(context));
@@ -54,9 +57,8 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
         Linux.getFoldersOfActionEntries(context, returnValue.entries);
     returnValue.entries.addAll(additionalFolders);
 
-    ConfigHandler configHandler = ConfigHandler();
     await configHandler.setValue("runFirstStartUp", false);
-    await configHandler.clearOldDatesOfOpenendEntries();
+    await clearOldEntries;
 
     return returnValue;
   }

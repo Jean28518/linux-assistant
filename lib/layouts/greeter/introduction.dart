@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:linux_assistant/layouts/mintY.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:linux_assistant/layouts/updater/updater.dart';
 import 'package:linux_assistant/services/config_handler.dart';
 import 'package:linux_assistant/services/linux.dart';
 import 'package:linux_assistant/services/main_search_loader.dart';
@@ -17,7 +18,7 @@ class GreeterIntroduction extends StatelessWidget {
     bool runIntroduction =
         configHandler.getValueUnsafe("runIntroduction", true);
     if (!runIntroduction && !forceOpen) {
-      return MainSearchLoader();
+      return const LinuxAssistantUpdatePage();
     }
     return MintYPage(
       title: AppLocalizations.of(context)!.introduction,
@@ -93,7 +94,7 @@ class GreeterIntroduction extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           MintYButtonNavigate(
-            route: MainSearchLoader(),
+            route: const LinuxAssistantUpdatePage(),
             color: MintY.currentColor,
             text: Text(
               AppLocalizations.of(context)!.letsStart,

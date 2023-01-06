@@ -1007,4 +1007,19 @@ class Linux {
         return "<Super>";
     }
   }
+
+  static bool usesCurrentEnvironmentDebPackages() {
+    switch (currentenvironment.distribution) {
+      case DISTROS.DEBIAN:
+      case DISTROS.MXLINUX:
+      case DISTROS.LINUX_MINT:
+      case DISTROS.POPOS:
+      case DISTROS.ZORINOS:
+      case DISTROS.UBUNTU:
+        return true;
+
+      default:
+        return false;
+    }
+  }
 }

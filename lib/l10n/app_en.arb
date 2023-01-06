@@ -217,6 +217,11 @@
     "description": "",
     "type": "text"
   },
+  "update": "Update",
+  "aNewVersionIsAvailable": "A new version is available!",
+  "doYouWantToUpdateNow": "New features are waiting for you. Do you want to update Linux-Assistant now? This usually takes only a few seconds.",
+  "later": "Later",
+  "updateNow": "Update now",
   "@helloWorld": {
     "placeholders": {},
     "description": "The conventional newborn programmer greeting",

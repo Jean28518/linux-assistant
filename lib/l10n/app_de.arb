@@ -217,6 +217,11 @@
     "description": "",
     "type": "text"
   },
+  "update": "Aktualisierung",
+  "aNewVersionIsAvailable": "Eine neue Version ist verfügbar!",
+  "doYouWantToUpdateNow": "Neue Funktionen warten auf Dich. Möchtest Du Linux-Assistant jetzt aktualisieren? Dies dauert in der Regel nur wenige Sekunden.",
+  "later": "Später",
+  "updateNow": "Aktualisiere jetzt",
   "@helloWorld": {
     "placeholders": {},
     "description": "",

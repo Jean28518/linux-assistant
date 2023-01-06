@@ -13,6 +13,7 @@ import 'package:linux_assistant/layouts/main_screen/action_entry_card.dart';
 import 'package:linux_assistant/layouts/main_screen/disk_space.dart';
 import 'package:linux_assistant/layouts/feedback/feedback_form.dart';
 import 'package:linux_assistant/services/main_search_loader.dart';
+import 'package:linux_assistant/services/updater.dart';
 import 'package:linux_assistant/widgets/memory_status.dart';
 import 'package:linux_assistant/layouts/mintY.dart';
 import 'package:linux_assistant/layouts/main_screen/recommendation_card.dart';
@@ -565,10 +566,8 @@ class _MainSearchState extends State<MainSearch> {
       _hotKeyDebug,
       keyDownHandler: (hotKey) async {
         print("DEBUG");
-        Linux.ensureApplicationInstallation(
-            ["im.riot.Riot", "element-desktop"]);
-        print(Linux.commandQueue);
         // insert here function calls to debug
+        LinuxAssistantUpdater.isNewerVersionAvailable();
       },
     );
   }

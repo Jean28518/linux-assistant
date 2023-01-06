@@ -1,6 +1,6 @@
 Package: linux-assistant
 Version: 0.1.4
-Depends: libkeybinder-3.0-0, wmctrl
+Depends: libkeybinder-3.0-0, wmctrl, wget
 Maintainer: Jean28518
 Architecture: amd64
 Description: Daily Linux Helper with integrated search
