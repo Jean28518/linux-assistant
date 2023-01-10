@@ -1,4 +1,4 @@
-Feature,Debian,Ubuntu,Linux Mint,PopOS,MX Linux,Zorin OS,Gnome,Xfce,Cinnamon,Notes
+Feature,Debian,Ubuntu,Linux Mint,PopOS,MX Linux,Zorin OS,Arch,Gnome,Xfce,Cinnamon,Notes
 Adabtable dark mode,yes,yes,yes,yes,yes,yes,yes *,yes,yes,"*) depends on window theme,not gtk  "
 Hotkey handling,yes *,yes *,yes,yes,yes,yes,yes *,yes,yes,*) only works on wayland with workaround described in #24
 Feedback function,yes,yes,yes,yes,yes,yes,yes,yes,yes,
