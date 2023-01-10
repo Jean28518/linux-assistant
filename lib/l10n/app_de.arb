@@ -31,7 +31,7 @@
   "homeFolderRightsNotOkay": "Dein persönlicher Ordner ist nicht sicher. Andere Benutzer könnten deine Dateien sehen.",
   "networkSecurity": "Netzwerk-Sicherheit",
   "noFirewallRecognized": "Es wurde keine Firewall auf Deinem System gefunden. Eine Firewall ist für Rechner mit Zugriff vom Internet empfohlen.",
-  "firewallIsRunning": "Deine Firewall ist aktiv. Guter Job!",
+  "firewallIsRunning": "Deine Firewall ist aktiv. Gute Arbeit!",
   "firewallIsInactive": "Deine Firewall ist inaktiv. Eine Firewall ist für Rechner mit Zugriff vom Internet empfohlen.",
   "sshFoundOnYourComputer": "Ein SSH-Server wurde auf Deinem Rechner gefunden. Dein Computer könnte von außen erreichbar sein. Bitte deinstalliere ssh-server, wenn Du diesen nicht benötigst. ",
   "noFail2BanFound": "Es wurde leider keine fail2ban Instanz auf Deinem Rechner gefunden. Mit diesem Dienst ist Dein Rechner sicherer vor SSH-Brute-Force Attacken.",
