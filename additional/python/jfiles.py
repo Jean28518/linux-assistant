@@ -41,7 +41,7 @@ def get_all_lines_from_file(file_path):
     return_array = []
     i = 1
     for line in text.readlines():
-        return_array.append(line)
+        return_array.append(line.replace("\n", ""))
     text.close()
     return return_array
 
@@ -168,7 +168,6 @@ def write_lines_to_file(file_path, lines = []):
     if does_file_exist(file_path):
         os.remove(file_path)
     for line in lines:
-        line = line.replace("\n", "")
         append_line_to_file(file_path, line)
 
 

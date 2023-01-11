@@ -1,6 +1,7 @@
 from gi.repository import Gio
 import jessentials
-import json
+import jfiles
+import jfolders
 import os
 
 # Cinnamon ----------------------------------------------------------------------------------
@@ -88,8 +89,67 @@ def add_linux_assistant_keybinding_gnome():
     custom_list.reverse()
     parent.set_strv("custom-keybindings", custom_list)
 
+# Xfce ----------------------------------------------------------------------------------
+
 def add_linux_assistant_keybinding_xfce():
     jessentials.run_command(f"xfconf-query -c xfce4-keyboard-shortcuts -p '/commands/custom/{KEY_MODIFIER}q' -n -t string -s linux-assistant")
+
+# KDE ----------------------------------------------------------------------------------
+
+def add_linux_assistant_keybinding_kde():
+    lines = jfiles.get_all_lines_from_file(jfolders.replace_tilde_to_home("~/.config/khotkeysrc"))
+
+    newDataNumber = -1
+
+    khotkeysrc_text = ""
+
+    for i in range(len(lines)):
+        if lines[i].strip() == "[Data]":
+            newDataNumber = int(lines[i+1].replace("DataCount=", "")) + 1
+            lines[i+1] = f"DataCount={newDataNumber}"
+
+        if lines[i].strip() == "[General]":
+            lines.insert(i, f"""[Data_{newDataNumber}]
+Comment=Open linux-assistant
+Enabled=true
+Name=linux-assistant
+Type=SIMPLE_ACTION_DATA
+
+[Data_{newDataNumber}Actions]
+ActionsCount=1
+
+[Data_{newDataNumber}Actions0]
+CommandURL=linux-assistant
+Type=COMMAND_URL
+
+[Data_{newDataNumber}Conditions]
+Comment=
+ConditionsCount=0
+
+[Data_{newDataNumber}Triggers]
+Comment=Simple_action
+TriggersCount=1
+
+[Data_{newDataNumber}Triggers0]
+Key=Alt+Q
+Type=SHORTCUT
+Uuid={{c3daee14-f3bd-49db-bb5f-0a31a4b7fa73}}
+""")
+            break     
+
+    jfiles.write_lines_to_file(jfolders.replace_tilde_to_home("~/.config/khotkeysrc"), lines)
+
+
+    lines = jfiles.get_all_lines_from_file(jfolders.replace_tilde_to_home("~/.config/kglobalshortcutsrc"))
+    for i in range(len(lines)):
+        if (lines[i].startswith("[khotkeys]")):
+            lines.insert(i+2, "{c3daee14-f3bd-49db-bb5f-0a31a4b7fa73}=Alt+Q,none,linux-assistant")
+            break
+    
+    jfiles.write_lines_to_file(jfolders.replace_tilde_to_home("~/.config/kglobalshortcutsrc"), lines)
+
+  
+
 
 def main():
     global KEY_MODIFIER
@@ -104,6 +164,8 @@ def main():
         add_linux_assistant_keybinding_gnome()
     if "xfce" in os.getenv("XDG_CURRENT_DESKTOP").lower():
         add_linux_assistant_keybinding_xfce()
+    if "kde" in os.getenv("XDG_CURRENT_DESKTOP").lower():
+        add_linux_assistant_keybinding_kde()
 
 if __name__ == "__main__":
     main()
