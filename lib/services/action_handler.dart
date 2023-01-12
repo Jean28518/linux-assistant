@@ -128,8 +128,7 @@ class ActionHandler {
       } else {
         String filepath = actionEntry.action.replaceFirst("openapp:", "");
         String file = filepath.split("/").last;
-        String filename = file.replaceAll(".desktop", "");
-        Linux.runCommand("gtk-launch " + filename);
+        Linux.runCommand("/usr/bin/gtk-launch " + file);
       }
 
       callback();
