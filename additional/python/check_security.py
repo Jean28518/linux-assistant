@@ -2,6 +2,7 @@ import os
 import jessentials
 import jfolders
 import jfiles
+import apt
 
 
 def get_additional_sources():
@@ -48,10 +49,12 @@ def get_additional_sources():
 
 def get_available_updates():
     jessentials.run_command("apt update", False, False, {'DEBIAN_FRONTEND': 'noninteractive'})
-    lines = jessentials.run_command("apt list --upgradable", False, True, {'DEBIAN_FRONTEND': 'noninteractive'})
-    for i in range(1, len(lines)):
-        line = lines[i].strip().split("/")[0]
-        print(f"upgradeablepackage: {line}")
+    cache = apt.Cache()
+    cache.upgrade(True) # dist-upgrade
+    changes = cache.get_changes()
+    for pkg in changes:
+        if (pkg.is_installed and pkg.marked_upgrade and pkg.candidate.version != pkg.installed.version):
+           print(f"upgradeablepackage: {pkg}")
 
 def check_home_folder_rights(home_folder):
     # Doesn't work because script is run as root:
