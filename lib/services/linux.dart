@@ -477,7 +477,7 @@ class Linux {
 
     // Get Bookmarks:
     if (currentenvironment.desktop != DESKTOPS.KDE) {
-      String home = await getHomeDirectory();
+      String home = getHomeDirectory();
       String bookmarksLocation = home + "/.config/gtk-3.0/bookmarks";
       String bookmarksString =
           await runCommandAndGetStdout("cat " + bookmarksLocation);
@@ -496,6 +496,17 @@ class Linux {
           }
         }
       }
+    } else if (currentenvironment.desktop == DESKTOPS.KDE) {
+      List<String> lines =
+          await File("${getHomeDirectory()}/.local/share/user-places.xbel")
+              .readAsLines();
+      for (String line in lines) {
+        if (line.contains("<bookmark href=\"file://")) {
+          folders.add(line
+              .replaceAll("<bookmark href=\"file://", "")
+              .replaceAll("\">", ""));
+        }
+      }
     }
 
     List<ActionEntry> actionEntries = [];
@@ -507,6 +518,10 @@ class Linux {
       String folderName = elements[elements.length - 1];
       if (folderName.trim() == "") {
         folderName = elements[elements.length - 2];
+      }
+      folder = folder.trim();
+      if (!folder.endsWith("/")) {
+        folder = "$folder/";
       }
       ActionEntry entry = ActionEntry(
           name: folderName,
@@ -940,6 +955,10 @@ class Linux {
       List<String> elements = path.split("/");
       if (elements.length > 1) {
         String name = elements[elements.length - 2];
+        path = path.trim();
+        if (!path.endsWith("/")) {
+          path = "$path/";
+        }
         ActionEntry newEntry = ActionEntry(
             name: name,
             description: AppLocalizations.of(context)!.openX + " $path",
@@ -984,7 +1003,11 @@ class Linux {
         String output = await runCommandAndGetStdout(
             "xfconf-query -c xfwm4 -p /general/theme");
         return output.toLowerCase().contains("dark");
-
+      case DESKTOPS.KDE:
+        String file = await File(
+                "${Linux.getHomeDirectory()}/.config/kdedefaults/kdeglobals")
+            .readAsString();
+        return file.toLowerCase().contains("dark");
       default:
         return false;
     }
@@ -999,6 +1022,9 @@ class Linux {
   }
 
   static String get_hotkey_modifier() {
+    if (currentenvironment.desktop == DESKTOPS.KDE) {
+      return "<Alt>";
+    }
     switch (currentenvironment.distribution) {
       case DISTROS.POPOS:
       case DISTROS.ZORINOS:

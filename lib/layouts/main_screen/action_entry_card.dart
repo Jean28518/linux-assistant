@@ -49,7 +49,7 @@ class _ActionEntryCardState extends State<ActionEntryCard> {
           subtitle: Text(widget.actionEntry.description),
           // For debugging search index:
           // subtitle: Text(
-          //     "${widget.actionEntry.description} | ${widget.actionEntry.priority} | ${widget.actionEntry.tmpPriority}"),
+          //     "${widget.actionEntry.description} | ${widget.actionEntry.priority} | ${widget.actionEntry.tmpPriority} | ${widget.actionEntry.action} "),
           leading: icon,
         ),
         onTap: () {

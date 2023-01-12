@@ -95,6 +95,7 @@ def add_linux_assistant_keybinding_xfce():
     jessentials.run_command(f"xfconf-query -c xfce4-keyboard-shortcuts -p '/commands/custom/{KEY_MODIFIER}q' -n -t string -s linux-assistant")
 
 # KDE ----------------------------------------------------------------------------------
+# Keymodifier is always <Alt> here.
 
 def add_linux_assistant_keybinding_kde():
     lines = jfiles.get_all_lines_from_file(jfolders.replace_tilde_to_home("~/.config/khotkeysrc"))

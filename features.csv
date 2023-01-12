@@ -1,11 +1,11 @@
 Feature,Debian,Ubuntu,Linux Mint,PopOS,MX Linux,Zorin OS,Gnome,Xfce,Cinnamon,KDE,Notes
-Adabtable dark mode,yes,yes,yes,yes,yes,yes,yes *,yes,yes,no,"*) depends on window theme,not gtk  "
-Hotkey handling,yes *,yes *,yes,yes,yes,yes,yes *,yes,yes,wip,*) only works on wayland with workaround described in #24
+Adabtable dark mode,yes,yes,yes,yes,yes,yes,yes *,yes,yes,yes,"*) depends on window theme,not gtk  "
+Hotkey handling,yes *,yes *,yes,yes,yes,yes,yes *,yes,yes,yes,*) only works on wayland with workaround described in #24
 Feedback function,yes,yes,yes,yes,yes,yes,-,-,-,-,
 Automatic recognition of environment,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,
 App search,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,
 Folder structure search,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,
-Bookmark/Places folder search,-,-,-,-,-,-,yes,yes,yes,no,
+Bookmark/Places folder search,-,-,-,-,-,-,yes,yes,yes,yes,
 Recent file search,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,
 Favorite file search,-,-,-,-,-,-,no,no,yes,no,
 Browser bookmark search,yes,?,yes,yes,yes,yes,yes,yes,yes,yes," Currently works with firefox,chromium and chrome; needs to checked with firefox on snap  "
