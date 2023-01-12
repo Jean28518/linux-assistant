@@ -62,7 +62,7 @@ def check_home_folder_rights(home_folder):
         print(f"homefoldernotsecure: {lines[1]}")
 
 def check_server_access():
-    # Check for Xrdp
+    # Check for firewall
     if (jfiles.does_file_exist("/usr/sbin/ufw")):
         lines = jessentials.run_command("/usr/sbin/iptables -L", False, True)
         ufwUserFound = False
@@ -75,6 +75,7 @@ def check_server_access():
     else:
         print("nofirewall")
     
+    # Check for Xrdp
     lines = jessentials.run_command("/usr/bin/systemctl status xrdp", False, True)
     if (len(lines) > 1):
         print("xrdprunning")
