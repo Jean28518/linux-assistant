@@ -1,5 +1,5 @@
 # linux-assistant
-Distribution indenpendent tool for everything, a linux desktop user needs. Written in flutter
+A linux application which is a daily linux helper with powerful integrated search, routines checks and admninistrative tasks. The Project is built with flutter and python.
 
 ## Requirements
 ```bash
@@ -33,8 +33,11 @@ sudo dpkg --install linux-assistant.deb
 ```
 
 ## Features
-Check the `features.csv` file for detailed features.
+https://github.com/Jean28518/linux-assistant/blob/main/features.csv
 
 ## Current Languages:
 - English
 - German
+
+## Mission:
+https://github.com/Jean28518/linux-assistant/blob/main/MANIFEST.md
