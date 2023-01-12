@@ -599,6 +599,8 @@ class Linux {
       newEnvironment.distribution = DISTROS.LINUX_MINT;
     } else if (lines[0].toLowerCase().contains("pop!_os")) {
       newEnvironment.distribution = DISTROS.POPOS;
+    } else if (lines[0].toLowerCase().contains("kde neon")) {
+      newEnvironment.distribution = DISTROS.KDENEON;
     } else if (lines[0].toLowerCase().contains("mxlinux")) {
       newEnvironment.distribution = DISTROS.MXLINUX;
     } else if (lines[0].toLowerCase().contains("zorin")) {
@@ -724,6 +726,7 @@ class Linux {
       case DISTROS.UBUNTU:
       case DISTROS.POPOS:
       case DISTROS.ZORINOS:
+      case DISTROS.KDENEON:
         commandQueue.add(LinuxCommand(
             userId: 0,
             command:
@@ -1041,6 +1044,7 @@ class Linux {
       case DISTROS.LINUX_MINT:
       case DISTROS.POPOS:
       case DISTROS.ZORINOS:
+      case DISTROS.KDENEON:
       case DISTROS.UBUNTU:
         return true;
 

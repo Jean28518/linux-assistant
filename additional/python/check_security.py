@@ -20,6 +20,12 @@ def get_additional_sources():
         if "zorinos-ubuntu-" in entry: # ZorinOS
             continue
         if "system.sources" in entry: # Pop!_OS
+            continue        
+        if "neon.list" in entry: # KDE neon
+            continue        
+        if "org.kde.neon.net.launchpad.ppa.mozillateam.list" in entry: # KDE neon
+            continue        
+        if "preinstalled-pool.list" in entry: # KDE neon
             continue
         lines = jfiles.get_all_lines_from_file(entry)
 
