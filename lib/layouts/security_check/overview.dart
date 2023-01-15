@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
+import 'package:linux_assistant/enums/distros.dart';
 import 'package:linux_assistant/layouts/mintY.dart';
 import 'package:linux_assistant/services/linux.dart';
 import 'package:linux_assistant/services/main_search_loader.dart';
@@ -16,11 +17,20 @@ class SecurityCheckOverview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future<String> checkerOutputString = Linux.runPythonScript(
-        "check_security.py",
-        root: true,
-        arguments: ["--home=${Platform.environment['HOME']}"],
-        getErrorMessages: true);
+    Future<String> checkerOutputString;
+
+    if (Linux.currentenvironment.distribution == DISTROS.OPENSUSE) {
+      checkerOutputString = Linux.runPythonScript("check_security_opensuse.py",
+          root: true,
+          arguments: ["--home=${Platform.environment['HOME']}"],
+          getErrorMessages: true);
+    } else {
+      checkerOutputString = Linux.runPythonScript("check_security.py",
+          root: true,
+          arguments: ["--home=${Platform.environment['HOME']}"],
+          getErrorMessages: true);
+    }
+
     return FutureBuilder<String>(
       future: checkerOutputString,
       builder: (context, snapshot) {
@@ -73,8 +83,8 @@ class SecurityCheckOverview extends StatelessWidget {
           // Then if errors are recongized, then set the specific vars to "unsafe":
           for (String line in lines) {
             if (line.startsWith("additionalsource:")) {
-              additionalSources.add(
-                  line.replaceFirst("additionalsource: ", "").split(" ")[0]);
+              additionalSources
+                  .add(line.replaceFirst("additionalsource: ", ""));
             }
             if (line.startsWith("upgradeablepackage:")) {
               availableUpdatePackages++;

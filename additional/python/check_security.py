@@ -3,6 +3,8 @@ import jessentials
 import jfolders
 import jfiles
 import apt
+from check_home_folder_rights import check_home_folder_rights
+
 
 
 def get_additional_sources():
@@ -45,7 +47,7 @@ def get_additional_sources():
                 
                 # Only return the 3 important parts of the line
                 length = len(sections)
-                print(f"additionalsource: {sections[length-3]} {sections[length-2]} {sections[length-1]}")
+                print(f"additionalsource: {sections[length-3]}")
 
 def get_available_updates():
     jessentials.run_command("apt update", False, False, {'DEBIAN_FRONTEND': 'noninteractive'})
@@ -55,14 +57,6 @@ def get_available_updates():
     for pkg in changes:
         if (pkg.is_installed and pkg.marked_upgrade and pkg.candidate.version != pkg.installed.version):
            print(f"upgradeablepackage: {pkg}")
-
-def check_home_folder_rights(home_folder):
-    # Doesn't work because script is run as root:
-    # home_folder = jessentials.get_environment_variable("HOME")
-    
-    lines = jessentials.run_command(f"ls -al {home_folder}", False, True)
-    if lines[1][7] != "-" or lines[1][8] != "-" or lines[1][9] != "-":
-        print(f"homefoldernotsecure: {lines[1]}")
 
 def check_server_access():
     # Check for firewall

@@ -1,21 +1,23 @@
-Feature,Debian,Ubuntu,Linux Mint,PopOS,MX Linux,Zorin OS,KDE neon,Gnome,Xfce,Cinnamon,KDE,Notes
-Adabtable dark mode,yes,yes,yes,yes,yes,yes,yes,yes *,yes,yes,yes,"*) depends on window theme,not gtk  "
-Hotkey handling,yes *,yes *,yes,yes,yes,yes,yes,yes *,yes,yes,yes,*) only works on wayland with workaround described in #24
-Feedback function,yes,yes,yes,yes,yes,yes,yes,-,-,-,-,
-Automatic recognition of environment,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,
-App search,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,
-Folder structure search,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,
-Bookmark/Places folder search,-,-,-,-,-,-,-,yes,yes,yes,yes,
-Recent file search,-,-,-,-,-,-,-,yes,yes,yes,yes,
-Favorite file search,-,-,-,-,-,-,-,no,no,yes,no,
-Browser bookmark search,yes,?,yes,yes,yes,yes,yes,yes,yes,yes,yes," Currently works with firefox,chromium and chrome; needs to checked with firefox on snap  "
-Security check,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,
-After installation routine,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,
-Warpinator,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,Only works if flatpak is installed/available in the sources
-Nvidia installation,(yes),yes,yes,(yes),(yes),(yes),(yes),-,-,-,-,
-Multimedia codecs installation,yes,yes,yes,yes,yes,yes,yes,-,-,-,-,
-Timeshift setup,yes,yes,yes,yes,yes,yes *,yes,-,-,-,-,*) When you start timeshift the welcome dialog with config is started. But the timeshift.json is configured successfully??
-Automatic update setup,yes,yes,yes,yes,yes,yes,yes,-,-,-,-,integrates on Linux Mint with mintupdate
-Search and installation of apt packages,yes,yes,yes,yes,yes,yes,yes,-,-,-,-,
-General integration of flatpak,yes,yes,yes,yes,yes,yes,yes,-,-,-,-,
-General integration of snapd,yes,yes,yes,yes,yes,yes,yes,-,-,-,-,
+Feature,Debian,Ubuntu,Linux Mint,PopOS,MX Linux,Zorin OS,KDE neon,openSUSE,Gnome,Xfce,Cinnamon,KDE,Notes
+Adabtable dark mode,yes,yes,yes,yes,yes,yes,yes,yes,yes *,yes,yes,yes,"*) depends on window theme,not gtk  "
+Hotkey handling,yes *,yes *,yes,yes,yes,yes,yes,yes,yes *,yes,yes,yes,*) only works on wayland with workaround described in #24
+Feedback function,yes,yes,yes,yes,yes,yes,yes,yes,-,-,-,-,
+Automatic recognition of environment,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,
+App search,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,
+Folder structure search,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,
+Bookmark/Places folder search,-,-,-,-,-,-,-,-,yes,yes,yes,yes,
+Recent file search,-,-,-,-,-,-,-,-,yes,yes,yes,yes,
+Favorite file search,-,-,-,-,-,-,-,-,no,no,yes,no,
+Browser bookmark search,yes,?,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes," Currently works with firefox,chromium and chrome; needs to checked with firefox on snap  "
+Security check,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,
+Health check,yes,yes,yes,yes,yes,yes,yes,yes,,,,,
+After installation routine,yes,yes,yes,yes,yes,yes,yes,,yes,yes,yes,yes,
+Warpinator,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,Only works if flatpak is installed/available in the sources
+Nvidia installation,(yes),yes,yes,(yes),(yes),(yes),(yes),,-,-,-,-,
+Multimedia codecs installation,yes,yes,yes,yes,yes,yes,yes,yes*,-,-,-,-,To be tested!!!
+Timeshift setup,yes,yes,yes,yes,yes,yes *,yes,,-,-,-,-,*) When you start timeshift the welcome dialog with config is started. But the timeshift.json is configured successfully??
+Automatic update setup,yes,yes,yes,yes,yes,yes,yes,,-,-,-,-,integrates on Linux Mint with mintupdate
+Search and installation of system packages,yes,yes,yes,yes,yes,yes,yes,,-,-,-,-,
+General integration of flatpak,yes,yes,yes,yes,yes,yes,yes,yes,-,-,-,-,
+General integration of snapd,yes,yes,yes,yes,yes,yes,yes,yes,-,-,-,-,
+Recognition of drive space utilization,yes,yes,yes,yes,yes,yes,yes,yes,,,,,

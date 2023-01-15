@@ -30,6 +30,8 @@ class IconLoader {
       ]);
     }
 
+    iconPath = iconPath.trim();
+
     if (iconPath.contains("not found")) {
       if (cache.containsKey("!default!-$iconSize")) {
         cache[cacheKeyword] = cache['!default!-$iconSize']!;
@@ -44,13 +46,19 @@ class IconLoader {
       }
       return cache[cacheKeyword]!;
     }
-
-    File file = await File(iconPath.replaceAll("\n", ""));
+    File file = File(iconPath);
     if (iconPath.contains(".svg")) {
       Image image = Image(
           width: iconSize,
           height: iconSize,
-          image: Svg(iconPath.replaceAll("\n", "")));
+          image: Svg(iconPath),
+          errorBuilder: (context, error, stackTrace) {
+            print("Failed to load $iconPath: ${error.toString()}");
+            return Icon(
+              Icons.settings,
+              size: iconSize,
+            );
+          });
       cache[cacheKeyword] = image;
       return image;
     } else {

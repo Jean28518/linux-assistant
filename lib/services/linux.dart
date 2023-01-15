@@ -237,7 +237,7 @@ class Linux {
             LinuxCommand(
               command:
                   "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.FLATPAK)} install $repo $appCode --system -y --noninteractive",
-              userId: currentenvironment.currentUserId,
+              userId: 0,
             ),
           );
           return;
@@ -599,6 +599,8 @@ class Linux {
       newEnvironment.distribution = DISTROS.LINUX_MINT;
     } else if (lines[0].toLowerCase().contains("pop!_os")) {
       newEnvironment.distribution = DISTROS.POPOS;
+    } else if (lines[0].toLowerCase().contains("opensuse")) {
+      newEnvironment.distribution = DISTROS.OPENSUSE;
     } else if (lines[0].toLowerCase().contains("kde neon")) {
       newEnvironment.distribution = DISTROS.KDENEON;
     } else if (lines[0].toLowerCase().contains("mxlinux")) {
@@ -733,7 +735,35 @@ class Linux {
                 "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.APT)} install ubuntu-restricted-extras -y",
             environment: {"DEBIAN_FRONTEND": "noninteractive"}));
         break;
-
+      case DISTROS.OPENSUSE:
+        commandQueue.add(LinuxCommand(
+          userId: 0,
+          command:
+              "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.ZYPPER)} --non-interactive install opi",
+        ));
+        switch (currentenvironment.desktop) {
+          case DESKTOPS.GNOME:
+            commandQueue.add(LinuxCommand(
+              userId: 0,
+              command: "konsole -e 'opi codecs'",
+            ));
+            break;
+          case DESKTOPS.XFCE:
+            commandQueue.add(LinuxCommand(
+              userId: 0,
+              command: "xfce4-terminal -e 'opi codecs'",
+            ));
+            break;
+          case DESKTOPS.GNOME:
+            commandQueue.add(LinuxCommand(
+              userId: 0,
+              command: "gnome-terminal -e 'opi codecs'",
+            ));
+            break;
+          default:
+            break;
+        }
+        break;
       default:
     }
   }

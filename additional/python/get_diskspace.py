@@ -2,6 +2,7 @@ import jessentials
 
 def main():
     lines = jessentials.run_command("df -h", False, True) 
+    already_printed_drives = []
     for line in lines:
         if line.startswith("df:"):
             continue
@@ -26,7 +27,13 @@ def main():
         if values[1].endswith("M"):
             continue
         
-        print("%s\t%s\t%s\t%s\t%s\t%s" % (values[0], values[1], values[2], values[3], values[4], values[5], ))
+        # For btrfs: Hide volumes
+        if (not values[0] in already_printed_drives):
+            print("%s\t%s\t%s\t%s\t%s\t%s" % (values[0], values[1], values[2], values[3], values[4], values[5], ))
+            already_printed_drives.append(values[0])
+        
+
+        
 
 
 if __name__ == '__main__':

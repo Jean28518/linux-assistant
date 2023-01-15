@@ -24,7 +24,7 @@ class IsYourEnvironmentCorrectView extends StatelessWidget {
           height: 16,
         ),
         Text(
-          "${AppLocalizations.of(context)!.distribution}: ${getNiceStringOfDistrosEnum(Linux.currentenvironment.distribution)} ${Linux.currentenvironment.version}\n${AppLocalizations.of(context)!.desktop}: ${getNiceStringOfDesktopsEnum(Linux.currentenvironment.desktop)}\n${AppLocalizations.of(context)!.language}: ${Linux.currentenvironment.language}",
+          "${AppLocalizations.of(context)!.distribution}: ${getNiceStringOfDistrosEnum(Linux.currentenvironment.distribution)} \n${AppLocalizations.of(context)!.desktop}: ${getNiceStringOfDesktopsEnum(Linux.currentenvironment.desktop)}\n${AppLocalizations.of(context)!.language}: ${Linux.currentenvironment.language}",
           style: Theme.of(context).textTheme.headline3,
           textAlign: TextAlign.center,
         ),

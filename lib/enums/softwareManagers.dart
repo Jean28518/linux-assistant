@@ -2,6 +2,7 @@ enum SOFTWARE_MANAGERS {
   FLATPAK,
   SNAP,
   APT,
+  ZYPPER,
 }
 
 String getNiceStringOfSoftwareManagerEnum(SOFTWARE_MANAGERS input) {
@@ -12,6 +13,8 @@ String getNiceStringOfSoftwareManagerEnum(SOFTWARE_MANAGERS input) {
       return "Snap";
     case SOFTWARE_MANAGERS.APT:
       return "APT";
+    case SOFTWARE_MANAGERS.ZYPPER:
+      return "Zypper";
     default:
       return "";
   }

@@ -88,6 +88,9 @@ class MyApp extends StatelessWidget {
       case DISTROS.KDENEON:
         MintY.currentColor = const Color.fromARGB(255, 35, 104, 150);
         break;
+      case DISTROS.OPENSUSE:
+        MintY.currentColor = const Color.fromARGB(255, 115, 186, 37);
+        break;
       default:
         MintY.currentColor = Colors.blue;
     }

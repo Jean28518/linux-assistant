@@ -56,43 +56,43 @@ class _EnvironmentSelectionViewState extends State<EnvironmentSelectionView> {
           SizedBox(
             height: 32,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "${AppLocalizations.of(context)!.version}: ",
-                style: Theme.of(context).textTheme.headline1,
-              ),
-              SizedBox(
-                width: 16,
-              ),
-              Container(
-                width: 150,
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: environment.version.toString(),
-                    hintStyle: TextStyle(fontSize: 24),
-                  ),
-                  autofocus: true,
-                  style: TextStyle(fontSize: 24),
-                  onChanged: (value) {
-                    if (value.isNotEmpty) {
-                      if (double.tryParse(value) != null) {
-                        environment.version = double.parse(value);
-                        configHandler.setValue("version", environment.version);
-                      }
-                    } else {
-                      environment.version = oldEnvironment.version;
-                    }
-                  },
-                ),
-              )
-            ],
-          ),
-          SizedBox(
-            height: 32,
-          ),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: [
+          //     Text(
+          //       "${AppLocalizations.of(context)!.version}: ",
+          //       style: Theme.of(context).textTheme.headline1,
+          //     ),
+          //     SizedBox(
+          //       width: 16,
+          //     ),
+          //     Container(
+          //       width: 150,
+          //       child: TextField(
+          //         decoration: InputDecoration(
+          //           border: OutlineInputBorder(),
+          //           hintText: environment.version.toString(),
+          //           hintStyle: TextStyle(fontSize: 24),
+          //         ),
+          //         autofocus: true,
+          //         style: TextStyle(fontSize: 24),
+          //         onChanged: (value) {
+          //           if (value.isNotEmpty) {
+          //             if (double.tryParse(value) != null) {
+          //               environment.version = double.parse(value);
+          //               configHandler.setValue("version", environment.version);
+          //             }
+          //           } else {
+          //             environment.version = oldEnvironment.version;
+          //           }
+          //         },
+          //       ),
+          //     )
+          //   ],
+          // ),
+          // SizedBox(
+          //   height: 32,
+          // ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
