@@ -459,6 +459,14 @@ class _MainSearchState extends State<MainSearch> {
 
       heavyEntries.addAll(pckgs);
     }
+    // Search through zypper
+    else if (Linux.currentenvironment.installedSoftwareManagers
+        .contains(SOFTWARE_MANAGERS.ZYPPER)) {
+      List<ActionEntry> pckgs =
+          await Linux.getInstallableZypperPackagesForKeyword(keyword);
+
+      heavyEntries.addAll(pckgs);
+    }
 
     setState(() {
       _foundEntries.addAll(heavyEntries);

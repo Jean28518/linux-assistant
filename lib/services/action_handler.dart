@@ -10,6 +10,7 @@ import 'package:linux_assistant/layouts/main_screen/main_search.dart';
 import 'package:linux_assistant/layouts/run_command_queue.dart';
 import 'package:linux_assistant/layouts/security_check/overview.dart';
 import 'package:linux_assistant/models/action_entry.dart';
+import 'package:linux_assistant/models/linux_command.dart';
 import 'package:linux_assistant/services/config_handler.dart';
 import 'package:linux_assistant/services/linux.dart';
 import 'package:linux_assistant/services/main_search_loader.dart';
@@ -115,6 +116,23 @@ class ActionHandler {
         MaterialPageRoute(
             builder: (context) => RunCommandQueue(
                   title: "APT",
+                  message: "Your package will be installed in a few moments...",
+                  route: MainSearchLoader(),
+                )),
+      );
+    }
+
+    if (actionEntry.action.startsWith("zypper-install:")) {
+      String pkg = actionEntry.action.replaceFirst("zypper-install:", "");
+      Linux.commandQueue.add(LinuxCommand(
+          userId: 0,
+          command:
+              "${Linux.getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.ZYPPER)} --non-interactive install $pkg"));
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => RunCommandQueue(
+                  title: "Zypper",
                   message: "Your package will be installed in a few moments...",
                   route: MainSearchLoader(),
                 )),

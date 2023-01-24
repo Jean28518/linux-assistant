@@ -11,13 +11,17 @@ Favorite file search,-,-,-,-,-,-,-,-,no,no,yes,no,
 Browser bookmark search,yes,?,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes," Currently works with firefox,chromium and chrome; needs to checked with firefox on snap  "
 Security check,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,
 Health check,yes,yes,yes,yes,yes,yes,yes,yes,,,,,
-After installation routine,yes,yes,yes,yes,yes,yes,yes,,yes,yes,yes,yes,
+After installation routine,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,
 Warpinator,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,Only works if flatpak is installed/available in the sources
-Nvidia installation,(yes),yes,yes,(yes),(yes),(yes),(yes),,-,-,-,-,
-Multimedia codecs installation,yes,yes,yes,yes,yes,yes,yes,yes*,-,-,-,-,To be tested!!!
-Timeshift setup,yes,yes,yes,yes,yes,yes *,yes,,-,-,-,-,*) When you start timeshift the welcome dialog with config is started. But the timeshift.json is configured successfully??
-Automatic update setup,yes,yes,yes,yes,yes,yes,yes,,-,-,-,-,integrates on Linux Mint with mintupdate
-Search and installation of system packages,yes,yes,yes,yes,yes,yes,yes,,-,-,-,-,
+Nvidia installation,(yes),yes,yes,(yes),(yes),(yes),(yes),no,-,-,-,-,
+Multimedia codecs installation,yes,yes,yes,yes,yes,yes,yes,yes,-,-,-,-,
+Timeshift setup,yes,yes,yes,yes,yes,yes *,yes,no,-,-,-,-,*) When you start timeshift the welcome dialog with config is started. But the timeshift.json is configured successfully??
+Automatic update setup,yes,yes,yes,yes,yes,yes,yes,yes,-,-,-,-,integrates on Linux Mint with mintupdate
+Update all packages since installation,yes,yes,yes,yes,yes,yes,yes,yes,-,-,-,-,
+Search and installation of system packages,yes,yes,yes,yes,yes,yes,yes,yes,-,-,-,-,
+General integration of system package manager,yes,yes,yes,yes,yes,yes,yes,yes,-,-,-,-,
 General integration of flatpak,yes,yes,yes,yes,yes,yes,yes,yes,-,-,-,-,
 General integration of snapd,yes,yes,yes,yes,yes,yes,yes,yes,-,-,-,-,
 Recognition of drive space utilization,yes,yes,yes,yes,yes,yes,yes,yes,,,,,
+Change user passwort dialog,-,-,-,-,yes,-,no,-,yes,yes,yes,no,
+open system information,-,-,-,-,yes,-,no,-,yes,yes,yes,no,

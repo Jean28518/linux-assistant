@@ -31,13 +31,9 @@ def get_additional_sources():
 def get_available_updates():
     jessentials.run_command("zypper --non-interactive refresh", False, True, {'LC_ALL': 'C'})
     lines = jessentials.run_command("zypper --non-interactive list-updates", False, True, {'LC_ALL': 'C'})
-    if len(lines) > 3:
-        for i in range(lines-3):
+    if len(lines) > 4:
+        for i in range(len(lines)-4):
             print(f"upgradeablepackage: (to be implemented)")
-
-    for line in lines:
-        if (False):
-            print(f"upgradeablepackage: {pkg}")
 
 def check_server_access():
     # Check for firewall

@@ -224,6 +224,24 @@ class Linux {
           return;
         }
 
+        if (softwareManager == SOFTWARE_MANAGERS.ZYPPER) {
+          // Check, if package is available:
+          bool available = await isZypperPackageAvailable(appCode);
+          if (!available) {
+            continue;
+          }
+
+          commandQueue.add(
+            LinuxCommand(
+              command:
+                  "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.ZYPPER)} --non-interactive install $appCode",
+              userId: 0,
+              environment: {},
+            ),
+          );
+          return;
+        }
+
         if (softwareManager == SOFTWARE_MANAGERS.FLATPAK) {
           print("!228");
           // Check, if package is available:
@@ -275,8 +293,23 @@ class Linux {
   }
 
   static Future<bool> isSpecificDebPackageInstalled(appCode) async {
+    if (!currentenvironment.installedSoftwareManagers
+        .contains(SOFTWARE_MANAGERS.APT)) {
+      return false;
+    }
     String output = await runCommandAndGetStdout("/usr/bin/dpkg -l $appCode");
     return output.contains("ii  $appCode");
+  }
+
+  static Future<bool> isSpecificZypperPackageInstalled(appCode) async {
+    if (!currentenvironment.installedSoftwareManagers
+        .contains(SOFTWARE_MANAGERS.ZYPPER)) {
+      return false;
+    }
+    String output = await runCommandAndGetStdout(
+        "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.ZYPPER)} --non-interactive info $appCode",
+        environment: {"LC_ALL": "C"});
+    return output.replaceAll(" ", "").contains("Installed:Yes");
   }
 
   static Future<bool> isSpecificSnapInstalled(appCode) async {
@@ -302,6 +335,21 @@ class Linux {
             command:
                 "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.APT)} remove $appCode -y",
             environment: {"DEBIAN_FRONTEND": "noninteractive"},
+          ),
+        );
+      }
+
+      // Zypper
+      bool isZypperPackageInstalled =
+          await isSpecificZypperPackageInstalled(appCode);
+      if ((softwareManager == null ||
+              softwareManager == SOFTWARE_MANAGERS.ZYPPER) &&
+          isZypperPackageInstalled) {
+        commandQueue.add(
+          LinuxCommand(
+            userId: 0,
+            command:
+                "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.ZYPPER)} --non-interactive remove $appCode",
           ),
         );
       }
@@ -350,6 +398,16 @@ class Linux {
       }
     }
     if (currentenvironment.installedSoftwareManagers
+        .contains(SOFTWARE_MANAGERS.ZYPPER)) {
+      for (String appCode in appCodes) {
+        bool isZypperPackageInstalled =
+            await isSpecificZypperPackageInstalled(appCode);
+        if (isZypperPackageInstalled) {
+          return true;
+        }
+      }
+    }
+    if (currentenvironment.installedSoftwareManagers
         .contains(SOFTWARE_MANAGERS.FLATPAK)) {
       for (String appCode in appCodes) {
         bool isFlatpakInstalled = await isSpecificFlatpakInstalled(appCode);
@@ -377,6 +435,12 @@ class Linux {
         !output.contains("No packages found");
   }
 
+  static Future<bool> isZypperPackageAvailable(String appCode) async {
+    String output = await runCommandAndGetStdout(
+        "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.ZYPPER)} info $appCode");
+    return !output.contains(" not found.");
+  }
+
   /// returns the source under which the Flatpak is available, otherwise empty String
   static Future<String> isFlatpakAvailable(String appCode) async {
     String output = await Linux.runCommandAndGetStdout(
@@ -402,6 +466,10 @@ class Linux {
   static Future<bool> areApplicationsAvailable(List<String> appCodes) async {
     for (String appCode in appCodes) {
       bool available = await isDebPackageAvailable(appCode);
+      if (available) {
+        return true;
+      }
+      available = await isZypperPackageAvailable(appCode);
       if (available) {
         return true;
       }
@@ -656,7 +724,7 @@ class Linux {
     }
 
     // Get user id
-    String output = await Linux.getUserIdOfCurrentUser();
+    String output = await getUserIdOfCurrentUser();
     newEnvironment.currentUserId = int.parse(output);
 
     return newEnvironment;
@@ -670,6 +738,8 @@ class Linux {
         return "/usr/bin/snap";
       case SOFTWARE_MANAGERS.APT:
         return "/usr/bin/apt";
+      case SOFTWARE_MANAGERS.ZYPPER:
+        return "/usr/bin/zypper";
       default:
         return "";
     }
@@ -736,33 +806,44 @@ class Linux {
             environment: {"DEBIAN_FRONTEND": "noninteractive"}));
         break;
       case DISTROS.OPENSUSE:
+        String file = await getEtcOsRelease();
+        bool tumbleweed = file.toLowerCase().contains("tumbleweed");
+
+        if (tumbleweed) {
+          commandQueue.add(LinuxCommand(
+            userId: 0,
+            command:
+                "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.ZYPPER)} --non-interactive addrepo -cfp 90 'https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/' packman",
+          ));
+        } else {
+          // LEAP:
+          // String releasever = "";
+          // if (Platform.environment.containsKey("releasever")) {
+          //   releasever = Platform.environment["releasever"]!;
+          // }
+          commandQueue.add(LinuxCommand(
+            userId: 0,
+            command:
+                "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.ZYPPER)} --non-interactive addrepo -cfp 90 'https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Leap_\$releasever/' packman",
+          ));
+        }
+
         commandQueue.add(LinuxCommand(
           userId: 0,
           command:
-              "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.ZYPPER)} --non-interactive install opi",
+              "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.ZYPPER)} --non-interactive refresh",
         ));
-        switch (currentenvironment.desktop) {
-          case DESKTOPS.GNOME:
-            commandQueue.add(LinuxCommand(
-              userId: 0,
-              command: "konsole -e 'opi codecs'",
-            ));
-            break;
-          case DESKTOPS.XFCE:
-            commandQueue.add(LinuxCommand(
-              userId: 0,
-              command: "xfce4-terminal -e 'opi codecs'",
-            ));
-            break;
-          case DESKTOPS.GNOME:
-            commandQueue.add(LinuxCommand(
-              userId: 0,
-              command: "gnome-terminal -e 'opi codecs'",
-            ));
-            break;
-          default:
-            break;
-        }
+        commandQueue.add(LinuxCommand(
+          userId: 0,
+          command:
+              "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.ZYPPER)} --non-interactive dist-upgrade --from packman --allow-vendor-change",
+        ));
+        commandQueue.add(LinuxCommand(
+          userId: 0,
+          command:
+              "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.ZYPPER)} --non-interactive install --from packman ffmpeg gstreamer-plugins-{good,bad,ugly,libav} libavcodec-full vlc-codecs",
+        ));
+
         break;
       default:
     }
@@ -803,19 +884,20 @@ class Linux {
   }
 
   /// Puts all commands into [Linux.commandQueue]
-  static void applyAutomaticConfigurationAfterInstallation(
+  static Future<void> applyAutomaticConfigurationAfterInstallation(
       {bool applyUpdatesSinceRelease = true,
       bool installMultimediaCodecs_ = true,
       bool setupAutomaticSnapshots = true,
       bool installNvidiaDriversAutomatically = true,
       bool setupAutomaticUpdates = true}) async {
     if (applyUpdatesSinceRelease) {
-      updateAllPackages();
+      await updateAllPackages();
     }
     if (installMultimediaCodecs_) {
       installMultimediaCodecs();
     }
     if (setupAutomaticSnapshots) {
+      await ensureApplicationInstallation(["timeshift"]);
       commandQueue.add(LinuxCommand(
           userId: 0,
           command:
@@ -828,25 +910,64 @@ class Linux {
               "python3 ${executableFolder}additional/python/install_nvidia_driver.py"));
     }
     if (setupAutomaticUpdates) {
-      commandQueue.add(LinuxCommand(
-          userId: 0,
-          command:
-              "python3 ${executableFolder}additional/python/setup_automatic_updates.py"));
+      switch (currentenvironment.distribution) {
+        case DISTROS.OPENSUSE:
+          await ensureApplicationInstallation(
+              ["yast2-online-update-configuration"]);
+          commandQueue.add(LinuxCommand(
+              userId: 0,
+              command:
+                  "ln -s /usr/lib/YaST2/bin/online_update /etc/cron.daily/"));
+          break;
+        default:
+          commandQueue.add(LinuxCommand(
+              userId: 0,
+              command:
+                  "python3 ${executableFolder}additional/python/setup_automatic_updates_debian.py"));
+      }
     }
   }
 
   /// Only appends commands to [commandQueue]
-  static void updateAllPackages() {
-    commandQueue.add(LinuxCommand(
-      userId: 0,
-      command: "apt update",
-      environment: {"DEBIAN_FRONTEND": "noninteractive"},
-    ));
-    commandQueue.add(LinuxCommand(
-      userId: 0,
-      command: "apt dist-upgrade -y",
-      environment: {"DEBIAN_FRONTEND": "noninteractive"},
-    ));
+  static Future<void> updateAllPackages() async {
+    if (currentenvironment.installedSoftwareManagers
+        .contains(SOFTWARE_MANAGERS.APT)) {
+      commandQueue.add(LinuxCommand(
+        userId: 0,
+        command: "apt update",
+        environment: {"DEBIAN_FRONTEND": "noninteractive"},
+      ));
+      commandQueue.add(LinuxCommand(
+        userId: 0,
+        command: "apt dist-upgrade -y",
+        environment: {"DEBIAN_FRONTEND": "noninteractive"},
+      ));
+    } else {
+      if (currentenvironment.installedSoftwareManagers
+          .contains(SOFTWARE_MANAGERS.ZYPPER)) {
+        // Check if we are in tumbleweed:
+        String file = await getEtcOsRelease();
+        if (file.toLowerCase().contains("tumbleweed")) {
+          // Tumbleweed
+          commandQueue.add(LinuxCommand(
+            userId: 0,
+            command:
+                "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.ZYPPER)} --non-interactive dup",
+          ));
+        } else {
+          // Leap or other
+          commandQueue.add(LinuxCommand(
+            userId: 0,
+            command:
+                "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.ZYPPER)} --non-interactive up",
+          ));
+        }
+      }
+    }
+  }
+
+  static Future<String> getEtcOsRelease() async {
+    return await File("/etc/os-release").readAsString();
   }
 
   static Future<List<ActionEntry>> getFavoriteFiles(
@@ -930,6 +1051,54 @@ class Linux {
           name: "Install $line",
           description: "Install via apt",
           action: "apt-install:$line",
+          priority: -20));
+    }
+    return results;
+  }
+
+  /// Only returns results if keyword is longer than 3 and there are under 100 results.
+  static Future<List<ActionEntry>> getInstallableZypperPackagesForKeyword(
+      String keyword) async {
+    if (keyword.length <= 3) {
+      return [];
+    }
+    String output = await runCommandWithCustomArgumentsAndGetStdOut(
+        getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.ZYPPER),
+        ["--non-interactive", "search", keyword]);
+    output = output.trim();
+    List<String> lines = output.split("\n");
+
+    // Cancel search, if too many search results.
+    if (lines.length > 104) {
+      return [];
+    }
+
+    List<ActionEntry> results = [];
+    for (String line in lines) {
+      if (line.trim() == "" || line.split("|").length < 4) {
+        continue;
+      }
+      List<String> lineParts = line.split("|");
+      String packageName = lineParts[1].trim();
+
+      // Skip table head
+      if (packageName == "Name") {
+        continue;
+      }
+
+      // if already installed, skip entry
+      if (lineParts[0].trim() == "i") {
+        continue;
+      }
+
+      results.add(ActionEntry(
+          iconWidget: Icon(
+            Icons.archive,
+            size: 48,
+          ),
+          name: "Install $packageName",
+          description: "Install via zypper",
+          action: "zypper-install:$packageName",
           priority: -20));
     }
     return results;

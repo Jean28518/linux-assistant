@@ -28,7 +28,7 @@ class AfterInstallationService {
   static Future<void> applyCurrentBrowserSituation() async {
     /// Start the Functions for parallel use
     Future fFirefox = Linux.ensureApplicationInstallation(
-        ["firefox", "firefox-esr"],
+        ["firefox", "mozillafirefox", "firefox-esr"],
         installed: firefox);
 
     Future? fChromium;
@@ -63,7 +63,7 @@ class AfterInstallationService {
 
   static Future<void> applyCurrentOfficeSituation() async {
     Future fLibreOffice = Linux.ensureApplicationInstallation(
-        ["libreoffice-common", "org.libreoffice.LibreOffice"],
+        ["libreoffice-common", "libreoffice", "org.libreoffice.LibreOffice"],
         installed: libreOffice);
     Future fOnlyOffice = Linux.ensureApplicationInstallation(
         ["org.onlyoffice.desktopeditors", "onlyoffice-desktopeditors"],
@@ -78,7 +78,7 @@ class AfterInstallationService {
 
   static Future<void> applyCommunicationSituation() async {
     Future fThunderbird = Linux.ensureApplicationInstallation(
-        ["thunderbird", "org.mozilla.Thunderbird"],
+        ["thunderbird", "mozillathunderbird", "org.mozilla.Thunderbird"],
         installed: thunderbird);
     Future fJitsi = Linux.ensureApplicationInstallation(
         ["org.jitsi.jitsi-meet"],
@@ -106,8 +106,8 @@ class AfterInstallationService {
     await fTeams;
   }
 
-  static void applyAutomaticConfiguration() {
-    Linux.applyAutomaticConfigurationAfterInstallation(
+  static Future<void> applyAutomaticConfiguration() async {
+    await Linux.applyAutomaticConfigurationAfterInstallation(
         applyUpdatesSinceRelease: applyUpdatesSinceRelease,
         installMultimediaCodecs_: installMultimediaCodecs,
         installNvidiaDriversAutomatically: installNvidiaDrivers,

@@ -19,6 +19,14 @@ class AfterInstallationAutomaticConfiguration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Disable functions for specific Distributions:
+    if (Linux.currentenvironment.distribution == DISTROS.OPENSUSE) {
+      AfterInstallationService.installNvidiaDrivers =
+          false; // disabled at the time
+      AfterInstallationService.setupAutomaticSnapshots =
+          false; // disabled because of snapper
+    }
+
     List<Widget> content = [
       MintYSelectableEntryWithIconHorizontal(
         icon: SystemIcon(
@@ -47,62 +55,73 @@ class AfterInstallationAutomaticConfiguration extends StatelessWidget {
         },
         text: AppLocalizations.of(context)!.installMultimediaCodecsDescription,
       ),
-      MintYSelectableEntryWithIconHorizontal(
-        icon: SystemIcon(
-          iconString: "disks",
-          iconSize: 128,
-        ),
-        title: AppLocalizations.of(context)!.automaticSnapshots,
-        selected: true,
-        onPressed: () {
-          AfterInstallationService.setupAutomaticSnapshots =
-              !AfterInstallationService.setupAutomaticSnapshots;
-        },
-        text: AppLocalizations.of(context)!.automaticSnapshotsDescription,
-      ),
-      FutureBuilder<bool>(
-        future: isNvidiaCardInstalledOnSystem,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            if (snapshot.data.toString() == "true") {
-              AfterInstallationService.installNvidiaDrivers = true;
-              return MintYSelectableEntryWithIconHorizontal(
-                icon: SystemIcon(
-                  iconString: "cs-drivers",
-                  iconSize: 128,
-                ),
-                title: AppLocalizations.of(context)!
-                    .automaticNvidiaDriverInstallation,
-                selected: true,
-                onPressed: () {
-                  AfterInstallationService.installNvidiaDrivers =
-                      !AfterInstallationService.installNvidiaDrivers;
-                },
-                text: AppLocalizations.of(context)!
-                    .automaticNvidiaDriverInstallationDesciption,
-              );
-            } else {
-              AfterInstallationService.installNvidiaDrivers = false;
-            }
-          }
-          return Container();
-        },
-      ),
-      MintYSelectableEntryWithIconHorizontal(
-        icon: SystemIcon(
-          iconString: "update-manager",
-          iconSize: 128,
-        ),
-        title:
-            AppLocalizations.of(context)!.automaticUpdateManagerConfiguration,
-        selected: true,
-        onPressed: () {
-          AfterInstallationService.setupAutomaticUpdates =
-              !AfterInstallationService.setupAutomaticUpdates;
-        },
-        text: AppLocalizations.of(context)!
-            .automaticUpdateManagerConfigurationDescription,
-      ),
+
+      AfterInstallationService.setupAutomaticSnapshots
+          ? MintYSelectableEntryWithIconHorizontal(
+              icon: SystemIcon(
+                iconString: "disks",
+                iconSize: 128,
+              ),
+              title: AppLocalizations.of(context)!.automaticSnapshots,
+              selected: true,
+              onPressed: () {
+                AfterInstallationService.setupAutomaticSnapshots =
+                    !AfterInstallationService.setupAutomaticSnapshots;
+              },
+              text: AppLocalizations.of(context)!.automaticSnapshotsDescription,
+            )
+          : Container(),
+
+      // Automatic Nvidia Installation
+      AfterInstallationService.installNvidiaDrivers
+          ? FutureBuilder<bool>(
+              future: isNvidiaCardInstalledOnSystem,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  if (snapshot.data.toString() == "true") {
+                    AfterInstallationService.installNvidiaDrivers = true;
+                    return MintYSelectableEntryWithIconHorizontal(
+                      icon: SystemIcon(
+                        iconString: "cs-drivers",
+                        iconSize: 128,
+                      ),
+                      title: AppLocalizations.of(context)!
+                          .automaticNvidiaDriverInstallation,
+                      selected: true,
+                      onPressed: () {
+                        AfterInstallationService.installNvidiaDrivers =
+                            !AfterInstallationService.installNvidiaDrivers;
+                      },
+                      text: AppLocalizations.of(context)!
+                          .automaticNvidiaDriverInstallationDesciption,
+                    );
+                  } else {
+                    AfterInstallationService.installNvidiaDrivers = false;
+                  }
+                }
+                return Container();
+              },
+            )
+          : Container(),
+
+      // Setup automatic updates
+      AfterInstallationService.setupAutomaticUpdates
+          ? MintYSelectableEntryWithIconHorizontal(
+              icon: SystemIcon(
+                iconString: "update-manager",
+                iconSize: 128,
+              ),
+              title: AppLocalizations.of(context)!
+                  .automaticUpdateManagerConfiguration,
+              selected: true,
+              onPressed: () {
+                AfterInstallationService.setupAutomaticUpdates =
+                    !AfterInstallationService.setupAutomaticUpdates;
+              },
+              text: AppLocalizations.of(context)!
+                  .automaticUpdateManagerConfigurationDescription,
+            )
+          : Container(),
     ];
     content.removeWhere((element) =>
         element.runtimeType != MintYSelectableEntryWithIconHorizontal);
@@ -120,8 +139,8 @@ class AfterInstallationAutomaticConfiguration extends StatelessWidget {
               .automaticConfigurationIsRunningDescription,
           route: GreeterIntroduction(),
         ),
-        onPressed: () {
-          AfterInstallationService.applyAutomaticConfiguration();
+        onPressedFuture: () async {
+          await AfterInstallationService.applyAutomaticConfiguration();
         },
       ),
     );

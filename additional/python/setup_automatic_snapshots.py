@@ -2,10 +2,9 @@ import jessentials
 import jfiles
 import re
 
-print("Enabling automaitc snapshots...")
+print("Enabling automatic snapshots...")
 jessentials.ensure_root_privileges()
-jessentials.run_command("apt update", environment={'DEBIAN_FRONTEND': 'noninteractive'})
-jessentials.run_command("apt install -y timeshift", environment={'DEBIAN_FRONTEND': 'noninteractive'})
+# Timeshift should have been installed before.
 if not jfiles.does_file_exist("/etc/timeshift/timeshift.json"):
     jfiles.copy_file("/etc/timeshift/default.json", "/etc/timeshift/timeshift.json")
 timeshift_config = jfiles.get_dict_of_json_file("/etc/timeshift/timeshift.json")

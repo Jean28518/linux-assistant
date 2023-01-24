@@ -14,7 +14,7 @@ class AfterInstallationCommunicationSoftwareSelection extends StatelessWidget {
   AfterInstallationCommunicationSoftwareSelection({super.key});
 
   static Future<bool> thunderbirdInstalled = Linux.areApplicationsInstalled(
-      ["thunderbird", "org.mozilla.Thunderbird"]);
+      ["thunderbird", "mozillathunderbird", "org.mozilla.Thunderbird"]);
   static Future<bool> jitsiMeetInstalled =
       Linux.areApplicationsInstalled(["org.jitsi.jitsi-meet"]);
   static Future<bool> elementInstalled =

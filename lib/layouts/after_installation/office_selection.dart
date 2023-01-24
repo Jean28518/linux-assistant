@@ -13,8 +13,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class AfterInstallationOfficeSelection extends StatelessWidget {
   const AfterInstallationOfficeSelection({super.key});
 
-  static Future<bool> libreOfficeInstalled =
-      Linux.areApplicationsInstalled(["libreoffice-common"]);
+  static Future<bool> libreOfficeInstalled = Linux.areApplicationsInstalled(
+      ["libreoffice-common", "org.libreoffice.LibreOffice", "libreoffice"]);
   static Future<bool> onlOfficeInstalled = Linux.areApplicationsInstalled(
       ["org.onlyoffice.desktopeditors", "onlyoffice-desktopeditors"]);
   static Future<bool> wpsInstalled =

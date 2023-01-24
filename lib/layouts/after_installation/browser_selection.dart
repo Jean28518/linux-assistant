@@ -14,8 +14,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class AfterInstallationBrowserSelection extends StatelessWidget {
   AfterInstallationBrowserSelection({super.key});
 
-  static Future<bool> firefoxInstalled =
-      Linux.areApplicationsInstalled(["firefox", "firefox-esr"]);
+  static Future<bool> firefoxInstalled = Linux.areApplicationsInstalled(
+      ["firefox", "mozillafirefox", "firefox-esr"]);
   static Future<bool> chromiumInstalled =
       Linux.areApplicationsInstalled(["chromium"]);
   static Future<bool> braveInstalled =
