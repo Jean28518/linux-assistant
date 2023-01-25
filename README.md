@@ -30,6 +30,8 @@ cd build/linux/x64/release/bundle/
 bash ./build-deb.sh
 sudo dpkg --install linux-assistant.deb
 
+# Option 3: Build .rpm package:
+bash ./build-rpm.sh
 ```
 
 ## Features
