@@ -41,5 +41,5 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: linux-assistant-rpm
-          path: ~/rpmbuild/RPMS/
+          path: /home/runner/rpmbuild/RPMS/
 
