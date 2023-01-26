@@ -1,5 +1,5 @@
 Name:           linux-assistant
-Version:        0.1.5
+Version:        
 Release:        1%{?dist}
 Summary:        Daily Linux Helper with integrated search
 License:        GPL
