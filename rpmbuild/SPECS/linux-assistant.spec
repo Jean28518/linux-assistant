@@ -20,6 +20,15 @@ cp -r * $RPM_BUILD_ROOT/%{_libdir}/%{name}
 sed -i "s|/usr/lib/|%{_libdir}/|" $RPM_BUILD_ROOT/%{_libdir}/%{name}/%{name}
 mv $RPM_BUILD_ROOT/%{_libdir}/%{name}/%{name} $RPM_BUILD_ROOT/%{_bindir}/
 
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/icons/hicolor/scalable/apps/
+mv $RPM_BUILD_ROOT/%{_libdir}/%{name}/linux-assistant.svg $RPM_BUILD_ROOT/%{_datadir}/icons/hicolor/scalable/apps/
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/icons/hicolor/256x256/apps/
+mv $RPM_BUILD_ROOT/%{_libdir}/%{name}/linux-assistant.png $RPM_BUILD_ROOT/%{_datadir}/icons/hicolor/256x256/apps/
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/applications/
+mv $RPM_BUILD_ROOT/%{_libdir}/%{name}/linux_assistant.desktop $RPM_BUILD_ROOT/%{_datadir}/applications/
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/polkit-1/actions/
+mv $RPM_BUILD_ROOT/%{_libdir}/%{name}/org.linux-assistant.operations.policy $RPM_BUILD_ROOT/%{_datadir}/polkit-1/actions/
+
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -27,3 +36,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %{_bindir}/%{name}
 %{_libdir}/%{name}
+%{_datadir}/polkit-1/actions/org.linux-assistant.operations.policy
+%{_datadir}/applications/linux_assistant.desktop
+%{_datadir}/icons/hicolor/scalable/apps/linux-assistant.svg
+%{_datadir}/icons/hicolor/256x256/apps/linux-assistant.png

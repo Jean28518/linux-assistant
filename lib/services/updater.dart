@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:linux_assistant/enums/softwareManagers.dart';
 import 'package:linux_assistant/main.dart';
 import 'package:linux_assistant/models/linux_command.dart';
 import 'package:linux_assistant/services/config_handler.dart';
@@ -76,6 +77,27 @@ class LinuxAssistantUpdater {
             command: "wget $downloadURL -P /tmp/"));
         Linux.commandQueue.add(LinuxCommand(
             userId: 0, command: "/usr/bin/apt install /tmp/$fileName -y"));
+      }
+      // RPM
+      if (asset["content_type"] == "application/x-rpm" &&
+          Linux.usesCurrentEnvironmentRPMPackages()) {
+        String downloadURL = asset["browser_download_url"];
+        if (downloadURL.isEmpty) {
+          print(
+              "Error while updating Linux-Assistant to newest version. Download URL empty.");
+          return;
+        }
+        String fileName = downloadURL.split("/").last;
+        Linux.commandQueue.add(LinuxCommand(
+            userId: Linux.currentenvironment.currentUserId,
+            command: "wget $downloadURL -P /tmp/"));
+        if (Linux.currentenvironment.installedSoftwareManagers
+            .contains(SOFTWARE_MANAGERS.ZYPPER)) {
+          Linux.commandQueue.add(LinuxCommand(
+              userId: 0,
+              command:
+                  "${Linux.getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.ZYPPER)} --non-interactive  --no-gpg-checks install /tmp/$fileName"));
+        }
       }
     }
   }

@@ -1251,4 +1251,13 @@ class Linux {
         return false;
     }
   }
+
+  static bool usesCurrentEnvironmentRPMPackages() {
+    switch (currentenvironment.distribution) {
+      case DISTROS.OPENSUSE:
+        return true;
+      default:
+        return false;
+    }
+  }
 }
