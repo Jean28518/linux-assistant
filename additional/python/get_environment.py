@@ -7,8 +7,7 @@ def getDistribution():
 def getVersionId():
     string = jfiles.get_value_from_file("/etc/os-release", "VERSION", "-1").replace("\"", "")
     # We need this because Linux Mint writes the codename behind the version:
-    string = string.split(" ")[0]
-    return float(string)
+    return string.split(" ")[0]
 
 def getDesktop():
     return jessentials.get_environment_variable("XDG_CURRENT_DESKTOP")
