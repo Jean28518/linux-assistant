@@ -54,6 +54,8 @@ class LinuxAssistantUpdatePage extends StatelessWidget {
                     LinuxAssistantUpdater.updateLinuxAssistantToNewestVersion();
                   },
                   route: RunCommandQueue(
+                      message: AppLocalizations.of(context)!
+                          .linuxAssistantIsUpdating,
                       title: AppLocalizations.of(context)!.update,
                       route: const MainSearchLoader()),
                   text: Text(

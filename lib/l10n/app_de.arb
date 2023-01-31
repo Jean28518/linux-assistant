@@ -222,6 +222,7 @@
   "doYouWantToUpdateNow": "Neue Funktionen warten auf Dich. Möchtest Du Linux-Assistant jetzt aktualisieren? Dies dauert in der Regel nur wenige Sekunden.",
   "later": "Später",
   "updateNow": "Aktualisiere jetzt",
+  "linuxAssistantIsUpdating": "Linux-Assistant aktualisiert sich gerade. Danach ist ein Neustart der Anwendung empfohlen.",
   "@helloWorld": {
     "placeholders": {},
     "description": "",

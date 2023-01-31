@@ -222,6 +222,7 @@
   "doYouWantToUpdateNow": "New features are waiting for you. Do you want to update Linux-Assistant now? This usually takes only a few seconds.",
   "later": "Later",
   "updateNow": "Update now",
+  "linuxAssistantIsUpdating": "Linux-Assistant is updating itself. After that, restarting the application is recommended.",
   "@helloWorld": {
     "placeholders": {},
     "description": "The conventional newborn programmer greeting",
