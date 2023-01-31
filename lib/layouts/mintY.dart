@@ -127,9 +127,10 @@ class MintY {
   );
 
   static ThemeData theme() => ThemeData(
+      useMaterial3: true,
       primaryColor: currentColor,
       brightness: Brightness.light,
-      backgroundColor: Colors.white70,
+      // backgroundColor: Colors.white70,
       textTheme: const TextTheme(
         headline1: heading1,
         headline2: heading2,
@@ -150,10 +151,11 @@ class MintY {
           TextSelectionThemeData(selectionColor: MintY.currentColor));
 
   static ThemeData themeDark() => ThemeData(
+      useMaterial3: true,
       primaryColor: currentColor,
       canvasColor: const Color.fromARGB(255, 31, 31, 31),
       brightness: Brightness.dark,
-      backgroundColor: const Color.fromARGB(255, 31, 31, 31),
+      // backgroundColor: const Color.fromARGB(255, 31, 31, 31),
       cardColor: const Color.fromARGB(255, 45, 45, 45),
       highlightColor: _white,
       textTheme: const TextTheme(

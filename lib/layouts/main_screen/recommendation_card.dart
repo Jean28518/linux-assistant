@@ -20,8 +20,8 @@ class RecommendationCard extends StatelessWidget {
           ActionHandler.handleActionEntry(entry, () {}, context);
         },
         child: Container(
-          width: 400,
-          height: 100,
+          width: 450,
+          height: 120,
           padding: EdgeInsets.all(10),
           child: Row(children: [
             entry.iconWidget!,
