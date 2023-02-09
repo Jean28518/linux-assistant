@@ -19,6 +19,8 @@ class AfterInstallationCommunicationSoftwareSelection extends StatelessWidget {
       Linux.areApplicationsInstalled(["org.jitsi.jitsi-meet"]);
   static Future<bool> elementInstalled =
       Linux.areApplicationsInstalled(["im.riot.Riot", "element-desktop"]);
+  static Future<bool> signalInstalled =
+      Linux.areApplicationsInstalled(["org.signal.Signal"]);
   static Future<bool> discordInstalled =
       Linux.areApplicationsInstalled(["com.discordapp.Discord", "discord"]);
   static Future<bool> zoomInstalled =
@@ -89,6 +91,25 @@ class AfterInstallationCommunicationSoftwareSelection extends StatelessWidget {
                     onPressed: () {
                       AfterInstallationService.element =
                           !AfterInstallationService.element;
+                    });
+              }
+              return Center(child: MintYProgressIndicatorCircle());
+            },
+          ),
+          FutureBuilder<bool>(
+            future: signalInstalled,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                AfterInstallationService.element =
+                    snapshot.data.toString() == 'true';
+                return MintYSelectableEntryWithIconHorizontal(
+                    icon: const SystemIcon(iconString: "signal", iconSize: 64),
+                    title: "Signal",
+                    text: AppLocalizations.of(context)!.signalDescription,
+                    selected: snapshot.data.toString() == 'true',
+                    onPressed: () {
+                      AfterInstallationService.signal =
+                          !AfterInstallationService.signal;
                     });
               }
               return Center(child: MintYProgressIndicatorCircle());

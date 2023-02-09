@@ -14,6 +14,7 @@ class AfterInstallationService {
   static bool thunderbird = false;
   static bool jitsiMeet = false;
   static bool element = false;
+  static bool signal = false;
   static bool discord = false;
   static bool zoom = false;
   static bool microsoftTeams = false;
@@ -86,6 +87,8 @@ class AfterInstallationService {
     Future fElement = Linux.ensureApplicationInstallation(
         ["im.riot.Riot", "element-desktop"],
         installed: element);
+    Future fSignal = Linux.ensureApplicationInstallation(["org.signal.Signal"],
+        installed: signal);
     Future fDiscord = Linux.ensureApplicationInstallation(
         ["com.discordapp.Discord", "discord"],
         installed: discord);
@@ -101,6 +104,7 @@ class AfterInstallationService {
     await fThunderbird;
     await fJitsi;
     await fElement;
+    await fSignal;
     await fDiscord;
     await fZoom;
     await fTeams;

@@ -85,6 +85,7 @@
   "thunderbirdDescription": "Open Source E-Mail Client von Mozilla.",
   "jitsiDescription": "Open Source Video-Konferenz-Tool",
   "elementDescription": "Open Source Messenger Tool basierend auf dem Matrix-Protokoll",
+  "signalDescription": "Open Source Messenger. Funktioniert nur mit der Smartphone-App.",
   "discordDescription": "Proprietäre Community-Chat-Software",
   "zoomDescription": "Proprietäre Konferenz-Software",
   "teamsDescription": "Proprietäre Team-Kommunikations-Software.",
