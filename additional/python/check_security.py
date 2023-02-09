@@ -10,6 +10,8 @@ from check_home_folder_rights import check_home_folder_rights
 def get_additional_sources():
     entries = jfolders.get_folder_entries("/etc/apt/sources.list.d")
     for entry in entries:
+        if entry.endswith(".save"): 
+            continue
         if "official-package-repositories.list" in entry: # Linux Mint
             continue
         if "debian.list" in entry: # MX Linux
@@ -36,6 +38,8 @@ def get_additional_sources():
             line = str(line).lstrip()
             line = str(line).rstrip()
             if not line.startswith("#") and not len(line.strip()) == 0:
+                if line.startswith("deb-src"):
+                    continue
                 line = line.strip()
                 sections_raw = line.split(" ")
 

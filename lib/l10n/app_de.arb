@@ -223,6 +223,7 @@
   "later": "Später",
   "updateNow": "Aktualisiere jetzt",
   "linuxAssistantIsUpdating": "Linux-Assistant aktualisiert sich gerade. Danach ist ein Neustart der Anwendung empfohlen.",
+  "fix": "Beheben",
   "@helloWorld": {
     "placeholders": {},
     "description": "",

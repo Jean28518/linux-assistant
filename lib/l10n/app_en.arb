@@ -223,6 +223,7 @@
   "later": "Later",
   "updateNow": "Update now",
   "linuxAssistantIsUpdating": "Linux-Assistant is updating itself. After that, restarting the application is recommended.",
+  "fix": "Fix",
   "@helloWorld": {
     "placeholders": {},
     "description": "The conventional newborn programmer greeting",

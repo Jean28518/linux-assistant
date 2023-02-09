@@ -1260,4 +1260,41 @@ class Linux {
         return false;
     }
   }
+
+  /// removes all rights for others at the home folder
+  static Future<void> fixHomeFolderPermissions() async {
+    runCommandWithCustomArguments(
+        "/usr/bin/chmod", ["o-rwx", Linux.getHomeDirectory()]);
+  }
+
+  static Future<void> openAdditionalSoftwareSourcesSettings() async {
+    if (File("/usr/bin/software-properties-gtk").existsSync()) {
+      runCommand("/usr/bin/software-properties-gtk");
+      return;
+    }
+    switch (currentenvironment.distribution) {
+      case DISTROS.UBUNTU:
+      case DISTROS.ZORINOS:
+        runCommand("/usr/bin/software-properties-gtk");
+        break;
+      case DISTROS.LINUX_MINT:
+        runCommandWithCustomArguments("/usr/bin/pkexec", ["mintsources"]);
+        break;
+      case DISTROS.OPENSUSE:
+        runCommandWithCustomArguments(
+            "xdg-su", ["-c", "/sbin/yast2 repositories"]);
+        break;
+      case DISTROS.MXLINUX:
+        runCommand("/usr/bin/mx-repo-manager");
+        break;
+      case DISTROS.KDENEON:
+        runCommand("/usr/bin/plasma-discover");
+        break;
+      case DISTROS.DEBIAN:
+      case DISTROS.POPOS:
+        runCommandWithCustomArguments("xdg-open", ["/etc/apt/sources.list.d/"]);
+        break;
+      default:
+    }
+  }
 }

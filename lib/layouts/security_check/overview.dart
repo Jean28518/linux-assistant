@@ -6,6 +6,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
 import 'package:linux_assistant/enums/distros.dart';
 import 'package:linux_assistant/layouts/mintY.dart';
+import 'package:linux_assistant/layouts/run_command_queue.dart';
 import 'package:linux_assistant/services/linux.dart';
 import 'package:linux_assistant/services/main_search_loader.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -177,7 +178,15 @@ class UpdateCheck extends StatelessWidget {
                 )
               : WarningMessage(
                   text:
-                      "${availableUpdatePackages} ${AppLocalizations.of(context)!.xPackagesShouldBeUpdated}"))
+                      "${availableUpdatePackages} ${AppLocalizations.of(context)!.xPackagesShouldBeUpdated}",
+                  fixAction: () {
+                    Linux.updateAllPackages();
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => RunCommandQueue(
+                            title: AppLocalizations.of(context)!.update,
+                            route: SecurityCheckOverview())));
+                  },
+                ))
     ]);
   }
 }
@@ -204,7 +213,14 @@ class HomeFolderSecurityCheck extends StatelessWidget {
                   text: AppLocalizations.of(context)!.homeFolderRightsOkay,
                 )
               : WarningMessage(
-                  text: AppLocalizations.of(context)!.homeFolderRightsNotOkay))
+                  text: AppLocalizations.of(context)!.homeFolderRightsNotOkay,
+                  fixAction: () async {
+                    await Linux.fixHomeFolderPermissions();
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const SecurityCheckOverview(),
+                    ));
+                  },
+                ))
     ]);
   }
 }
@@ -279,6 +295,13 @@ class AdditionSoftwareSources extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> additionalSourceTexts = [];
+    additionalSources.forEach(
+      (element) {
+        additionalSourceTexts.add(Text(element));
+      },
+    );
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -293,8 +316,12 @@ class AdditionSoftwareSources extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     WarningMessage(
-                        text: AppLocalizations.of(context)!
-                            .additionalSoftwareSourcesDetected),
+                      text: AppLocalizations.of(context)!
+                          .additionalSoftwareSourcesDetected,
+                      fixAction: () {
+                        Linux.openAdditionalSoftwareSourcesSettings();
+                      },
+                    ),
                     SizedBox(
                       height: 8,
                     ),
@@ -303,13 +330,15 @@ class AdditionSoftwareSources extends StatelessWidget {
                           borderRadius: BorderRadius.all(Radius.circular(8)),
                           color: Colors.grey),
                       padding: EdgeInsets.all(8),
-                      height: additionalSources.length.toDouble() * 16.0 + 16.0,
-                      child: ListView.builder(
-                        primary: false,
-                        itemCount: additionalSources.length,
-                        itemBuilder: (context, index) {
-                          return Text(additionalSources[index]);
-                        },
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: additionalSourceTexts,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
