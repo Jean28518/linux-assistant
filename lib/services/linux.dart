@@ -7,6 +7,7 @@ import 'package:linux_assistant/enums/browsers.dart';
 import 'package:linux_assistant/enums/desktops.dart';
 import 'package:linux_assistant/enums/distros.dart';
 import 'package:linux_assistant/enums/softwareManagers.dart';
+import 'package:linux_assistant/layouts/mint_y.dart';
 import 'package:linux_assistant/layouts/run_command_queue.dart';
 import 'package:linux_assistant/models/action_entry.dart';
 import 'package:linux_assistant/models/environment.dart';
@@ -182,11 +183,57 @@ class Linux {
     await installApplications(["warpinator", "org.x.Warpinator"]);
     Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => RunCommandQueue(
-          title: "Install Warpinator",
+          title: AppLocalizations.of(context)!.installX("Warpinator"),
           route: MainSearchLoader(),
-          message:
-              "Installing Warpinator...\nYou have to reopen the Warpinator entry after."),
+          message: AppLocalizations.of(context)!
+              .installingXDescription("Warpinator")),
     ));
+  }
+
+  /// [callback] is used for clearing and reoading the search.
+  static void openOrInstallHardInfo(
+      BuildContext context, VoidCallback callback) async {
+    bool does_app_exist = await File("/usr/bin/hardinfo").exists();
+    if (does_app_exist) {
+      runCommand("/usr/bin/hardinfo");
+      callback();
+      return;
+    } else {
+      // if app is not installed:
+      await installApplications(["hardinfo"]);
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => RunCommandQueue(
+            title: AppLocalizations.of(context)!.installX("HardInfo"),
+            route: MainSearchLoader(),
+            message: AppLocalizations.of(context)!
+                .installingXDescription("HardInfo")),
+      ));
+    }
+  }
+
+  /// [callback] is used for clearing and reoading the search.
+  static void openOrInstallRedshift(
+      BuildContext context, VoidCallback callback) async {
+    bool does_app_exist = File("/usr/bin/redshift-gtk").existsSync();
+    if (does_app_exist) {
+      MintY.showMessage(context,
+          AppLocalizations.of(context)!.redshiftIsInstalledAlready, callback);
+
+      return;
+    } else {
+      // if app is not installed:
+      await installApplications(["redshift-gtk"]);
+      if (currentenvironment.desktop == DESKTOPS.KDE) {
+        await installApplications(["plasma-applet-redshift-control"]);
+      }
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => RunCommandQueue(
+            title: AppLocalizations.of(context)!.installX("Redshift"),
+            route: MainSearchLoader(),
+            message: AppLocalizations.of(context)!
+                .installingXDescription("Redshift")),
+      ));
+    }
   }
 
   /// Tries to install one of the appCodes. Stops after one was successfully found.

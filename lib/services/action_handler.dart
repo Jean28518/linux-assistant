@@ -60,6 +60,12 @@ class ActionHandler {
       case "send_files_via_warpinator":
         Linux.openOrInstallWarpinator(context, callback);
         break;
+      case "hard_info":
+        Linux.openOrInstallHardInfo(context, callback);
+        break;
+      case "redshift":
+        Linux.openOrInstallRedshift(context, callback);
+        break;
       case "security_check":
         Navigator.push(
           context,

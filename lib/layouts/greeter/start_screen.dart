@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:linux_assistant/layouts/greeter/introduction.dart';
 import 'package:linux_assistant/layouts/greeter/is_environment_correct.dart';
-import 'package:linux_assistant/layouts/mintY.dart';
+import 'package:linux_assistant/layouts/mint_y.dart';
 import 'package:linux_assistant/models/environment.dart';
 import 'package:linux_assistant/services/config_handler.dart';
 import 'package:linux_assistant/services/linux.dart';

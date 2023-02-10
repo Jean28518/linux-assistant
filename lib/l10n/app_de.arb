@@ -225,6 +225,25 @@
   "updateNow": "Aktualisiere jetzt",
   "linuxAssistantIsUpdating": "Linux-Assistant aktualisiert sich gerade. Danach ist ein Neustart der Anwendung empfohlen.",
   "fix": "Beheben",
+  "hardInfoDescription": "System-Informationen und Benchmark-Werkzeug",
+  "installX": "Installiere {app}",
+  "@installX": {
+    "placeholders": {
+      "app" : {}
+    },
+    "description": "",
+    "type": "text"
+  },
+  "installingXDescription": "Installiere {app}...\nSie müssen {app} danach separat öffnen.",
+  "@installingXDescription": {
+    "placeholders": {
+      "app" : {}
+    },
+    "description": "",
+    "type": "text"
+  },
+  "redshiftDescription": "Filtert blaues Licht um die Augen zu schonen.",
+  "redshiftIsInstalledAlready": "Redshift ist bereits installiert.\nBitte öffnen Sie Redshift selbständig aus Ihrem Systemmenü.",
   "@helloWorld": {
     "placeholders": {},
     "description": "",

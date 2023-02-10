@@ -3,7 +3,7 @@ import 'package:hotkey_manager/hotkey_manager.dart';
 import 'package:linux_assistant/content/basic_entries.dart';
 import 'package:linux_assistant/content/recommendations.dart';
 import 'package:linux_assistant/layouts/main_screen/main_search.dart';
-import 'package:linux_assistant/layouts/mintY.dart';
+import 'package:linux_assistant/layouts/mint_y.dart';
 import 'package:linux_assistant/models/action_entry.dart';
 import 'package:linux_assistant/models/action_entry_list.dart';
 import 'package:linux_assistant/services/config_handler.dart';

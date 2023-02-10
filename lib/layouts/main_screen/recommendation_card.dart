@@ -22,11 +22,15 @@ class RecommendationCard extends StatelessWidget {
         child: Container(
           width: 450,
           height: 120,
-          padding: EdgeInsets.all(10),
           child: Row(children: [
-            entry.iconWidget!,
             Container(
-              width: 40,
+              width: 90,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  entry.iconWidget!,
+                ],
+              ),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

@@ -40,5 +40,14 @@ List<ActionEntry> getRecommendations(BuildContext context) {
         size: 48,
       ),
     ),
+    ActionEntry(
+      name: "Redshift",
+      description: AppLocalizations.of(context)!.redshiftDescription,
+      action: "redshift",
+      iconWidget: const Icon(
+        Icons.remove_red_eye,
+        size: 48,
+      ),
+    ),
   ];
 }

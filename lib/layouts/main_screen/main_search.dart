@@ -15,7 +15,7 @@ import 'package:linux_assistant/layouts/feedback/feedback_form.dart';
 import 'package:linux_assistant/services/main_search_loader.dart';
 import 'package:linux_assistant/services/updater.dart';
 import 'package:linux_assistant/widgets/memory_status.dart';
-import 'package:linux_assistant/layouts/mintY.dart';
+import 'package:linux_assistant/layouts/mint_y.dart';
 import 'package:linux_assistant/layouts/main_screen/recommendation_card.dart';
 import 'package:linux_assistant/main.dart';
 import 'package:linux_assistant/models/action_entry.dart';

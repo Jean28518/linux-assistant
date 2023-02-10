@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:linux_assistant/layouts/after_installation/communication_software.dart';
-import 'package:linux_assistant/layouts/mintY.dart';
+import 'package:linux_assistant/layouts/mint_y.dart';
 import 'package:linux_assistant/widgets/system_icon.dart';
 import 'package:linux_assistant/services/after_installation_service.dart';
 import 'package:linux_assistant/services/icon_loader.dart';

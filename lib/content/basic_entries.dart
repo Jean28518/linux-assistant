@@ -55,5 +55,14 @@ List<ActionEntry> getBasicEntries(BuildContext context) {
         size: 48,
       ),
     ),
+    ActionEntry(
+      name: "HardInfo",
+      description: AppLocalizations.of(context)!.hardInfoDescription,
+      action: "hard_info",
+      iconWidget: const Icon(
+        Icons.speed,
+        size: 48,
+      ),
+    ),
   ];
 }

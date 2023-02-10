@@ -225,6 +225,25 @@
   "updateNow": "Update now",
   "linuxAssistantIsUpdating": "Linux-Assistant is updating itself. After that, restarting the application is recommended.",
   "fix": "Fix",
+  "hardInfoDescription": "System information and benchmark tool",
+  "installX": "Install {app}",
+  "@installX": {
+    "placeholders": {
+      "app" : {}
+    },
+    "description": "",
+    "type": "text"
+  },
+  "installingXDescription": "Installing {app}...\nYou have to open {app} after separatly.",
+  "@installingXDescription": {
+    "placeholders": {
+      "app" : {}
+    },
+    "description": "",
+    "type": "text"
+  },
+  "redshiftDescription": "Filters blue light to reduce eye strain.",
+  "redshiftIsInstalledAlready": "Redshift is already installed.\nPlease open Redshift independently from your system menu.",
   "@helloWorld": {
     "placeholders": {},
     "description": "The conventional newborn programmer greeting",

@@ -3,7 +3,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:hotkey_manager/hotkey_manager.dart';
 import 'package:linux_assistant/enums/distros.dart';
 import 'package:linux_assistant/layouts/greeter/start_screen.dart';
-import 'package:linux_assistant/layouts/mintY.dart';
+import 'package:linux_assistant/layouts/mint_y.dart';
 import 'package:linux_assistant/services/config_handler.dart';
 import 'package:linux_assistant/services/linux.dart';
 import 'package:window_manager/window_manager.dart';

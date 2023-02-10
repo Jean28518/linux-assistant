@@ -176,6 +176,46 @@ class MintY {
       ),
       textSelectionTheme:
           TextSelectionThemeData(selectionColor: MintY.currentColor));
+
+  static void showMessage(
+      BuildContext context, String message, VoidCallback? callback) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          child: Padding(
+            padding: const EdgeInsets.all(40.0),
+            child: Container(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Flexible(
+                    child: Text(
+                      message,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 32,
+                  ),
+                  MintYButton(
+                    text: Text(
+                      AppLocalizations.of(context)!.close,
+                      style: MintY.heading3,
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      callback?.call();
+                    },
+                  )
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
 }
 
 class MintYPage extends StatelessWidget {
