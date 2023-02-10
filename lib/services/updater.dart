@@ -25,7 +25,7 @@ class LinuxAssistantUpdater {
     http.Response response = await http
         .get(Uri.parse(
             "https://api.github.com/repos/Jean28518/linux-assistant/releases/latest"))
-        .timeout(Duration(seconds: 1));
+        .timeout(Duration(seconds: 5));
 
     Map responseMap = json.decode(response.body);
     newestVersionInformation = responseMap;
