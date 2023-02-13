@@ -729,7 +729,11 @@ class Linux {
     }
 
     // get version:
-    newEnvironment.version = double.parse(lines[1]);
+    if (double.tryParse(lines[1]) == null) {
+      newEnvironment.version = -1.0;
+    } else {
+      newEnvironment.version = double.parse(lines[1]);
+    }
 
     // get desktop:
     if (lines[2].toLowerCase().contains("gnome")) {
