@@ -245,7 +245,7 @@ class Linux {
 
     // Move preferred software manager to the start of the list
     currentenvironment.installedSoftwareManagers
-        .insert(0, preferredSoftwareManager!);
+        .insert(0, preferredSoftwareManager);
     currentenvironment.installedSoftwareManagers.removeAt(currentenvironment
         .installedSoftwareManagers
         .lastIndexOf(preferredSoftwareManager));
