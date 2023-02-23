@@ -25,7 +25,7 @@ def main():
                 pass
  
     # Chromium/Chrome
-    entires = []
+    entries = []
     entries = jessentials.add_arrays(jfolders.get_folder_entries("~/.config/chromium/"), entries)
     entries = jessentials.add_arrays(jfolders.get_folder_entries("~/.config/google-chrome/"), entries)
     entries = jessentials.add_arrays(jfolders.get_folder_entries("~/.var/app/org.chromium.Chromium/config/chromium/"), entries)
