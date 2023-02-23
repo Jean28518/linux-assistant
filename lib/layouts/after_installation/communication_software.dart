@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:linux_assistant/layouts/after_installation/automatic_configuration_entry.dart';
 import 'package:linux_assistant/layouts/mint_y.dart';
 import 'package:linux_assistant/widgets/system_icon.dart';
 import 'package:linux_assistant/services/after_installation_service.dart';
-import 'package:linux_assistant/services/icon_loader.dart';
 import 'package:linux_assistant/services/linux.dart';
-import 'package:linux_assistant/services/main_search_loader.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AfterInstallationCommunicationSoftwareSelection extends StatelessWidget {
-  AfterInstallationCommunicationSoftwareSelection({super.key});
+  const AfterInstallationCommunicationSoftwareSelection({super.key});
 
   static Future<bool> thunderbirdInstalled = Linux.areApplicationsInstalled(
       ["thunderbird", "mozillathunderbird", "org.mozilla.Thunderbird"]);
@@ -42,7 +38,9 @@ class AfterInstallationCommunicationSoftwareSelection extends StatelessWidget {
             future: thunderbirdInstalled,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                AfterInstallationService.thunderbird =
+                AfterInstallationService.thunderbird[0] =
+                    snapshot.data.toString() == 'true';
+                AfterInstallationService.thunderbird[1] =
                     snapshot.data.toString() == 'true';
                 return MintYSelectableEntryWithIconHorizontal(
                     icon: const SystemIcon(
@@ -51,18 +49,20 @@ class AfterInstallationCommunicationSoftwareSelection extends StatelessWidget {
                     text: AppLocalizations.of(context)!.thunderbirdDescription,
                     selected: snapshot.data.toString() == 'true',
                     onPressed: () {
-                      AfterInstallationService.thunderbird =
-                          !AfterInstallationService.thunderbird;
+                      AfterInstallationService.thunderbird[1] =
+                          !AfterInstallationService.thunderbird[1];
                     });
               }
-              return Center(child: MintYProgressIndicatorCircle());
+              return const Center(child: MintYProgressIndicatorCircle());
             },
           ),
           FutureBuilder<bool>(
             future: jitsiMeetInstalled,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                AfterInstallationService.jitsiMeet =
+                AfterInstallationService.jitsiMeet[0] =
+                    snapshot.data.toString() == 'true';
+                AfterInstallationService.jitsiMeet[1] =
                     snapshot.data.toString() == 'true';
                 return MintYSelectableEntryWithIconHorizontal(
                     icon: const SystemIcon(iconString: "jitsi", iconSize: 64),
@@ -70,18 +70,20 @@ class AfterInstallationCommunicationSoftwareSelection extends StatelessWidget {
                     text: AppLocalizations.of(context)!.jitsiDescription,
                     selected: snapshot.data.toString() == 'true',
                     onPressed: () {
-                      AfterInstallationService.jitsiMeet =
-                          !AfterInstallationService.jitsiMeet;
+                      AfterInstallationService.jitsiMeet[1] =
+                          !AfterInstallationService.jitsiMeet[1];
                     });
               }
-              return Center(child: MintYProgressIndicatorCircle());
+              return const Center(child: MintYProgressIndicatorCircle());
             },
           ),
           FutureBuilder<bool>(
             future: elementInstalled,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                AfterInstallationService.element =
+                AfterInstallationService.element[0] =
+                    snapshot.data.toString() == 'true';
+                AfterInstallationService.element[1] =
                     snapshot.data.toString() == 'true';
                 return MintYSelectableEntryWithIconHorizontal(
                     icon: const SystemIcon(iconString: "element", iconSize: 64),
@@ -89,18 +91,20 @@ class AfterInstallationCommunicationSoftwareSelection extends StatelessWidget {
                     text: AppLocalizations.of(context)!.elementDescription,
                     selected: snapshot.data.toString() == 'true',
                     onPressed: () {
-                      AfterInstallationService.element =
-                          !AfterInstallationService.element;
+                      AfterInstallationService.element[1] =
+                          !AfterInstallationService.element[1];
                     });
               }
-              return Center(child: MintYProgressIndicatorCircle());
+              return const Center(child: MintYProgressIndicatorCircle());
             },
           ),
           FutureBuilder<bool>(
             future: signalInstalled,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                AfterInstallationService.element =
+                AfterInstallationService.signal[0] =
+                    snapshot.data.toString() == 'true';
+                AfterInstallationService.signal[1] =
                     snapshot.data.toString() == 'true';
                 return MintYSelectableEntryWithIconHorizontal(
                     icon: const SystemIcon(iconString: "signal", iconSize: 64),
@@ -108,18 +112,20 @@ class AfterInstallationCommunicationSoftwareSelection extends StatelessWidget {
                     text: AppLocalizations.of(context)!.signalDescription,
                     selected: snapshot.data.toString() == 'true',
                     onPressed: () {
-                      AfterInstallationService.signal =
-                          !AfterInstallationService.signal;
+                      AfterInstallationService.signal[1] =
+                          !AfterInstallationService.signal[1];
                     });
               }
-              return Center(child: MintYProgressIndicatorCircle());
+              return const Center(child: MintYProgressIndicatorCircle());
             },
           ),
           FutureBuilder<bool>(
             future: discordInstalled,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                AfterInstallationService.discord =
+                AfterInstallationService.discord[0] =
+                    snapshot.data.toString() == 'true';
+                AfterInstallationService.discord[1] =
                     snapshot.data.toString() == 'true';
                 return MintYSelectableEntryWithIconHorizontal(
                     icon: const SystemIcon(iconString: "discord", iconSize: 64),
@@ -127,18 +133,20 @@ class AfterInstallationCommunicationSoftwareSelection extends StatelessWidget {
                     text: AppLocalizations.of(context)!.discordDescription,
                     selected: snapshot.data.toString() == 'true',
                     onPressed: () {
-                      AfterInstallationService.discord =
-                          !AfterInstallationService.discord;
+                      AfterInstallationService.discord[1] =
+                          !AfterInstallationService.discord[1];
                     });
               }
-              return Center(child: MintYProgressIndicatorCircle());
+              return const Center(child: MintYProgressIndicatorCircle());
             },
           ),
           FutureBuilder<bool>(
             future: zoomInstalled,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                AfterInstallationService.zoom =
+                AfterInstallationService.zoom[0] =
+                    snapshot.data.toString() == 'true';
+                AfterInstallationService.zoom[1] =
                     snapshot.data.toString() == 'true';
                 return MintYSelectableEntryWithIconHorizontal(
                     icon:
@@ -147,18 +155,20 @@ class AfterInstallationCommunicationSoftwareSelection extends StatelessWidget {
                     text: AppLocalizations.of(context)!.zoomDescription,
                     selected: snapshot.data.toString() == 'true',
                     onPressed: () {
-                      AfterInstallationService.zoom =
-                          !AfterInstallationService.zoom;
+                      AfterInstallationService.zoom[1] =
+                          !AfterInstallationService.zoom[1];
                     });
               }
-              return Center(child: MintYProgressIndicatorCircle());
+              return const Center(child: MintYProgressIndicatorCircle());
             },
           ),
           FutureBuilder<bool>(
             future: microsoftTeamsInstalled,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                AfterInstallationService.microsoftTeams =
+                AfterInstallationService.microsoftTeams[0] =
+                    snapshot.data.toString() == 'true';
+                AfterInstallationService.microsoftTeams[1] =
                     snapshot.data.toString() == 'true';
                 return MintYSelectableEntryWithIconHorizontal(
                     icon: const SystemIcon(
@@ -167,11 +177,11 @@ class AfterInstallationCommunicationSoftwareSelection extends StatelessWidget {
                     text: AppLocalizations.of(context)!.teamsDescription,
                     selected: snapshot.data.toString() == 'true',
                     onPressed: () {
-                      AfterInstallationService.microsoftTeams =
-                          !AfterInstallationService.microsoftTeams;
+                      AfterInstallationService.microsoftTeams[1] =
+                          !AfterInstallationService.microsoftTeams[1];
                     });
               }
-              return Center(child: MintYProgressIndicatorCircle());
+              return const Center(child: MintYProgressIndicatorCircle());
             },
           ),
         ],

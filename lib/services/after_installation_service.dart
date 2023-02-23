@@ -2,22 +2,26 @@ import 'package:linux_assistant/enums/distros.dart';
 import 'package:linux_assistant/services/linux.dart';
 
 class AfterInstallationService {
-  static bool firefox = false;
-  static bool chromium = false;
-  static bool brave = false;
-  static bool googleChrome = false;
+  /// The first element in the list describes the initial recognized state,
+  /// the second one the desired state of the user.
+  /// Then only on different states actions will be done.
+  /// This should prevent unwanted uninstalls of apps.
+  static List<bool> firefox = [false, false];
+  static List<bool> chromium = [false, false];
+  static List<bool> brave = [false, false];
+  static List<bool> googleChrome = [false, false];
 
-  static bool libreOffice = false;
-  static bool onlyOffice = false;
-  static bool wpsOffice = false;
+  static List<bool> libreOffice = [false, false];
+  static List<bool> onlyOffice = [false, false];
+  static List<bool> wpsOffice = [false, false];
 
-  static bool thunderbird = false;
-  static bool jitsiMeet = false;
-  static bool element = false;
-  static bool signal = false;
-  static bool discord = false;
-  static bool zoom = false;
-  static bool microsoftTeams = false;
+  static List<bool> thunderbird = [false, false];
+  static List<bool> jitsiMeet = [false, false];
+  static List<bool> element = [false, false];
+  static List<bool> signal = [false, false];
+  static List<bool> discord = [false, false];
+  static List<bool> zoom = [false, false];
+  static List<bool> microsoftTeams = [false, false];
 
   static bool applyUpdatesSinceRelease = true;
   static bool installMultimediaCodecs = true;
@@ -28,31 +32,28 @@ class AfterInstallationService {
 
   static Future<void> applyCurrentBrowserSituation() async {
     /// Start the Functions for parallel use
-    Future fFirefox = Linux.ensureApplicationInstallation(
-        ["firefox", "mozillafirefox", "firefox-esr"],
-        installed: firefox);
+
+    Future fFirefox = applyApplicationActionIfNecessary(
+        ["firefox", "mozillafirefox", "firefox-esr"], firefox);
 
     Future? fChromium;
 
     if (Linux.currentenvironment.distribution == DISTROS.UBUNTU ||
         Linux.currentenvironment.distribution == DISTROS.POPOS) {
       // Chromium for Ubuntu (snap):
-      fChromium = Linux.ensureApplicationInstallation(
-          ["chromium-browser", "org.chromium.Chromium"],
-          installed: chromium);
+      fChromium = applyApplicationActionIfNecessary(
+          ["chromium-browser", "org.chromium.Chromium"], chromium);
     } else {
       // Chromium for others:
-      fChromium = Linux.ensureApplicationInstallation(
-          ["chromium", "org.chromium.Chromium"],
-          installed: chromium);
+      fChromium = applyApplicationActionIfNecessary(
+          ["chromium", "org.chromium.Chromium"], chromium);
     }
 
-    Future fBrave = Linux.ensureApplicationInstallation(["com.brave.Browser"],
-        installed: brave);
+    Future fBrave = applyApplicationActionIfNecessary(
+        ["com.brave.Browser", "brave"], brave);
 
-    Future fChrome = Linux.ensureApplicationInstallation(
-        ["google-chrome-stable", "com.google.Chrome"],
-        installed: googleChrome);
+    Future fChrome = applyApplicationActionIfNecessary(
+        ["google-chrome-stable", "com.google.Chrome"], googleChrome);
 
     /// We need to wait until every function has finished,
     /// because otherwise the command queue will get filled to late.
@@ -63,14 +64,14 @@ class AfterInstallationService {
   }
 
   static Future<void> applyCurrentOfficeSituation() async {
-    Future fLibreOffice = Linux.ensureApplicationInstallation(
+    Future fLibreOffice = applyApplicationActionIfNecessary(
         ["libreoffice-common", "libreoffice", "org.libreoffice.LibreOffice"],
-        installed: libreOffice);
-    Future fOnlyOffice = Linux.ensureApplicationInstallation(
+        libreOffice);
+    Future fOnlyOffice = applyApplicationActionIfNecessary(
         ["org.onlyoffice.desktopeditors", "onlyoffice-desktopeditors"],
-        installed: onlyOffice);
-    Future fWPSOffice = Linux.ensureApplicationInstallation(["com.wps.Office"],
-        installed: wpsOffice);
+        onlyOffice);
+    Future fWPSOffice =
+        applyApplicationActionIfNecessary(["com.wps.Office"], wpsOffice);
 
     await fLibreOffice;
     await fOnlyOffice;
@@ -78,28 +79,23 @@ class AfterInstallationService {
   }
 
   static Future<void> applyCommunicationSituation() async {
-    Future fThunderbird = Linux.ensureApplicationInstallation(
+    Future fThunderbird = applyApplicationActionIfNecessary(
         ["thunderbird", "mozillathunderbird", "org.mozilla.Thunderbird"],
-        installed: thunderbird);
-    Future fJitsi = Linux.ensureApplicationInstallation(
-        ["org.jitsi.jitsi-meet"],
-        installed: jitsiMeet);
-    Future fElement = Linux.ensureApplicationInstallation(
-        ["im.riot.Riot", "element-desktop"],
-        installed: element);
-    Future fSignal = Linux.ensureApplicationInstallation(["org.signal.Signal"],
-        installed: signal);
-    Future fDiscord = Linux.ensureApplicationInstallation(
-        ["com.discordapp.Discord", "discord"],
-        installed: discord);
-    Future fZoom = Linux.ensureApplicationInstallation(
-        ["us.zoom.Zoom", "zoom-client"],
-        installed: zoom);
+        thunderbird);
+    Future fJitsi =
+        applyApplicationActionIfNecessary(["org.jitsi.jitsi-meet"], jitsiMeet);
+    Future fElement = applyApplicationActionIfNecessary(
+        ["im.riot.Riot", "element-desktop"], element);
+    Future fSignal =
+        applyApplicationActionIfNecessary(["org.signal.Signal"], signal);
+    Future fDiscord = applyApplicationActionIfNecessary(
+        ["com.discordapp.Discord", "discord"], discord);
+    Future fZoom = applyApplicationActionIfNecessary(
+        ["us.zoom.Zoom", "zoom-client"], zoom);
 
     /// Here the snap is preferred, because it is offically supported by Microsoft.
-    Future fTeams = Linux.ensureApplicationInstallation(
-        ["teams", "com.microsoft.Teams"],
-        installed: microsoftTeams);
+    Future fTeams = applyApplicationActionIfNecessary(
+        ["teams", "com.microsoft.Teams"], microsoftTeams);
 
     await fThunderbird;
     await fJitsi;
@@ -108,6 +104,17 @@ class AfterInstallationService {
     await fDiscord;
     await fZoom;
     await fTeams;
+  }
+
+  /// Only take action, if the user clicked on the card.
+  /// This should prevent unwanted app removals.
+  static Future<void> applyApplicationActionIfNecessary(
+      List<String> appCodes, List<bool> stateList) async {
+    assert(stateList.length == 2);
+    if (stateList[0] != stateList[1]) {
+      return Linux.ensureApplicationInstallation(appCodes,
+          installed: stateList[1]);
+    }
   }
 
   static Future<void> applyAutomaticConfiguration() async {

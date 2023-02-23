@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:linux_assistant/layouts/after_installation/communication_software.dart';
 import 'package:linux_assistant/layouts/mint_y.dart';
 import 'package:linux_assistant/widgets/system_icon.dart';
 import 'package:linux_assistant/services/after_installation_service.dart';
-import 'package:linux_assistant/services/icon_loader.dart';
 import 'package:linux_assistant/services/linux.dart';
-import 'package:linux_assistant/services/main_search_loader.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AfterInstallationOfficeSelection extends StatelessWidget {
@@ -33,7 +29,9 @@ class AfterInstallationOfficeSelection extends StatelessWidget {
                 future: libreOfficeInstalled,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    AfterInstallationService.libreOffice =
+                    AfterInstallationService.libreOffice[0] =
+                        snapshot.data.toString() == 'true';
+                    AfterInstallationService.libreOffice[1] =
                         snapshot.data.toString() == 'true';
                     return MintYSelectableCardWithIcon(
                         icon: const SystemIcon(
@@ -43,21 +41,23 @@ class AfterInstallationOfficeSelection extends StatelessWidget {
                             .libreOfficeDescription,
                         selected: snapshot.data.toString() == 'true',
                         onPressed: () {
-                          AfterInstallationService.libreOffice =
-                              !AfterInstallationService.libreOffice;
+                          AfterInstallationService.libreOffice[1] =
+                              !AfterInstallationService.libreOffice[1];
                         });
                   }
-                  return MintYProgressIndicatorCircle();
+                  return const MintYProgressIndicatorCircle();
                 },
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               FutureBuilder<bool>(
                 future: onlOfficeInstalled,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    AfterInstallationService.onlyOffice =
+                    AfterInstallationService.onlyOffice[0] =
+                        snapshot.data.toString() == 'true';
+                    AfterInstallationService.onlyOffice[1] =
                         snapshot.data.toString() == 'true';
                     return MintYSelectableCardWithIcon(
                         icon: const SystemIcon(
@@ -67,21 +67,23 @@ class AfterInstallationOfficeSelection extends StatelessWidget {
                             AppLocalizations.of(context)!.onlyOfficeDescription,
                         selected: snapshot.data.toString() == 'true',
                         onPressed: () {
-                          AfterInstallationService.onlyOffice =
-                              !AfterInstallationService.onlyOffice;
+                          AfterInstallationService.onlyOffice[1] =
+                              !AfterInstallationService.onlyOffice[1];
                         });
                   }
-                  return MintYProgressIndicatorCircle();
+                  return const MintYProgressIndicatorCircle();
                 },
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               FutureBuilder<bool>(
                 future: wpsInstalled,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    AfterInstallationService.wpsOffice =
+                    AfterInstallationService.wpsOffice[0] =
+                        snapshot.data.toString() == 'true';
+                    AfterInstallationService.wpsOffice[1] =
                         snapshot.data.toString() == 'true';
                     return MintYSelectableCardWithIcon(
                       icon: const SystemIcon(
@@ -90,12 +92,12 @@ class AfterInstallationOfficeSelection extends StatelessWidget {
                       text: AppLocalizations.of(context)!.wpsOfficeDescription,
                       selected: snapshot.data.toString() == 'true',
                       onPressed: () {
-                        AfterInstallationService.wpsOffice =
-                            !AfterInstallationService.wpsOffice;
+                        AfterInstallationService.wpsOffice[1] =
+                            !AfterInstallationService.wpsOffice[1];
                       },
                     );
                   }
-                  return MintYProgressIndicatorCircle();
+                  return const MintYProgressIndicatorCircle();
                 },
               ),
             ],

@@ -1,25 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:linux_assistant/layouts/after_installation/office_selection.dart';
 import 'package:linux_assistant/layouts/mint_y.dart';
-import 'package:linux_assistant/layouts/run_command_queue.dart';
 import 'package:linux_assistant/widgets/system_icon.dart';
 import 'package:linux_assistant/services/after_installation_service.dart';
-import 'package:linux_assistant/services/icon_loader.dart';
 import 'package:linux_assistant/services/linux.dart';
-import 'package:linux_assistant/services/main_search_loader.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AfterInstallationBrowserSelection extends StatelessWidget {
-  AfterInstallationBrowserSelection({super.key});
+  const AfterInstallationBrowserSelection({super.key});
 
   static Future<bool> firefoxInstalled = Linux.areApplicationsInstalled(
       ["firefox", "mozillafirefox", "firefox-esr"]);
   static Future<bool> chromiumInstalled =
-      Linux.areApplicationsInstalled(["chromium"]);
+      Linux.areApplicationsInstalled(["chromium", "org.chromium.Chromium"]);
   static Future<bool> braveInstalled =
-      Linux.areApplicationsInstalled(["com.brave.Browser"]);
+      Linux.areApplicationsInstalled(["com.brave.Browser", "brave"]);
   static Future<bool> googleChromeStableInstalled =
       Linux.areApplicationsInstalled(
           ["google-chrome-stable", "com.google.Chrome"]);
@@ -34,7 +29,9 @@ class AfterInstallationBrowserSelection extends StatelessWidget {
             FutureBuilder(
               future: firefoxInstalled,
               builder: (context, snapshot) {
-                AfterInstallationService.firefox =
+                AfterInstallationService.firefox[0] =
+                    snapshot.data.toString() == 'true';
+                AfterInstallationService.firefox[1] =
                     snapshot.data.toString() == 'true';
                 if (snapshot.hasData) {
                   return MintYSelectableEntryWithIconHorizontal(
@@ -43,8 +40,8 @@ class AfterInstallationBrowserSelection extends StatelessWidget {
                     text: AppLocalizations.of(context)!.firefoxDescription,
                     selected: snapshot.data.toString() == 'true',
                     onPressed: () {
-                      AfterInstallationService.firefox =
-                          !AfterInstallationService.firefox;
+                      AfterInstallationService.firefox[1] =
+                          !AfterInstallationService.firefox[1];
                     },
                   );
                 } else {
@@ -56,7 +53,9 @@ class AfterInstallationBrowserSelection extends StatelessWidget {
               future: chromiumInstalled,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  AfterInstallationService.chromium =
+                  AfterInstallationService.chromium[0] =
+                      snapshot.data.toString() == 'true';
+                  AfterInstallationService.chromium[1] =
                       snapshot.data.toString() == 'true';
                   return MintYSelectableEntryWithIconHorizontal(
                     icon:
@@ -65,8 +64,8 @@ class AfterInstallationBrowserSelection extends StatelessWidget {
                     text: AppLocalizations.of(context)!.chromiumDescription,
                     selected: snapshot.data.toString() == 'true',
                     onPressed: () {
-                      AfterInstallationService.chromium =
-                          !AfterInstallationService.chromium;
+                      AfterInstallationService.chromium[1] =
+                          !AfterInstallationService.chromium[1];
                     },
                   );
                 } else {
@@ -78,7 +77,9 @@ class AfterInstallationBrowserSelection extends StatelessWidget {
               future: braveInstalled,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  AfterInstallationService.brave =
+                  AfterInstallationService.brave[0] =
+                      snapshot.data.toString() == 'true';
+                  AfterInstallationService.brave[1] =
                       snapshot.data.toString() == 'true';
                   return MintYSelectableEntryWithIconHorizontal(
                     icon: const SystemIcon(iconString: "brave", iconSize: 64),
@@ -86,8 +87,8 @@ class AfterInstallationBrowserSelection extends StatelessWidget {
                     text: AppLocalizations.of(context)!.braveDescription,
                     selected: snapshot.data.toString() == 'true',
                     onPressed: () {
-                      AfterInstallationService.brave =
-                          !AfterInstallationService.brave;
+                      AfterInstallationService.brave[1] =
+                          !AfterInstallationService.brave[1];
                     },
                   );
                 } else {
@@ -99,7 +100,9 @@ class AfterInstallationBrowserSelection extends StatelessWidget {
               future: googleChromeStableInstalled,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  AfterInstallationService.googleChrome =
+                  AfterInstallationService.googleChrome[0] =
+                      snapshot.data.toString() == 'true';
+                  AfterInstallationService.googleChrome[1] =
                       snapshot.data.toString() == 'true';
                   return MintYSelectableEntryWithIconHorizontal(
                     icon: const SystemIcon(
@@ -108,8 +111,8 @@ class AfterInstallationBrowserSelection extends StatelessWidget {
                     text: AppLocalizations.of(context)!.chromeDescription,
                     selected: snapshot.data.toString() == 'true',
                     onPressed: () {
-                      AfterInstallationService.googleChrome =
-                          !AfterInstallationService.googleChrome;
+                      AfterInstallationService.googleChrome[1] =
+                          !AfterInstallationService.googleChrome[1];
                     },
                   );
                 } else {
