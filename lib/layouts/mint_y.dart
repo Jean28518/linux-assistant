@@ -823,7 +823,7 @@ class MintYProgressIndicatorCircle extends StatelessWidget {
   }
 }
 
-/// data should be a 2D list
+/// data should be a 2D list of strings
 /// First row are headings
 class MintYTable extends StatelessWidget {
   List<List<dynamic>> data;

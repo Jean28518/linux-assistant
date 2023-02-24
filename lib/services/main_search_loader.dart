@@ -26,36 +26,61 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
     const Duration timeoutDuration = Duration(seconds: 5);
 
     ConfigHandler configHandler = ConfigHandler();
+    await configHandler.ensureConfigIsLoaded();
     Future clearOldEntries = configHandler.clearOldDatesOfOpenendEntries();
 
     // prepare Action Entries
     ActionEntryList returnValue = ActionEntryList(entries: []);
     returnValue.entries.addAll(getRecommendations(context));
     returnValue.entries.addAll(getBasicEntries(context));
-    var folderEntries = await Linux.getAllFolderEntriesOfUser(context).timeout(
-        timeoutDuration,
-        onTimeout: () => _onTimeoutOfSearchLoadingModule("folderEntries"));
-    returnValue.entries.addAll(folderEntries);
-    var applicationEntries = await Linux.getAllAvailableApplications().timeout(
-        timeoutDuration,
-        onTimeout: () => _onTimeoutOfSearchLoadingModule("applicationEntries"));
-    returnValue.entries.addAll(applicationEntries);
-    var recentFiles = await Linux.getRecentFiles(context).timeout(
-        timeoutDuration,
-        onTimeout: () => _onTimeoutOfSearchLoadingModule("recentFiles"));
-    returnValue.entries.addAll(recentFiles);
-    var favoriteFiles = await Linux.getFavoriteFiles(context).timeout(
-        timeoutDuration,
-        onTimeout: () => _onTimeoutOfSearchLoadingModule("favoriteFiles"));
-    returnValue.entries.addAll(favoriteFiles);
-    var browserBookmarks = await Linux.getBrowserBookmarks(context).timeout(
-        timeoutDuration,
-        onTimeout: () => _onTimeoutOfSearchLoadingModule("browserBookmarks"));
-    returnValue.entries.addAll(browserBookmarks);
 
-    var additionalFolders =
-        Linux.getFoldersOfActionEntries(context, returnValue.entries);
-    returnValue.entries.addAll(additionalFolders);
+    if (configHandler.getValueUnsafe("search_filter_basic_folders", true)) {
+      var folderEntries = await Linux.getAllFolderEntriesOfUser(context)
+          .timeout(
+              timeoutDuration,
+              onTimeout: () =>
+                  _onTimeoutOfSearchLoadingModule("folderEntries"));
+      returnValue.entries.addAll(folderEntries);
+    }
+    print(configHandler.configMap);
+    print(configHandler.getValueUnsafe("search_filter_applications", true));
+    if (configHandler.getValueUnsafe("search_filter_applications", true)) {
+      var applicationEntries = await Linux.getAllAvailableApplications()
+          .timeout(timeoutDuration,
+              onTimeout: () =>
+                  _onTimeoutOfSearchLoadingModule("applicationEntries"));
+      returnValue.entries.addAll(applicationEntries);
+    }
+
+    if (configHandler.getValueUnsafe(
+        "search_filter_recently_used_files_and_folders", true)) {
+      var recentFiles = await Linux.getRecentFiles(context).timeout(
+          timeoutDuration,
+          onTimeout: () => _onTimeoutOfSearchLoadingModule("recentFiles"));
+      returnValue.entries.addAll(recentFiles);
+    }
+
+    if (configHandler.getValueUnsafe(
+        "search_filter_favorite_files_and_folder_bookmarks", true)) {
+      var favoriteFiles = await Linux.getFavoriteFiles(context).timeout(
+          timeoutDuration,
+          onTimeout: () => _onTimeoutOfSearchLoadingModule("favoriteFiles"));
+      returnValue.entries.addAll(favoriteFiles);
+    }
+
+    if (configHandler.getValueUnsafe("search_filter_bookmarks", true)) {
+      var browserBookmarks = await Linux.getBrowserBookmarks(context).timeout(
+          timeoutDuration,
+          onTimeout: () => _onTimeoutOfSearchLoadingModule("browserBookmarks"));
+      returnValue.entries.addAll(browserBookmarks);
+    }
+
+    if (configHandler.getValueUnsafe(
+        "search_filter_recently_used_files_and_folders", true)) {
+      var additionalFolders =
+          Linux.getFoldersOfActionEntries(context, returnValue.entries);
+      returnValue.entries.addAll(additionalFolders);
+    }
 
     await configHandler.setValue("runFirstStartUp", false);
     await clearOldEntries;

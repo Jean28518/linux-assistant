@@ -12,6 +12,7 @@ import 'package:linux_assistant/layouts/greeter/introduction.dart';
 import 'package:linux_assistant/layouts/main_screen/action_entry_card.dart';
 import 'package:linux_assistant/layouts/main_screen/disk_space.dart';
 import 'package:linux_assistant/layouts/feedback/feedback_form.dart';
+import 'package:linux_assistant/layouts/settings/settings_start.dart';
 import 'package:linux_assistant/services/main_search_loader.dart';
 import 'package:linux_assistant/services/updater.dart';
 import 'package:linux_assistant/widgets/memory_status.dart';
@@ -109,7 +110,7 @@ class _MainSearchState extends State<MainSearch> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
+                        SizedBox(
                           width: MediaQuery.of(context).size.width > 750
                               ? 600
                               : MediaQuery.of(context).size.width - 50,
@@ -195,10 +196,10 @@ class _MainSearchState extends State<MainSearch> {
                       ],
                     ),
                     _foundEntries.isEmpty
-                        ? SizedBox(
+                        ? const SizedBox(
                             height: 50,
                           )
-                        : SizedBox(
+                        : const SizedBox(
                             height: 10,
                           ),
                     _foundEntries.isEmpty
@@ -224,8 +225,8 @@ class _MainSearchState extends State<MainSearch> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Expanded(child: Container()),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
+                      const Padding(
+                        padding: EdgeInsets.all(8.0),
                         child: RecommendationCard(),
                       ),
                       Expanded(
@@ -235,28 +236,7 @@ class _MainSearchState extends State<MainSearch> {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             // Reload Button at start page
-                            IconButton(
-                              iconSize: 24,
-                              splashRadius: 24,
-                              icon: Icon(
-                                Icons.autorenew,
-                                color: widget.colorfulBackground
-                                    ? Colors.white
-                                    : Theme.of(context)
-                                        .textTheme
-                                        .headline1!
-                                        .color,
-                              ),
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => MainSearchLoader(),
-                                    ));
-                              },
-                              padding: EdgeInsets.zero,
-                              tooltip: AppLocalizations.of(context)!.reload,
-                            ),
+                            ReloadSearchButton(widget: widget),
                             // Background Button at start page
                             IconButton(
                               iconSize: 24,
@@ -285,36 +265,13 @@ class _MainSearchState extends State<MainSearch> {
                                   .changeBackground,
                             ),
                             // Help Button at start page
+                            HelpButton(widget: widget),
+                            // Settings Button:
                             IconButton(
                               iconSize: 24,
                               splashRadius: 24,
                               icon: Icon(
-                                Icons.help,
-                                color: widget.colorfulBackground
-                                    ? Colors.white
-                                    : Theme.of(context)
-                                        .textTheme
-                                        .headline1!
-                                        .color,
-                              ),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          GreeterIntroduction(forceOpen: true)),
-                                );
-                              },
-                              padding: EdgeInsets.zero,
-                              tooltip:
-                                  AppLocalizations.of(context)!.introduction,
-                            ),
-                            // Feedback Button at start page
-                            IconButton(
-                              iconSize: 24,
-                              splashRadius: 24,
-                              icon: Icon(
-                                Icons.feedback,
+                                Icons.settings,
                                 color: widget.colorfulBackground
                                     ? Colors.white
                                     : Theme.of(context)
@@ -324,14 +281,16 @@ class _MainSearchState extends State<MainSearch> {
                               ),
                               onPressed: () => showDialog(
                                 context: context,
-                                builder: (context) => FeedbackDialog(
-                                    foundEntries: _foundEntries,
-                                    searchText: _lastKeyword),
+                                builder: (context) => const SettingsStart(),
                               ),
                               padding: EdgeInsets.zero,
-                              tooltip:
-                                  AppLocalizations.of(context)!.sendFeedback,
+                              tooltip: AppLocalizations.of(context)!.settings,
                             ),
+                            // Feedback Button at start page
+                            FeedbackButton(
+                                widget: widget,
+                                foundEntries: _foundEntries,
+                                lastKeyword: _lastKeyword),
                           ],
                         ),
                       ),
@@ -388,25 +347,25 @@ class _MainSearchState extends State<MainSearch> {
       }).toList();
     }
 
-    bool uri_recognized = false;
+    bool uriRecognized = false;
 
     if (Uri.parse(keyword).isAbsolute || keyword.contains("www.")) {
-      uri_recognized = true;
+      uriRecognized = true;
     } else if (keyword.contains(".") && !keyword.endsWith(".")) {
       String keysplit = keyword.split(".").last.toUpperCase();
-      for (String top_level_domain in topLevelDomains) {
-        if (top_level_domain == keysplit) {
-          uri_recognized = true;
+      for (String topLevelDomain in topLevelDomains) {
+        if (topLevelDomain == keysplit) {
+          uriRecognized = true;
           break;
         }
       }
     }
 
-    if (uri_recognized) {
+    if (uriRecognized) {
       ActionEntry actionEntry = ActionEntry(
           name: "${AppLocalizations.of(context)!.openX} $keyword",
           description: "Open with default webbrowser",
-          action: "openwebsite:" + keyword);
+          action: "openwebsite:$keyword");
       actionEntry.priority = 10;
       results.add(actionEntry);
     }
@@ -415,13 +374,13 @@ class _MainSearchState extends State<MainSearch> {
       results.add(ActionEntry(
           name: "${AppLocalizations.of(context)!.searchInWebFor} $keyword",
           description: AppLocalizations.of(context)!.lookForOnlineResults,
-          action: "websearch:" + keyword));
+          action: "websearch:$keyword"));
       results.last.priority = -50;
     }
 
     if (selectedIndex >= results.length) {
       selectedIndex = results.length - 1;
-    } else if (results.length > 0 && selectedIndex == -1) {
+    } else if (results.isNotEmpty && selectedIndex == -1) {
       selectedIndex = 0;
       selectedIndexInView = 0;
     }
@@ -587,5 +546,104 @@ class _MainSearchState extends State<MainSearch> {
         suggestion = actionEntries[random];
       });
     }
+  }
+}
+
+class FeedbackButton extends StatelessWidget {
+  const FeedbackButton({
+    super.key,
+    required this.widget,
+    required List<ActionEntry> foundEntries,
+    required String lastKeyword,
+  })  : _foundEntries = foundEntries,
+        _lastKeyword = lastKeyword;
+
+  final MainSearch widget;
+  final List<ActionEntry> _foundEntries;
+  final String _lastKeyword;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      iconSize: 24,
+      splashRadius: 24,
+      icon: Icon(
+        Icons.feedback,
+        color: widget.colorfulBackground
+            ? Colors.white
+            : Theme.of(context).textTheme.headline1!.color,
+      ),
+      onPressed: () => showDialog(
+        context: context,
+        builder: (context) => FeedbackDialog(
+            foundEntries: _foundEntries, searchText: _lastKeyword),
+      ),
+      padding: EdgeInsets.zero,
+      tooltip: AppLocalizations.of(context)!.sendFeedback,
+    );
+  }
+}
+
+class HelpButton extends StatelessWidget {
+  const HelpButton({
+    super.key,
+    required this.widget,
+  });
+
+  final MainSearch widget;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      iconSize: 24,
+      splashRadius: 24,
+      icon: Icon(
+        Icons.help,
+        color: widget.colorfulBackground
+            ? Colors.white
+            : Theme.of(context).textTheme.headline1!.color,
+      ),
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => GreeterIntroduction(forceOpen: true)),
+        );
+      },
+      padding: EdgeInsets.zero,
+      tooltip: AppLocalizations.of(context)!.introduction,
+    );
+  }
+}
+
+class ReloadSearchButton extends StatelessWidget {
+  const ReloadSearchButton({
+    super.key,
+    required this.widget,
+  });
+
+  final MainSearch widget;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      iconSize: 24,
+      splashRadius: 24,
+      icon: Icon(
+        Icons.autorenew,
+        color: widget.colorfulBackground
+            ? Colors.white
+            : Theme.of(context).textTheme.headline1!.color,
+      ),
+      onPressed: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => MainSearchLoader(),
+            ));
+      },
+      padding: EdgeInsets.zero,
+      tooltip: AppLocalizations.of(context)!.reload,
+    );
   }
 }
