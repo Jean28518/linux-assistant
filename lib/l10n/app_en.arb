@@ -253,6 +253,9 @@
   "includeRecentlyUsedFilesAndFolders": "Include recently used files and folders.",
   "includeFavoriteFilesAndFolderBookmarks": "Include favorite files and folder bookmarks.",
   "includeBrowserBookmarks": "Include browser bookmars.",
+  "shutdown": "Shutdown",
+  "shutdownDescription": "Turn off your Linux machine now or set a timing for it.",
+  "shutdownIn": "Shutdown in",
   "@helloWorld": {
     "placeholders": {},
     "description": "The conventional newborn programmer greeting",

@@ -64,5 +64,14 @@ List<ActionEntry> getBasicEntries(BuildContext context) {
         size: 48,
       ),
     ),
+    ActionEntry(
+      name: AppLocalizations.of(context)!.shutdown,
+      description: AppLocalizations.of(context)!.shutdownDescription,
+      action: "shutdown",
+      iconWidget: const Icon(
+        Icons.power_settings_new,
+        size: 48,
+      ),
+    ),
   ];
 }

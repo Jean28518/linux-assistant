@@ -9,6 +9,7 @@ import 'package:linux_assistant/layouts/linux_health/overview.dart';
 import 'package:linux_assistant/layouts/main_screen/main_search.dart';
 import 'package:linux_assistant/layouts/run_command_queue.dart';
 import 'package:linux_assistant/layouts/security_check/overview.dart';
+import 'package:linux_assistant/layouts/shutdown/shutdown_dialog.dart';
 import 'package:linux_assistant/models/action_entry.dart';
 import 'package:linux_assistant/models/linux_command.dart';
 import 'package:linux_assistant/services/config_handler.dart';
@@ -65,6 +66,9 @@ class ActionHandler {
         break;
       case "redshift":
         Linux.openOrInstallRedshift(context, callback);
+        break;
+      case "shutdown":
+        showDialog(context: context, builder: (context) => ShutdownDialog());
         break;
       case "security_check":
         Navigator.push(

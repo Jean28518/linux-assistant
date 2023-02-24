@@ -253,6 +253,9 @@
   "includeRecentlyUsedFilesAndFolders": "Kürzlich verwendete Dateien und Ordner einbeziehen.",
   "includeFavoriteFilesAndFolderBookmarks": "Lieblingsdateien und Ordner-Lesezeichen einbeziehen.",
   "includeBrowserBookmarks": "Browser-Lesezeichen einbeziehen.",
+  "shutdown": "Herunterfahren",
+  "shutdownDescription": "Schalte deinen Linux-Rechner jetzt aus oder setzte dafür ein Timing. Führt den 'shutdown' Befehl aus.",
+  "shutdownIn": "Ausschalten in",
   "@helloWorld": {
     "placeholders": {},
     "description": "",
