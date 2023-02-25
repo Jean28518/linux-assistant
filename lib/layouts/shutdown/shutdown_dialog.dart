@@ -44,6 +44,9 @@ class ShutdownDialog extends StatelessWidget {
                         },
                         onSubmitted: (value) {
                           shutdown();
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const MainSearchLoader(),
+                          ));
                         },
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
