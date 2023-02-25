@@ -3,6 +3,7 @@ import sqlite3
 import jfolders
 import jfiles
 import jessentials
+import shutil
     
 def main():
 
@@ -13,15 +14,32 @@ def main():
             # We are using not .endswith in here because some distros have custom .default profile folder names.
             if not ".default" in entry:
                 continue
+            
+            dbFile = f"{entry}/places.sqlite"
 
-            connection = sqlite3.connect(f"{entry}/places.sqlite", timeout=0.5)
+            # If sqlite-wal file exists, the file 'places.sqlite' is opened by Firefox, which has an
+            # exclusive lock on the database so we can't read from it. Therefore we need to create
+            # a temporary copy.
+            if os.path.exists(f"{entry}/places.sqlite-wal"):
+                tmpDir = "/tmp/linux-assistant"
+                # Create temp directory, if it does not exist.
+                if not os.path.exists(tmpDir):
+                    os.mkdir(tmpDir)
+                
+                # Create a copy of the database file.
+                newDbFile = f"{tmpDir}/places.sqlite"
+                shutil.copyfile(dbFile, newDbFile)
+                dbFile = newDbFile
+
+            connection = sqlite3.connect(dbFile, timeout=0.5)
             cursor = connection.cursor()
 
             try:
                 for row in cursor.execute("SELECT moz_bookmarks.title, moz_places.url FROM moz_bookmarks JOIN moz_places WHERE moz_bookmarks.fk == moz_places.id"):
                     print(row[0] + "\t" + row[1])
-            except:
-                # Database busy
+            except Exception as ex:
+                print(f"Error reading data from sqlite database '{dbFile}'")
+                print(ex)
                 pass
  
     # Chromium/Chrome
