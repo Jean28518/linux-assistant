@@ -62,6 +62,9 @@ if __name__ == '__main__':
 
     dataDirs = os.getenv("XDG_DATA_DIRS").split(":")
 
+    if jfolders.does_folder_exist(os.getenv("HOME") + "/.local/share/applications"):
+        dataDirs.append(os.getenv("HOME") + "/.local/share")
+
     return_value = []
     for dataDir in dataDirs:
         dataDir += "/applications/"

@@ -151,12 +151,12 @@ class ActionHandler {
 
     if (actionEntry.action.startsWith("openapp:")) {
       if (Linux.currentenvironment.desktop == DESKTOPS.KDE) {
-        Linux.runCommand("kioclient exec " +
-            actionEntry.action.replaceFirst("openapp:", ""));
+        Linux.runCommandWithCustomArguments("kioclient",
+            ["exec", actionEntry.action.replaceFirst("openapp:", "")]);
       } else {
         String filepath = actionEntry.action.replaceFirst("openapp:", "");
         String file = filepath.split("/").last;
-        Linux.runCommand("/usr/bin/gtk-launch " + file);
+        Linux.runCommandWithCustomArguments("/usr/bin/gtk-launch", [file]);
       }
 
       callback();
