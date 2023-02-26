@@ -258,6 +258,11 @@
   "shutdownIn": "Shutdown in",
   "exit": "Exit",
   "exitDescription": "Close Linux-Assistant.",
+  "appearance_settings": "Appearance settings",
+  "darkThemeEnabled": "Dark theme (restart required)",
+  "mainColorSetting": "Main color (restart required)",
+  "secondaryColorSetting": "Secondary color (restart required)",
+  "colorfulBackground": "Colorful background",
   "@helloWorld": {
     "placeholders": {},
     "description": "The conventional newborn programmer greeting",

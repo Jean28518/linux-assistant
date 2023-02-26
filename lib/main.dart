@@ -23,6 +23,7 @@ void main() async {
   Linux.executableFolder = Linux.getExecutableFolder();
   await Linux.loadCurrentEnvironment();
   bool darkTheme = await Linux.isDarkThemeEnabled();
+  darkTheme = await ConfigHandler().getValue("dark_theme_activated", darkTheme);
 
   runApp(MyApp(
     darkTheme: darkTheme,
@@ -95,9 +96,13 @@ class MyApp extends StatelessWidget {
         MintY.currentColor = Colors.blue;
     }
     ConfigHandler configHandler = ConfigHandler();
-    String colorString = configHandler.getValueUnsafe("color", "");
+    String colorString = configHandler.getValueUnsafe("main_color", "");
     if (colorString.isNotEmpty) {
       MintY.currentColor = HexColor(colorString);
+    }
+    colorString = configHandler.getValueUnsafe("secondary_color", "");
+    if (colorString.isNotEmpty) {
+      MintY.secondaryColor = HexColor(colorString);
     }
   }
 }

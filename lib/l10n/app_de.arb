@@ -258,6 +258,11 @@
   "shutdownIn": "Ausschalten in",
   "exit": "Exit",
   "exitDescription": "Beende Linux-Assistant.",
+  "appearance_settings": "Erscheinungsbild-Einstellungen",
+  "darkThemeEnabled": "Dunkles Thema (Neustart benötigt)",
+  "mainColorSetting": "Primäre Farbe (Neustart benötigt)",
+  "secondaryColorSetting": "Sekundäre Farbe (Neustart benötigt)",
+  "colorfulBackground": "Bunter Hintergrund",
   "@helloWorld": {
     "placeholders": {},
     "description": "",

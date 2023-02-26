@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:linux_assistant/layouts/mint_y.dart';
+import 'package:linux_assistant/layouts/settings/appearance_settings.dart';
 import 'package:linux_assistant/layouts/settings/search_settings.dart';
 import 'package:linux_assistant/services/main_search_loader.dart';
 
@@ -26,6 +27,10 @@ class _SettingsStartState extends State<SettingsStart> {
       case "search_settings":
         content = SearchSettings();
         heading = AppLocalizations.of(context)!.searchSettings;
+        break;
+      case "appearance_settings":
+        content = AppearanceSettings();
+        heading = AppLocalizations.of(context)!.appearance_settings;
         break;
     }
     return Dialog(
@@ -96,6 +101,19 @@ class _SettingsStartState extends State<SettingsStart> {
             onPressed: () {
               setState(() {
                 state = "search_settings";
+              });
+            }),
+        MintYSelectableEntryWithIconHorizontal(
+            title: AppLocalizations.of(context)!.appearance_settings,
+            text: "",
+            icon: Icon(
+              Icons.brush,
+              size: 64,
+              color: MintY.currentColor,
+            ),
+            onPressed: () {
+              setState(() {
+                state = "appearance_settings";
               });
             })
       ]);

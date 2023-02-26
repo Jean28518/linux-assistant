@@ -237,33 +237,7 @@ class _MainSearchState extends State<MainSearch> {
                           children: [
                             // Reload Button at start page
                             ReloadSearchButton(widget: widget),
-                            // Background Button at start page
-                            IconButton(
-                              iconSize: 24,
-                              splashRadius: 24,
-                              icon: Icon(
-                                widget.colorfulBackground
-                                    ? Icons.circle
-                                    : Icons.blur_circular,
-                                color: widget.colorfulBackground
-                                    ? Colors.white
-                                    : Theme.of(context)
-                                        .textTheme
-                                        .headline1!
-                                        .color,
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  widget.colorfulBackground =
-                                      !widget.colorfulBackground;
-                                });
-                                ConfigHandler().setValue("colorfulBackground",
-                                    widget.colorfulBackground);
-                              },
-                              padding: EdgeInsets.zero,
-                              tooltip: AppLocalizations.of(context)!
-                                  .changeBackground,
-                            ),
+
                             // Help Button at start page
                             HelpButton(widget: widget),
                             // Settings Button:

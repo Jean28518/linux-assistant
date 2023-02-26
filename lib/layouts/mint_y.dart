@@ -5,6 +5,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class MintY {
   static Color currentColor = Color(0xff6db443);
 
+  static Color secondaryColor = Color(0xff2ab9a4);
+
   static bool dark = false;
   static MaterialColor currentColorTheme = green;
 
@@ -58,8 +60,8 @@ class MintY {
     gradient: LinearGradient(
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
-      stops: [0, 1],
-      colors: [MintY.currentColor, Color(0xff2ab9a4)],
+      stops: const [0, 1],
+      colors: [currentColor, secondaryColor],
     ),
   );
 
@@ -294,14 +296,14 @@ class MintYPage extends StatelessWidget {
 }
 
 class MintYButton extends StatelessWidget {
-  late Text text;
+  late Widget text;
   late Color color;
   VoidCallback? onPressed;
   late double width;
   late double height;
 
   MintYButton(
-      {Text text = const Text(""),
+      {this.text = const Text(""),
       Color color = const Color.fromARGB(255, 232, 232, 232),
       VoidCallback? onPressed,
       double width = 110,
