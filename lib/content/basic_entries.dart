@@ -73,5 +73,14 @@ List<ActionEntry> getBasicEntries(BuildContext context) {
         size: 48,
       ),
     ),
+    ActionEntry(
+      name: AppLocalizations.of(context)!.exit,
+      description: AppLocalizations.of(context)!.exitDescription,
+      action: "exit",
+      iconWidget: const Icon(
+        Icons.close,
+        size: 48,
+      ),
+    ),
   ];
 }

@@ -256,6 +256,8 @@
   "shutdown": "Herunterfahren",
   "shutdownDescription": "Schalte deinen Linux-Rechner jetzt aus oder setzte dafür ein Timing. Führt den 'shutdown' Befehl aus.",
   "shutdownIn": "Ausschalten in",
+  "exit": "Exit",
+  "exitDescription": "Beende Linux-Assistant.",
   "@helloWorld": {
     "placeholders": {},
     "description": "",

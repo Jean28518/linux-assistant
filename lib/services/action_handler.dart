@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:linux_assistant/enums/desktops.dart';
@@ -70,6 +72,8 @@ class ActionHandler {
       case "shutdown":
         showDialog(context: context, builder: (context) => ShutdownDialog());
         break;
+      case "exit":
+        exit(0);
       case "security_check":
         Navigator.push(
           context,

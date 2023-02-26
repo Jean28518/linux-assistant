@@ -256,6 +256,8 @@
   "shutdown": "Shutdown",
   "shutdownDescription": "Turn off your Linux machine now or set a timing for it.",
   "shutdownIn": "Shutdown in",
+  "exit": "Exit",
+  "exitDescription": "Close Linux-Assistant.",
   "@helloWorld": {
     "placeholders": {},
     "description": "The conventional newborn programmer greeting",
