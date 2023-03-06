@@ -26,10 +26,13 @@ class ActionHandler {
 
     // Save opened for intelligent search
     ConfigHandler configHandler = ConfigHandler();
-    String newDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
-    String oldList =
-        configHandler.getValueUnsafe("opened.${actionEntry.action}", "");
-    configHandler.setValue("opened.${actionEntry.action}", "$oldList$newDate;");
+    if (configHandler.getValueUnsafe("self_learning_search", true)) {
+      String newDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+      String oldList =
+          configHandler.getValueUnsafe("opened.${actionEntry.action}", "");
+      configHandler.setValue(
+          "opened.${actionEntry.action}", "$oldList$newDate;");
+    }
 
     switch (actionEntry.action) {
       case "change_user_password":

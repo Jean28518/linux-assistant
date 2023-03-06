@@ -430,14 +430,16 @@ class _MainSearchState extends State<MainSearch> {
         result.tmpPriority += 20;
       }
     }
-    _foundEntries.forEach((element) {
-      String datesString =
-          ConfigHandler().getValueUnsafe("opened.${element.action}", "");
+    if (ConfigHandler().getValueUnsafe("self_learning_search", true)) {
+      for (var element in _foundEntries) {
+        String datesString =
+            ConfigHandler().getValueUnsafe("opened.${element.action}", "");
 
-      /// length of an date entry is 11: "1970-01-01;".length = 11
-      int openTimes = (datesString.length / 11.0).round();
-      element.tmpPriority += openTimes * 2;
-    });
+        /// length of an date entry is 11: "1970-01-01;".length = 11
+        int openTimes = (datesString.length / 11.0).round();
+        element.tmpPriority += openTimes * 2;
+      }
+    }
 
     _foundEntries.sort((a, b) => (a.name).compareTo(b.name));
 

@@ -268,6 +268,7 @@
   "description": "Description",
   "root": "Root",
   "no": "No",
+  "selfLearningSearch": "Self-learning search",
   "@helloWorld": {
     "placeholders": {},
     "description": "The conventional newborn programmer greeting",

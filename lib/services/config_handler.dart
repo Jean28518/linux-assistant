@@ -80,18 +80,20 @@ class ConfigHandler {
       if (key.startsWith("opened.")) {
         String newDateString = "";
 
-        List<String> dateStrings = configMap[key].split(";");
-        for (String dateString in dateStrings) {
-          if (dateString.trim() == "") {
-            continue;
-          }
-          DateTime date = DateTime.parse(dateString);
+        if (getValueUnsafe("self_learning_search", true)) {
+          List<String> dateStrings = configMap[key].split(";");
+          for (String dateString in dateStrings) {
+            if (dateString.trim() == "") {
+              continue;
+            }
+            DateTime date = DateTime.parse(dateString);
 
-          /// oldestDate is after date:
-          if (oldestDate.compareTo(date) > 0) {
-            /// do nothing, don't add it again.
-          } else {
-            newDateString = "$newDateString$dateString;";
+            /// oldestDate is after date:
+            if (oldestDate.compareTo(date) > 0) {
+              /// do nothing, don't add it again.
+            } else {
+              newDateString = "$newDateString$dateString;";
+            }
           }
         }
 

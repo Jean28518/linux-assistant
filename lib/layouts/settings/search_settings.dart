@@ -34,6 +34,9 @@ class SearchSettings extends StatelessWidget {
           SettingWidgetOnOff(
               settingKey: "search_filter_bookmarks",
               text: AppLocalizations.of(context)!.includeBrowserBookmarks),
+          SettingWidgetOnOff(
+              settingKey: "self_learning_search",
+              text: AppLocalizations.of(context)!.selfLearningSearch),
         ],
       ),
     );
