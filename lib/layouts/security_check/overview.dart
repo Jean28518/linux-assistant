@@ -47,7 +47,7 @@ class SecurityCheckOverview extends StatelessWidget {
                 Text(
                   AppLocalizations.of(context)!
                       .securityCheckFailedBecauseNoRoot,
-                  style: Theme.of(context).textTheme.headline2,
+                  style: Theme.of(context).textTheme.headlineLarge,
                   textAlign: TextAlign.center,
                 )
               ],
@@ -64,7 +64,7 @@ class SecurityCheckOverview extends StatelessWidget {
                   MintYButtonNavigate(
                     route: const SecurityCheckOverview(),
                     text: Text(AppLocalizations.of(context)!.retry,
-                        style: MintY.heading2White),
+                        style: MintY.heading4White),
                     color: MintY.currentColor,
                   ),
                 ],
@@ -133,14 +133,14 @@ class SecurityCheckOverview extends StatelessWidget {
                 MintYButtonNavigate(
                   route: const MainSearchLoader(),
                   text: Text(AppLocalizations.of(context)!.backToSearch,
-                      style: MintY.heading3),
+                      style: MintY.heading4),
                   color: Colors.white,
                 ),
                 SizedBox(width: 16),
                 MintYButtonNavigate(
                   route: const SecurityCheckOverview(),
                   text: Text(AppLocalizations.of(context)!.reload,
-                      style: MintY.heading3White),
+                      style: MintY.heading4White),
                   color: MintY.currentColor,
                 ),
               ],
@@ -168,7 +168,7 @@ class UpdateCheck extends StatelessWidget {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text(
         AppLocalizations.of(context)!.updates,
-        style: Theme.of(context).textTheme.headline2,
+        style: Theme.of(context).textTheme.headlineLarge,
       ),
       Padding(
           padding: EdgeInsets.all(8.0),
@@ -204,7 +204,7 @@ class HomeFolderSecurityCheck extends StatelessWidget {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text(
         AppLocalizations.of(context)!.homeFolder,
-        style: Theme.of(context).textTheme.headline2,
+        style: Theme.of(context).textTheme.headlineLarge,
       ),
       Padding(
           padding: EdgeInsets.all(8.0),
@@ -246,7 +246,7 @@ class NetworkSecurityCheck extends StatelessWidget {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text(
         AppLocalizations.of(context)!.networkSecurity,
-        style: Theme.of(context).textTheme.headline2,
+        style: Theme.of(context).textTheme.headlineLarge,
       ),
       Padding(
           padding: EdgeInsets.all(8.0),
@@ -307,7 +307,7 @@ class AdditionSoftwareSources extends StatelessWidget {
       children: [
         Text(
           AppLocalizations.of(context)!.additionalSoftwareSources,
-          style: Theme.of(context).textTheme.headline2,
+          style: Theme.of(context).textTheme.headlineLarge,
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),

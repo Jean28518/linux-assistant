@@ -25,7 +25,7 @@ class AfterInstallationFlatpakCheck extends StatelessWidget {
       contentElements: [
         Text(
           AppLocalizations.of(context)!.flatpakIsNotInstalled,
-          style: Theme.of(context).textTheme.headline1,
+          style: Theme.of(context).textTheme.displayLarge,
           textAlign: TextAlign.center,
         ),
         Text(
@@ -41,7 +41,7 @@ class AfterInstallationFlatpakCheck extends StatelessWidget {
             color: Colors.grey,
             text: Text(
               AppLocalizations.of(context)!.skip,
-              style: MintY.heading3,
+              style: MintY.heading4,
             ),
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
@@ -56,7 +56,7 @@ class AfterInstallationFlatpakCheck extends StatelessWidget {
             color: MintY.currentColor,
             text: Text(
               AppLocalizations.of(context)!.settingUpFlatpak,
-              style: MintY.heading3White,
+              style: MintY.heading4White,
             ),
             onPressed: () async {
               await Linux.setUpFlatpak();

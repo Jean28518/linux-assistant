@@ -40,7 +40,7 @@ class WarningMessage extends StatelessWidget {
               ? MintYButton(
                   text: Text(
                     AppLocalizations.of(context)!.fix,
-                    style: MintY.heading3White,
+                    style: MintY.heading4White,
                   ),
                   color: MintY.currentColor,
                   onPressed: () {

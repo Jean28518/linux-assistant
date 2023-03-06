@@ -24,7 +24,7 @@ class LinuxAssistantUpdatePage extends StatelessWidget {
             contentElements: [
               Text(
                 AppLocalizations.of(context)!.aNewVersionIsAvailable,
-                style: Theme.of(context).textTheme.headline1,
+                style: Theme.of(context).textTheme.displayLarge,
                 textAlign: TextAlign.center,
               ),
               SizedBox(
@@ -43,7 +43,7 @@ class LinuxAssistantUpdatePage extends StatelessWidget {
                   route: MainSearchLoader(),
                   text: Text(
                     AppLocalizations.of(context)!.later,
-                    style: MintY.heading3,
+                    style: MintY.heading4,
                   ),
                 ),
                 SizedBox(
@@ -60,7 +60,7 @@ class LinuxAssistantUpdatePage extends StatelessWidget {
                       route: const MainSearchLoader()),
                   text: Text(
                     AppLocalizations.of(context)!.updateNow,
-                    style: MintY.heading3White,
+                    style: MintY.heading4White,
                   ),
                   color: MintY.currentColor,
                 ),

@@ -19,11 +19,11 @@ class RecommendationCard extends StatelessWidget {
         onTap: () {
           ActionHandler.handleActionEntry(entry, () {}, context);
         },
-        child: Container(
+        child: SizedBox(
           width: 450,
           height: 120,
           child: Row(children: [
-            Container(
+            SizedBox(
               width: 90,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -38,11 +38,14 @@ class RecommendationCard extends StatelessWidget {
               children: [
                 Text(
                   entry.name,
-                  style: TextStyle(fontSize: 24),
+                  style: Theme.of(context).textTheme.headlineMedium,
                 ),
-                Container(
-                  child: Text(entry.description),
+                SizedBox(
                   width: 290,
+                  child: Text(
+                    entry.description,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
                 ),
               ],
             )

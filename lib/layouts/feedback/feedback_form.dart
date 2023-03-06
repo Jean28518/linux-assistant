@@ -42,7 +42,7 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
               children: [
                 Text(
                   AppLocalizations.of(context)!.sendFeedback,
-                  style: Theme.of(context).textTheme.headline2,
+                  style: Theme.of(context).textTheme.headlineLarge,
                   textAlign: TextAlign.center,
                 ),
               ],
@@ -95,7 +95,7 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
                 MintYButton(
                   text: Text(
                     AppLocalizations.of(context)!.cancel,
-                    style: MintY.heading3,
+                    style: MintY.heading4,
                   ),
                   onPressed: () {
                     Navigator.of(context).pop();
@@ -108,7 +108,7 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
                   color: MintY.currentColor,
                   text: Text(
                     AppLocalizations.of(context)!.submit,
-                    style: MintY.heading3White,
+                    style: MintY.heading4White,
                   ),
                   onPressed: () {
                     Future<bool> success = FeedbackService.send_feedback(

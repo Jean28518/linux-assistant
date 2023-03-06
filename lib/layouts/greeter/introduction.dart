@@ -25,10 +25,10 @@ class GreeterIntroduction extends StatelessWidget {
       contentElements: [
         Text(
           AppLocalizations.of(context)!.theFollowingContentCanBeSearched,
-          style: Theme.of(context).textTheme.headline2,
+          style: Theme.of(context).textTheme.headlineLarge,
           textAlign: TextAlign.center,
         ),
-        SizedBox(
+        const SizedBox(
           height: 16,
         ),
         MintYFeature(
@@ -98,7 +98,7 @@ class GreeterIntroduction extends StatelessWidget {
             color: MintY.currentColor,
             text: Text(
               AppLocalizations.of(context)!.letsStart,
-              style: MintY.heading3White,
+              style: MintY.heading4White,
             ),
             onPressed: (() {
               ConfigHandler configHandler = ConfigHandler();

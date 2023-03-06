@@ -48,7 +48,7 @@ class StartScreen extends StatelessWidget {
             children: [
               Text(
                 AppLocalizations.of(context)!.yourLinuxAssistant,
-                style: Theme.of(context).textTheme.headline1,
+                style: Theme.of(context).textTheme.displayLarge,
               ),
               SizedBox(
                 height: 10,

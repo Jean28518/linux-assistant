@@ -17,7 +17,7 @@ class IsYourEnvironmentCorrectView extends StatelessWidget {
       contentElements: [
         Text(
           AppLocalizations.of(context)!.isTheRecognizedSystemCorrect,
-          style: Theme.of(context).textTheme.headline1,
+          style: Theme.of(context).textTheme.displayLarge,
           textAlign: TextAlign.center,
         ),
         const SizedBox(
@@ -25,7 +25,7 @@ class IsYourEnvironmentCorrectView extends StatelessWidget {
         ),
         Text(
           "${AppLocalizations.of(context)!.distribution}: ${getNiceStringOfDistrosEnum(Linux.currentenvironment.distribution)} \n${AppLocalizations.of(context)!.desktop}: ${getNiceStringOfDesktopsEnum(Linux.currentenvironment.desktop)}\n${AppLocalizations.of(context)!.language}: ${Linux.currentenvironment.language}",
-          style: Theme.of(context).textTheme.headline3,
+          style: Theme.of(context).textTheme.headlineMedium,
           textAlign: TextAlign.center,
         ),
       ],
@@ -35,7 +35,7 @@ class IsYourEnvironmentCorrectView extends StatelessWidget {
           MintYButtonNavigate(
             text: Text(
               AppLocalizations.of(context)!.noIWantToChange,
-              style: MintY.heading3,
+              style: MintY.heading4,
             ),
             route: const EnvironmentSelectionView(),
           ),
@@ -45,7 +45,7 @@ class IsYourEnvironmentCorrectView extends StatelessWidget {
           MintYButtonNavigate(
             text: Text(
               AppLocalizations.of(context)!.yes,
-              style: MintY.heading3White,
+              style: MintY.heading4White,
             ),
             color: MintY.currentColor,
             route: ActivateHotkeyQuestion(),

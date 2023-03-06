@@ -114,7 +114,7 @@ class LinuxHealthOverview extends StatelessWidget {
             contentElements: [
               Text(
                 AppLocalizations.of(context)!.runtime,
-                style: Theme.of(context).textTheme.headline2,
+                style: Theme.of(context).textTheme.headlineLarge,
               ),
               uptimeWarning
                   ? WarningMessage(
@@ -140,7 +140,7 @@ class LinuxHealthOverview extends StatelessWidget {
                         children: [
                           Text(
                             AppLocalizations.of(context)!.topMemoryProcesses,
-                            style: Theme.of(context).textTheme.headline3,
+                            style: Theme.of(context).textTheme.headlineMedium,
                           ),
                           Padding(
                             padding: const EdgeInsets.all(16.0),
@@ -154,7 +154,7 @@ class LinuxHealthOverview extends StatelessWidget {
                         children: [
                           Text(
                             AppLocalizations.of(context)!.topCPUProcesses,
-                            style: Theme.of(context).textTheme.headline3,
+                            style: Theme.of(context).textTheme.headlineMedium,
                           ),
                           Padding(
                             padding: const EdgeInsets.all(16.0),
@@ -168,7 +168,7 @@ class LinuxHealthOverview extends StatelessWidget {
               ),
               Text(
                 AppLocalizations.of(context)!.memoryAndStorage,
-                style: Theme.of(context).textTheme.headline2,
+                style: Theme.of(context).textTheme.headlineLarge,
               ),
               diskWarnings.isEmpty
                   ? SuccessMessage(
@@ -196,7 +196,7 @@ class LinuxHealthOverview extends StatelessWidget {
                   route: LinuxHealthOverview(),
                   text: Text(
                     AppLocalizations.of(context)!.reload,
-                    style: MintY.heading3,
+                    style: MintY.heading4,
                   ),
                 ),
                 SizedBox(
@@ -207,7 +207,7 @@ class LinuxHealthOverview extends StatelessWidget {
                   color: MintY.currentColor,
                   text: Text(
                     AppLocalizations.of(context)!.backToSearch,
-                    style: MintY.heading3White,
+                    style: MintY.heading4White,
                   ),
                 )
               ],

@@ -33,7 +33,7 @@ class _EnvironmentSelectionViewState extends State<EnvironmentSelectionView> {
             children: [
               Text(
                 "${AppLocalizations.of(context)!.distribution}: ",
-                style: Theme.of(context).textTheme.headline1,
+                style: Theme.of(context).textTheme.displayLarge,
               ),
               SizedBox(
                 width: 16,
@@ -61,7 +61,7 @@ class _EnvironmentSelectionViewState extends State<EnvironmentSelectionView> {
           //   children: [
           //     Text(
           //       "${AppLocalizations.of(context)!.version}: ",
-          //       style: Theme.of(context).textTheme.headline1,
+          //       style: Theme.of(context).textTheme.displayLarge,
           //     ),
           //     SizedBox(
           //       width: 16,
@@ -106,7 +106,7 @@ class _EnvironmentSelectionViewState extends State<EnvironmentSelectionView> {
               MintYButton(
                 text: Text(
                   getNiceStringOfDesktopsEnum(environment.desktop),
-                  style: Theme.of(context).textTheme.headline2,
+                  style: Theme.of(context).textTheme.headlineLarge,
                 ),
                 onPressed: () {
                   showDialog(
@@ -178,7 +178,7 @@ class _EnvironmentSelectionViewState extends State<EnvironmentSelectionView> {
               MintYButton(
                 text: Text(
                   AppLocalizations.of(context)!.next,
-                  style: MintY.heading2White,
+                  style: MintY.heading4White,
                 ),
                 color: Colors.blue,
                 onPressed: () {
@@ -206,7 +206,7 @@ class _EnvironmentSelectionViewState extends State<EnvironmentSelectionView> {
             children: [
               Text(
                 "${AppLocalizations.of(context)!.selectYourDistribution}:",
-                style: Theme.of(context).textTheme.headline1,
+                style: Theme.of(context).textTheme.displayLarge,
               ),
               const SizedBox(
                 height: 32,
@@ -252,7 +252,7 @@ class _EnvironmentSelectionViewState extends State<EnvironmentSelectionView> {
             children: [
               Text(
                 "${AppLocalizations.of(context)!.selectYourDesktop}:",
-                style: Theme.of(context).textTheme.headline1,
+                style: Theme.of(context).textTheme.displayLarge,
               ),
               const SizedBox(
                 height: 32,

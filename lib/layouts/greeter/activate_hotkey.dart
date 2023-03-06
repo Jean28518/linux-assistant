@@ -16,7 +16,7 @@ class ActivateHotkeyQuestion extends StatelessWidget {
       contentElements: [
         Text(
           AppLocalizations.of(context)!.openLinuxAssistantFaster,
-          style: Theme.of(context).textTheme.headline1,
+          style: Theme.of(context).textTheme.displayLarge,
           textAlign: TextAlign.center,
         ),
         const SizedBox(
@@ -36,7 +36,7 @@ class ActivateHotkeyQuestion extends StatelessWidget {
             route: route!,
             text: Text(
               AppLocalizations.of(context)!.skip,
-              style: MintY.heading3,
+              style: MintY.heading4,
             ),
           ),
           const SizedBox(
@@ -46,7 +46,7 @@ class ActivateHotkeyQuestion extends StatelessWidget {
             route: route!,
             text: Text(
               AppLocalizations.of(context)!.yesSetUpHotkey,
-              style: MintY.heading3White,
+              style: MintY.heading4White,
             ),
             color: MintY.currentColor,
             onPressed: () {

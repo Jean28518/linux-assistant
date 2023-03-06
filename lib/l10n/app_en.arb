@@ -263,6 +263,11 @@
   "mainColorSetting": "Main color (restart required)",
   "secondaryColorSetting": "Secondary color (restart required)",
   "colorfulBackground": "Colorful background",
+  "theFollowingCommandsWillBeExecuted": "The following commands will be executed",
+  "command" : "Command",
+  "description": "Description",
+  "root": "Root",
+  "no": "No",
   "@helloWorld": {
     "placeholders": {},
     "description": "The conventional newborn programmer greeting",

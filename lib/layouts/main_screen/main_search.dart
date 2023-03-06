@@ -180,7 +180,7 @@ class _MainSearchState extends State<MainSearch> {
                                       ? Colors.white
                                       : Theme.of(context)
                                           .textTheme
-                                          .headline1!
+                                          .displayLarge!
                                           .color,
                                 ),
                                 onPressed: () => showDialog(
@@ -250,7 +250,7 @@ class _MainSearchState extends State<MainSearch> {
                                     ? Colors.white
                                     : Theme.of(context)
                                         .textTheme
-                                        .headline1!
+                                        .displayLarge!
                                         .color,
                               ),
                               onPressed: () => showDialog(
@@ -545,7 +545,7 @@ class FeedbackButton extends StatelessWidget {
         Icons.feedback,
         color: widget.colorfulBackground
             ? Colors.white
-            : Theme.of(context).textTheme.headline1!.color,
+            : Theme.of(context).textTheme.displayLarge!.color,
       ),
       onPressed: () => showDialog(
         context: context,
@@ -575,7 +575,7 @@ class HelpButton extends StatelessWidget {
         Icons.help,
         color: widget.colorfulBackground
             ? Colors.white
-            : Theme.of(context).textTheme.headline1!.color,
+            : Theme.of(context).textTheme.displayLarge!.color,
       ),
       onPressed: () {
         Navigator.push(
@@ -607,7 +607,7 @@ class ReloadSearchButton extends StatelessWidget {
         Icons.autorenew,
         color: widget.colorfulBackground
             ? Colors.white
-            : Theme.of(context).textTheme.headline1!.color,
+            : Theme.of(context).textTheme.displayLarge!.color,
       ),
       onPressed: () {
         Navigator.push(

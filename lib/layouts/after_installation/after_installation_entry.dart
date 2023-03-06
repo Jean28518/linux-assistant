@@ -17,7 +17,7 @@ class AfterInstallationEntry extends StatelessWidget {
         contentElements: [
           Text(
             AppLocalizations.of(context)!.welcomeToYourLinuxMachine,
-            style: Theme.of(context).textTheme.headline1,
+            style: Theme.of(context).textTheme.displayLarge,
             textAlign: TextAlign.center,
           ),
           SizedBox(
@@ -39,7 +39,7 @@ class AfterInstallationEntry extends StatelessWidget {
             children: [
               MintYButtonNavigate(
                 text: Text(AppLocalizations.of(context)!.letsStart,
-                    style: MintY.heading2White),
+                    style: MintY.heading4White),
                 route: AfterInstallationFlatpakCheck(),
                 color: MintY.currentColor,
                 // width: 400,

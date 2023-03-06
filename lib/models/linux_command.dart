@@ -9,10 +9,14 @@ class LinuxCommand {
   late String command;
   late Map<String, String>? environment;
 
+  // Used as explanation to users
+  late String description;
+
   LinuxCommand({
     required this.userId,
     required this.command,
     this.environment,
+    this.description = "",
   });
 
   @override

@@ -263,6 +263,11 @@
   "mainColorSetting": "Primäre Farbe (Neustart benötigt)",
   "secondaryColorSetting": "Sekundäre Farbe (Neustart benötigt)",
   "colorfulBackground": "Bunter Hintergrund",
+  "theFollowingCommandsWillBeExecuted": "Folgende Befehle werden ausgeführt",
+  "command": "Befehl",
+  "description": "Beschreibung",
+  "root": "Root",
+  "no": "Nein",
   "@helloWorld": {
     "placeholders": {},
     "description": "",

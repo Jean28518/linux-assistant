@@ -18,7 +18,7 @@ class StartAfterInstallationRoutineQuestion extends StatelessWidget {
       contentElements: [
         Text(
           AppLocalizations.of(context)!.timeToSetupYourComputer,
-          style: Theme.of(context).textTheme.headline1,
+          style: Theme.of(context).textTheme.displayLarge,
           textAlign: TextAlign.center,
         ),
         const SizedBox(
@@ -26,7 +26,7 @@ class StartAfterInstallationRoutineQuestion extends StatelessWidget {
         ),
         Text(
           AppLocalizations.of(context)!.timeToSetupYourComputerDescription,
-          style: Theme.of(context).textTheme.headline3,
+          style: Theme.of(context).textTheme.headlineMedium,
           textAlign: TextAlign.center,
         ),
       ],
@@ -37,10 +37,10 @@ class StartAfterInstallationRoutineQuestion extends StatelessWidget {
             route: GreeterIntroduction(),
             text: Text(
               AppLocalizations.of(context)!.skip,
-              style: MintY.heading3,
+              style: MintY.heading4,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 10,
           ),
           MintYButtonNavigate(
@@ -48,7 +48,7 @@ class StartAfterInstallationRoutineQuestion extends StatelessWidget {
             color: MintY.currentColor,
             text: Text(
               AppLocalizations.of(context)!.letsStart,
-              style: MintY.heading3White,
+              style: MintY.heading4White,
             ),
           ),
         ],

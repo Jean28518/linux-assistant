@@ -29,17 +29,17 @@ class FeedbackSent extends StatelessWidget {
                   ),
                   Text(
                     AppLocalizations.of(context)!.thankYouForTheFeedback,
-                    style: Theme.of(context).textTheme.headline2,
+                    style: Theme.of(context).textTheme.headlineLarge,
                   ),
                   Text(
                     AppLocalizations.of(context)!.feedbackSentSuccessfully,
-                    style: Theme.of(context).textTheme.headline3,
+                    style: Theme.of(context).textTheme.headlineMedium,
                   ),
                   const SizedBox(height: 32),
                   MintYButton(
                     text: Text(
                       AppLocalizations.of(context)!.close,
-                      style: MintY.heading3White,
+                      style: MintY.heading4White,
                     ),
                     color: MintY.currentColor,
                     onPressed: () => Navigator.of(context).pop(),
@@ -58,13 +58,13 @@ class FeedbackSent extends StatelessWidget {
                   ),
                   Text(
                     AppLocalizations.of(context)!.sendingFeedbackFailed,
-                    style: Theme.of(context).textTheme.headline2,
+                    style: Theme.of(context).textTheme.headlineLarge,
                   ),
                   const SizedBox(height: 32),
                   MintYButton(
                     text: Text(
                       AppLocalizations.of(context)!.close,
-                      style: MintY.heading3White,
+                      style: MintY.heading4White,
                     ),
                     color: MintY.currentColor,
                     onPressed: () => Navigator.of(context).pop(),
@@ -81,7 +81,7 @@ class FeedbackSent extends StatelessWidget {
                   ),
                   Text(
                     AppLocalizations.of(context)!.sendingFeedback,
-                    style: Theme.of(context).textTheme.headline2,
+                    style: Theme.of(context).textTheme.headlineLarge,
                   )
                 ],
               );
