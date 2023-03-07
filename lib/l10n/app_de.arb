@@ -269,6 +269,7 @@
   "root": "Root",
   "no": "Nein",
   "selfLearningSearch": "Selbstlernende Suche",
+  "updateSystemDescription": "Aktualisiere deinen Linux-Rechner und alle Anwendungen. (Updates)",
   "@helloWorld": {
     "placeholders": {},
     "description": "",

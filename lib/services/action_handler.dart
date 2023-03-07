@@ -17,6 +17,7 @@ import 'package:linux_assistant/models/linux_command.dart';
 import 'package:linux_assistant/services/config_handler.dart';
 import 'package:linux_assistant/services/linux.dart';
 import 'package:linux_assistant/services/main_search_loader.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ActionHandler {
   /// The callback is usually the clear function.
@@ -124,6 +125,47 @@ class ActionHandler {
       callback();
     }
 
+    if (actionEntry.action == "update_system") {
+      Linux.updateAllPackages();
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => RunCommandQueue(
+              title: AppLocalizations.of(context)!.update,
+              message: AppLocalizations.of(context)!.updateSystemDescription,
+              route: const MainSearchLoader())));
+    }
+
+    if (actionEntry.action == "install_multimedia_codecs") {
+      Linux.installMultimediaCodecs();
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => RunCommandQueue(
+              title: AppLocalizations.of(context)!.installMultimediaCodecs,
+              message: AppLocalizations.of(context)!
+                  .installMultimediaCodecsDescription,
+              route: const MainSearchLoader())));
+    }
+
+    if (actionEntry.action == "enable_automatic_updates") {
+      await Linux.enableAutomaticUpdates();
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => RunCommandQueue(
+              title: AppLocalizations.of(context)!
+                  .automaticUpdateManagerConfiguration,
+              message: AppLocalizations.of(context)!
+                  .automaticUpdateManagerConfigurationDescription,
+              route: const MainSearchLoader())));
+    }
+
+    if (actionEntry.action == "enable_automatic_snapshots") {
+      await Linux.enableAutomaticSnapshots();
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => RunCommandQueue(
+              title: AppLocalizations.of(context)!
+                  .automaticUpdateManagerConfiguration,
+              message: AppLocalizations.of(context)!
+                  .automaticUpdateManagerConfigurationDescription,
+              route: const MainSearchLoader())));
+    }
+
     if (actionEntry.action.startsWith("apt-install:")) {
       String pkg = actionEntry.action.replaceFirst("apt-install:", "");
       await Linux.installApplications([pkg],
@@ -131,7 +173,7 @@ class ActionHandler {
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => RunCommandQueue(
+            builder: (context) => const RunCommandQueue(
                   title: "APT",
                   message: "Your package will be installed in a few moments...",
                   route: MainSearchLoader(),

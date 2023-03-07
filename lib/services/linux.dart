@@ -820,6 +820,7 @@ class Linux {
     return returnValue;
   }
 
+  /// Only adds commands to the command queue
   static void installMultimediaCodecs() async {
     switch (currentenvironment.distribution) {
       case DISTROS.DEBIAN:
@@ -948,11 +949,7 @@ class Linux {
       installMultimediaCodecs();
     }
     if (setupAutomaticSnapshots) {
-      await ensureApplicationInstallation(["timeshift"]);
-      commandQueue.add(LinuxCommand(
-          userId: 0,
-          command:
-              "python3 ${executableFolder}additional/python/setup_automatic_snapshots.py"));
+      await enableAutomaticSnapshots();
     }
     if (installNvidiaDriversAutomatically) {
       commandQueue.add(LinuxCommand(
@@ -961,22 +958,36 @@ class Linux {
               "python3 ${executableFolder}additional/python/install_nvidia_driver.py"));
     }
     if (setupAutomaticUpdates) {
-      switch (currentenvironment.distribution) {
-        case DISTROS.OPENSUSE:
-          await ensureApplicationInstallation(
-              ["yast2-online-update-configuration"]);
-          commandQueue.add(LinuxCommand(
-              userId: 0,
-              command:
-                  "ln -s /usr/lib/YaST2/bin/online_update /etc/cron.daily/"));
-          break;
-        default:
-          commandQueue.add(LinuxCommand(
-              userId: 0,
-              command:
-                  "python3 ${executableFolder}additional/python/setup_automatic_updates_debian.py"));
-      }
+      await enableAutomaticUpdates();
     }
+  }
+
+  /// Only appends commands to [commandQueue]
+  static Future<void> enableAutomaticUpdates() async {
+    switch (currentenvironment.distribution) {
+      case DISTROS.OPENSUSE:
+        await ensureApplicationInstallation(
+            ["yast2-online-update-configuration"]);
+        commandQueue.add(LinuxCommand(
+            userId: 0,
+            command:
+                "ln -s /usr/lib/YaST2/bin/online_update /etc/cron.daily/"));
+        break;
+      default:
+        commandQueue.add(LinuxCommand(
+            userId: 0,
+            command:
+                "python3 ${executableFolder}additional/python/setup_automatic_updates_debian.py"));
+    }
+  }
+
+  /// Only appends commands to [commandQueue]
+  static Future<void> enableAutomaticSnapshots() async {
+    await ensureApplicationInstallation(["timeshift"]);
+    commandQueue.add(LinuxCommand(
+        userId: 0,
+        command:
+            "python3 ${executableFolder}additional/python/setup_automatic_snapshots.py"));
   }
 
   /// Only appends commands to [commandQueue]
@@ -985,12 +996,12 @@ class Linux {
         .contains(SOFTWARE_MANAGERS.APT)) {
       commandQueue.add(LinuxCommand(
         userId: 0,
-        command: "apt update",
+        command: "/usr/bin/apt update",
         environment: {"DEBIAN_FRONTEND": "noninteractive"},
       ));
       commandQueue.add(LinuxCommand(
         userId: 0,
-        command: "apt dist-upgrade -y",
+        command: "/usr/bin/apt dist-upgrade -y",
         environment: {"DEBIAN_FRONTEND": "noninteractive"},
       ));
     } else {
@@ -1014,6 +1025,24 @@ class Linux {
           ));
         }
       }
+    }
+
+    if (currentenvironment.installedSoftwareManagers
+        .contains(SOFTWARE_MANAGERS.FLATPAK)) {
+      commandQueue.add(LinuxCommand(
+        userId: 0,
+        command: "/usr/bin/flatpak upgrade -y",
+        environment: {"DEBIAN_FRONTEND": "noninteractive"},
+      ));
+    }
+
+    if (currentenvironment.installedSoftwareManagers
+        .contains(SOFTWARE_MANAGERS.SNAP)) {
+      commandQueue.add(LinuxCommand(
+        userId: 0,
+        command: "/usr/bin/snap refresh",
+        environment: {"DEBIAN_FRONTEND": "noninteractive"},
+      ));
     }
   }
 

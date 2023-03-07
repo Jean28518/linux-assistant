@@ -82,6 +82,20 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
       returnValue.entries.addAll(additionalFolders);
     }
 
+    // Remove action entries for specific environments
+    List<ActionEntry> entriesToRemove = [];
+    for (ActionEntry entry in returnValue.entries) {
+      if (entry.disableEntryIf != null) {
+        // If the disableEntryIf function of the entry gets true, remove:
+        if (entry.disableEntryIf!()) {
+          entriesToRemove.add(entry);
+        }
+      }
+    }
+    for (ActionEntry entry in entriesToRemove) {
+      returnValue.entries.remove(entry);
+    }
+
     await configHandler.setValue("runFirstStartUp", false);
     await clearOldEntries;
 
