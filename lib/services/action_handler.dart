@@ -121,7 +121,20 @@ class ActionHandler {
 
     if (actionEntry.action.startsWith("openfile:")) {
       String file = actionEntry.action.replaceFirst("openfile:", "");
-      Linux.runCommandWithCustomArguments("xdg-open", [file]);
+      bool isExecutable = await Linux.isFileExecutable(file);
+      if (isExecutable) {
+        // TODO: Ask the user, if the file should be run (possible security risk).
+        // TODO: Ask the user, if the file should be run in a terminal.
+
+        // Run the file without terminal.
+        //Linux.runCommand(file);
+
+        // Run the file in a terminal (default for now).
+        Linux.runExecutableInTerminal(file);
+      } else {
+        Linux.runCommandWithCustomArguments("xdg-open", [file]);
+      }
+
       callback();
     }
 
