@@ -265,6 +265,8 @@
   "colorfulBackground": "Bunter Hintergrund",
   "theFollowingCommandsWillBeExecuted": "Folgende Befehle werden ausgeführt",
   "command": "Befehl",
+  "showCommands": "Befehle einblenden",
+  "hideCommands": "Befehle ausblenden",
   "description": "Beschreibung",
   "root": "Root",
   "no": "Nein",

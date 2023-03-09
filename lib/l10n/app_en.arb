@@ -265,6 +265,8 @@
   "colorfulBackground": "Colorful background",
   "theFollowingCommandsWillBeExecuted": "The following commands will be executed",
   "command" : "Command",
+  "showCommands": "Show commands",
+  "hideCommands": "Hide commands",
   "description": "Description",
   "root": "Root",
   "no": "No",
