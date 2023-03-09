@@ -175,7 +175,10 @@ class _CommandTableState extends State<CommandTable> {
       children: [
         MintYButton(
           color: MintY.currentColor,
-          text: Text(showTable ? "Befehle ausblenden" : "Befehle einblenden",
+          text: Text(
+              showTable
+                  ? AppLocalizations.of(context)!.hideCommands
+                  : AppLocalizations.of(context)!.showCommands,
               style: MintY.heading4White),
           onPressed: () {
             ConfigHandler()
