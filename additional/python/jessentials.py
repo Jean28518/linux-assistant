@@ -153,7 +153,7 @@ def get_filename_of_path(path):
 # Returns the location of the new folder
 def unzip_file(file_path):
     file_name_zip = get_filename_of_path(file_path)
-    file_name = file_name_zip.replace(".zip", "")
+    file_name = os.path.splitext(file_name_zip)[0]
     path = file_path.replace(file_name_zip, "")
     run_command("mkdir %s%s" % (path, file_name), False)
     run_command("unzip -o %s -d %s%s" % (file_path, path, file_name), False)
