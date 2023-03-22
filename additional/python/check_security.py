@@ -32,6 +32,10 @@ def get_additional_sources():
             continue        
         if "preinstalled-pool.list" in entry: # KDE neon
             continue
+        if "ubuntu-esm-apps.list" in entry: # Ubuntu ESM
+            continue
+        if "ubuntu-esm-infra.list" in entry: # Ubuntu ESM
+            continue
         lines = jfiles.get_all_lines_from_file(entry)
 
         for line in lines:
