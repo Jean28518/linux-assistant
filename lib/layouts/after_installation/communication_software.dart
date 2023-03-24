@@ -16,7 +16,7 @@ class AfterInstallationCommunicationSoftwareSelection extends StatelessWidget {
   static Future<bool> elementInstalled =
       Linux.areApplicationsInstalled(["im.riot.Riot", "element-desktop"]);
   static Future<bool> signalInstalled =
-      Linux.areApplicationsInstalled(["org.signal.Signal"]);
+      Linux.areApplicationsInstalled(["org.signal.Signal", "signal-desktop"]);
   static Future<bool> discordInstalled =
       Linux.areApplicationsInstalled(["com.discordapp.Discord", "discord"]);
   static Future<bool> zoomInstalled =
