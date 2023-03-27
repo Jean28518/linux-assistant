@@ -365,7 +365,7 @@ class _MainSearchState extends State<MainSearch> {
       results.add(actionEntry);
     }
 
-    if (keyword != "" && Linux.currentenvironment.browser == BROWSERS.FIREFOX) {
+    if (keyword != "") {
       results.add(ActionEntry(
           name: "${AppLocalizations.of(context)!.searchInWebFor} $keyword",
           description: AppLocalizations.of(context)!.lookForOnlineResults,
@@ -399,7 +399,7 @@ class _MainSearchState extends State<MainSearch> {
 
   /// This filter is only runs, if the user has stopped typing.
   void _runHeavyFilter(String keyword) async {
-    if (keyword.trim() == "") {
+    if (keyword.trim() == "" || _lastKeyword == "") {
       return;
     }
 
@@ -420,6 +420,12 @@ class _MainSearchState extends State<MainSearch> {
           await Linux.getInstallableZypperPackagesForKeyword(keyword);
 
       heavyEntries.addAll(pckgs);
+    }
+
+    // If in the meantime the user cleared the search bar, we don't want to
+    // show the results.
+    if (keyword.trim() == "" || _lastKeyword == "") {
+      return;
     }
 
     setState(() {
