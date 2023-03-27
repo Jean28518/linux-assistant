@@ -272,6 +272,7 @@
   "no": "No",
   "selfLearningSearch": "Self-learning search",
   "updateSystemDescription": "Update your Linux machine and all applications. (Updates)",
+  "featureOverview" : "Feature overview",
   "@helloWorld": {
     "placeholders": {},
     "description": "The conventional newborn programmer greeting",

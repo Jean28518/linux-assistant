@@ -8,6 +8,7 @@ import 'package:hotkey_manager/hotkey_manager.dart';
 import 'package:linux_assistant/content/top_level_domains.dart';
 import 'package:linux_assistant/enums/browsers.dart';
 import 'package:linux_assistant/enums/softwareManagers.dart';
+import 'package:linux_assistant/layouts/feature_overview/feature_overview.dart';
 import 'package:linux_assistant/layouts/greeter/introduction.dart';
 import 'package:linux_assistant/layouts/main_screen/action_entry_card.dart';
 import 'package:linux_assistant/layouts/main_screen/disk_space.dart';
@@ -240,6 +241,26 @@ class _MainSearchState extends State<MainSearch> {
 
                             // Help Button at start page
                             HelpButton(widget: widget),
+
+                            IconButton(
+                              onPressed: () => {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => const FeatureOverview(),
+                                ))
+                              },
+                              icon: Icon(
+                                Icons.apps,
+                                color: widget.colorfulBackground
+                                    ? Colors.white
+                                    : Theme.of(context)
+                                        .textTheme
+                                        .displayLarge!
+                                        .color,
+                              ),
+                              tooltip:
+                                  AppLocalizations.of(context)!.featureOverview,
+                            ),
+
                             // Settings Button:
                             IconButton(
                               iconSize: 24,

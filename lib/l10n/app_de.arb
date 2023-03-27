@@ -272,6 +272,7 @@
   "no": "Nein",
   "selfLearningSearch": "Selbstlernende Suche",
   "updateSystemDescription": "Aktualisiere deinen Linux-Rechner und alle Anwendungen. (Updates)",
+  "featureOverview": "Funktionsübersicht",
   "@helloWorld": {
     "placeholders": {},
     "description": "",

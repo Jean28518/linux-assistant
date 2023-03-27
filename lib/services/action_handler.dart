@@ -210,6 +210,10 @@ class ActionHandler {
 
       callback();
     }
+
+    if (actionEntry.action.startsWith("just_callback")) {
+      callback();
+    }
   }
 
   static void handleRecommendation() {}
