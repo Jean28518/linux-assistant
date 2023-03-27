@@ -10,14 +10,6 @@ terminal_emulators = [
     "gnome-terminal",
     "konsole",
     "xfce4-terminal",
-    "tilix",
-    "alacritty",
-    "kitty",
-    "urxvt",
-    "rxvt",
-    "terminology",
-    "terminator",
-    "stterm",
     "xterm"
 ]
 
