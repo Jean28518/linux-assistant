@@ -8,28 +8,38 @@ import shutil
 def main():
 
     # Firefox
-    if jfolders.does_folder_exist("~/.mozilla/firefox/"):
-        entries = jfolders.get_folder_entries("~/.mozilla/firefox/")
+    firefoxDir = "~/.mozilla/firefox/"
+
+    # Check if firefox is installed as snap (default on Ubuntu).
+    if shutil.which("snap") is not None and os.system("snap list firefox") == 0:
+        firefoxDir = "~/snap/firefox/common/.mozilla/firefox"
+
+    if jfolders.does_folder_exist(firefoxDir):
+        tmpDir = "/tmp/linux-assistant"
+        tmpFileUsed = False
+
+        entries = jfolders.get_folder_entries(firefoxDir)
         for entry in entries:
             # We are using not .endswith in here because some distros have custom .default profile folder names.
             if not ".default" in entry:
                 continue
             
             dbFile = f"{entry}/places.sqlite"
-
+            
             # If sqlite-wal file exists, the file 'places.sqlite' is opened by Firefox, which has an
             # exclusive lock on the database so we can't read from it. Therefore we need to create
             # a temporary copy.
             if os.path.exists(f"{entry}/places.sqlite-wal"):
-                tmpDir = "/tmp/linux-assistant"
                 # Create temp directory, if it does not exist.
                 if not os.path.exists(tmpDir):
-                    os.mkdir(tmpDir)
+                    os.mkdir(tmpDir, 0o700)
                 
                 # Create a copy of the database file.
                 newDbFile = f"{tmpDir}/places.sqlite"
                 shutil.copyfile(dbFile, newDbFile)
                 dbFile = newDbFile
+                
+                tmpFileUsed = True
 
             connection = sqlite3.connect(dbFile, timeout=0.5)
             cursor = connection.cursor()
@@ -38,9 +48,19 @@ def main():
                 for row in cursor.execute("SELECT moz_bookmarks.title, moz_places.url FROM moz_bookmarks JOIN moz_places WHERE moz_bookmarks.fk == moz_places.id"):
                     print(row[0] + "\t" + row[1])
             except Exception as ex:
-                print(f"Error reading data from sqlite database '{dbFile}'")
+                print(f"Failed to read data from sqlite database: {dbFile}")
                 print(ex)
                 pass
+            finally:
+                connection.close()
+        
+        # Delete the temporary database file after we're done with it.
+        if tmpFileUsed:
+            try:
+                os.remove(dbFile)
+            except Exception as ex:
+                print(f"Failed to remove temporary file: {dbFile}")
+                print(ex)
  
     # Chromium/Chrome
     entries = []
