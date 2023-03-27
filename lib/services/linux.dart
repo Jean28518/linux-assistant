@@ -1286,10 +1286,15 @@ class Linux {
             "xfconf-query -c xfwm4 -p /general/theme");
         return output.toLowerCase().contains("dark");
       case DESKTOPS.KDE:
-        String file = await File(
-                "${Linux.getHomeDirectory()}/.config/kdedefaults/kdeglobals")
-            .readAsString();
-        return file.toLowerCase().contains("dark");
+        String kdeGlobals =
+            "${Linux.getHomeDirectory()}/.config/kdedefaults/kdeglobals";
+
+        if (await File(kdeGlobals).exists()) {
+          String contents = await File(kdeGlobals).readAsString();
+          return contents.toLowerCase().contains("dark");
+        } else {
+          return false;
+        }
       default:
         return false;
     }
