@@ -9,6 +9,7 @@ import 'package:linux_assistant/layouts/greeter/activate_hotkey.dart';
 import 'package:linux_assistant/layouts/greeter/introduction.dart';
 import 'package:linux_assistant/layouts/linux_health/overview.dart';
 import 'package:linux_assistant/layouts/main_screen/main_search.dart';
+import 'package:linux_assistant/layouts/power_mode/power_mode.dart';
 import 'package:linux_assistant/layouts/run_command_queue.dart';
 import 'package:linux_assistant/layouts/security_check/overview.dart';
 import 'package:linux_assistant/layouts/shutdown/shutdown_dialog.dart';
@@ -78,6 +79,12 @@ class ActionHandler {
         break;
       case "exit":
         exit(0);
+      case "power_mode":
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const PowerMode()),
+        );
+        break;
       case "security_check":
         Navigator.push(
           context,

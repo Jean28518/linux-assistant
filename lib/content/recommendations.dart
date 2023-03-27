@@ -57,5 +57,15 @@ List<ActionEntry> getRecommendations(BuildContext context) {
         color: MintY.currentColor,
       ),
     ),
+    ActionEntry(
+      name: AppLocalizations.of(context)!.powerMode,
+      description: AppLocalizations.of(context)!.powerModeDescription,
+      action: "power_mode",
+      iconWidget: Icon(
+        Icons.speed,
+        size: 48,
+        color: MintY.currentColor,
+      ),
+    ),
   ];
 }
