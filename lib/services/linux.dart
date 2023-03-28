@@ -1382,4 +1382,24 @@ class Linux {
       default:
     }
   }
+
+  static Future<bool> isFileExecutable(String filePath) async {
+    var stat = await FileStat.stat(filePath);
+    var mode = stat.mode.toRadixString(8).substring(3);
+
+    // Example values for variable 'mode': '755', '644' etc.
+    // If any of the three numbers is uneven, the file is marked as executable.
+    return int.parse(mode[0]) % 2 != 0 ||
+        int.parse(mode[1]) % 2 != 0 ||
+        int.parse(mode[2]) % 2 != 0;
+  }
+
+  static void runExecutableInTerminal(String executablePath) async {
+    String term = await Linux.runPythonScript("get_terminal_emulator.py");
+    if ((term = term.trim()) == "gnome-terminal") {
+      Linux.runCommandWithCustomArguments(term, ["--", executablePath]);
+    } else {
+      Linux.runCommandWithCustomArguments(term, ["-e", executablePath]);
+    }
+  }
 }
