@@ -66,6 +66,9 @@ List<ActionEntry> getRecommendations(BuildContext context) {
         size: 48,
         color: MintY.currentColor,
       ),
+      disableEntryIf: () {
+        return Linux.currentenvironment.distribution == DISTROS.POPOS;
+      },
     ),
   ];
 }
