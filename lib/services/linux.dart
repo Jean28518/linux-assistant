@@ -729,6 +729,13 @@ class Linux {
     }
 
     // get version:
+    // Only use first two numbers of version number
+    List<String> split_ver = lines[1].split(".");
+    if (split_ver.length >= 2) {
+      lines[1] = split_ver[0] + "." + split_ver[1];
+    } else {
+      lines[1] = split_ver[0];
+    }
     if (double.tryParse(lines[1]) == null) {
       newEnvironment.version = -1.0;
     } else {
