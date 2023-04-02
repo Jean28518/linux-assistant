@@ -6,6 +6,7 @@ import 'package:linux_assistant/enums/softwareManagers.dart';
 class Environment {
   var distribution = DISTROS.DEBIAN;
   var version = -1.0;
+  var versionString = "";
   var desktop = DESKTOPS.CINNAMON;
   var browser = BROWSERS.FIREFOX;
   var language = "";
@@ -23,6 +24,7 @@ class Environment {
     return {
       'distribution': distribution.toString(),
       'version': version,
+      'versionString': versionString,
       'desktop': desktop.toString(),
       'browser': browser.toString(),
       'language': language,
