@@ -1404,4 +1404,8 @@ class Linux {
       Linux.runCommandWithCustomArguments(term, ["-e", executablePath]);
     }
   }
+
+  static void shutdown({int minutes = 0}) {
+    Linux.runCommand("/sbin/shutdown $minutes");
+  }
 }

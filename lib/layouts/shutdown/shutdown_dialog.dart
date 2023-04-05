@@ -43,7 +43,7 @@ class ShutdownDialog extends StatelessWidget {
                           }
                         },
                         onSubmitted: (value) {
-                          shutdown();
+                          Linux.shutdown(minutes: minutes);
                           Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => const MainSearchLoader(),
                           ));
@@ -87,7 +87,7 @@ class ShutdownDialog extends StatelessWidget {
                     style: MintY.heading4White,
                   ),
                   onPressed: () {
-                    shutdown();
+                    Linux.shutdown(minutes: minutes);
                   },
                 ),
               ],
@@ -96,9 +96,5 @@ class ShutdownDialog extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  void shutdown() {
-    Linux.runCommand("/sbin/shutdown $minutes");
   }
 }

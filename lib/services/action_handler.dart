@@ -151,6 +151,7 @@ class ActionHandler {
           builder: (context) => RunCommandQueue(
               title: AppLocalizations.of(context)!.update,
               message: AppLocalizations.of(context)!.updateSystemDescription,
+              offerShutdownAfterwards: true,
               route: const MainSearchLoader())));
     }
 

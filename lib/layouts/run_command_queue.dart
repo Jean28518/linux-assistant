@@ -12,12 +12,15 @@ class RunCommandQueue extends StatelessWidget {
   final String title;
   final String message;
   final Widget route;
+  final bool offerShutdownAfterwards;
+  static bool shutdownAfterwards = false;
 
   const RunCommandQueue({
     super.key,
     this.message = "",
     required this.title,
     required this.route,
+    this.offerShutdownAfterwards = false,
   });
 
   @override
@@ -50,6 +53,9 @@ class RunCommandQueue extends StatelessWidget {
       future: output,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
+          if (offerShutdownAfterwards && shutdownAfterwards) {
+            Linux.shutdown();
+          }
           return MintYPage(
             title: title,
             contentElements: [
@@ -122,7 +128,9 @@ class RunCommandQueue extends StatelessWidget {
                 const SizedBox(
                   width: 10,
                 ),
-                MintYButtonNext(route: route),
+                MintYButtonNext(
+                  route: route,
+                ),
               ],
             ),
           );
@@ -148,12 +156,49 @@ class RunCommandQueue extends StatelessWidget {
                   CommandTable(
                     tableData: tableData,
                   ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  offerShutdownAfterwards
+                      ? const ShutdownCheckbox()
+                      : Container(),
                 ],
               ),
             ],
           );
         }
       },
+    );
+  }
+}
+
+class ShutdownCheckbox extends StatefulWidget {
+  const ShutdownCheckbox({super.key});
+
+  @override
+  State<ShutdownCheckbox> createState() => _ShutdownCheckboxState();
+}
+
+class _ShutdownCheckboxState extends State<ShutdownCheckbox> {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Checkbox(
+          fillColor:
+              MaterialStateColor.resolveWith((states) => MintY.currentColor),
+          value: RunCommandQueue.shutdownAfterwards,
+          onChanged: (value) {
+            RunCommandQueue.shutdownAfterwards = value!;
+            setState(() {});
+          },
+        ),
+        Text(
+          AppLocalizations.of(context)!.shutdownAfterwards,
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
+      ],
     );
   }
 }

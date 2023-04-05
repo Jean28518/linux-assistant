@@ -42,8 +42,6 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
                   _onTimeoutOfSearchLoadingModule("folderEntries"));
       returnValue.entries.addAll(folderEntries);
     }
-    print(configHandler.configMap);
-    print(configHandler.getValueUnsafe("search_filter_applications", true));
     if (configHandler.getValueUnsafe("search_filter_applications", true)) {
       var applicationEntries = await Linux.getAllAvailableApplications()
           .timeout(timeoutDuration,
