@@ -31,7 +31,7 @@ class SystemIcon extends StatelessWidget {
       return iconLoader.getIconFromCache(iconString, iconSize: iconSize);
     } else {
       return FutureBuilder<Widget>(
-        future: iconLoader.getIconForApp(iconString, iconSize: iconSize),
+        future: iconLoader.getIconForAppOrFile(iconString, iconSize: iconSize),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return snapshot.data!;

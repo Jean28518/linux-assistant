@@ -697,8 +697,8 @@ class Linux {
       String fileName = recentFile.split("/").last;
       ActionEntry actionEntry = ActionEntry(
           name: fileName,
-          description: AppLocalizations.of(context)!.openX + " " + recentFile,
-          action: "openfile:" + recentFile);
+          description: "${AppLocalizations.of(context)!.openX} $recentFile",
+          action: "openfile:$recentFile");
       actionEntry.priority = -15;
       actionEntries.add(actionEntry);
     }

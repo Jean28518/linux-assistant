@@ -85,9 +85,10 @@ class _ActionEntryCardState extends State<ActionEntryCard> {
     _lastAction = widget.actionEntry.action;
 
     if (widget.actionEntry.action.startsWith("openfolder:")) {
-      return const Icon(
-        Icons.folder,
-        size: 48,
+      return SystemIcon(
+        iconString: "folder",
+        iconSize: 48,
+        spinner: false,
       );
     }
     if (widget.actionEntry.action.startsWith("openapp:")) {
@@ -109,9 +110,10 @@ class _ActionEntryCardState extends State<ActionEntryCard> {
       );
     }
     if (widget.actionEntry.action.startsWith("openfile:")) {
-      return const Icon(
-        Icons.description,
-        size: 48,
+      return SystemIcon(
+        iconString: widget.actionEntry.action.replaceFirst("openfile:", ""),
+        iconSize: 48,
+        spinner: false,
       );
     }
     return (const Icon(
