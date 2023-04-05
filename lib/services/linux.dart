@@ -1317,7 +1317,7 @@ class Linux {
       case DISTROS.ZORINOS:
         return "<Alt>";
       default:
-        return "<Super>";
+        return "<Super/Windows> ";
     }
   }
 
