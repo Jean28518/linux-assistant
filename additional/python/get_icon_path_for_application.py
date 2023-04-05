@@ -1,4 +1,5 @@
 import gi
+from gi.repository import Gio
 import os
 
 gi.require_version("Gtk", "3.0")

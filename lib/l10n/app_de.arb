@@ -271,7 +271,7 @@
   "root": "Root",
   "no": "Nein",
   "selfLearningSearch": "Selbstlernende Suche",
-  "updateSystemDescription": "Aktualisiere deinen Linux-Rechner und alle Anwendungen. (Updates)",
+  "updateSystemDescription": "Aktualisiere deinen Linux-Rechner und alle Anwendungen (Updates).\nDieser Prozess kann einige Minuten dauern.",
   "featureOverview": "Funktionsübersicht",
   "powerMode": "Leistungsmodus",
   "powerModeDescription": "Wähle zwischen dem Energiesparmodus und einem Leistungsmodus.",
@@ -281,6 +281,8 @@
   "activate": "Aktivieren",
   "active": "Aktiv",
   "installPowerProfilesDeamonDescription": "Um den Leistungsmodus zu ändern, wird power-profiles-deamon benötigt. Möchtest Du diesen installieren?",
+  "folderRecursionDepth" : "Ordner-Rekursions-Tiefe",
+  "shutdownAfterwards": "Rechner danach herunterfahren",
   "@helloWorld": {
     "placeholders": {},
     "description": "",

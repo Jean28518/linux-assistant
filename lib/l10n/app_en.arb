@@ -271,7 +271,7 @@
   "root": "Root",
   "no": "No",
   "selfLearningSearch": "Self-learning search",
-  "updateSystemDescription": "Update your Linux machine and all applications. (Updates)",
+  "updateSystemDescription": "Update your Linux machine and all applications (updates).\nThis process may take a few minutes.",
   "featureOverview" : "Feature overview",
   "powerMode": "Power mode",
   "powerModeDescription": "Switch between power saving and performance mode.",
@@ -281,6 +281,8 @@
   "activate": "Activate",
   "active": "Active",
   "installPowerProfilesDeamonDescription": "To change the power mode you need power-profiles-deamon. Do you want to install this?",
+  "folderRecursionDepth" : "Folder recursion depth",
+  "shutdownAfterwards": "Shutdown Linux afterwards",
   "@helloWorld": {
     "placeholders": {},
     "description": "The conventional newborn programmer greeting",

@@ -585,9 +585,11 @@ class Linux {
 
   static Future<List<ActionEntry>> getAllFolderEntriesOfUser(
       BuildContext context) async {
-    String foldersString = await runCommandWithCustomArgumentsAndGetStdOut(
-        "python3",
-        ["${executableFolder}additional/python/get_folder_structure.py"]);
+    String foldersString =
+        await runCommandWithCustomArgumentsAndGetStdOut("python3", [
+      "${executableFolder}additional/python/get_folder_structure.py",
+      "--recursion_depth=${ConfigHandler().getValueUnsafe("folder_recursion_depth", 3)}"
+    ]);
     List<String> folders = foldersString.split('\n');
 
     // Get Bookmarks:
@@ -695,8 +697,8 @@ class Linux {
       String fileName = recentFile.split("/").last;
       ActionEntry actionEntry = ActionEntry(
           name: fileName,
-          description: AppLocalizations.of(context)!.openX + " " + recentFile,
-          action: "openfile:" + recentFile);
+          description: "${AppLocalizations.of(context)!.openX} $recentFile",
+          action: "openfile:$recentFile");
       actionEntry.priority = -15;
       actionEntries.add(actionEntry);
     }
@@ -729,6 +731,14 @@ class Linux {
     }
 
     // get version:
+    newEnvironment.versionString = lines[1];
+    // Only use first two numbers of version number
+    List<String> splitVer = lines[1].split(".");
+    if (splitVer.length >= 2) {
+      lines[1] = splitVer[0] + "." + splitVer[1];
+    } else {
+      lines[1] = splitVer[0];
+    }
     if (double.tryParse(lines[1]) == null) {
       newEnvironment.version = -1.0;
     } else {
@@ -1193,6 +1203,8 @@ class Linux {
         "distribution", currentenvironment.distribution);
     currentenvironment.version =
         configHandler.getValueUnsafe("version", currentenvironment.version);
+    currentenvironment.versionString =
+        configHandler.getValueUnsafe("versionString", currentenvironment.versionString);
     currentenvironment.desktop =
         configHandler.getValueUnsafe("desktop", currentenvironment.desktop);
     currentenvironment.browser =
@@ -1317,7 +1329,7 @@ class Linux {
       case DISTROS.ZORINOS:
         return "<Alt>";
       default:
-        return "<Super>";
+        return "<Super/Windows> ";
     }
   }
 
@@ -1401,5 +1413,9 @@ class Linux {
     } else {
       Linux.runCommandWithCustomArguments(term, ["-e", executablePath]);
     }
+  }
+
+  static void shutdown({int minutes = 0}) {
+    Linux.runCommand("/sbin/shutdown $minutes");
   }
 }

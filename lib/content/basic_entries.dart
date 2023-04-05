@@ -31,7 +31,7 @@ List<ActionEntry> getBasicEntries(BuildContext context) {
     ActionEntry(
       name: AppLocalizations.of(context)!.systemInformation,
       description:
-          "${getNiceStringOfDistrosEnum(Linux.currentenvironment.distribution)} ${Linux.currentenvironment.version.toString()} ${getNiceStringOfDesktopsEnum(Linux.currentenvironment.desktop)}",
+          "${getNiceStringOfDistrosEnum(Linux.currentenvironment.distribution)} ${Linux.currentenvironment.versionString} ${getNiceStringOfDesktopsEnum(Linux.currentenvironment.desktop)}",
       action: "open_systeminformation",
       iconWidget: Icon(
         Icons.info_rounded,
