@@ -28,7 +28,7 @@
   "xPackagesShouldBeUpdated": "Pakete sollten aktualisiert werden.",
   "homeFolder": "Persönlicher Ordner",
   "homeFolderRightsOkay": "Die Rechte Deines persönlichen Ordners sind korrekt. Keine anderen Benutzer können Deine Dateien sehen.",
-  "homeFolderRightsNotOkay": "Dein persönlicher Ordner ist nicht sicher. Andere Benutzer könnten deine Dateien sehen.",
+  "homeFolderRightsNotOkay": "Dein persönlicher Ordner ist nicht sicher. Andere Benutzer könnten Deine Dateien sehen.",
   "networkSecurity": "Netzwerk-Sicherheit",
   "noFirewallRecognized": "Es wurde keine Firewall auf Deinem System gefunden. Eine Firewall ist für Rechner mit Zugriff vom Internet empfohlen.",
   "firewallIsRunning": "Deine Firewall ist aktiv. Gute Arbeit!",
@@ -55,7 +55,7 @@
   "yes": "Ja",
   "recognizingSystem": "Systemerkennung...",
   "yourLinuxAssistant": "Dein. Linux. Assistent.",
-  "linuxAssistantLongDescription": "Linux Assistant ist distributionsunabhängig und wurde dazu entwickelt, um Dir bei der täglichen Arbeit zu helfen und Tipps zu geben. Gib einfach ein paar Wörter in das Suchfeld ein und finde, was Du auch immer suchst! Der Linux Assistent kommt mit nützlichen Links zu Dateien, Ordnern und Anwendungen und hat ebenfalls einige Routinen, die Dir das Leben einfacher machen. Links zu Einstellungen und z.B. der mitgelieferten Sicherheitsüberprüfung sind ebenfalls vorhanden.",
+  "linuxAssistantLongDescription": "Linux-Assistant ist distributionsunabhängig und wurde dazu entwickelt, um Dir bei der täglichen Arbeit zu helfen und Tipps zu geben. Gib einfach ein paar Wörter in das Suchfeld ein und finde, was Du auch immer suchst! Der Linux Assistent kommt mit nützlichen Links zu Dateien, Ordnern und Anwendungen und hat ebenfalls einige Routinen, die Dir das Leben einfacher machen. Links zu Einstellungen und z.B. der mitgelieferten Sicherheitsüberprüfung sind ebenfalls vorhanden.",
   "welcomeToYourLinuxMachine": "Willkommen auf Deinem neuen Linux-Rechner!",
   "afterInstallationGreetingDescription": "In den nächsten Minuten werden wir Deinen Linux-Rechner nach Deinen Bedürfnissen einrichten.",
   "letsStart": "Lasst uns loslegen!",
@@ -66,13 +66,13 @@
   "applyConfiguration": "Wende Software-Konfiguration an",
   "thisProcessCouldTakeManyMinutesDependingSoftwareChoosed": "Dieser Prozess kann einige Minuten in Anspruch nehmen.\nDieser Prozess ist abhängig von der ausgewählten Konfiguration...",
   "automaticConfiguration": "Automatische Konfiguration",
-  "selectSpecificActionsOnTheNextSite": "Wähle spezifische automatische Aktionen auf der nächste Seite aus.",
+  "selectSpecificActionsOnTheNextSite": "Wähle spezifische automatische Aktionen auf der nächsten Seite aus.",
   "installMultimediaCodecs": "Installiere Multimedia-Codecs",
   "installMultimediaCodecsDescription": "Installiere zusätzliche Multimedia-Codecs zum Abspielen von Videos und Musik.",
   "automaticSnapshots": "Automatische Systemschnappschüsse",
   "automaticSnapshotsDescription": "Konfiguriere automatische Systemschnappschüsse. Timeshift wird so konfiguriert, dass zwei monatliche Schnappschüsse auf Deiner Root-Partition abgespeichert werden.",
-  "automaticNvidiaDriverInstallation": "Automatische Nvidia-Treiber installation",
-  "automaticNvidiaDriverInstallationDesciption": "Alle empohlenen Treiber werden installiert.",
+  "automaticNvidiaDriverInstallation": "Automatische Nvidia-Treiber Installation",
+  "automaticNvidiaDriverInstallationDesciption": "Alle empfohlenen Treiber werden installiert.",
   "automaticUpdateManagerConfiguration": "Automatische Konfiguration der Aktualisierungsverwaltung",
   "automaticUpdateManagerConfigurationDescription": "Es werden automatische Updates und (wenn vorhanden) automatische Wartung konfiguriert.",
   "welcomeToYourNewSystem": "Willkommen auf Deinem neuen System!",
@@ -99,7 +99,7 @@
   "onlyOfficeDescription": "Open Source Office Suite. Geeignet für das Microsoft Document Format (.docx, .xls, .ppt).",
   "wpsOfficeDescription": "Proprietäre Office Suite. Gut geeignet für das Microsoft Document Format (.docx, .xls, .ppt).",
   "feedbackPlaceholder": "Vermisst Du ein Suchergebnis? Nach was suchst Du? Hast Du Verbesserungsvorschläge?",
-  "includeSearchTermAndResults": "Versende ebenfalls den eingegeben Such-Text und die Such-Ergbnisse.",
+  "includeSearchTermAndResults": "Versende ebenfalls den eingegebenen Suchtext und die Such-Ergebnisse.",
   "includeBasicSystemInformation": "Sende ebenfalls grundlegende Systeminformationen",
   "submit": "Einsenden",
   "thankYouForTheFeedback": "Vielen Dank für Dein Feedback!",
@@ -111,8 +111,8 @@
   "timeToSetupYourComputer": "Zeit, Deinen Rechner einzurichten",
   "timeToSetupYourComputerDescription": "Konfiguriere Deinen Linux-Rechner nach Deinen Bedürfnissen.",
   "activateHotkey": "Aktiviere Tastenkürzel",
-  "openLinuxAssistantFaster": "Öffne Linux Assistant schneller.",
-  "openLinuxAssistantFasterDescription": "Mit der Tastenkombination {modifier} + <Q> könntest Du direkt deinen Assistenten schneller öffnen.\nUm mit Deinem Rechner produktiver zu arbeiten, wird dieser Schritt wärmstens empfohlen.",
+  "openLinuxAssistantFaster": "Öffne Linux-Assistant schneller.",
+  "openLinuxAssistantFasterDescription": "Mit der Tastenkombination {modifier} + <Q> könntest Du direkt Deinen Assistenten schneller öffnen.\nUm mit Deinem Rechner produktiver zu arbeiten, wird dieser Schritt wärmstens empfohlen.",
   "@openLinuxAssistantFasterDescription": {
     "placeholders": {
       "modifier" : {}
@@ -126,16 +126,16 @@
   "applications": "Anwendungen",
   "applicationSearchDescription": "Suche nach allen Deinen liebsten Anwendungen und starte diese im Bruchteil einer Sekunde.",
   "folders": "Ordner",
-  "folderSearchDescription": "Linux Assistant scannt automatisch nach Deinen wichtigsten Ordner und bietet diese Dir in der Suche an.",
+  "folderSearchDescription": "Linux-Assistant scannt automatisch nach Deinen wichtigsten Ordnern und bietet diese Dir in der Suche an.",
   "recentFiles": "Zuletzt geöffnete Dateien",
-  "recentFilesDescription": "Solange dein System die zuletzt geöffneten Dateien abspeichert, kannst Du auch nach zuletzt geöffneten oder deinen als Favorit markierten Dateien finden.",
+  "recentFilesDescription": "Solange Dein System die zuletzt geöffneten Dateien abspeichert, kannst Du auch nach zuletzt geöffneten oder Deinen als Favorit markierten Dateien finden.",
   "browserBookmarks": "Lesezeichen Deines Webbrowsers",
   "browserBookmarksDescription": "Durchsuche Deine Lieblingswebseiten, sofern Du diese in Deinem Webbrowser als Lesezeichen abgespeichert hast.",
   "specialFunctions": "Spezielle Funktionen des Linux-Assistants",
   "specialFunctionsDescription": "Starte die Sicherheitsüberprüfung oder die Einrichtung nach der Installation, sowie wie viele weitere kleine Routinen, die Dir den Linux-Alltag vereinfachen. Diese werden in zufälliger Reihenfolge unter der Sucheleiste vorgestellt.",
   "hint": "Tipp",
   "youCanOpenThisWindowBySearchingForIntroduction": "Du kannst diese Seite immer wieder aufrufen, in dem Du nach 'Einführung des Linux-Assistants' suchst.",
-  "youCanOpenLinuxAssistantWithHotkey": "Du kannst den Linux Assistant immer mit der Tastenkombination {modifier} + <Q> öffnen. Wenn dies noch nicht funktioniert, rufe in der Suche 'Tastatur Kurzbefehl' auf.",
+  "youCanOpenLinuxAssistantWithHotkey": "Du kannst den Linux-Assistant immer mit der Tastenkombination {modifier} + <Q> öffnen. Wenn dies noch nicht funktioniert, rufe in der Suche 'Tastatur Kurzbefehl' auf.",
   "@youCanOpenLinuxAssistantWithHotkey": {
     "placeholders": {
       "modifier" : {}
@@ -148,8 +148,8 @@
   "changeBackground": "Wechsle Hintergrund",
   "analysingLinuxHealth": "Analysiere Linux-Gesundheit...",
   "linuxHealth": "Linux-Gesundheit",
-  "linuxHealthDescription": "Überprüfe den aktuellen Status deines Linux-Systems.",
-  "uptimeWarning": "Dein Linux-System wurde schon lange nicht mehr neugestartet. Um potentielle Fehler zu vermeiden werden regelmäßige Neustarts empfohlen. Der letzte Neustart war vor {time} {unit}.",
+  "linuxHealthDescription": "Überprüfe den aktuellen Status Deines Linux-Systems.",
+  "uptimeWarning": "Dein Linux-System wurde schon lange nicht mehr neu gestartet. Um potentielle Fehler zu vermeiden werden regelmäßige Neustarts empfohlen. Der letzte Neustart war vor {time} {unit}.",
   "@uptimeWarning": {
     "placeholders": {
       "time" : {},
@@ -209,8 +209,8 @@
   "minutes": "Minuten",
   "hours": "Stunden",
   "days": "Tage",
-  "linuxAssistantKeyboardShortcut": "Linux Assistant Tastatur Kurzbefehl",
-  "setUpLinuxAssistantKeyboardShortcut": "Richte die Tastatenkombination {modifier} + <Q> ein um Linux-Assistant von überall aus schnell zu öffnen.",
+  "linuxAssistantKeyboardShortcut": "Linux-Assistant Tastatur Kurzbefehl",
+  "setUpLinuxAssistantKeyboardShortcut": "Richte die Tastenkombination {modifier} + <Q> ein, um Linux-Assistant von überall aus schnell zu öffnen.",
   "@setUpLinuxAssistantKeyboardShortcut": {
     "placeholders": {
       "modifier" : {}
@@ -242,7 +242,7 @@
     "description": "",
     "type": "text"
   },
-  "redshiftDescription": "Filtert blaues Licht um die Augen zu schonen.",
+  "redshiftDescription": "Filtert blaues Licht, um die Augen zu schonen.",
   "redshiftIsInstalledAlready": "Redshift ist bereits installiert.\nBitte öffnen Sie Redshift selbständig aus Ihrem Systemmenü.",
   "settings": "Einstellungen",
   "searchSettings": "Such-Einstellungen",
@@ -280,7 +280,7 @@
   "balanced": "Ausgewogen",
   "activate": "Aktivieren",
   "active": "Aktiv",
-  "installPowerProfilesDeamonDescription": "Um den Leistungsmodus zu ändern wird power-profiles-deamon benötigt. Möchtest Du diesen installieren?",
+  "installPowerProfilesDeamonDescription": "Um den Leistungsmodus zu ändern, wird power-profiles-deamon benötigt. Möchtest Du diesen installieren?",
   "folderRecursionDepth" : "Ordner-Rekursions-Tiefe",
   "shutdownAfterwards": "Rechner danach herunterfahren",
   "@helloWorld": {
