@@ -585,9 +585,11 @@ class Linux {
 
   static Future<List<ActionEntry>> getAllFolderEntriesOfUser(
       BuildContext context) async {
-    String foldersString = await runCommandWithCustomArgumentsAndGetStdOut(
-        "python3",
-        ["${executableFolder}additional/python/get_folder_structure.py"]);
+    String foldersString =
+        await runCommandWithCustomArgumentsAndGetStdOut("python3", [
+      "${executableFolder}additional/python/get_folder_structure.py",
+      "--recursion_depth=${ConfigHandler().getValueUnsafe("folder_recursion_depth", 3)}"
+    ]);
     List<String> folders = foldersString.split('\n');
 
     // Get Bookmarks:

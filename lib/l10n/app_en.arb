@@ -281,6 +281,7 @@
   "activate": "Activate",
   "active": "Active",
   "installPowerProfilesDeamonDescription": "To change the power mode you need power-profiles-deamon. Do you want to install this?",
+  "folderRecursionDepth" : "Folder recursion depth",
   "@helloWorld": {
     "placeholders": {},
     "description": "The conventional newborn programmer greeting",
