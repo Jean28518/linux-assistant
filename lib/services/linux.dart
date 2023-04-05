@@ -731,6 +731,14 @@ class Linux {
     }
 
     // get version:
+    newEnvironment.versionString = lines[1];
+    // Only use first two numbers of version number
+    List<String> splitVer = lines[1].split(".");
+    if (splitVer.length >= 2) {
+      lines[1] = splitVer[0] + "." + splitVer[1];
+    } else {
+      lines[1] = splitVer[0];
+    }
     if (double.tryParse(lines[1]) == null) {
       newEnvironment.version = -1.0;
     } else {
@@ -1195,6 +1203,8 @@ class Linux {
         "distribution", currentenvironment.distribution);
     currentenvironment.version =
         configHandler.getValueUnsafe("version", currentenvironment.version);
+    currentenvironment.versionString =
+        configHandler.getValueUnsafe("versionString", currentenvironment.versionString);
     currentenvironment.desktop =
         configHandler.getValueUnsafe("desktop", currentenvironment.desktop);
     currentenvironment.browser =
