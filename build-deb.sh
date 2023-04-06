@@ -1,5 +1,5 @@
 #!/bin/bash
-VERSION=0.2.0
+VERSION=0.2.1
 
 # Build Linux Assistant
 chmod +x additional/python/run_script.py
