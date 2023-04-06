@@ -225,11 +225,18 @@ class _MainSearchState extends State<MainSearch> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
+                      // Left Bottom
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [Container()],
+                      ),
+                      // Recommendation Card
                       Expanded(child: Container()),
                       const Padding(
                         padding: EdgeInsets.all(8.0),
                         child: RecommendationCard(),
                       ),
+                      // Right Bottom
                       Expanded(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,

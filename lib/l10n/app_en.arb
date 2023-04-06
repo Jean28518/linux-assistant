@@ -283,6 +283,7 @@
   "installPowerProfilesDeamonDescription": "To change the power mode you need power-profiles-deamon. Do you want to install this?",
   "folderRecursionDepth" : "Folder recursion depth",
   "shutdownAfterwards": "Shutdown Linux afterwards",
+  "versionOfLinuxAssistant": "Version of Linux Assistant",
   "@helloWorld": {
     "placeholders": {},
     "description": "The conventional newborn programmer greeting",

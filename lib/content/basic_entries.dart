@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:linux_assistant/enums/desktops.dart';
 import 'package:linux_assistant/enums/distros.dart';
 import 'package:linux_assistant/layouts/mint_y.dart';
+import 'package:linux_assistant/main.dart';
 import 'package:linux_assistant/models/action_entry.dart';
 import 'package:linux_assistant/services/linux.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -136,5 +137,15 @@ List<ActionEntry> getBasicEntries(BuildContext context) {
         return Linux.currentenvironment.distribution == DISTROS.OPENSUSE;
       },
     ),
+    ActionEntry(
+      name: AppLocalizations.of(context)!.versionOfLinuxAssistant,
+      description: "v$CURRENT_LINUX_ASSISTANT_VERSION",
+      action: "just_callback",
+      iconWidget: Icon(
+        Icons.info_rounded,
+        size: 48,
+        color: MintY.currentColor,
+      ),
+    )
   ];
 }

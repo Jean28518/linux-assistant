@@ -283,6 +283,7 @@
   "installPowerProfilesDeamonDescription": "Um den Leistungsmodus zu ändern, wird power-profiles-deamon benötigt. Möchtest Du diesen installieren?",
   "folderRecursionDepth" : "Ordner-Rekursions-Tiefe",
   "shutdownAfterwards": "Rechner danach herunterfahren",
+  "versionOfLinuxAssistant": "Version von Linux-Assistant",
   "@helloWorld": {
     "placeholders": {},
     "description": "",
