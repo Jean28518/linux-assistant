@@ -187,6 +187,7 @@ class _MainSearchState extends State<MainSearch> {
                                 onPressed: () => showDialog(
                                   context: context,
                                   builder: (context) => FeedbackDialog(
+                                      calledFromHome: false,
                                       foundEntries: _foundEntries,
                                       searchText: _lastKeyword),
                                 ),
@@ -586,7 +587,9 @@ class FeedbackButton extends StatelessWidget {
       onPressed: () => showDialog(
         context: context,
         builder: (context) => FeedbackDialog(
-            foundEntries: _foundEntries, searchText: _lastKeyword),
+            calledFromHome: true,
+            foundEntries: _foundEntries,
+            searchText: _lastKeyword),
       ),
       padding: EdgeInsets.zero,
       tooltip: AppLocalizations.of(context)!.sendFeedback,
