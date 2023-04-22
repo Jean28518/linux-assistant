@@ -1,6 +1,12 @@
 # Project-level configuration.
 cmake_minimum_required(VERSION 3.10)
 project(runner LANGUAGES CXX)
+project(Linux-Assistant
+  DESCRIPTION "A daily linux helper with powerful integrated search, routines and checks."
+  VERSION 0.2.1)
+
+configure_file(config.h.in ${CMAKE_CURRENT_SOURCE_DIR}/include/config.h)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 # The name of the executable created for the application. Change this to change
 # the on-disk name of your application.
