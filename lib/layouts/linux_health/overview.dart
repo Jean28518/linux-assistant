@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -204,9 +203,6 @@ class _LinuxHealthOverviewStat extends State<LinuxHealthOverview> {
             bottom: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
-                  width: 10,
-                ),
                 MintYButtonNavigate(
                   route: MainSearchLoader(),
                   color: MintY.currentColor,
