@@ -12,13 +12,17 @@ class FeedbackDialog extends StatefulWidget {
   String searchText;
   List<ActionEntry> foundEntries;
 
+  bool calledFromHome;
   bool includeSearchTermAndResults = true;
   bool includeBasicSystemInformation = true;
 
   String message = "";
 
   FeedbackDialog(
-      {super.key, this.searchText = "", this.foundEntries = const []});
+      {super.key,
+      required this.calledFromHome,
+      this.searchText = "",
+      this.foundEntries = const []});
 
   @override
   State<FeedbackDialog> createState() => _FeedbackDialogState();
@@ -58,20 +62,21 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
               style: Theme.of(context).textTheme.bodyText1,
               controller: messageController,
             ),
-            Row(
-              children: [
-                Checkbox(
-                    activeColor: MintY.currentColor,
-                    value: widget.includeSearchTermAndResults,
-                    onChanged: ((value) => setState(() {
-                          widget.includeSearchTermAndResults = value!;
-                        }))),
-                Text(
-                  AppLocalizations.of(context)!.includeSearchTermAndResults,
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-              ],
-            ),
+            if (!widget.calledFromHome)
+              Row(
+                children: [
+                  Checkbox(
+                      activeColor: MintY.currentColor,
+                      value: widget.includeSearchTermAndResults,
+                      onChanged: ((value) => setState(() {
+                            widget.includeSearchTermAndResults = value!;
+                          }))),
+                  Text(
+                    AppLocalizations.of(context)!.includeSearchTermAndResults,
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                ],
+              ),
             Row(
               children: [
                 Checkbox(
@@ -116,7 +121,9 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
                         widget.foundEntries,
                         widget.searchText,
                         widget.includeBasicSystemInformation,
-                        widget.includeSearchTermAndResults);
+                        widget.calledFromHome
+                            ? false
+                            : widget.includeSearchTermAndResults);
                     Navigator.of(context).pop();
                     showDialog(
                       context: context,
