@@ -38,8 +38,7 @@ class SecurityCheckOverview extends StatelessWidget {
         if (snapshot.hasData) {
           print(snapshot.data!);
           List<String> lines = snapshot.data!.split("\n");
-          if (lines[0].contains("must run as root!") ||
-              lines[0].contains("Request dismissed")) {
+          if (!snapshot.data!.contains("#!script ran successfully.")) {
             return Scaffold(
                 body: MintYPage(
               title: AppLocalizations.of(context)!.securityCheck,
@@ -57,7 +56,7 @@ class SecurityCheckOverview extends StatelessWidget {
                   MintYButtonNavigate(
                     route: const MainSearchLoader(),
                     text: Text(AppLocalizations.of(context)!.cancel,
-                        style: MintY.heading2),
+                        style: MintY.heading4),
                     color: Colors.white,
                   ),
                   SizedBox(width: 16),

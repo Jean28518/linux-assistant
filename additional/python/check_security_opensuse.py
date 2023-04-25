@@ -67,3 +67,4 @@ if __name__ == "__main__":
     get_available_updates()
     check_home_folder_rights(jessentials.get_value_from_arguments("home", ""))
     check_server_access()
+    print("#!script ran successfully.")
