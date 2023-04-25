@@ -17,7 +17,10 @@ def getLanguage():
 
 def getDefaultBrowser():
     lines = jessentials.run_command("xdg-settings get default-web-browser", False, True)
-    return lines[0].replace(".desktop", "")
+    if len(lines) > 0:
+        return lines[0].replace(".desktop", "")
+    else:
+        return ""
 
 def getSessionType():
     return jessentials.get_environment_variable("XDG_SESSION_TYPE")
