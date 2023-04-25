@@ -284,6 +284,8 @@
   "folderRecursionDepth" : "Ordner-Rekursions-Tiefe",
   "shutdownAfterwards": "Rechner danach herunterfahren",
   "versionOfLinuxAssistant": "Version von Linux-Assistant",
+  "urls": "URL",
+  "urlsDescription": "Gebe eine URL ein und öffne diese in deinem Standard-Browser.",
   "@helloWorld": {
     "placeholders": {},
     "description": "",

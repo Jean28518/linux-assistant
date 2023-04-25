@@ -45,5 +45,15 @@ List<ActionEntry> getSearchableEntryExamples(BuildContext context) {
         color: MintY.currentColor,
       ),
     ),
+    ActionEntry(
+      name: AppLocalizations.of(context)!.urls,
+      description: AppLocalizations.of(context)!.urlsDescription,
+      action: "just_callback",
+      iconWidget: Icon(
+        Icons.link,
+        size: 64,
+        color: MintY.currentColor,
+      ),
+    ),
   ];
 }

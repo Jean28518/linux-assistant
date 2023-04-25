@@ -284,6 +284,8 @@
   "folderRecursionDepth" : "Folder recursion depth",
   "shutdownAfterwards": "Shutdown Linux afterwards",
   "versionOfLinuxAssistant": "Version of Linux Assistant",
+  "urls": "URL",
+  "urlsDescription": "Enter an URL and open it in your default browser.",
   "@helloWorld": {
     "placeholders": {},
     "description": "The conventional newborn programmer greeting",
