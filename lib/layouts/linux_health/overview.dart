@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -9,12 +10,22 @@ import 'package:linux_assistant/services/main_search_loader.dart';
 import 'package:linux_assistant/widgets/success_message.dart';
 import 'package:linux_assistant/widgets/warning_message.dart';
 
-class LinuxHealthOverview extends StatelessWidget {
-  LinuxHealthOverview({super.key});
-  Future<String> output = Linux.runPythonScript("check_linux_health.py");
+class LinuxHealthOverview extends StatefulWidget {
+  const LinuxHealthOverview({super.key});
+
+  @override
+  State<LinuxHealthOverview> createState() => _LinuxHealthOverviewStat();
+}
+
+class _LinuxHealthOverviewStat extends State<LinuxHealthOverview> {
+  Timer? reloadTimer;
 
   @override
   Widget build(BuildContext context) {
+    late Future<String> output = Linux.runPythonScript("check_linux_health.py");
+    reloadTimer ??=
+        Timer.periodic(const Duration(seconds: 5), (timer) => setState(() {}));
+
     return FutureBuilder<String>(
       future: output,
       builder: (context, snapshot) {
@@ -193,22 +204,13 @@ class LinuxHealthOverview extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 MintYButtonNavigate(
-                  route: LinuxHealthOverview(),
-                  text: Text(
-                    AppLocalizations.of(context)!.reload,
-                    style: MintY.heading4,
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                MintYButtonNavigate(
                   route: MainSearchLoader(),
                   color: MintY.currentColor,
                   text: Text(
                     AppLocalizations.of(context)!.backToSearch,
                     style: MintY.heading4White,
                   ),
+                  onPressed: () => reloadTimer?.cancel(),
                 )
               ],
             ),
@@ -223,5 +225,3 @@ class LinuxHealthOverview extends StatelessWidget {
     );
   }
 }
-
-class Test {}
