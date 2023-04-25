@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/widgets.dart';
 import 'package:linux_assistant/layouts/mint_y.dart';
 import 'package:linux_assistant/layouts/run_command_queue.dart';
 import 'package:linux_assistant/services/main_search_loader.dart';
 import 'package:linux_assistant/services/updater.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:linux_assistant/services/weekly_tasks.dart';
 
 class LinuxAssistantUpdatePage extends StatelessWidget {
   const LinuxAssistantUpdatePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Future<bool> newVersionAvailable =
-        LinuxAssistantUpdater.isNewerVersionAvailable();
-    return FutureBuilder<bool>(
-      future: newVersionAvailable,
+    Future<void> weeklyTasks = WeeklyTasks.doWeekleyTasks();
+
+    return FutureBuilder<void>(
+      future: weeklyTasks,
       builder: (context, snapshot) {
-        if (snapshot.hasData && (snapshot.data!)) {
+        if (snapshot.connectionState == ConnectionState.done &&
+            LinuxAssistantUpdater.isNewerVersionAvailable()) {
           return MintYPage(
             title: AppLocalizations.of(context)!.update,
             contentElements: [
@@ -27,12 +26,12 @@ class LinuxAssistantUpdatePage extends StatelessWidget {
                 style: Theme.of(context).textTheme.displayLarge,
                 textAlign: TextAlign.center,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Text(
                 AppLocalizations.of(context)!.doYouWantToUpdateNow,
-                style: Theme.of(context).textTheme.bodyText1,
+                style: Theme.of(context).textTheme.bodyMedium,
                 textAlign: TextAlign.center,
               ),
             ],
@@ -40,13 +39,13 @@ class LinuxAssistantUpdatePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 MintYButtonNavigate(
-                  route: MainSearchLoader(),
+                  route: const MainSearchLoader(),
                   text: Text(
                     AppLocalizations.of(context)!.later,
                     style: MintY.heading4,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
                 MintYButtonNavigate(
@@ -67,7 +66,8 @@ class LinuxAssistantUpdatePage extends StatelessWidget {
               ],
             ),
           );
-        } else if (snapshot.hasData || snapshot.hasError) {
+        } else if (snapshot.connectionState == ConnectionState.done ||
+            snapshot.hasError) {
           return const MainSearchLoader();
         } else {
           return const MintYLoadingPage();

@@ -286,6 +286,7 @@
   "versionOfLinuxAssistant": "Version of Linux Assistant",
   "urls": "URL",
   "urlsDescription": "Enter an URL and open it in your default browser.",
+  "packageWillBeInstalled": "Your package will be installed in a few moments...",
   "@helloWorld": {
     "placeholders": {},
     "description": "The conventional newborn programmer greeting",

@@ -2,11 +2,9 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:hotkey_manager/hotkey_manager.dart';
 import 'package:linux_assistant/content/top_level_domains.dart';
-import 'package:linux_assistant/enums/browsers.dart';
 import 'package:linux_assistant/enums/softwareManagers.dart';
 import 'package:linux_assistant/layouts/feature_overview/feature_overview.dart';
 import 'package:linux_assistant/layouts/greeter/introduction.dart';
@@ -15,7 +13,7 @@ import 'package:linux_assistant/layouts/main_screen/disk_space.dart';
 import 'package:linux_assistant/layouts/feedback/feedback_form.dart';
 import 'package:linux_assistant/layouts/settings/settings_start.dart';
 import 'package:linux_assistant/services/main_search_loader.dart';
-import 'package:linux_assistant/services/updater.dart';
+import 'package:linux_assistant/services/weekly_tasks.dart';
 import 'package:linux_assistant/widgets/memory_status.dart';
 import 'package:linux_assistant/layouts/mint_y.dart';
 import 'package:linux_assistant/layouts/main_screen/recommendation_card.dart';
@@ -88,7 +86,7 @@ class _MainSearchState extends State<MainSearch> {
           children: [
             Expanded(
               child: Container(
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: Center(
                     child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -96,7 +94,7 @@ class _MainSearchState extends State<MainSearch> {
                     _foundEntries.isEmpty
                         ? Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
+                            children: const [
                               DiskSpace(),
                               SizedBox(width: 16),
                               MemoryStatus(),
@@ -104,7 +102,7 @@ class _MainSearchState extends State<MainSearch> {
                           )
                         : Container(),
                     _foundEntries.isEmpty
-                        ? SizedBox(
+                        ? const SizedBox(
                             height: 16,
                           )
                         : Container(),
@@ -147,7 +145,7 @@ class _MainSearchState extends State<MainSearch> {
                                           AppLocalizations.of(context)!.clear,
                                     ),
                             ),
-                            style: Theme.of(context).textTheme.bodyText1,
+                            style: Theme.of(context).textTheme.bodyMedium,
                             cursorColor: MintY.currentColor,
                             controller: searchBarController,
                             autofocus: true,
@@ -417,7 +415,7 @@ class _MainSearchState extends State<MainSearch> {
     if (Linux.currentenvironment.installedSoftwareManagers
         .contains(SOFTWARE_MANAGERS.APT)) {
       List<ActionEntry> pckgs =
-          await Linux.getInstallableAptPackagesForKeyword(keyword);
+          await Linux.getInstallableAptPackagesForKeyword(context, keyword);
 
       heavyEntries.addAll(pckgs);
     }
@@ -535,17 +533,17 @@ class _MainSearchState extends State<MainSearch> {
     );
 
     // Debug Call
-    HotKey _hotKeyDebug = HotKey(
+    HotKey hotKeyDebug = HotKey(
       KeyCode.keyD,
       modifiers: [KeyModifier.control],
       scope: HotKeyScope.inapp,
     );
     hotKeyManager.register(
-      _hotKeyDebug,
+      hotKeyDebug,
       keyDownHandler: (hotKey) async {
         print("DEBUG");
         // insert here function calls to debug
-        LinuxAssistantUpdater.isNewerVersionAvailable();
+        WeeklyTasks.doWeekleyTasks();
       },
     );
   }
@@ -652,7 +650,7 @@ class ReloadSearchButton extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => MainSearchLoader(),
+              builder: (context) => const MainSearchLoader(),
             ));
       },
       padding: EdgeInsets.zero,

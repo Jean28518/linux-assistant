@@ -1,8 +1,3 @@
-import 'dart:convert';
-import 'dart:io';
-
-import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
 import 'package:linux_assistant/enums/softwareManagers.dart';
 import 'package:linux_assistant/main.dart';
 import 'package:linux_assistant/models/linux_command.dart';
@@ -12,27 +7,12 @@ import 'package:linux_assistant/services/linux.dart';
 class LinuxAssistantUpdater {
   static Map? newestVersionInformation;
 
-  /// Only searches, if the last successfull search is 7 days old, otherwise returns false;
-  static Future<bool> isNewerVersionAvailable() async {
-    // Check if we should already search
-    ConfigHandler configHandler = ConfigHandler();
-    DateTime lastSearch = DateTime.parse(
-        configHandler.getValueUnsafe("last-searched-for-update", "1970-01-01"));
-    if (DateTime.now().difference(lastSearch).inDays < 7) {
-      return false;
-    }
+  /// Only searches, if the last successful search is 7 days old, otherwise returns false;
+  static bool isNewerVersionAvailable() {
+    // Lookup done by WeeklyTasks
 
-    http.Response response = await http
-        .get(Uri.parse(
-            "https://api.github.com/repos/Jean28518/linux-assistant/releases/latest"))
-        .timeout(Duration(seconds: 5));
-
-    Map responseMap = json.decode(response.body);
-    newestVersionInformation = responseMap;
-    String newestVersion = responseMap["name"].replaceAll("v", "");
-
-    String newDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
-    await configHandler.setValue("last-searched-for-update", newDate);
+    String newestVersion = ConfigHandler().getValueUnsafe(
+        "newest-linux-assistant-version", CURRENT_LINUX_ASSISTANT_VERSION);
 
     return isVersionGreaterThanCurrent(newestVersion);
   }

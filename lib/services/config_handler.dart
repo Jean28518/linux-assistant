@@ -30,6 +30,9 @@ class ConfigHandler {
     }
   }
 
+  /// Ensures that the config is loaded into memory before
+  /// Also ensures that the config is saved to file after
+  /// You may directly access the saved variable with getValueUnsafe()
   Future<void> setValue(key, value) async {
     await ensureConfigIsLoaded();
     setValueUnsafe(key, value);
@@ -52,7 +55,7 @@ class ConfigHandler {
   Future<void> loadConfigFromFile() async {
     String homeDir = Linux.getHomeDirectory();
 
-    File configFile = File(homeDir + ".config/linux-assistant/config.json");
+    File configFile = File("$homeDir.config/linux-assistant/config.json");
     if (!await configFile.exists()) {
       await Linux.runCommandAndGetStdout(
           "mkdir " + homeDir + ".config/linux-assistant/");

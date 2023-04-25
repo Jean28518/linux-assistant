@@ -1,8 +1,8 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:linux_assistant/enums/browsers.dart';
 import 'package:linux_assistant/enums/desktops.dart';
 import 'package:linux_assistant/enums/distros.dart';
@@ -785,8 +785,7 @@ class Linux {
     }
 
     // Get user id
-    String output = await getUserIdOfCurrentUser();
-    newEnvironment.currentUserId = int.parse(output);
+    newEnvironment.currentUserId = await getUserIdOfCurrentUser();
 
     return newEnvironment;
   }
@@ -1108,13 +1107,14 @@ class Linux {
     return output;
   }
 
-  static Future<String> getUserIdOfCurrentUser() {
-    return Linux.runCommandAndGetStdout("id -u");
+  static Future<int> getUserIdOfCurrentUser() async {
+    String output = await Linux.runCommandAndGetStdout("id -u");
+    return int.parse(output);
   }
 
   /// Only returns results if keyword is longer than 3 and there are under 100 results.
   static Future<List<ActionEntry>> getInstallableAptPackagesForKeyword(
-      String keyword) async {
+      BuildContext context, String keyword) async {
     if (keyword.length <= 3) {
       return [];
     }
@@ -1135,10 +1135,10 @@ class Linux {
       }
       results.add(ActionEntry(
           iconWidget: Icon(
-            Icons.archive,
+            Icons.download_rounded,
             size: 48,
           ),
-          name: "Install $line",
+          name: AppLocalizations.of(context)!.installX(line),
           description: "Install via apt",
           action: "apt-install:$line",
           priority: -20));
@@ -1203,8 +1203,8 @@ class Linux {
         "distribution", currentenvironment.distribution);
     currentenvironment.version =
         configHandler.getValueUnsafe("version", currentenvironment.version);
-    currentenvironment.versionString =
-        configHandler.getValueUnsafe("versionString", currentenvironment.versionString);
+    currentenvironment.versionString = configHandler.getValueUnsafe(
+        "versionString", currentenvironment.versionString);
     currentenvironment.desktop =
         configHandler.getValueUnsafe("desktop", currentenvironment.desktop);
     currentenvironment.browser =
@@ -1417,5 +1417,42 @@ class Linux {
 
   static void shutdown({int minutes = 0}) {
     Linux.runCommand("/sbin/shutdown $minutes");
+  }
+
+  static Future<List<ActionEntry>> getAvailableFlatpaks(
+      BuildContext context) async {
+    String homeDir = Linux.getHomeDirectory();
+
+    List<ActionEntry> returnValue = [];
+    try {
+      String installedFlatpaks =
+          await Linux.runCommandWithCustomArgumentsAndGetStdOut(
+              "/usr/bin/flatpak", ["list", "--app", "--columns=application"]);
+
+      File flathubIndexFile =
+          File("$homeDir.config/linux-assistant/flathub_index.json");
+      List<dynamic> responseMap =
+          json.decode(flathubIndexFile.readAsStringSync());
+      for (Map<String, dynamic> app in responseMap) {
+        if (!installedFlatpaks
+            .contains(app["flatpakAppId"].toString().trim())) {
+          ActionEntry entry = ActionEntry(
+            name: AppLocalizations.of(context)!
+                .installX("${app["name"]} (Flatpak)"),
+            description: app["summary"],
+            action: "flatpak-install:${app["flatpakAppId"]}",
+            priority: -19.0,
+            iconWidget: const Icon(
+              Icons.archive_rounded,
+              size: 48,
+            ),
+          );
+          returnValue.add(entry);
+        }
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+    return returnValue;
   }
 }

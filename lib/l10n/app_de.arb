@@ -286,6 +286,7 @@
   "versionOfLinuxAssistant": "Version von Linux-Assistant",
   "urls": "URL",
   "urlsDescription": "Gebe eine URL ein und öffne diese in deinem Standard-Browser.",
+  "packageWillBeInstalled": "Dein Paket wird in wenigen Momenten installiert.",
   "@helloWorld": {
     "placeholders": {},
     "description": "",

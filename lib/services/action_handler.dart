@@ -219,6 +219,23 @@ class ActionHandler {
       );
     }
 
+    if (actionEntry.action.startsWith("flatpak-install:")) {
+      String pkg = actionEntry.action.replaceFirst("flatpak-install:", "");
+      Linux.commandQueue.add(LinuxCommand(
+          userId: 0,
+          command:
+              "${Linux.getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.FLATPAK)} install $pkg -y --noninteractive"));
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => RunCommandQueue(
+                  title: "Flatpak",
+                  message: AppLocalizations.of(context)!.packageWillBeInstalled,
+                  route: MainSearchLoader(),
+                )),
+      );
+    }
+
     if (actionEntry.action.startsWith("openapp:")) {
       if (Linux.currentenvironment.desktop == DESKTOPS.KDE) {
         Linux.runCommandWithCustomArguments("kioclient",

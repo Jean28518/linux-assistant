@@ -79,7 +79,7 @@ class RunCommandQueue extends StatelessWidget {
                 MintYButton(
                   text: const Text(
                     "Log",
-                    style: MintY.heading2,
+                    style: MintY.heading4,
                   ),
                   onPressed: () {
                     showDialog(

@@ -80,6 +80,14 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
       returnValue.entries.addAll(additionalFolders);
     }
 
+    // Flatpak Index Installations
+    if (configHandler.getValueUnsafe("search_filter_install_software", true)) {
+      var flatpaks = await Linux.getAvailableFlatpaks(context).timeout(
+          timeoutDuration,
+          onTimeout: () => _onTimeoutOfSearchLoadingModule("flatpaks"));
+      returnValue.entries.addAll(flatpaks);
+    }
+
     // Remove action entries for specific environments
     List<ActionEntry> entriesToRemove = [];
     for (ActionEntry entry in returnValue.entries) {
