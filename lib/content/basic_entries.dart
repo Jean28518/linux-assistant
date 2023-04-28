@@ -82,6 +82,8 @@ List<ActionEntry> getBasicEntries(BuildContext context) {
         color: MintY.currentColor,
       ),
     ),
+
+    /// Should imitate the terminal command 'exit'
     ActionEntry(
       name: AppLocalizations.of(context)!.exit,
       description: AppLocalizations.of(context)!.exitDescription,
@@ -92,6 +94,7 @@ List<ActionEntry> getBasicEntries(BuildContext context) {
         color: MintY.currentColor,
       ),
     ),
+
     ActionEntry(
       name: AppLocalizations.of(context)!.update,
       description: AppLocalizations.of(context)!.updateSystemDescription,
