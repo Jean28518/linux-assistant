@@ -10,7 +10,7 @@ import 'package:window_manager/window_manager.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-String CURRENT_LINUX_ASSISTANT_VERSION = "0.2.1";
+String CURRENT_LINUX_ASSISTANT_VERSION = "0.2.2";
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
