@@ -26,8 +26,8 @@ modules:
     - type: archive
       only-arches:
         - x86_64
-      url: https://github.com/Jean28518/linux-assistant/releases/download/v0.2.1/linux-assistant-bundle.zip
+      url: https://github.com/Jean28518/linux-assistant/releases/download/v0.2.2/linux-assistant-bundle.zip
       dest: linux-assistant
-      sha256: b6549d5b1aa360e1f2a424879047798df5fefb84e7384748a5bea215f9071143
+      sha256: edce2403bf5ae83e3df6a78f60c268d41d0fb499ebadf775deaeedce090a80b1
     - type: file
       path: build-flatpak.sh

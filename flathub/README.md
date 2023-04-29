@@ -11,7 +11,6 @@ Install runtime and SDK with:<br>
 Build the application:<br>
 `flatpak-builder --force-clean build-dir org.linuxassistant.desktop.yaml`
 
-
 Install the application:<br>
 `flatpak-builder --user --install --force-clean build-dir org.linuxassistant.desktop.yaml`
 
@@ -20,16 +19,13 @@ Change the `getDefaultBrowser` function in the file 'build-dir/files/linux-assis
 ```
 def getDefaultBrowser():
     lines = jessentials.run_command("xdg-settings get default-web-browser", False, True)
-    return lines[0].replace(".desktop", "")
+    ...
 ```
 to:
 ```
 def getDefaultBrowser():
     lines = jessentials.run_command("/run/host/usr/bin/xdg-settings get default-web-browser", False, True)
-    if len(lines) > 0:
-        return lines[0].replace(".desktop", "")
-    else:
-        return ""
+    ...
 ```
 
 Now you can run the application with the command:<br>
