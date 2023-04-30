@@ -14,7 +14,11 @@ class LinuxAssistantUpdater {
     String newestVersion = ConfigHandler().getValueUnsafe(
         "newest-linux-assistant-version", CURRENT_LINUX_ASSISTANT_VERSION);
 
-    return isVersionGreaterThanCurrent(newestVersion);
+    // If reading the version file failed, just return false. Else the version
+    // check will crash.
+    return CURRENT_LINUX_ASSISTANT_VERSION.isEmpty
+        ? false
+        : isVersionGreaterThanCurrent(newestVersion);
   }
 
   /// example for [version] would be: "3.4.19"

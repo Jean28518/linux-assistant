@@ -1,10 +1,11 @@
 #!/bin/bash
-VERSION=0.2.2
+VERSION="$( cat version )"
 
 # Build Linux Assistant
 chmod +x additional/python/run_script.py
 flutter build linux
 cp -r additional build/linux/x64/release/bundle/
+cp version build/linux/x64/release/bundle/
 
 # Prepare rpm files for packaging
 mkdir -p rpmbuild/SOURCES/linux-assistant-$VERSION
