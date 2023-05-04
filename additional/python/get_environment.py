@@ -10,7 +10,7 @@ def getVersionId():
     return string.split(" ")[0]
 
 def getDesktop():
-    return jessentials.get_environment_variable("XDG_CURRENT_DESKTOP")
+    return jessentials.get_environment_variable("XDG_CURRENT_DESKTOP", "Gnome")
 
 def getLanguage():
     return jessentials.get_environment_variable("LANG").split("_")[0]
@@ -23,7 +23,7 @@ def getDefaultBrowser():
         return ""
 
 def getSessionType():
-    return jessentials.get_environment_variable("XDG_SESSION_TYPE")
+    return jessentials.get_environment_variable("XDG_SESSION_TYPE", "x11")
 
 
 print(f"{getDistribution()}\n{getVersionId()}\n{getDesktop()}\n{getLanguage()}\n{getDefaultBrowser()}\n{getSessionType()}")
