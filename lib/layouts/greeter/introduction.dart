@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:linux_assistant/layouts/mint_y.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:linux_assistant/layouts/updater/updater.dart';
 import 'package:linux_assistant/services/config_handler.dart';
 import 'package:linux_assistant/services/linux.dart';
-import 'package:linux_assistant/services/main_search_loader.dart';
 
 class GreeterIntroduction extends StatelessWidget {
-  bool forceOpen;
-  GreeterIntroduction({super.key, this.forceOpen = false});
+  final bool forceOpen;
+  const GreeterIntroduction({super.key, this.forceOpen = false});
 
   @override
   Widget build(BuildContext context) {
