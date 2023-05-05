@@ -4,7 +4,6 @@ import 'package:linux_assistant/enums/distros.dart';
 import 'package:linux_assistant/layouts/greeter/activate_hotkey.dart';
 import 'package:linux_assistant/layouts/greeter/environment_selection.dart';
 import 'package:linux_assistant/layouts/mint_y.dart';
-import 'package:linux_assistant/models/environment.dart';
 import 'package:linux_assistant/services/linux.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
