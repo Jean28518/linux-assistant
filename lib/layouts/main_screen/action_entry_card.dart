@@ -1,23 +1,20 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:linux_assistant/widgets/system_icon.dart';
 import 'package:linux_assistant/services/icon_loader.dart';
-import 'package:linux_assistant/services/main_search_loader.dart';
 import 'package:linux_assistant/models/action_entry.dart';
 import 'package:linux_assistant/services/action_handler.dart';
 
 class ActionEntryCard extends StatefulWidget {
-  ActionEntryCard(
-      {required this.actionEntry,
+  const ActionEntryCard(
+      {super.key,
+      required this.actionEntry,
       required this.callback,
       this.selected = false});
 
   final ActionEntry actionEntry;
   final VoidCallback callback;
-  final selected;
+  final bool selected;
 
   @override
   State<ActionEntryCard> createState() => _ActionEntryCardState();
@@ -43,7 +40,7 @@ class _ActionEntryCardState extends State<ActionEntryCard> {
           key: UniqueKey(),
           tileColor: widget.selected
               ? Theme.of(context).focusColor
-              : Color.fromARGB(0, 0, 0, 0),
+              : const Color.fromARGB(0, 0, 0, 0),
           hoverColor: Colors.grey,
           title: Text(widget.actionEntry.name),
           subtitle: Text(widget.actionEntry.description),
@@ -85,7 +82,7 @@ class _ActionEntryCardState extends State<ActionEntryCard> {
     _lastAction = widget.actionEntry.action;
 
     if (widget.actionEntry.action.startsWith("openfolder:")) {
-      return SystemIcon(
+      return const SystemIcon(
         iconString: "folder",
         iconSize: 48,
         spinner: false,
@@ -122,6 +119,7 @@ class _ActionEntryCardState extends State<ActionEntryCard> {
     ));
   }
 
+  @override
   void dispose() {
     iconLoading?.cancel();
     super.dispose();
