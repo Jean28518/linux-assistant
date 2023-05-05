@@ -104,7 +104,7 @@ class AfterInstallationOfficeSelection extends StatelessWidget {
           ),
         ],
         bottom: MintYButtonNext(
-          route: AfterInstallationCommunicationSoftwareSelection(),
+          route: const AfterInstallationCommunicationSoftwareSelection(),
           onPressedFuture: () async {
             await AfterInstallationService.applyCurrentOfficeSituation();
           },
