@@ -1,5 +1,3 @@
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
 import 'package:linux_assistant/enums/distros.dart';
 import 'package:linux_assistant/layouts/greeter/introduction.dart';
@@ -8,13 +6,12 @@ import 'package:linux_assistant/layouts/run_command_queue.dart';
 import 'package:linux_assistant/widgets/system_icon.dart';
 import 'package:linux_assistant/services/after_installation_service.dart';
 import 'package:linux_assistant/services/linux.dart';
-import 'package:linux_assistant/services/main_search_loader.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AfterInstallationAutomaticConfiguration extends StatelessWidget {
   AfterInstallationAutomaticConfiguration({Key? key}) : super(key: key);
 
-  Future<bool> isNvidiaCardInstalledOnSystem =
+  final Future<bool> isNvidiaCardInstalledOnSystem =
       Linux.isNvidiaCardInstalledOnSystem();
 
   @override
@@ -29,7 +26,7 @@ class AfterInstallationAutomaticConfiguration extends StatelessWidget {
 
     List<Widget> content = [
       MintYSelectableEntryWithIconHorizontal(
-        icon: SystemIcon(
+        icon: const SystemIcon(
           iconString: "update-manager",
           iconSize: 128,
         ),
@@ -43,7 +40,7 @@ class AfterInstallationAutomaticConfiguration extends StatelessWidget {
             getNiceStringOfDistrosEnum(Linux.currentenvironment.distribution)),
       ),
       MintYSelectableEntryWithIconHorizontal(
-        icon: SystemIcon(
+        icon: const SystemIcon(
           iconString: "multimedia",
           iconSize: 128,
         ),
@@ -58,7 +55,7 @@ class AfterInstallationAutomaticConfiguration extends StatelessWidget {
 
       AfterInstallationService.setupAutomaticSnapshots
           ? MintYSelectableEntryWithIconHorizontal(
-              icon: SystemIcon(
+              icon: const SystemIcon(
                 iconString: "disks",
                 iconSize: 128,
               ),
@@ -81,7 +78,7 @@ class AfterInstallationAutomaticConfiguration extends StatelessWidget {
                   if (snapshot.data.toString() == "true") {
                     AfterInstallationService.installNvidiaDrivers = true;
                     return MintYSelectableEntryWithIconHorizontal(
-                      icon: SystemIcon(
+                      icon: const SystemIcon(
                         iconString: "cs-drivers",
                         iconSize: 128,
                       ),
@@ -107,7 +104,7 @@ class AfterInstallationAutomaticConfiguration extends StatelessWidget {
       // Setup automatic updates
       AfterInstallationService.setupAutomaticUpdates
           ? MintYSelectableEntryWithIconHorizontal(
-              icon: SystemIcon(
+              icon: const SystemIcon(
                 iconString: "update-manager",
                 iconSize: 128,
               ),
