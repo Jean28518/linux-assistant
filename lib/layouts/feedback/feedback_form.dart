@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:linux_assistant/layouts/feedback/feedback_send.dart';
 import 'package:linux_assistant/layouts/mint_y.dart';
 import 'package:linux_assistant/models/action_entry.dart';
-import 'package:linux_assistant/models/environment.dart';
 import 'package:linux_assistant/services/feedback_service.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FeedbackDialog extends StatefulWidget {
-  String searchText;
-  List<ActionEntry> foundEntries;
+  final String searchText;
+  final List<ActionEntry> foundEntries;
 
-  bool calledFromHome;
+  final bool calledFromHome;
   bool includeSearchTermAndResults = true;
   bool includeBasicSystemInformation = true;
 
@@ -59,7 +56,7 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
               decoration: InputDecoration(
                   border: const OutlineInputBorder(),
                   hintText: AppLocalizations.of(context)!.feedbackPlaceholder),
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.bodyLarge,
               controller: messageController,
             ),
             if (!widget.calledFromHome)
@@ -73,7 +70,7 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
                           }))),
                   Text(
                     AppLocalizations.of(context)!.includeSearchTermAndResults,
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ],
               ),
@@ -87,7 +84,7 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
                         }))),
                 Text(
                   AppLocalizations.of(context)!.includeBasicSystemInformation,
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ],
             ),
