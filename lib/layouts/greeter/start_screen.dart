@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:linux_assistant/layouts/greeter/introduction.dart';
 import 'package:linux_assistant/layouts/greeter/is_environment_correct.dart';
 import 'package:linux_assistant/layouts/mint_y.dart';
-import 'package:linux_assistant/models/environment.dart';
 import 'package:linux_assistant/services/config_handler.dart';
-import 'package:linux_assistant/services/linux.dart';
-import 'package:linux_assistant/services/main_search_loader.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class StartScreen extends StatelessWidget {
@@ -21,10 +18,10 @@ class StartScreen extends StatelessWidget {
           if (snapshot.data!) {
             return getStartScreenView(context);
           } else {
-            return GreeterIntroduction();
+            return const GreeterIntroduction();
           }
         } else {
-          return MintYLoadingPage();
+          return const MintYLoadingPage();
         }
       },
     );
@@ -40,30 +37,28 @@ class StartScreen extends StatelessWidget {
 
   Scaffold getStartScreenView(context) {
     return Scaffold(
-      body: Container(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                AppLocalizations.of(context)!.yourLinuxAssistant,
-                style: Theme.of(context).textTheme.displayLarge,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              AppLocalizations.of(context)!.yourLinuxAssistant,
+              style: Theme.of(context).textTheme.displayLarge,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(32.0),
+              child: Text(
+                AppLocalizations.of(context)!.linuxAssistantLongDescription,
+                style: Theme.of(context).textTheme.bodyLarge,
+                overflow: TextOverflow.visible,
               ),
-              SizedBox(
-                height: 10,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(32.0),
-                child: Text(
-                  AppLocalizations.of(context)!.linuxAssistantLongDescription,
-                  style: Theme.of(context).textTheme.bodyText1,
-                  overflow: TextOverflow.visible,
-                ),
-              ),
-              MintYButtonNext(route: IsYourEnvironmentCorrectView())
-            ],
-          ),
+            ),
+            MintYButtonNext(route: const IsYourEnvironmentCorrectView())
+          ],
         ),
       ),
     );
