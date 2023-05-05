@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:linux_assistant/content/basic_entries.dart';
 import 'package:linux_assistant/content/recommendations.dart';
 import 'package:linux_assistant/content/searchable_entry_examples.dart';
@@ -8,7 +6,6 @@ import 'package:linux_assistant/layouts/mint_y.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:linux_assistant/models/action_entry.dart';
 import 'package:linux_assistant/services/action_handler.dart';
-import 'package:linux_assistant/services/icon_loader.dart';
 import 'package:linux_assistant/services/main_search_loader.dart';
 import 'package:linux_assistant/widgets/system_icon.dart';
 
