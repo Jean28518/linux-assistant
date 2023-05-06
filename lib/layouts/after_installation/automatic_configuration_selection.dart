@@ -134,7 +134,7 @@ class AfterInstallationAutomaticConfiguration extends StatelessWidget {
           title: AppLocalizations.of(context)!.welcomeToYourNewSystem,
           message: AppLocalizations.of(context)!
               .automaticConfigurationIsRunningDescription,
-          route: GreeterIntroduction(),
+          route: const GreeterIntroduction(),
         ),
         onPressedFuture: () async {
           await AfterInstallationService.applyAutomaticConfiguration();

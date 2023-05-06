@@ -41,7 +41,7 @@ class AfterInstallationAutomaticConfigurationEntry extends StatelessWidget {
                       title: AppLocalizations.of(context)!.applyConfiguration,
                       message: AppLocalizations.of(context)!
                           .thisProcessCouldTakeManyMinutesDependingSoftwareChoosed,
-                      route: GreeterIntroduction(),
+                      route: const GreeterIntroduction(),
                     ),
                   ),
                 );
