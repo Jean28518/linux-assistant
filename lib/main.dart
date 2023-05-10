@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:hotkey_manager/hotkey_manager.dart';
@@ -10,7 +11,7 @@ import 'package:window_manager/window_manager.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-String CURRENT_LINUX_ASSISTANT_VERSION = "0.2.2";
+String CURRENT_LINUX_ASSISTANT_VERSION = "";
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,6 +25,16 @@ void main() async {
   await Linux.loadCurrentEnvironment();
   bool darkTheme = await Linux.isDarkThemeEnabled();
   darkTheme = await ConfigHandler().getValue("dark_theme_activated", darkTheme);
+
+  String versionFile = "${Linux.executableFolder}/version";
+  if (await File(versionFile).exists()) {
+    try {
+      CURRENT_LINUX_ASSISTANT_VERSION =
+          (await File(versionFile).readAsString()).trim();
+    } catch (e) {
+      // Do nothing.
+    }
+  }
 
   runApp(MyApp(
     darkTheme: darkTheme,
