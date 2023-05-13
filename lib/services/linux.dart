@@ -1455,4 +1455,80 @@ class Linux {
     }
     return returnValue;
   }
+
+  static Future<String> getUserAndHostname() async {
+    final int id = currentenvironment.currentUserId;
+    try {
+      final String hostname = (await runCommandAndGetStdout("hostname")).trim();
+      final String user = (await runCommandAndGetStdout("id -nu $id")).trim();
+      return "$user@$hostname";
+    } catch (e) {
+      return "";
+    }
+  }
+
+  static Future<String> getOsPrettyName() async {
+    try {
+      return (await File("/etc/os-release").readAsString())
+          .split("\n")
+          .firstWhere((x) => x.startsWith("PRETTY_NAME"))
+          .split('"')
+          .elementAt(1);
+    } catch (e) {
+      return "";
+    }
+  }
+
+  static Future<String> getCpuModel() async {
+    try {
+      final List<String> cpuinfo =
+          (await File("/proc/cpuinfo").readAsString()).split("\n");
+
+      int cores = cpuinfo.where((x) => x.contains("model name")).length;
+      String model = cpuinfo
+          .firstWhere((x) => x.contains("model name"))
+          .replaceFirst("model name", "")
+          .replaceFirst(":", "")
+          .replaceFirst("CPU", "")
+          .replaceFirst("with Radeon Graphics", "")
+          // Remove everything in parentheses
+          .replaceAll(RegExp(r'\s?\(([^\)]+)\)'), "")
+          // Remove clock speed
+          .replaceAll(RegExp(r'\s?[@].*'), "")
+          .trim();
+
+      return "$model ($cores)";
+    } catch (e) {
+      return "";
+    }
+  }
+
+  static Future<String> getGpuModel() async {
+    try {
+      return (await runCommandAndGetStdout("glxinfo -B"))
+          .split("\n")
+          .firstWhere((x) => x.startsWith("OpenGL renderer string"))
+          .replaceFirst("OpenGL renderer string:", "")
+          .replaceFirst("Mesa DRI", "")
+          // Remove everything in parentheses
+          .replaceAll(RegExp(r'\s?\(([^\)]+)\)'), "")
+          // Remove everything after /
+          .replaceAll(RegExp(r'[\/].*'), "")
+          .trim();
+    } catch (e) {
+      return "";
+    }
+  }
+
+  static Future<String> getKernelVersion() async {
+    try {
+      return (await File("/proc/version").readAsString())
+          .split(" ")
+          .elementAt(2)
+          .split("-")
+          .elementAt(0);
+    } catch (e) {
+      return "";
+    }
+  }
 }
