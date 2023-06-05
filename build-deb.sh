@@ -15,11 +15,11 @@ cp linux-assistant.svg deb/usr/share/icons/hicolor/scalable/apps/
 mkdir -p deb/usr/share/icons/hicolor/256x256/apps/
 cp linux-assistant.png deb/usr/share/icons/hicolor/256x256/apps/
 mkdir -p deb/usr/share/applications/
-cp linux_assistant.desktop deb/usr/share/applications/
+cp linux-assistant.desktop deb/usr/share/applications/
 mkdir -p deb/usr/share/polkit-1/actions/
 cp org.linux-assistant.operations.policy deb/usr/share/polkit-1/actions/
 mkdir -p deb/usr/bin/
-cp linux-assistant deb/usr/bin/
+cp linux-assistant.sh deb/usr/bin/linux-assistant
 chmod +x deb/usr/bin/linux-assistant
 chmod 755 deb/DEBIAN
 

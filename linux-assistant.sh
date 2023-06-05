@@ -16,5 +16,5 @@ fi
 if wmctrl -l | grep -q 'Linux Assistant'; then
   wmctrl -a 'Linux Assistant'
 else
-  "$APP_DIR/linux_assistant"
+  "$APP_DIR/linux-assistant"
 fi
