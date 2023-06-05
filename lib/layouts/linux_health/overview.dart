@@ -1,8 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/widgets.dart';
 import 'package:linux_assistant/layouts/mint_y.dart';
 import 'package:linux_assistant/services/linux.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -68,12 +65,10 @@ class _LinuxHealthOverviewStat extends State<LinuxHealthOverview> {
                 List<String> values = line.split("\t");
                 if (int.parse(values[4].replaceAll("%", "")) > 90) {
                   WarningMessage warningMessage = WarningMessage(
-                      text: AppLocalizations.of(context)!.diskspaceWarning1 +
-                          values[0] +
-                          " " +
-                          values[5] +
-                          AppLocalizations.of(context)!.diskspaceWarning2 +
-                          values[3]);
+                      text: "${AppLocalizations.of(context)!.diskspaceWarning1}"
+                          "${values[0]} ${values[5]}"
+                          "${AppLocalizations.of(context)!.diskspaceWarning2}"
+                          "${values[3]}");
                   diskWarnings.add(warningMessage);
                 }
               }
@@ -204,7 +199,7 @@ class _LinuxHealthOverviewStat extends State<LinuxHealthOverview> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 MintYButtonNavigate(
-                  route: MainSearchLoader(),
+                  route: const MainSearchLoader(),
                   color: MintY.currentColor,
                   text: Text(
                     AppLocalizations.of(context)!.backToSearch,

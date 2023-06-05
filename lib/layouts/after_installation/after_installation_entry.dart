@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:linux_assistant/layouts/after_installation/browser_selection.dart';
 import 'package:linux_assistant/layouts/after_installation/flatpak_check.dart';
 import 'package:linux_assistant/layouts/mint_y.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -20,18 +17,18 @@ class AfterInstallationEntry extends StatelessWidget {
             style: Theme.of(context).textTheme.displayLarge,
             textAlign: TextAlign.center,
           ),
-          SizedBox(
+          const SizedBox(
             height: 16,
           ),
           Text(
             AppLocalizations.of(context)!.afterInstallationGreetingDescription,
-            style: Theme.of(context).textTheme.bodyText1,
+            style: Theme.of(context).textTheme.bodyLarge,
             textAlign: TextAlign.center,
           ),
-          SizedBox(
+          const SizedBox(
             height: 16,
           ),
-          SizedBox(
+          const SizedBox(
             height: 16,
           ),
           Row(
@@ -40,7 +37,7 @@ class AfterInstallationEntry extends StatelessWidget {
               MintYButtonNavigate(
                 text: Text(AppLocalizations.of(context)!.letsStart,
                     style: MintY.heading4White),
-                route: AfterInstallationFlatpakCheck(),
+                route: const AfterInstallationFlatpakCheck(),
                 color: MintY.currentColor,
                 // width: 400,
               ),

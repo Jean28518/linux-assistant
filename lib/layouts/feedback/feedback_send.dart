@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:linux_assistant/layouts/mint_y.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FeedbackSent extends StatelessWidget {
-  Future<bool> success;
+  final Future<bool> success;
 
-  FeedbackSent({super.key, required this.success});
+  const FeedbackSent({super.key, required this.success});
 
   @override
   Widget build(BuildContext context) {
