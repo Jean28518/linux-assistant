@@ -43,15 +43,29 @@ class AfterInstallationCommunicationSoftwareSelection extends StatelessWidget {
                 AfterInstallationService.thunderbird[1] =
                     snapshot.data.toString() == 'true';
                 return MintYSelectableEntryWithIconHorizontal(
-                    icon: const SystemIcon(
-                        iconString: "thunderbird", iconSize: 64),
-                    title: "Thunderbird",
-                    text: AppLocalizations.of(context)!.thunderbirdDescription,
-                    selected: snapshot.data.toString() == 'true',
-                    onPressed: () {
-                      AfterInstallationService.thunderbird[1] =
-                          !AfterInstallationService.thunderbird[1];
-                    });
+                  icon:
+                      const SystemIcon(iconString: "thunderbird", iconSize: 64),
+                  title: "Thunderbird",
+                  text: AppLocalizations.of(context)!.thunderbirdDescription,
+                  selected: snapshot.data.toString() == 'true',
+                  onPressed: () {
+                    AfterInstallationService.thunderbird[1] =
+                        !AfterInstallationService.thunderbird[1];
+                  },
+
+                  /// Display warning text if installed version will be removed by user
+                  infoText: snapshot.data.toString() == 'true'
+                      ? Text(
+                          AppLocalizations.of(context)!
+                              .thisApplicationWillBeRemoved,
+                          style:
+                              Theme.of(context).textTheme.labelLarge!.copyWith(
+                                    color: Theme.of(context).colorScheme.error,
+                                  ),
+                        )
+                      : null,
+                  showInfoTextAtThisSelectionState: false,
+                );
               }
               return const Center(child: MintYProgressIndicatorCircle());
             },
@@ -65,14 +79,28 @@ class AfterInstallationCommunicationSoftwareSelection extends StatelessWidget {
                 AfterInstallationService.jitsiMeet[1] =
                     snapshot.data.toString() == 'true';
                 return MintYSelectableEntryWithIconHorizontal(
-                    icon: const SystemIcon(iconString: "jitsi", iconSize: 64),
-                    title: "Jitsi Meet",
-                    text: AppLocalizations.of(context)!.jitsiDescription,
-                    selected: snapshot.data.toString() == 'true',
-                    onPressed: () {
-                      AfterInstallationService.jitsiMeet[1] =
-                          !AfterInstallationService.jitsiMeet[1];
-                    });
+                  icon: const SystemIcon(iconString: "jitsi", iconSize: 64),
+                  title: "Jitsi Meet",
+                  text: AppLocalizations.of(context)!.jitsiDescription,
+                  selected: snapshot.data.toString() == 'true',
+                  onPressed: () {
+                    AfterInstallationService.jitsiMeet[1] =
+                        !AfterInstallationService.jitsiMeet[1];
+                  },
+
+                  /// Display warning text if installed version will be removed by user
+                  infoText: snapshot.data.toString() == 'true'
+                      ? Text(
+                          AppLocalizations.of(context)!
+                              .thisApplicationWillBeRemoved,
+                          style:
+                              Theme.of(context).textTheme.labelLarge!.copyWith(
+                                    color: Theme.of(context).colorScheme.error,
+                                  ),
+                        )
+                      : null,
+                  showInfoTextAtThisSelectionState: false,
+                );
               }
               return const Center(child: MintYProgressIndicatorCircle());
             },
@@ -86,14 +114,28 @@ class AfterInstallationCommunicationSoftwareSelection extends StatelessWidget {
                 AfterInstallationService.element[1] =
                     snapshot.data.toString() == 'true';
                 return MintYSelectableEntryWithIconHorizontal(
-                    icon: const SystemIcon(iconString: "element", iconSize: 64),
-                    title: "Element",
-                    text: AppLocalizations.of(context)!.elementDescription,
-                    selected: snapshot.data.toString() == 'true',
-                    onPressed: () {
-                      AfterInstallationService.element[1] =
-                          !AfterInstallationService.element[1];
-                    });
+                  icon: const SystemIcon(iconString: "element", iconSize: 64),
+                  title: "Element",
+                  text: AppLocalizations.of(context)!.elementDescription,
+                  selected: snapshot.data.toString() == 'true',
+                  onPressed: () {
+                    AfterInstallationService.element[1] =
+                        !AfterInstallationService.element[1];
+                  },
+
+                  /// Display warning text if installed version will be removed by user
+                  infoText: snapshot.data.toString() == 'true'
+                      ? Text(
+                          AppLocalizations.of(context)!
+                              .thisApplicationWillBeRemoved,
+                          style:
+                              Theme.of(context).textTheme.labelLarge!.copyWith(
+                                    color: Theme.of(context).colorScheme.error,
+                                  ),
+                        )
+                      : null,
+                  showInfoTextAtThisSelectionState: false,
+                );
               }
               return const Center(child: MintYProgressIndicatorCircle());
             },
@@ -107,14 +149,28 @@ class AfterInstallationCommunicationSoftwareSelection extends StatelessWidget {
                 AfterInstallationService.signal[1] =
                     snapshot.data.toString() == 'true';
                 return MintYSelectableEntryWithIconHorizontal(
-                    icon: const SystemIcon(iconString: "signal", iconSize: 64),
-                    title: "Signal",
-                    text: AppLocalizations.of(context)!.signalDescription,
-                    selected: snapshot.data.toString() == 'true',
-                    onPressed: () {
-                      AfterInstallationService.signal[1] =
-                          !AfterInstallationService.signal[1];
-                    });
+                  icon: const SystemIcon(iconString: "signal", iconSize: 64),
+                  title: "Signal",
+                  text: AppLocalizations.of(context)!.signalDescription,
+                  selected: snapshot.data.toString() == 'true',
+                  onPressed: () {
+                    AfterInstallationService.signal[1] =
+                        !AfterInstallationService.signal[1];
+                  },
+
+                  /// Display warning text if installed version will be removed by user
+                  infoText: snapshot.data.toString() == 'true'
+                      ? Text(
+                          AppLocalizations.of(context)!
+                              .thisApplicationWillBeRemoved,
+                          style:
+                              Theme.of(context).textTheme.labelLarge!.copyWith(
+                                    color: Theme.of(context).colorScheme.error,
+                                  ),
+                        )
+                      : null,
+                  showInfoTextAtThisSelectionState: false,
+                );
               }
               return const Center(child: MintYProgressIndicatorCircle());
             },
@@ -128,14 +184,28 @@ class AfterInstallationCommunicationSoftwareSelection extends StatelessWidget {
                 AfterInstallationService.discord[1] =
                     snapshot.data.toString() == 'true';
                 return MintYSelectableEntryWithIconHorizontal(
-                    icon: const SystemIcon(iconString: "discord", iconSize: 64),
-                    title: "Discord",
-                    text: AppLocalizations.of(context)!.discordDescription,
-                    selected: snapshot.data.toString() == 'true',
-                    onPressed: () {
-                      AfterInstallationService.discord[1] =
-                          !AfterInstallationService.discord[1];
-                    });
+                  icon: const SystemIcon(iconString: "discord", iconSize: 64),
+                  title: "Discord",
+                  text: AppLocalizations.of(context)!.discordDescription,
+                  selected: snapshot.data.toString() == 'true',
+                  onPressed: () {
+                    AfterInstallationService.discord[1] =
+                        !AfterInstallationService.discord[1];
+                  },
+
+                  /// Display warning text if installed version will be removed by user
+                  infoText: snapshot.data.toString() == 'true'
+                      ? Text(
+                          AppLocalizations.of(context)!
+                              .thisApplicationWillBeRemoved,
+                          style:
+                              Theme.of(context).textTheme.labelLarge!.copyWith(
+                                    color: Theme.of(context).colorScheme.error,
+                                  ),
+                        )
+                      : null,
+                  showInfoTextAtThisSelectionState: false,
+                );
               }
               return const Center(child: MintYProgressIndicatorCircle());
             },
@@ -149,15 +219,28 @@ class AfterInstallationCommunicationSoftwareSelection extends StatelessWidget {
                 AfterInstallationService.zoom[1] =
                     snapshot.data.toString() == 'true';
                 return MintYSelectableEntryWithIconHorizontal(
-                    icon:
-                        const SystemIcon(iconString: "zoom-zoom", iconSize: 64),
-                    title: "Zoom",
-                    text: AppLocalizations.of(context)!.zoomDescription,
-                    selected: snapshot.data.toString() == 'true',
-                    onPressed: () {
-                      AfterInstallationService.zoom[1] =
-                          !AfterInstallationService.zoom[1];
-                    });
+                  icon: const SystemIcon(iconString: "zoom-zoom", iconSize: 64),
+                  title: "Zoom",
+                  text: AppLocalizations.of(context)!.zoomDescription,
+                  selected: snapshot.data.toString() == 'true',
+                  onPressed: () {
+                    AfterInstallationService.zoom[1] =
+                        !AfterInstallationService.zoom[1];
+                  },
+
+                  /// Display warning text if installed version will be removed by user
+                  infoText: snapshot.data.toString() == 'true'
+                      ? Text(
+                          AppLocalizations.of(context)!
+                              .thisApplicationWillBeRemoved,
+                          style:
+                              Theme.of(context).textTheme.labelLarge!.copyWith(
+                                    color: Theme.of(context).colorScheme.error,
+                                  ),
+                        )
+                      : null,
+                  showInfoTextAtThisSelectionState: false,
+                );
               }
               return const Center(child: MintYProgressIndicatorCircle());
             },
@@ -171,15 +254,29 @@ class AfterInstallationCommunicationSoftwareSelection extends StatelessWidget {
                 AfterInstallationService.microsoftTeams[1] =
                     snapshot.data.toString() == 'true';
                 return MintYSelectableEntryWithIconHorizontal(
-                    icon: const SystemIcon(
-                        iconString: "microsoft-teams", iconSize: 64),
-                    title: "Microsoft Teams",
-                    text: AppLocalizations.of(context)!.teamsDescription,
-                    selected: snapshot.data.toString() == 'true',
-                    onPressed: () {
-                      AfterInstallationService.microsoftTeams[1] =
-                          !AfterInstallationService.microsoftTeams[1];
-                    });
+                  icon: const SystemIcon(
+                      iconString: "microsoft-teams", iconSize: 64),
+                  title: "Microsoft Teams",
+                  text: AppLocalizations.of(context)!.teamsDescription,
+                  selected: snapshot.data.toString() == 'true',
+                  onPressed: () {
+                    AfterInstallationService.microsoftTeams[1] =
+                        !AfterInstallationService.microsoftTeams[1];
+                  },
+
+                  /// Display warning text if installed version will be removed by user
+                  infoText: snapshot.data.toString() == 'true'
+                      ? Text(
+                          AppLocalizations.of(context)!
+                              .thisApplicationWillBeRemoved,
+                          style:
+                              Theme.of(context).textTheme.labelLarge!.copyWith(
+                                    color: Theme.of(context).colorScheme.error,
+                                  ),
+                        )
+                      : null,
+                  showInfoTextAtThisSelectionState: false,
+                );
               }
               return const Center(child: MintYProgressIndicatorCircle());
             },

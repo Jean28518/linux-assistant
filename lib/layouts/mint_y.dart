@@ -500,6 +500,13 @@ class MintYSelectableEntryWithIconHorizontal extends StatefulWidget {
   late String title;
   late String text;
   late bool selected;
+
+  /// Shows only info text if [selected] == [showInfoTextAtThisSelectionState]
+  late Text? infoText;
+
+  /// Shows only info text if [selected] == [showInfoTextAtThisSelectionState]
+  bool showInfoTextAtThisSelectionState = false;
+
   VoidCallback? onPressed;
 
   MintYSelectableEntryWithIconHorizontal(
@@ -508,6 +515,8 @@ class MintYSelectableEntryWithIconHorizontal extends StatefulWidget {
       this.text = "Lorem Ipsum...",
       this.selected = false,
       this.onPressed,
+      this.infoText,
+      this.showInfoTextAtThisSelectionState = false,
       super.key});
 
   @override
@@ -520,7 +529,7 @@ class _MintYSelectableEntryWithIconHorizontalState
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
       child: Card(
         child: InkWell(
           onTap: () {
@@ -530,18 +539,18 @@ class _MintYSelectableEntryWithIconHorizontalState
             widget.onPressed?.call();
           },
           child: Container(
-            padding: EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
-                    children: [widget.icon],
                     mainAxisAlignment: MainAxisAlignment.center,
+                    children: [widget.icon],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
                 Flexible(
@@ -550,21 +559,29 @@ class _MintYSelectableEntryWithIconHorizontalState
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 16,
                       ),
                       Text(
                         widget.title,
                         style: Theme.of(context).textTheme.headlineMedium,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 4,
                       ),
                       Text(
                         widget.text,
                         style: Theme.of(context).textTheme.bodyMedium,
                         maxLines: 100,
-                      )
+                      ),
+                      widget.infoText != null &&
+                              widget.showInfoTextAtThisSelectionState ==
+                                  widget.selected
+                          ? Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: widget.infoText!,
+                            )
+                          : Container(),
                     ],
                   ),
                 ),

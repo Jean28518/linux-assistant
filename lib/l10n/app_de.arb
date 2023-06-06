@@ -287,6 +287,7 @@
   "urls": "URL",
   "urlsDescription": "Gebe eine URL ein und öffne diese in deinem Standard-Browser.",
   "packageWillBeInstalled": "Dein Paket wird in wenigen Momenten installiert.",
+  "thisApplicationWillBeRemoved": "Diese Anwendung wird deinstalliert.",
   "@helloWorld": {
     "placeholders": {},
     "description": "",

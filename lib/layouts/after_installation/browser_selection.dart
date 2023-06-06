@@ -43,6 +43,21 @@ class AfterInstallationBrowserSelection extends StatelessWidget {
                       AfterInstallationService.firefox[1] =
                           !AfterInstallationService.firefox[1];
                     },
+
+                    /// Display warning text if installed version will be removed by user
+                    infoText: snapshot.data.toString() == 'true'
+                        ? Text(
+                            AppLocalizations.of(context)!
+                                .thisApplicationWillBeRemoved,
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
+                                .copyWith(
+                                  color: Theme.of(context).colorScheme.error,
+                                ),
+                          )
+                        : null,
+                    showInfoTextAtThisSelectionState: false,
                   );
                 } else {
                   return const MintYProgressIndicatorCircle();
@@ -67,6 +82,21 @@ class AfterInstallationBrowserSelection extends StatelessWidget {
                       AfterInstallationService.chromium[1] =
                           !AfterInstallationService.chromium[1];
                     },
+
+                    /// Display warning text if installed version will be removed by user
+                    infoText: snapshot.data.toString() == 'true'
+                        ? Text(
+                            AppLocalizations.of(context)!
+                                .thisApplicationWillBeRemoved,
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
+                                .copyWith(
+                                  color: Theme.of(context).colorScheme.error,
+                                ),
+                          )
+                        : null,
+                    showInfoTextAtThisSelectionState: false,
                   );
                 } else {
                   return const MintYProgressIndicatorCircle();
@@ -90,6 +120,21 @@ class AfterInstallationBrowserSelection extends StatelessWidget {
                       AfterInstallationService.brave[1] =
                           !AfterInstallationService.brave[1];
                     },
+
+                    /// Display warning text if installed version will be removed by user
+                    infoText: snapshot.data.toString() == 'true'
+                        ? Text(
+                            AppLocalizations.of(context)!
+                                .thisApplicationWillBeRemoved,
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
+                                .copyWith(
+                                  color: Theme.of(context).colorScheme.error,
+                                ),
+                          )
+                        : null,
+                    showInfoTextAtThisSelectionState: false,
                   );
                 } else {
                   return const MintYProgressIndicatorCircle();
@@ -114,6 +159,21 @@ class AfterInstallationBrowserSelection extends StatelessWidget {
                       AfterInstallationService.googleChrome[1] =
                           !AfterInstallationService.googleChrome[1];
                     },
+
+                    /// Display warning text if installed version will be removed by user
+                    infoText: snapshot.data.toString() == 'true'
+                        ? Text(
+                            AppLocalizations.of(context)!
+                                .thisApplicationWillBeRemoved,
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
+                                .copyWith(
+                                  color: Theme.of(context).colorScheme.error,
+                                ),
+                          )
+                        : null,
+                    showInfoTextAtThisSelectionState: false,
                   );
                 } else {
                   return const MintYProgressIndicatorCircle();
