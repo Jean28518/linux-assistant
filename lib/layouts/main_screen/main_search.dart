@@ -555,8 +555,15 @@ class _MainSearchState extends State<MainSearch> {
   }
 
   void _handleSuggestions() {
+    // If the main search window is present and the user has not typed anything
     if (_foundEntries.isEmpty) {
-      int random = Random().nextInt(widget.actionEntries.length - 1);
+      int random = 0;
+      while (true) {
+        random = Random().nextInt(widget.actionEntries.length - 1);
+        if (!widget.actionEntries[random].excludeFromSearchProposal) {
+          break;
+        }
+      }
       setState(() {
         suggestion = actionEntries[random];
       });

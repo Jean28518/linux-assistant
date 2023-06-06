@@ -13,6 +13,9 @@ class ActionEntry {
   late double tmpPriority;
   final BoolCallback? disableEntryIf;
 
+  /// If true, this entry will not be shown in the search bar at the start screen randomly.
+  final bool excludeFromSearchProposal;
+
   ActionEntry(
       {required this.name,
       required this.description,
@@ -22,11 +25,12 @@ class ActionEntry {
       this.keywords = const [],
       this.iconWidget,
       this.tmpPriority = 0,
-      this.disableEntryIf});
+      this.disableEntryIf,
+      this.excludeFromSearchProposal = false});
 
   @override
   String toString() {
-    return "ActionEntry: (name: $name; description: $description; action: $action, iconURI: $iconURI, priority: $priority, tmpPriority: $tmpPriority, iconWidget: $iconWidget)";
+    return "ActionEntry: (name: $name; description: $description; action: $action, iconURI: $iconURI, priority: $priority, tmpPriority: $tmpPriority, iconWidget: $iconWidget, excludeFromSearchProposal: $excludeFromSearchProposal)";
   }
 
   Map<String, dynamic> toJson() {
@@ -38,6 +42,7 @@ class ActionEntry {
       "priority": priority,
       "tmpPriority": priority,
       "iconWidget": iconWidget.toString(),
+      "excludeFromSearchProposal": excludeFromSearchProposal.toString(),
     };
   }
 }

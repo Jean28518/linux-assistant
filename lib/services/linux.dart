@@ -1446,6 +1446,7 @@ class Linux {
               Icons.archive_rounded,
               size: 48,
             ),
+            excludeFromSearchProposal: true,
           );
           returnValue.add(entry);
         }
