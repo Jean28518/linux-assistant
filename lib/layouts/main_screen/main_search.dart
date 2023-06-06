@@ -96,7 +96,6 @@ class _MainSearchState extends State<MainSearch> {
                         ? Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: const [
-                              HardwareInfo(),
                               SizedBox(width: 16),
                               DiskSpace(),
                               SizedBox(width: 16),
@@ -217,11 +216,13 @@ class _MainSearchState extends State<MainSearch> {
                                       callback: clear,
                                       selected: selectedIndex == index)),
                             ),
-                          )
+                          ),
                   ],
                 )),
               ),
             ),
+
+            /// Bottom Bar
             _foundEntries.isEmpty
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -230,7 +231,9 @@ class _MainSearchState extends State<MainSearch> {
                       // Left Bottom
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
-                        children: [Container()],
+                        children: [
+                          Container(),
+                        ],
                       ),
                       // Recommendation Card
                       Expanded(child: Container()),

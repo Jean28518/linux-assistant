@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
+import 'package:linux_assistant/widgets/hardware_info.dart';
 import 'package:linux_assistant/widgets/single_bar_chart.dart';
 import 'package:linux_assistant/services/linux.dart';
 
@@ -55,11 +56,23 @@ class _MemoryStatusState extends State<MemoryStatus> {
             ));
           }
 
+          // Remove last widget if the swap is not available
           widgets.removeLast();
+
+          widgets.add(const SizedBox(
+            width: 20,
+          ));
+
+          widgets.add(const Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              HardwareInfo(),
+            ],
+          ));
 
           return Card(
             child: Container(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
