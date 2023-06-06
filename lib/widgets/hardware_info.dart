@@ -39,7 +39,7 @@ class _HardwareInfoState extends State<HardwareInfo> {
               const SizedBox(height: 10),
               InfoLineWithIcon(text: values[1], iconData: Icons.info),
               InfoLineWithIcon(
-                  text: "Linux ${values[2]}", iconData: Icons.settings),
+                  text: "Kernel ${values[2]}", iconData: Icons.settings),
               InfoLineWithIcon(text: values[3], iconData: Icons.memory),
               InfoLineWithIcon(text: values[4], iconData: Icons.monitor),
             ],
