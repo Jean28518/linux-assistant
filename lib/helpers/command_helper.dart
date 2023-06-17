@@ -20,9 +20,13 @@ abstract class CommandHelper {
       cmd = "pkexec";
     }
 
-    var procResult = await Process.run(cmd, args, environment: env);
-    return procResult.exitCode == 0
-        ? Tuple2(true, procResult.stdout.toString().trim())
-        : Tuple2(false, procResult.stderr.toString().trim());
+    try {
+      var procResult = await Process.run(cmd, args, environment: env);
+      return procResult.exitCode == 0
+          ? Tuple2(true, procResult.stdout.toString().trim())
+          : Tuple2(false, procResult.stderr.toString().trim());
+    } on ProcessException catch (e) {
+      return Tuple2(false, e.message);
+    }
   }
 }
