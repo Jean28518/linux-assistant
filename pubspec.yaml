@@ -44,6 +44,7 @@ dependencies:
   http: ^0.13.5
   hexcolor: ^3.0.1
   logger: ^1.1.0
+  tuple: ^2.0.2
 
 dev_dependencies:
   flutter_test:
