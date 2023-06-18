@@ -9,14 +9,14 @@ class DiskSpace extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future<List<Device>> systemDevices = LinuxFilesystem.getDevices();
-    return FutureBuilder<List<Device>>(
+    Future<List<DeviceInfo>> systemDevices = LinuxFilesystem.devices();
+    return FutureBuilder<List<DeviceInfo>>(
       future: systemDevices,
       builder: ((context, snapshot) {
         if (snapshot.hasData) {
-          List<Device> devices = snapshot.data!;
+          List<DeviceInfo> devices = snapshot.data!;
           List<Widget> barCharts = [];
-          for (Device device in devices) {
+          for (DeviceInfo device in devices) {
             if (device.mountPoint != "/boot/efi") {
               barCharts.add(
                 SingleBarChart(
