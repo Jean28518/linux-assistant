@@ -11,7 +11,7 @@ abstract class LinuxProcess {
   static Future<List<ProcessStat>> _getTopProcesses(
       String metric, int count) async {
     var cmdResult = await CommandHelper.runWithArguments(
-        "ps", ["-eo", "$metric,args", "--sort=-$metric"]);
+        "/usr/bin/ps", ["-eo", "$metric,args", "--sort=-$metric"]);
 
     if (!cmdResult.success) {
       throw Exception(cmdResult.error);
@@ -28,7 +28,7 @@ abstract class LinuxProcess {
   }
 
   static Future<int> processCount() async {
-    var cmdResult = await CommandHelper.runWithArguments("ps", ["-e"]);
+    var cmdResult = await CommandHelper.runWithArguments("/usr/bin/ps", ["-e"]);
     if (!cmdResult.success) {
       throw Exception(cmdResult.error);
     }
@@ -43,7 +43,9 @@ abstract class LinuxProcess {
       await _getTopProcesses("pmem", count);
 
   static Future<int> zombieCount() async {
-    var cmdResult = await CommandHelper.runWithArguments("ps", ["-eo", "stat"]);
+    var cmdResult =
+        await CommandHelper.runWithArguments("/usr/bin/ps", ["-eo", "stat"]);
+
     if (!cmdResult.success) {
       throw Exception(cmdResult.error);
     }

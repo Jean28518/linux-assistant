@@ -9,7 +9,9 @@ class Uptime {
 
 abstract class LinuxSystem {
   static Future<bool> hasSwap() async {
-    var cmdResult = await CommandHelper.runWithArguments("swapon", ["-s"]);
+    var cmdResult =
+        await CommandHelper.runWithArguments("/usr/bin/swapon", ["-s"]);
+
     if (!cmdResult.success) {
       return true;
     }
@@ -18,7 +20,9 @@ abstract class LinuxSystem {
   }
 
   static Future<Uptime> uptime() async {
-    var cmdResult = await CommandHelper.run("uptime", env: {"LC_ALL": "C"});
+    var cmdResult =
+        await CommandHelper.run("/usr/bin/uptime", env: {"LC_ALL": "C"});
+
     if (!cmdResult.success) {
       throw Exception(cmdResult.output);
     }

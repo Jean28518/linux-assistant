@@ -26,7 +26,7 @@ abstract class LinuxFilesystem {
   static final List<String> _removableDevices = ["/media/", "/mnt/"];
 
   static Future<List<DeviceInfo>> devices() async {
-    var cmdResult = await CommandHelper.runWithArguments("df", ["-h"]);
+    var cmdResult = await CommandHelper.runWithArguments("/usr/bin/df", ["-h"]);
     if (!cmdResult.success) {
       throw Exception(cmdResult.error);
     }
