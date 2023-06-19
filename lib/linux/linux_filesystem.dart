@@ -27,11 +27,11 @@ abstract class LinuxFilesystem {
 
   static Future<List<DeviceInfo>> devices() async {
     var cmdResult = await CommandHelper.runWithArguments("df", ["-h"]);
-    if (!cmdResult.item1) {
-      throw Exception(cmdResult.item2);
+    if (!cmdResult.success) {
+      throw Exception(cmdResult.error);
     }
 
-    var lines = cmdResult.item2
+    var lines = cmdResult.output
         .split("\n")
         .skip(1)
         .where((x) => !_ignoreDevices.any((y) => x.startsWith(y)));

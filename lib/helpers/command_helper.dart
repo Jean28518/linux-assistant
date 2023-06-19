@@ -1,14 +1,20 @@
 import 'dart:io';
-import 'package:tuple/tuple.dart';
+
+class CommandResult {
+  final String error;
+  final String output;
+  final bool success;
+
+  const CommandResult(this.success, this.output, this.error);
+}
 
 abstract class CommandHelper {
-  static Future<Tuple2<bool, String>> run(String cmd,
+  static Future<CommandResult> run(String cmd,
       {Map<String, String>? env, bool asRoot = false}) async {
     return await runWithArguments(cmd, [], env: env, asRoot: asRoot);
   }
 
-  static Future<Tuple2<bool, String>> runWithArguments(
-      String cmd, List<String> args,
+  static Future<CommandResult> runWithArguments(String cmd, List<String> args,
       {Map<String, String>? env, bool asRoot = false}) async {
     if (asRoot) {
       if (args.isEmpty) {
@@ -22,11 +28,11 @@ abstract class CommandHelper {
 
     try {
       var procResult = await Process.run(cmd, args, environment: env);
-      return procResult.exitCode == 0
-          ? Tuple2(true, procResult.stdout.toString().trim())
-          : Tuple2(false, procResult.stderr.toString().trim());
+      String out = procResult.stdout.toString().trim();
+      String err = procResult.stderr.toString().trim();
+      return CommandResult(procResult.exitCode == 0, out, err);
     } on ProcessException catch (e) {
-      return Tuple2(false, e.message);
+      return CommandResult(false, "", e.message);
     }
   }
 }

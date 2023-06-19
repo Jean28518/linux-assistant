@@ -13,12 +13,12 @@ abstract class LinuxProcess {
     var cmdResult = await CommandHelper.runWithArguments(
         "ps", ["-eo", "$metric,args", "--sort=-$metric"]);
 
-    if (!cmdResult.item1) {
-      throw Exception(cmdResult.item2);
+    if (!cmdResult.success) {
+      throw Exception(cmdResult.error);
     }
 
     var processes = List<ProcessStat>.empty(growable: true);
-    for (var line in cmdResult.item2.split("\n").skip(1).take(count)) {
+    for (var line in cmdResult.output.split("\n").skip(1).take(count)) {
       var values = line.split(" ");
       values.removeWhere((x) => x == "");
       processes.add(ProcessStat(values[0], values[1].split("/").last));
@@ -29,11 +29,11 @@ abstract class LinuxProcess {
 
   static Future<int> processCount() async {
     var cmdResult = await CommandHelper.runWithArguments("ps", ["-e"]);
-    if (!cmdResult.item1) {
-      throw Exception(cmdResult.item2);
+    if (!cmdResult.success) {
+      throw Exception(cmdResult.error);
     }
 
-    return cmdResult.item2.split("\n").skip(1).length;
+    return cmdResult.output.split("\n").skip(1).length;
   }
 
   static Future<List<ProcessStat>> topProcessesByCpu(int count) async =>
@@ -44,10 +44,10 @@ abstract class LinuxProcess {
 
   static Future<int> zombieCount() async {
     var cmdResult = await CommandHelper.runWithArguments("ps", ["-eo", "stat"]);
-    if (!cmdResult.item1) {
-      throw Exception(cmdResult.item2);
+    if (!cmdResult.success) {
+      throw Exception(cmdResult.error);
     }
 
-    return cmdResult.item2.split("\n").where((x) => x.trim() == "Z").length;
+    return cmdResult.output.split("\n").where((x) => x.trim() == "Z").length;
   }
 }

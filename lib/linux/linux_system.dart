@@ -10,20 +10,20 @@ class Uptime {
 abstract class LinuxSystem {
   static Future<bool> hasSwap() async {
     var cmdResult = await CommandHelper.runWithArguments("swapon", ["-s"]);
-    if (!cmdResult.item1) {
+    if (!cmdResult.success) {
       return true;
     }
 
-    return cmdResult.item2.split("\n").skip(1).isNotEmpty;
+    return cmdResult.output.split("\n").skip(1).isNotEmpty;
   }
 
   static Future<Uptime> uptime() async {
     var cmdResult = await CommandHelper.run("uptime", env: {"LC_ALL": "C"});
-    if (!cmdResult.item1) {
-      throw Exception(cmdResult.item2);
+    if (!cmdResult.success) {
+      throw Exception(cmdResult.output);
     }
 
-    var values = cmdResult.item2.replaceAll(RegExp(r" +"), " ").split(" ");
+    var values = cmdResult.output.replaceAll(RegExp(r" +"), " ").split(" ");
     if (values[2].contains(":")) {
       var arr = values[2].split(":");
       int hourValue = int.parse(arr[0]);
