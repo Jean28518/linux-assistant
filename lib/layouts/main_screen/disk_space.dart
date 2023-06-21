@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:linux_assistant/enums/distros.dart';
+import 'package:linux_assistant/linux/linux_filesystem.dart';
 import 'package:linux_assistant/widgets/single_bar_chart.dart';
 import 'package:linux_assistant/services/linux.dart';
 
@@ -8,27 +9,21 @@ class DiskSpace extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future<String> diskSpaces = Linux.runCommandWithCustomArgumentsAndGetStdOut(
-        "python3",
-        ["${Linux.executableFolder}additional/python/get_diskspace.py"]);
-
-    return FutureBuilder<String>(
-      future: diskSpaces,
+    Future<List<DeviceInfo>> systemDevices = LinuxFilesystem.devices();
+    return FutureBuilder<List<DeviceInfo>>(
+      future: systemDevices,
       builder: ((context, snapshot) {
         if (snapshot.hasData) {
-          List<String> lines = snapshot.data!.split("\n");
+          List<DeviceInfo> devices = snapshot.data!;
           List<Widget> barCharts = [];
-          for (String line in lines) {
-            List<String> values = line.split("\t");
-            if (values.length >= 6 && values[5] != "/boot/efi") {
+          for (DeviceInfo device in devices) {
+            if (device.mountPoint != "/boot/efi") {
               barCharts.add(
                 SingleBarChart(
-                  value: double.parse(
-                        values[4].replaceAll("%", ""),
-                      ) /
-                      100,
-                  text: "${getDisklabel(values[5])}: ${values[4]}",
-                  tooltip: "${values[2]}/${values[1]}",
+                  value: device.usedPercent / 100,
+                  text: "${getDisklabel(device.mountPoint)}: "
+                      "${device.usedPercent}%",
+                  tooltip: "${device.sizeUsed}/${device.size}",
                   fillColor: const Color.fromARGB(255, 141, 141, 141),
                 ),
               );

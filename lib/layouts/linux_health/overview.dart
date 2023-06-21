@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:linux_assistant/layouts/mint_y.dart';
-import 'package:linux_assistant/services/linux.dart';
+import 'package:linux_assistant/linux/linux_filesystem.dart';
+import 'package:linux_assistant/linux/linux_process.dart';
+import 'package:linux_assistant/linux/linux_system.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:linux_assistant/services/main_search_loader.dart';
 import 'package:linux_assistant/widgets/success_message.dart';
@@ -19,101 +21,83 @@ class _LinuxHealthOverviewStat extends State<LinuxHealthOverview> {
 
   @override
   Widget build(BuildContext context) {
-    late Future<String> output = Linux.runPythonScript("check_linux_health.py");
+    int maxProcs = 3;
+    var futures = [
+      LinuxFilesystem.devices(),
+      LinuxProcess.processCount(),
+      LinuxProcess.topProcessesByCpu(maxProcs),
+      LinuxProcess.topProcessesByMemory(maxProcs),
+      LinuxProcess.zombieCount(),
+      LinuxSystem.hasSwap(),
+      LinuxSystem.uptime()
+    ];
+
     reloadTimer ??=
         Timer.periodic(const Duration(seconds: 5), (timer) => setState(() {}));
 
-    return FutureBuilder<String>(
-      future: output,
-      builder: (context, snapshot) {
+    return FutureBuilder(
+      future: Future.wait(futures),
+      builder: (context, AsyncSnapshot<List<Object>> snapshot) {
         if (snapshot.hasData) {
-          List<String> lines = snapshot.data!.split("\n");
+          List<Object> results = snapshot.data!;
+          var devices = results[0] as List<DeviceInfo>;
+          var procCount = results[1] as int;
+          var topProcsCpu = results[2] as List<ProcessStat>;
+          var topProcsMem = results[3] as List<ProcessStat>;
+          var zombies = results[4] as int;
+          var hasSwap = results[5] as bool;
+          var uptime = results[6] as Uptime;
 
-          String uptimeLength = "";
-          String uptimeUnit = "";
-          bool uptimeWarning = false;
+          var removableCount = devices.where((x) => x.isRemovable).length;
           List<Widget> diskWarnings = [];
-          int processes = 0;
-          int zombies = 0;
-          int removableDevices = 0;
-          int swaps = 0;
-          List<List<dynamic>> topMemoryProcesses = [];
-          List<List<dynamic>> topCPUProcesses = [];
-          for (int i = 0; i < lines.length; i++) {
-            String line = lines[i];
-            if (line.startsWith("uptime: ")) {
-              uptimeLength = line.replaceAll("uptime: ", "");
-              if (uptimeLength.length > 4) {
-                uptimeWarning = true;
-              }
-
-              if (uptimeLength.length < 3) {
-                uptimeUnit = AppLocalizations.of(context)!.minutes;
-              } else if (line.contains("days")) {
-                uptimeUnit = AppLocalizations.of(context)!.days;
-                uptimeLength = uptimeLength.replaceAll("days", "");
-              } else {
-                uptimeUnit = AppLocalizations.of(context)!.hours;
-              }
-
-              // Read Diskspaces
-              for (int j = i + 1; true; j++) {
-                String line = lines[j];
-                if (line.startsWith("processes: ")) {
-                  break;
-                }
-                List<String> values = line.split("\t");
-                if (int.parse(values[4].replaceAll("%", "")) > 90) {
-                  WarningMessage warningMessage = WarningMessage(
-                      text: "${AppLocalizations.of(context)!.diskspaceWarning1}"
-                          "${values[0]} ${values[5]}"
-                          "${AppLocalizations.of(context)!.diskspaceWarning2}"
-                          "${values[3]}");
-                  diskWarnings.add(warningMessage);
-                }
-              }
-            }
-
-            if (line.startsWith("processes: ")) {
-              processes = int.parse(line.replaceAll("processes: ", ""));
-            }
-            if (line.startsWith("zombies: ")) {
-              zombies = int.parse(line.replaceAll("zombies: ", ""));
-            }
-            if (line.startsWith("removable_devices: ")) {
-              removableDevices =
-                  int.parse(line.replaceAll("removable_devices: ", ""));
-            }
-            if (line.startsWith("swaps: ")) {
-              swaps = int.parse(line.replaceAll("swaps: ", ""));
-            }
-
-            if (line.startsWith("Top 3 Memory:")) {
-              topMemoryProcesses.add([
-                AppLocalizations.of(context)!.memoryUsage,
-                AppLocalizations.of(context)!.process
-              ]);
-              // Read Top 3 Memory
-              for (int j = 1; j <= 3; j++) {
-                String line = lines[j + i];
-                List<String> values = line.split(" ");
-                topMemoryProcesses.add(["${values[0]}%", values[1]]);
-              }
-            }
-
-            if (line.startsWith("Top 3 CPU:")) {
-              topCPUProcesses.add([
-                AppLocalizations.of(context)!.cpuUsage,
-                AppLocalizations.of(context)!.process
-              ]);
-              // Read Top 3 Memory
-              for (int j = 1; j <= 3; j++) {
-                String line = lines[j + i];
-                List<String> values = line.split(" ");
-                topCPUProcesses.add(["${values[0]}%", values[1]]);
-              }
+          for (var device in devices) {
+            if (device.usedPercent > 90) {
+              var warningMessage = WarningMessage(
+                  text: "${AppLocalizations.of(context)!.diskspaceWarning1}"
+                      "${device.filesystem} ${device.mountPoint}"
+                      "${AppLocalizations.of(context)!.diskspaceWarning2}"
+                      "${device.sizeFree}");
+              diskWarnings.add(warningMessage);
             }
           }
+
+          List<List<dynamic>> topCPUProcesses = [
+            [
+              AppLocalizations.of(context)!.cpuUsage,
+              AppLocalizations.of(context)!.process
+            ]
+          ];
+
+          for (var stat in topProcsCpu) {
+            topCPUProcesses.add(["${stat.metricValue}%", stat.processName]);
+          }
+
+          List<List<dynamic>> topMemoryProcesses = [
+            [
+              AppLocalizations.of(context)!.memoryUsage,
+              AppLocalizations.of(context)!.process
+            ]
+          ];
+
+          for (var stat in topProcsMem) {
+            topMemoryProcesses.add(["${stat.metricValue}%", stat.processName]);
+          }
+
+          String uptimeUnitText;
+          switch (uptime.unit) {
+            case "m":
+              uptimeUnitText = AppLocalizations.of(context)!.minutes;
+              break;
+            case "h":
+              uptimeUnitText = AppLocalizations.of(context)!.hours;
+              break;
+            default:
+              uptimeUnitText = AppLocalizations.of(context)!.days;
+              break;
+          }
+
+          bool uptimeWarning =
+              uptime.unit == "d" || (uptime.unit == "h" && uptime.value >= 10);
 
           return MintYPage(
             title: AppLocalizations.of(context)!.linuxHealth,
@@ -125,17 +109,17 @@ class _LinuxHealthOverviewStat extends State<LinuxHealthOverview> {
               uptimeWarning
                   ? WarningMessage(
                       text: AppLocalizations.of(context)!
-                          .uptimeWarning(uptimeLength, uptimeUnit))
+                          .uptimeWarning(uptime.value, uptimeUnitText))
                   : SuccessMessage(
                       text: AppLocalizations.of(context)!
-                          .uptimePass(uptimeLength, uptimeUnit)),
+                          .uptimePass(uptime.value, uptimeUnitText)),
               zombies == 0
                   ? SuccessMessage(
                       text: AppLocalizations.of(context)!
-                          .processesWithZombiesMessage(processes, zombies))
+                          .processesWithZombiesMessage(procCount, zombies))
                   : WarningMessage(
                       text: AppLocalizations.of(context)!
-                          .processesWithZombiesMessage(processes, zombies)),
+                          .processesWithZombiesMessage(procCount, zombies)),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
@@ -183,17 +167,17 @@ class _LinuxHealthOverviewStat extends State<LinuxHealthOverview> {
                   : Column(
                       children: diskWarnings,
                     ),
-              removableDevices == 0
+              removableCount == 0
                   ? SuccessMessage(
                       text: AppLocalizations.of(context)!.removableDevicesPass)
                   : WarningMessage(
                       text: AppLocalizations.of(context)!
-                          .removableDevicesWarning(removableDevices)),
-              swaps == 0
-                  ? WarningMessage(
-                      text: AppLocalizations.of(context)!.swapsWarning)
-                  : SuccessMessage(
-                      text: AppLocalizations.of(context)!.swapsPass),
+                          .removableDevicesWarning(removableCount)),
+              hasSwap
+                  ? SuccessMessage(
+                      text: AppLocalizations.of(context)!.swapsPass)
+                  : WarningMessage(
+                      text: AppLocalizations.of(context)!.swapsWarning),
             ],
             bottom: Row(
               mainAxisAlignment: MainAxisAlignment.center,
