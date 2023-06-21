@@ -4,41 +4,74 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
+import 'package:linux_assistant/linux/linux_system.dart';
 import 'package:linux_assistant/widgets/hardware_info.dart';
 import 'package:linux_assistant/widgets/single_bar_chart.dart';
 import 'package:linux_assistant/services/linux.dart';
 
-class MemoryStatus extends StatefulWidget {
-  const MemoryStatus({Key? key}) : super(key: key);
+class SystemStatus extends StatefulWidget {
+  const SystemStatus({Key? key}) : super(key: key);
 
   @override
-  State<MemoryStatus> createState() => _MemoryStatusState();
+  State<SystemStatus> createState() => _SystemStatusState();
 }
 
-class _MemoryStatusState extends State<MemoryStatus> {
+Future<List<Object>> _getAllFutures() async {
+  return await Future.wait([
+    Linux.runCommandAndGetStdout("free -m"),
+    LinuxSystem.getCpuAverageLoad(),
+  ]);
+}
+
+class _SystemStatusState extends State<SystemStatus> {
+  // Start clock timer for refresh every 2 seconds
+  Timer? timer;
+
+  @override
+  void initState() {
+    super.initState();
+    timer = Timer.periodic(
+        const Duration(seconds: 2), (Timer t) => setState(() {}));
+  }
+
   @override
   Widget build(BuildContext context) {
-    late Future<String> memoryText = Linux.runCommandAndGetStdout("free -m");
-    return FutureBuilder<String>(
-      future: memoryText,
+    var allFutures = _getAllFutures();
+    return FutureBuilder<List<Object>>(
+      future: allFutures,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          List<String> lines = snapshot.data!.split("\n");
+          String outputFreeM = snapshot.data![0] as String;
+          List<String> lines = outputFreeM.split("\n");
           List<Widget> widgets = [];
+
+          // CPU
+          // double is in snapshot.data[1] (List<Object>)
+          double cpuLoad = snapshot.data![1] as double;
+          widgets.add(SingleBarChart(
+            value: cpuLoad < 0.9 ? cpuLoad + 0.1 : cpuLoad,
+            fillColor: Color.fromARGB(255, 70, 153, 221),
+            tooltip: (cpuLoad * 100).toStringAsFixed(2) + "% (~1 min)",
+            text: "CPU",
+          ));
+
+          widgets.add(SizedBox(
+            width: 15,
+          ));
 
           // RAM
           if (lines.length >= 2) {
             List<String> values = convertLineToList(lines[1]);
             widgets.add(SingleBarChart(
               value: double.parse(values[2]) / double.parse(values[1]),
-              fillColor: Color.fromARGB(255, 70, 153, 221),
+              fillColor: Color.fromARGB(255, 193, 119, 243),
               tooltip: convertToGB(values[2]) + "/" + convertToGB(values[1]),
               text: "RAM",
             ));
           }
 
           widgets.add(SizedBox(
-            width: 20,
+            width: 15,
           ));
 
           // SWAP:
@@ -52,11 +85,11 @@ class _MemoryStatusState extends State<MemoryStatus> {
             ));
 
             widgets.add(SizedBox(
-              width: 20,
+              width: 15,
             ));
           }
 
-          // Remove last widget if the swap is not available
+          // Remove last space widget if the swap is not available
           widgets.removeLast();
 
           widgets.add(const SizedBox(

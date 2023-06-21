@@ -98,7 +98,7 @@ class _MainSearchState extends State<MainSearch> {
                               SizedBox(width: 16),
                               DiskSpace(),
                               SizedBox(width: 16),
-                              MemoryStatus(),
+                              SystemStatus(),
                             ],
                           )
                         : Container(),

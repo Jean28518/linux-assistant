@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:linux_assistant/helpers/command_helper.dart';
 
 class Uptime {
@@ -34,5 +36,27 @@ abstract class LinuxSystem {
     } else {
       return Uptime("d", int.parse(values[2]));
     }
+  }
+
+  static Future<int> getCpuThreadCount() async {
+    var cmdResult = await CommandHelper.run("/usr/bin/nproc");
+    if (!cmdResult.success) {
+      print("Error: ${cmdResult.error}");
+    }
+    return int.parse(cmdResult.output);
+  }
+
+  /// Returns the average load of the CPU of the last minute
+  /// Values are between 0 and 1
+  static Future<double> getCpuAverageLoad() async {
+    // Run cat /proc/loadavg
+    var cmdResult =
+        await CommandHelper.runWithArguments("/usr/bin/cat", ["/proc/loadavg"]);
+    if (!cmdResult.success) {
+      print("Error: ${cmdResult.error}");
+    }
+    double load = double.parse(cmdResult.output.split(" ")[0]);
+    int cpuCount = await getCpuThreadCount();
+    return load / cpuCount;
   }
 }
