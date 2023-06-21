@@ -14,6 +14,14 @@ class Environment {
   var preferredSoftwareManager = SOFTWARE_MANAGERS.APT;
   bool wayland = false;
 
+  /// All these variables are generated at runtime
+  String username = "";
+  String hostname = "";
+  String osPrettyName = "";
+  String kernelVersion = "";
+  String cpuModel = "";
+  String gpuModel = "";
+
   /// POSIX User ID.
   var currentUserId = 1000;
 

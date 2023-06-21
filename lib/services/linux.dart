@@ -784,8 +784,13 @@ class Linux {
       }
     }
 
-    // Get user id
     newEnvironment.currentUserId = await getUserIdOfCurrentUser();
+    newEnvironment.hostname = await getHostname();
+    newEnvironment.username = await getUsername();
+    newEnvironment.osPrettyName = await Linux.getOsPrettyName();
+    newEnvironment.kernelVersion = await getKernelVersion();
+    newEnvironment.cpuModel = await getCpuModel();
+    newEnvironment.gpuModel = await getGpuModel();
 
     return newEnvironment;
   }
@@ -1457,15 +1462,13 @@ class Linux {
     return returnValue;
   }
 
-  static Future<String> getUserAndHostname() async {
+  static Future<String> getUsername() async {
     final int id = currentenvironment.currentUserId;
-    try {
-      final String hostname = (await runCommandAndGetStdout("hostname")).trim();
-      final String user = (await runCommandAndGetStdout("id -nu $id")).trim();
-      return "$user@$hostname";
-    } catch (e) {
-      return "";
-    }
+    return (await runCommandAndGetStdout("id -nu $id")).trim();
+  }
+
+  static Future<String> getHostname() async {
+    return (await runCommandAndGetStdout("hostname")).trim();
   }
 
   static Future<String> getOsPrettyName() async {

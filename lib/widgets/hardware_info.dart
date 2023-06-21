@@ -13,41 +13,28 @@ class HardwareInfo extends StatefulWidget {
 class _HardwareInfoState extends State<HardwareInfo> {
   @override
   Widget build(BuildContext context) {
-    var futures = [
-      Linux.getUserAndHostname(),
-      Linux.getOsPrettyName(),
-      Linux.getKernelVersion(),
-      Linux.getCpuModel(),
-      Linux.getGpuModel()
-    ];
-
-    return FutureBuilder(
-      future: Future.wait(futures),
-      builder: (context, AsyncSnapshot<List<String>> snapshot) {
-        if (snapshot.hasData) {
-          var values = snapshot.data!;
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              InfoLineWithIcon(
-                text: values[0],
-                iconData: Icons.person,
-                textStyle: Theme.of(context).textTheme.labelLarge,
-              ),
-              const SizedBox(height: 10),
-              InfoLineWithIcon(text: values[1], iconData: Icons.info),
-              InfoLineWithIcon(
-                  text: "Kernel ${values[2]}", iconData: Icons.settings),
-              InfoLineWithIcon(text: values[3], iconData: Icons.memory),
-              InfoLineWithIcon(text: values[4], iconData: Icons.monitor),
-            ],
-          );
-        } else {
-          return Container();
-        }
-      },
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        InfoLineWithIcon(
+          text:
+              "${Linux.currentenvironment.username}@${Linux.currentenvironment.hostname}",
+          iconData: Icons.person,
+          textStyle: Theme.of(context).textTheme.labelLarge,
+        ),
+        const SizedBox(height: 10),
+        InfoLineWithIcon(
+            text: Linux.currentenvironment.osPrettyName, iconData: Icons.info),
+        InfoLineWithIcon(
+            text: "Kernel ${Linux.currentenvironment.kernelVersion}",
+            iconData: Icons.settings),
+        InfoLineWithIcon(
+            text: Linux.currentenvironment.cpuModel, iconData: Icons.memory),
+        InfoLineWithIcon(
+            text: Linux.currentenvironment.gpuModel, iconData: Icons.monitor),
+      ],
     );
   }
 }
