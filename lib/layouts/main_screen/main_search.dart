@@ -14,7 +14,6 @@ import 'package:linux_assistant/layouts/feedback/feedback_form.dart';
 import 'package:linux_assistant/layouts/settings/settings_start.dart';
 import 'package:linux_assistant/services/main_search_loader.dart';
 import 'package:linux_assistant/services/weekly_tasks.dart';
-import 'package:linux_assistant/widgets/hardware_info.dart';
 import 'package:linux_assistant/widgets/memory_status.dart';
 import 'package:linux_assistant/layouts/mint_y.dart';
 import 'package:linux_assistant/layouts/main_screen/recommendation_card.dart';
@@ -93,9 +92,9 @@ class _MainSearchState extends State<MainSearch> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     _foundEntries.isEmpty
-                        ? Row(
+                        ? const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               SizedBox(width: 16),
                               DiskSpace(),
                               SizedBox(width: 16),
@@ -330,11 +329,28 @@ class _MainSearchState extends State<MainSearch> {
     _runFilter("");
   }
 
+  bool isRegex(String pattern) {
+    try {
+      RegExp(pattern);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   void _runFilter(String keyword) {
     // Heavy search
     const duration = Duration(milliseconds: 800);
     searchOnStoppedTyping?.cancel();
     searchOnStoppedTyping = Timer(duration, () => _runHeavyFilter(keyword));
+
+    RegExp? regExp = null;
+    if (isRegex(keyword)) {
+      regExp = RegExp(keyword, caseSensitive: false);
+    } else {
+      // Replace all *. with that e.g. *.filetype is recognized as a file ending
+      keyword = keyword.replaceAll("*.", ".");
+    }
 
     _lastKeyword = keyword;
     keyword = keyword.toLowerCase();
@@ -344,6 +360,13 @@ class _MainSearchState extends State<MainSearch> {
       results = [];
     } else {
       results = actionEntries.where((actionEntry) {
+        // If regualar expression is used and matches return true
+        if (regExp != null &&
+            (regExp.hasMatch(actionEntry.name) ||
+                regExp.hasMatch(actionEntry.description))) {
+          return true;
+        }
+        // Otherwise check if all keys are contained in name or description
         for (String key in keys) {
           if (actionEntry.name.toLowerCase().contains(key) ||
               actionEntry.description.toLowerCase().contains(key)) {
@@ -631,7 +654,7 @@ class HelpButton extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => GreeterIntroduction(forceOpen: true)),
+              builder: (context) => const GreeterIntroduction(forceOpen: true)),
         );
       },
       padding: EdgeInsets.zero,
