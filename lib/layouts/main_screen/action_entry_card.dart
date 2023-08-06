@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:linux_assistant/layouts/mint_y.dart';
 import 'package:linux_assistant/widgets/system_icon.dart';
 import 'package:linux_assistant/services/icon_loader.dart';
 import 'package:linux_assistant/models/action_entry.dart';
@@ -89,21 +90,24 @@ class _ActionEntryCardState extends State<ActionEntryCard> {
       );
     }
     if (widget.actionEntry.action.startsWith("openapp:")) {
-      return const Icon(
+      return Icon(
         Icons.settings,
         size: 48,
+        color: MintY.currentColor,
       );
     }
     if (widget.actionEntry.action.startsWith("websearch:")) {
-      return const Icon(
+      return Icon(
         Icons.search,
         size: 48,
+        color: MintY.currentColor,
       );
     }
     if (widget.actionEntry.action.startsWith("openwebsite:")) {
-      return const Icon(
+      return Icon(
         Icons.web,
         size: 48,
+        color: MintY.currentColor,
       );
     }
     if (widget.actionEntry.action.startsWith("openfile:")) {

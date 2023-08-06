@@ -288,6 +288,30 @@
   "urlsDescription": "Enter an URL and open it in your default browser.",
   "packageWillBeInstalled": "Your package will be installed in a few moments...",
   "thisApplicationWillBeRemoved": "This application will be removed.",
+  "uninstallingXDescription": "Uninstalling {app}...",
+  "@uninstallingXDescription": {
+    "placeholders": {
+      "app" : {}
+    },
+    "description": "",
+    "type": "text"
+  },
+  "uninstallApp": "Uninstall {app}",
+  "@uninstallApp": {
+    "placeholders": {
+      "app" : {}
+    },
+    "description": "",
+    "type": "text"
+  },
+  "uninstallAppWarning": "Do you really want to uninstall {app}?\nThe system might not work properly afterwards.\nPlease uninstall only programs you installed yourself.",
+  "@uninstallAppWarning": {
+    "placeholders": {
+      "app" : {}
+    }, 
+    "description": "",
+    "type": "text"
+  },
   "@helloWorld": {
     "placeholders": {},
     "description": "The conventional newborn programmer greeting",

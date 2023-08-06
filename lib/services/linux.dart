@@ -370,64 +370,75 @@ class Linux {
   static Future<void> removeApplications(List<String> appCodes,
       {SOFTWARE_MANAGERS? softwareManager}) async {
     for (String appCode in appCodes) {
-      // Deb Package
-      bool isDebianPackageInstalled =
-          await isSpecificDebPackageInstalled(appCode);
-      if ((softwareManager == null ||
-              softwareManager == SOFTWARE_MANAGERS.APT) &&
-          isDebianPackageInstalled) {
-        commandQueue.add(
-          LinuxCommand(
-            userId: 0,
-            command:
-                "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.APT)} remove $appCode -y",
-            environment: {"DEBIAN_FRONTEND": "noninteractive"},
-          ),
-        );
+      if (softwareManager == null || softwareManager == SOFTWARE_MANAGERS.APT) {
+        // Deb Package
+        bool isDebianPackageInstalled =
+            await isSpecificDebPackageInstalled(appCode);
+        if ((softwareManager == null ||
+                softwareManager == SOFTWARE_MANAGERS.APT) &&
+            isDebianPackageInstalled) {
+          commandQueue.add(
+            LinuxCommand(
+              userId: 0,
+              command:
+                  "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.APT)} remove $appCode -y",
+              environment: {"DEBIAN_FRONTEND": "noninteractive"},
+            ),
+          );
+        }
       }
 
       // Zypper
-      bool isZypperPackageInstalled =
-          await isSpecificZypperPackageInstalled(appCode);
-      if ((softwareManager == null ||
-              softwareManager == SOFTWARE_MANAGERS.ZYPPER) &&
-          isZypperPackageInstalled) {
-        commandQueue.add(
-          LinuxCommand(
-            userId: 0,
-            command:
-                "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.ZYPPER)} --non-interactive remove $appCode",
-          ),
-        );
+      if (softwareManager == null ||
+          softwareManager == SOFTWARE_MANAGERS.ZYPPER) {
+        bool isZypperPackageInstalled =
+            await isSpecificZypperPackageInstalled(appCode);
+        if ((softwareManager == null ||
+                softwareManager == SOFTWARE_MANAGERS.ZYPPER) &&
+            isZypperPackageInstalled) {
+          commandQueue.add(
+            LinuxCommand(
+              userId: 0,
+              command:
+                  "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.ZYPPER)} --non-interactive remove $appCode",
+            ),
+          );
+        }
       }
 
       // Flatpak
-      bool isFlatpakInstalled = await isSpecificFlatpakInstalled(appCode);
-      print(isFlatpakInstalled);
-      if ((softwareManager == null ||
-              softwareManager == SOFTWARE_MANAGERS.FLATPAK) &&
-          isFlatpakInstalled) {
-        commandQueue.add(
-          LinuxCommand(
-            userId: currentenvironment.currentUserId,
-            command:
-                "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.FLATPAK)} remove $appCode -y --noninteractive",
-          ),
-        );
+      if (softwareManager == null ||
+          softwareManager == SOFTWARE_MANAGERS.FLATPAK) {
+        bool isFlatpakInstalled = await isSpecificFlatpakInstalled(appCode);
+        print(isFlatpakInstalled);
+        if ((softwareManager == null ||
+                softwareManager == SOFTWARE_MANAGERS.FLATPAK) &&
+            isFlatpakInstalled) {
+          commandQueue.add(
+            LinuxCommand(
+              userId: currentenvironment.currentUserId,
+              command:
+                  "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.FLATPAK)} remove $appCode -y --noninteractive",
+            ),
+          );
+        }
       }
 
       // Snap
-      bool isSnapInstalled = await isSpecificSnapInstalled(appCode);
-      if ((softwareManager == null ||
-              softwareManager == SOFTWARE_MANAGERS.SNAP) &&
-          isSnapInstalled) {
-        commandQueue.add(
-          LinuxCommand(
-            userId: 0,
-            command:
-                "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.SNAP)} remove $appCode",
-          ),
-        );
+      if (softwareManager == null ||
+          softwareManager == SOFTWARE_MANAGERS.SNAP) {
+        bool isSnapInstalled = await isSpecificSnapInstalled(appCode);
+        if ((softwareManager == null ||
+                softwareManager == SOFTWARE_MANAGERS.SNAP) &&
+            isSnapInstalled) {
+          commandQueue.add(
+            LinuxCommand(
+              userId: 0,
+              command:
+                  "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.SNAP)} remove $appCode",
+            ),
+          );
+        }
       }
     }
   }
@@ -1139,14 +1150,16 @@ class Linux {
         continue;
       }
       results.add(ActionEntry(
-          iconWidget: Icon(
-            Icons.download_rounded,
-            size: 48,
-          ),
-          name: AppLocalizations.of(context)!.installX(line),
-          description: "Install via apt",
-          action: "apt-install:$line",
-          priority: -20));
+        iconWidget: Icon(
+          Icons.download_rounded,
+          size: 48,
+          color: MintY.currentColor,
+        ),
+        name: AppLocalizations.of(context)!.installX(line),
+        description: "Install via apt",
+        action: "apt-install:$line",
+        priority: -20,
+      ));
     }
     return results;
   }
@@ -1197,6 +1210,140 @@ class Linux {
           priority: -20));
     }
     return results;
+  }
+
+  static Future<List<String>> getInstalledAPTPackages() async {
+    List<String> returnValue = [];
+
+    /// Run: /usr/bin/dpkg --get-selections | /usr/bin/awk '!/deinstall|purge|hold/' | /usr/bin/cut -f1 | /usr/bin/tr '\n' ' '
+    String output =
+        await Linux.runCommandWithCustomArgumentsAndGetStdOut("/usr/bin/dpkg", [
+      "--get-selections",
+    ]);
+
+    List<String> lines = output.split("\n");
+
+    for (String line in lines) {
+      if (line.contains("install") || true) {
+        returnValue.add(line.replaceFirst("install", "").trim());
+      }
+    }
+    return returnValue;
+  }
+
+  static Future<List<List<String>>> getInstalledZypperPackages() async {
+    // TODO This command should do it: zypper search --installed-only
+    print("TODO!");
+    return [];
+  }
+
+  /// Return value: List of [app id, app name, app description];
+  static Future<List<List<String>>> getInstalledFlatpaks() async {
+    List<List<String>> returnValue = [];
+    String installedFlatpaks =
+        await Linux.runCommandWithCustomArgumentsAndGetStdOut(
+            "/usr/bin/flatpak",
+            ["list", "--app", "--columns=application,name,description"]);
+    List<String> lines = installedFlatpaks.split("\n");
+    for (String line in lines) {
+      if (line.isNotEmpty) {
+        List<String> app = line.split("\t");
+        returnValue.add(app);
+      }
+    }
+    return returnValue;
+  }
+
+  /// Return value: List of app id;
+  static Future<List<String>> getInstalledSnaps() async {
+    List<String> returnValue = [];
+    String installedSnaps =
+        await Linux.runCommandWithCustomArgumentsAndGetStdOut(
+            "/usr/bin/snap", ["list"]);
+    List<String> lines = installedSnaps.split("\n");
+
+    /// Remove the heading line of the output of the command
+    lines.removeAt(0);
+
+    for (String line in lines) {
+      if (line.isNotEmpty) {
+        returnValue.add(line.split(" ")[0]);
+      }
+    }
+    return returnValue;
+  }
+
+  /// For all package managers including flatpak and snap
+  static Future<List<ActionEntry>> getUninstallEntries(context) async {
+    List<ActionEntry> returnValue = [];
+    Future<List<String>> installedAptPackagesFuture = getInstalledAPTPackages();
+    Future<List<List<String>>> installedZypperPackagesFuture =
+        getInstalledZypperPackages();
+    Future<List<List<String>>> installedFlatpaksFuture = getInstalledFlatpaks();
+    Future<List<String>> installedSnapsFuture = getInstalledSnaps();
+
+    /// APT
+    List<String> installedAptPackages = await installedAptPackagesFuture;
+    for (String aptPackage in installedAptPackages) {
+      returnValue.add(
+        ActionEntry(
+          name: AppLocalizations.of(context)!.uninstallApp(aptPackage),
+          description: "(APT)",
+          action: "apt-uninstall:$aptPackage",
+          iconWidget: Icon(
+            Icons.delete,
+            size: 48,
+            color: MintY.currentColor,
+          ),
+          priority: -10,
+          excludeFromSearchProposal: true,
+        ),
+      );
+    }
+
+    /// Zypper
+
+    /// Flatpak
+    List<List<String>> installedFlatpaks = await installedFlatpaksFuture;
+
+    /// flatpak entry: app-id, app name, description
+    for (List<String> flatpakEntry in installedFlatpaks) {
+      returnValue.add(
+        ActionEntry(
+          name: AppLocalizations.of(context)!.uninstallApp(flatpakEntry[1]),
+          description: "${flatpakEntry[2]} (Flatpak)",
+          action: "flatpak-uninstall:${flatpakEntry[0]}",
+          iconWidget: Icon(
+            Icons.delete,
+            size: 48,
+            color: MintY.currentColor,
+          ),
+          priority: -10,
+          excludeFromSearchProposal: true,
+        ),
+      );
+    }
+
+    /// Snap
+    List<String> installedSnaps = await installedSnapsFuture;
+    for (String snap in installedSnaps) {
+      returnValue.add(
+        ActionEntry(
+          name: AppLocalizations.of(context)!.uninstallApp(snap),
+          description: "(Snap)",
+          action: "snap-uninstall:$snap",
+          iconWidget: Icon(
+            Icons.delete,
+            size: 48,
+            color: MintY.currentColor,
+          ),
+          priority: -10,
+          excludeFromSearchProposal: true,
+        ),
+      );
+    }
+
+    return returnValue;
   }
 
   /// Used while startup of the application
@@ -1447,9 +1594,10 @@ class Linux {
             description: app["summary"],
             action: "flatpak-install:${app["flatpakAppId"]}",
             priority: -19.0,
-            iconWidget: const Icon(
+            iconWidget: Icon(
               Icons.archive_rounded,
               size: 48,
+              color: MintY.currentColor,
             ),
             excludeFromSearchProposal: true,
           );

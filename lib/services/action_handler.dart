@@ -13,6 +13,7 @@ import 'package:linux_assistant/layouts/power_mode/power_mode.dart';
 import 'package:linux_assistant/layouts/run_command_queue.dart';
 import 'package:linux_assistant/layouts/security_check/overview.dart';
 import 'package:linux_assistant/layouts/shutdown/shutdown_dialog.dart';
+import 'package:linux_assistant/layouts/uninstaller/uninstaller_question.dart';
 import 'package:linux_assistant/models/action_entry.dart';
 import 'package:linux_assistant/models/linux_command.dart';
 import 'package:linux_assistant/services/config_handler.dart';
@@ -202,6 +203,18 @@ class ActionHandler {
       );
     }
 
+    if (actionEntry.action.startsWith("apt-uninstall:")) {
+      String pkg = actionEntry.action.replaceFirst("apt-uninstall:", "");
+      await Linux.removeApplications([pkg],
+          softwareManager: SOFTWARE_MANAGERS.APT);
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                UninstallerQuestion(action: actionEntry.action),
+          ));
+    }
+
     if (actionEntry.action.startsWith("zypper-install:")) {
       String pkg = actionEntry.action.replaceFirst("zypper-install:", "");
       Linux.commandQueue.add(LinuxCommand(
@@ -219,6 +232,18 @@ class ActionHandler {
       );
     }
 
+    if (actionEntry.action.startsWith("zypper-uninstall:")) {
+      String pkg = actionEntry.action.replaceFirst("zypper-uninstall:", "");
+      await Linux.removeApplications([pkg],
+          softwareManager: SOFTWARE_MANAGERS.ZYPPER);
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                UninstallerQuestion(action: actionEntry.action),
+          ));
+    }
+
     if (actionEntry.action.startsWith("flatpak-install:")) {
       String pkg = actionEntry.action.replaceFirst("flatpak-install:", "");
       Linux.commandQueue.add(LinuxCommand(
@@ -231,6 +256,38 @@ class ActionHandler {
             builder: (context) => RunCommandQueue(
                   title: "Flatpak",
                   message: AppLocalizations.of(context)!.packageWillBeInstalled,
+                  route: MainSearchLoader(),
+                )),
+      );
+    }
+
+    if (actionEntry.action.startsWith("flatpak-uninstall:")) {
+      String pkg = actionEntry.action.replaceFirst("flatpak-uninstall:", "");
+      await Linux.removeApplications([pkg],
+          softwareManager: SOFTWARE_MANAGERS.FLATPAK);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => RunCommandQueue(
+                  title: actionEntry.name,
+                  message: AppLocalizations.of(context)!
+                      .uninstallingXDescription(pkg),
+                  route: MainSearchLoader(),
+                )),
+      );
+    }
+
+    if (actionEntry.action.startsWith("snap-uninstall:")) {
+      String pkg = actionEntry.action.replaceFirst("snap-uninstall:", "");
+      await Linux.removeApplications([pkg],
+          softwareManager: SOFTWARE_MANAGERS.SNAP);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => RunCommandQueue(
+                  title: actionEntry.name,
+                  message: AppLocalizations.of(context)!
+                      .uninstallingXDescription(pkg),
                   route: MainSearchLoader(),
                 )),
       );

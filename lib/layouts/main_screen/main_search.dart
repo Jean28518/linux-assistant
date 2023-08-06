@@ -572,7 +572,9 @@ class _MainSearchState extends State<MainSearch> {
       keyDownHandler: (hotKey) async {
         print("DEBUG");
         // insert here function calls to debug
-        WeeklyTasks.doWeekleyTasks();
+        // Linux.getInstalledFlatpaks();
+        // Linux.getInstalledSnaps();
+        // Linux.getInstalledAPTPackages();
       },
     );
   }

@@ -288,6 +288,30 @@
   "urlsDescription": "Gebe eine URL ein und öffne diese in deinem Standard-Browser.",
   "packageWillBeInstalled": "Dein Paket wird in wenigen Momenten installiert.",
   "thisApplicationWillBeRemoved": "Diese Anwendung wird deinstalliert.",
+  "uninstallingXDescription": "Deinstalliere {app}...",
+  "@uninstallingXDescription": {
+    "placeholders": {
+      "app" : {}
+    },
+    "description": "",
+    "type": "text"
+  },
+  "uninstallApp": "Deinstalliere {app}",
+  "@uninstallApp": {
+    "placeholders": {
+      "app" : {}
+    },
+    "description": "",
+    "type": "text"
+  },  
+  "uninstallAppWarning": "Möchtest Du wirklich {app} deinstallieren?\nDas System könnte danach nicht mehr richtig funktionieren.\nBitte deinstalliere nur Programme, die Du selber installiert hast.",
+  "@uninstallAppWarning": {
+    "placeholders": {
+      "app" : {}
+    },
+    "description": "",
+    "type": "text"
+  },
   "@helloWorld": {
     "placeholders": {},
     "description": "",

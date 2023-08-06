@@ -88,6 +88,16 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
       returnValue.entries.addAll(flatpaks);
     }
 
+    // Deinstallation Entries.
+    if (configHandler.getValueUnsafe(
+        "search_filter_uninstall_software", true)) {
+      var actions = await Linux.getUninstallEntries(context).timeout(
+          timeoutDuration,
+          onTimeout: () =>
+              _onTimeoutOfSearchLoadingModule("uninstall_entries"));
+      returnValue.entries.addAll(actions);
+    }
+
     // Remove action entries for specific environments
     List<ActionEntry> entriesToRemove = [];
     for (ActionEntry entry in returnValue.entries) {

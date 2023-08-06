@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+import 'package:linux_assistant/layouts/mint_y.dart';
 import 'package:linux_assistant/services/linux.dart';
 
 class IconLoader {
@@ -80,6 +81,7 @@ class IconLoader {
         Icon icon = Icon(
           Icons.settings,
           size: iconSize,
+          color: MintY.currentColor,
         );
 
         cache['!default!-$iconSize'] = icon;
@@ -98,6 +100,7 @@ class IconLoader {
             return Icon(
               Icons.settings,
               size: iconSize,
+              color: MintY.currentColor,
             );
           });
       cache[cacheKeyword] = image;
