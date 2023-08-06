@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -49,8 +50,9 @@ class _SystemStatusState extends State<SystemStatus> {
           // double is in snapshot.data[1] (List<Object>)
           double cpuLoad = snapshot.data![1] as double;
           widgets.add(SingleBarChart(
-            value: cpuLoad < 0.9 ? cpuLoad + 0.1 : cpuLoad,
-            fillColor: Color.fromARGB(255, 70, 153, 221),
+            value: cpuLoad < 0.9 ? cpuLoad + 0.1 : max(cpuLoad, 1),
+            fillColor:
+                cpuLoad < 1 ? Color.fromARGB(255, 70, 153, 221) : Colors.red,
             tooltip: (cpuLoad * 100).toStringAsFixed(2) + "% (~1 min)",
             text: "CPU",
           ));
