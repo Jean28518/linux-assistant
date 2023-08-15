@@ -4,7 +4,7 @@ Release:        1%{?dist}
 Summary:        Daily Linux Helper with integrated search
 License:        GPL
 Source0:        %{name}-%{version}.tar.gz
-Requires:       libkeybinder-3_0-0 wmctrl wget python3 mesa-utils
+Requires:       libkeybinder-3_0-0 wmctrl wget python3
 Provides:       libflutter_linux_gtk.so()(64bit) libhotkey_manager_plugin.so()(64bit)
 
 %description
