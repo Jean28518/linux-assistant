@@ -1210,6 +1210,7 @@ class Linux {
           iconWidget: Icon(
             Icons.archive,
             size: 48,
+            color: MintY.currentColor,
           ),
           name: "Install $packageName",
           description: "Install via zypper",
