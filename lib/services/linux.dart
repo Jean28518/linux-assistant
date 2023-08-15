@@ -171,11 +171,18 @@ class Linux {
       callback();
       return;
     } else {
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => MintYLoadingPage(
+          text: AppLocalizations.of(context)!.loading,
+        ),
+      ));
       does_warpinator_exist =
           await isSpecificFlatpakInstalled("org.x.Warpinator");
       if (does_warpinator_exist) {
         runCommand("/usr/bin/flatpak run org.x.Warpinator");
-        callback();
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const MainSearchLoader(),
+        ));
         return;
       }
     }
