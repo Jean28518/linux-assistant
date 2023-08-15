@@ -19,6 +19,7 @@ abstract class LinuxSystem {
     return cmdResult.output.contains("Swap");
   }
 
+  /// Might be inaccurate
   static Future<Uptime> uptime() async {
     var cmdResult =
         await CommandHelper.run("/usr/bin/uptime", env: {"LC_ALL": "C"});
@@ -34,7 +35,17 @@ abstract class LinuxSystem {
       int minuteValue = int.parse(arr[1].replaceAll(",", ""));
       return hourValue == 0 ? Uptime("m", minuteValue) : Uptime("h", hourValue);
     } else {
-      return Uptime("d", int.parse(values[2]));
+      // The new uptime output could be: 1 day,  1:23
+      if (cmdResult.output.contains("min")) {
+        return Uptime("m", int.parse(values[2]));
+      }
+      if (cmdResult.output.contains("day")) {
+        return Uptime("d", int.parse(values[2]));
+      }
+      if (cmdResult.output.contains("hour")) {
+        return Uptime("h", int.parse(values[2]));
+      }
+      return Uptime("m", int.parse(values[2]));
     }
   }
 
