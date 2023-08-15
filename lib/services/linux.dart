@@ -1213,6 +1213,10 @@ class Linux {
   }
 
   static Future<List<String>> getInstalledAPTPackages() async {
+    if (!currentenvironment.installedSoftwareManagers
+        .contains(SOFTWARE_MANAGERS.APT)) {
+      return [];
+    }
     List<String> returnValue = [];
 
     /// Run: /usr/bin/dpkg --get-selections | /usr/bin/awk '!/deinstall|purge|hold/' | /usr/bin/cut -f1 | /usr/bin/tr '\n' ' '
@@ -1224,21 +1228,48 @@ class Linux {
     List<String> lines = output.split("\n");
 
     for (String line in lines) {
-      if (line.contains("install") || true) {
+      if (line.contains("install")) {
         returnValue.add(line.replaceFirst("install", "").trim());
       }
     }
     return returnValue;
   }
 
+  /// Returns List of [package name, description]
   static Future<List<List<String>>> getInstalledZypperPackages() async {
-    // TODO This command should do it: zypper search --installed-only
-    print("TODO!");
-    return [];
+    if (!currentenvironment.installedSoftwareManagers
+        .contains(SOFTWARE_MANAGERS.ZYPPER)) {
+      return [];
+    }
+    List<List<String>> returnValue = [];
+
+    /// Run: zypper se --installed-only
+    String output = await Linux.runCommandWithCustomArgumentsAndGetStdOut(
+        "/usr/bin/zypper", [
+      "se",
+      "--installed-only",
+    ]);
+
+    List<String> lines = output.split("\n");
+
+    for (String line in lines) {
+      List<String> lineParts = line.split("|");
+      if (lineParts.length < 4) {
+        continue;
+      }
+      String packageName = lineParts[1].trim();
+      String description = lineParts[2].trim();
+      returnValue.add([packageName, description]);
+    }
+    return returnValue;
   }
 
   /// Return value: List of [app id, app name, app description];
   static Future<List<List<String>>> getInstalledFlatpaks() async {
+    if (!currentenvironment.installedSoftwareManagers
+        .contains(SOFTWARE_MANAGERS.FLATPAK)) {
+      return [];
+    }
     List<List<String>> returnValue = [];
     String installedFlatpaks =
         await Linux.runCommandWithCustomArgumentsAndGetStdOut(
@@ -1256,6 +1287,10 @@ class Linux {
 
   /// Return value: List of app id;
   static Future<List<String>> getInstalledSnaps() async {
+    if (!currentenvironment.installedSoftwareManagers
+        .contains(SOFTWARE_MANAGERS.SNAP)) {
+      return [];
+    }
     List<String> returnValue = [];
     String installedSnaps =
         await Linux.runCommandWithCustomArgumentsAndGetStdOut(
@@ -1302,12 +1337,38 @@ class Linux {
     }
 
     /// Zypper
+    List<List<String>> installedZypperPackages =
+        await installedZypperPackagesFuture;
+    for (List<String> zypperEntry in installedZypperPackages) {
+      if (zypperEntry.length < 2) {
+        print("Wrong zypper entry: $zypperEntry");
+        continue;
+      }
+      returnValue.add(
+        ActionEntry(
+          name: AppLocalizations.of(context)!.uninstallApp(zypperEntry[0]),
+          description: "${zypperEntry[1]} (Zypper)",
+          action: "zypper-uninstall:${zypperEntry[0]}",
+          iconWidget: Icon(
+            Icons.delete,
+            size: 48,
+            color: MintY.currentColor,
+          ),
+          priority: -10,
+          excludeFromSearchProposal: true,
+        ),
+      );
+    }
 
     /// Flatpak
     List<List<String>> installedFlatpaks = await installedFlatpaksFuture;
 
     /// flatpak entry: app-id, app name, description
     for (List<String> flatpakEntry in installedFlatpaks) {
+      if (flatpakEntry.length < 3) {
+        print("Wrong flatpak entry: $flatpakEntry");
+        continue;
+      }
       returnValue.add(
         ActionEntry(
           name: AppLocalizations.of(context)!.uninstallApp(flatpakEntry[1]),
