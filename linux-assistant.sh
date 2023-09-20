@@ -1,6 +1,13 @@
 #!/bin/bash
 APP_DIR="/usr/lib/linux-assistant"
 
+# if /app/bin is present change APP_DIR (because then we are in flatpak)
+if [ -d "/app/bin" ]; then
+   APP_DIR="/app/bin"
+fi
+
+echo "App_DIR: $APP_DIR"
+
 if [[ "$1" == "-v" || "$1" == "--version" ]]; then
   VERSION=""
   if [ -f "$APP_DIR/version" ]; then
