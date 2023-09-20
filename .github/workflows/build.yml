@@ -31,7 +31,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: linux-assistant-bundle
-          path: build/linux/x64/release/bundle/
+          path: build/linux/x64/release/bundle
       - run: bash build-deb.sh
       - name: Upload deb
         uses: actions/upload-artifact@v1
