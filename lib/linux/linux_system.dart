@@ -16,7 +16,7 @@ abstract class LinuxSystem {
       throw Exception(cmdResult.error);
     }
 
-    return cmdResult.output.contains("Swap");
+    return cmdResult.output.toLowerCase().contains("swap");
   }
 
   /// Might be inaccurate
