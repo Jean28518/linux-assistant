@@ -1,4 +1,5 @@
 import 'package:linux_assistant/helpers/command_helper.dart';
+import 'package:linux_assistant/services/linux.dart';
 
 class DeviceInfo {
   final String filesystem;
@@ -26,15 +27,16 @@ abstract class LinuxFilesystem {
   static final List<String> _removableDevices = ["/media/", "/mnt/"];
 
   static Future<List<DeviceInfo>> devices() async {
-    var cmdResult = await CommandHelper.runWithArguments("/usr/bin/df", ["-h"]);
-    if (!cmdResult.success) {
-      throw Exception(cmdResult.error);
-    }
+    var cmdResult = await Linux.runCommandWithCustomArguments(
+        "/usr/bin/df", ["-h"],
+        getErrorMessages: false);
 
-    var lines = cmdResult.output
+    Iterable<String> lines = cmdResult
         .split("\n")
         .skip(1)
         .where((x) => !_ignoreDevices.any((y) => x.startsWith(y)));
+
+    lines = lines.where((element) => element.length > 10);
 
     var devices = List<DeviceInfo>.empty(growable: true);
     var devicesRead = List<String>.empty(growable: true);

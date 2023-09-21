@@ -57,7 +57,7 @@ class ConfigHandler {
 
     File configFile = File("$homeDir.config/linux-assistant/config.json");
     if (!await configFile.exists()) {
-      await Linux.runCommandAndGetStdout(
+      await Linux.runCommand(
           "/usr/bin/mkdir -p " + homeDir + ".config/linux-assistant/");
       configMap["config_initialized"] = true;
     } else {

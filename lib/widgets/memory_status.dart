@@ -19,7 +19,7 @@ class SystemStatus extends StatefulWidget {
 
 Future<List<Object>> _getAllFutures() async {
   return await Future.wait([
-    Linux.runCommandAndGetStdout("free -m"),
+    Linux.runCommand("free -m", hostOnFlatpak: false),
     LinuxSystem.getCpuAverageLoad(),
   ]);
 }

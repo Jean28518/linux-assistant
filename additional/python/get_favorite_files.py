@@ -1,4 +1,5 @@
 from gi.repository import Gio
+import urllib.parse
 
 # Check if xapp favorites exist:
 schema_source =  Gio.SettingsSchemaSource.get_default()
@@ -10,4 +11,5 @@ if Gio.SettingsSchemaSource.lookup(schema_source, "org.x.apps.favorites", True):
     for l in list:
         l = l.replace("file://", "")
         l = l.split("::")[0]
+        l = urllib.parse.unquote(l)
         print(l)

@@ -142,13 +142,15 @@ List<ActionEntry> getBasicEntries(BuildContext context) {
     ),
     ActionEntry(
       name: AppLocalizations.of(context)!.versionOfLinuxAssistant,
-      description: "v$CURRENT_LINUX_ASSISTANT_VERSION",
+      description: Linux.currentenvironment.runningInFlatpak
+          ? "v$CURRENT_LINUX_ASSISTANT_VERSION (Flatpak)"
+          : "v$CURRENT_LINUX_ASSISTANT_VERSION",
       action: "just_callback",
       iconWidget: Icon(
         Icons.info_rounded,
         size: 48,
         color: MintY.currentColor,
       ),
-    )
+    ),
   ];
 }

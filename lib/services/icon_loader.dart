@@ -47,26 +47,23 @@ class IconLoader {
 
     /// Load icon for folder
     if (appCode == "folder") {
-      iconPath = await Linux.runCommandWithCustomArgumentsAndGetStdOut(
-          "/usr/bin/python3", [
-        "${Linux.executableFolder}additional/python/get_icon_path_for_file.py",
+      iconPath = await Linux.runCommandWithCustomArguments("/usr/bin/python3", [
+        "${Linux.pythonScriptsFolder}/get_icon_path_for_file.py",
         "--file='/tmp/'",
       ]);
 
       /// Load icon for app
     } else if (appCode != "" && file_path == "") {
-      iconPath = await Linux.runCommandWithCustomArgumentsAndGetStdOut(
-          "/usr/bin/python3", [
-        "${Linux.executableFolder}additional/python/get_icon_path_for_application.py",
+      iconPath = await Linux.runCommandWithCustomArguments("/usr/bin/python3", [
+        "${Linux.pythonScriptsFolder}/get_icon_path_for_application.py",
         "--icon=$appCode",
-        "--path-to-alternative-logos=${Linux.executableFolder}additional/logos/"
+        "--path-to-alternative-logos=${Linux.additionalFolder}logos/"
       ]);
 
       /// Load icon for file type
     } else if (file_path != "") {
-      iconPath = await Linux.runCommandWithCustomArgumentsAndGetStdOut(
-          "/usr/bin/python3", [
-        "${Linux.executableFolder}additional/python/get_icon_path_for_file.py",
+      iconPath = await Linux.runCommandWithCustomArguments("/usr/bin/python3", [
+        "${Linux.pythonScriptsFolder}/get_icon_path_for_file.py",
         "--file='$file_path'",
       ]);
     }

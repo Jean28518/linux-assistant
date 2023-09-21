@@ -9,7 +9,7 @@ import 'package:linux_assistant/enums/softwareManagers.dart';
 import 'package:linux_assistant/layouts/feature_overview/feature_overview.dart';
 import 'package:linux_assistant/layouts/greeter/introduction.dart';
 import 'package:linux_assistant/layouts/main_screen/action_entry_card.dart';
-import 'package:linux_assistant/layouts/main_screen/disk_space.dart';
+import 'package:linux_assistant/widgets/disk_space.dart';
 import 'package:linux_assistant/layouts/feedback/feedback_form.dart';
 import 'package:linux_assistant/layouts/settings/settings_start.dart';
 import 'package:linux_assistant/services/main_search_loader.dart';

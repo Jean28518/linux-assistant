@@ -20,42 +20,68 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class Linux {
   static Environment currentenvironment = Environment();
   static String executableFolder = "";
+  static String pythonScriptsFolder = "";
+  static String homeFolder = "";
+
+  /// Here the additonal files are stored, like the python scripts and logos of other applications
+  static String additionalFolder = "";
 
   /// Commands in it can be run at once by [Linux.executeCommandQueue()]
   /// or by opening the page "RunCommandQueue"
   static List<LinuxCommand> commandQueue = [];
 
-  static void runCommand(String command,
-      {Map<String, String>? environment}) async {
+  static Future<void> init() async {
+    executableFolder = getExecutableFolder();
+    homeFolder = getHomeDirectory();
+    pythonScriptsFolder = "$executableFolder/additional/python/";
+    additionalFolder = "$executableFolder/additional/";
+
+    // If /app/bin exists, we are running in a flatpak, we need this for every command issued
+    if (await Directory("/app/bin").exists()) {
+      Linux.currentenvironment.runningInFlatpak = true;
+
+      // That python scripts are also running in flatpak we need to copy them to the home directory .cache folder
+      await runCommand("rm -r $homeFolder/.cache/linux-assistant");
+      await runCommand(
+          "cp -r $additionalFolder $homeFolder/.cache/linux-assistant",
+          hostOnFlatpak: false);
+      pythonScriptsFolder = "$homeFolder/.cache/linux-assistant/python/";
+      additionalFolder = "$homeFolder/.cache/linux-assistant/";
+    }
+
+    await loadCurrentEnvironment();
+  }
+
+  /// Returns the stdout and the stderr.
+  ///
+  /// If [hostOnFlatpak] is set to false, the command will be issued in the flatpak sandbox, if available.
+  static Future<String> runCommand(String command,
+      {Map<String, String>? environment, bool hostOnFlatpak = true}) async {
     List<String> arguments = command.split(' ');
     String exec = arguments.removeAt(0);
-
-    print("Running linux command: " + command);
-    var result = await Process.run(exec, arguments,
-        runInShell: true, environment: environment);
-    if (result.stderr is String && !result.stderr.toString().isEmpty) {
-      print(result.stderr);
-    }
-    print(result.stdout);
+    String result = await runCommandWithCustomArguments(exec, arguments,
+        environment: environment,
+        hostOnFlatpak: hostOnFlatpak,
+        getErrorMessages: true);
+    return result;
   }
 
-  static void runCommandWithCustomArguments(String exec, List<String> arguments,
-      {Map<String, String>? environment}) async {
-    print("Running linux command: " +
-        exec +
-        " with arguments: " +
-        arguments.toString());
-    var result = await Process.run(exec, arguments,
-        runInShell: true, environment: environment);
-    if (result.stderr is String && !result.stderr.toString().isEmpty) {
-      print(result.stderr);
-    }
-    print(result.stdout);
-  }
-
-  static Future<String> runCommandWithCustomArgumentsAndGetStdOut(
+  /// Returns the stdout and the stderr.
+  ///
+  /// If [hostOnFlatpak] is set to false, the command will be issued in the flatpak sandbox, if available.
+  static Future<String> runCommandWithCustomArguments(
       String exec, List<String> arguments,
-      {bool getErrorMessages = false, Map<String, String>? environment}) async {
+      {bool getErrorMessages = false,
+      Map<String, String>? environment,
+      bool hostOnFlatpak = true}) async {
+    exec = expandCommand(exec);
+    if (currentenvironment.runningInFlatpak) {
+      arguments.insert(0, exec);
+      exec = "flatpak-spawn";
+      if (hostOnFlatpak) {
+        arguments.insert(0, "--host");
+      }
+    }
     print("Running linux command: " +
         exec +
         " with arguments: " +
@@ -73,18 +99,24 @@ class Linux {
     return (result.stdout);
   }
 
-  static Future<String> runCommandAndGetStdout(String command,
-      {Map<String, String>? environment}) async {
-    List<String> arguments = command.split(' ');
-    String exec = arguments.removeAt(0);
-    var result = await Process.run(exec, arguments,
-        runInShell: true, environment: environment);
-    String output = result.stdout.toString() + "\n";
-    if (result.stderr is String && !result.stderr.toString().isEmpty) {
-      print(result.stderr);
-      output += result.stderr.toString();
+  /// Expand command for correct use in Linux and Flatpak. Examples:
+  ///
+  /// - "firefox" -> "/usr/bin/firefox"
+  /// - "firefox" -> "/var/run/host/usr/bin/firefox"
+  static String expandCommand(String command) {
+    // If a local command is used, we don't need to expand it.
+    if (command.startsWith(".")) {
+      return command;
     }
-    return output;
+    if (!command.startsWith("/usr/bin") &&
+        !command.startsWith("/var/run/host")) {
+      command = "/usr/bin/$command";
+    }
+    // if (!command.startsWith("/var/run/host") &&
+    //     currentenvironment.runningInFlatpak) {
+    //   command = "/var/run/host$command";
+    // }
+    return command;
   }
 
   static String getHomeDirectory() {
@@ -162,10 +194,20 @@ class Linux {
     }
   }
 
+  /// Checks if the file is accessible in /usr/bin or /var/run/host/usr/bin.
+  /// (Flatpak compatible)
+  ///
+  /// Its up to you if you put /usr/bin before the file name or not.
+  static bool doesExecutableExist(String executable) {
+    executable = expandCommand(executable);
+    return File(expandCommand(executable)).existsSync() ||
+        File(expandCommand("/var/run/host/$executable")).existsSync();
+  }
+
   /// [callback] is used for clearing and reoading the search.
   static void openOrInstallWarpinator(
       BuildContext context, VoidCallback callback) async {
-    bool does_warpinator_exist = await File("/usr/bin/warpinator").exists();
+    bool does_warpinator_exist = doesExecutableExist("warpinator");
     if (does_warpinator_exist) {
       runCommand("/usr/bin/warpinator");
       callback();
@@ -180,9 +222,7 @@ class Linux {
           await isSpecificFlatpakInstalled("org.x.Warpinator");
       if (does_warpinator_exist) {
         runCommand("/usr/bin/flatpak run org.x.Warpinator");
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => const MainSearchLoader(),
-        ));
+        callback();
         return;
       }
     }
@@ -200,7 +240,7 @@ class Linux {
   /// [callback] is used for clearing and reoading the search.
   static void openOrInstallHardInfo(
       BuildContext context, VoidCallback callback) async {
-    bool does_app_exist = await File("/usr/bin/hardinfo").exists();
+    bool does_app_exist = doesExecutableExist("hardinfo");
     if (does_app_exist) {
       runCommand("/usr/bin/hardinfo");
       callback();
@@ -221,7 +261,7 @@ class Linux {
   /// [callback] is used for clearing and reoading the search.
   static void openOrInstallRedshift(
       BuildContext context, VoidCallback callback) async {
-    bool does_app_exist = File("/usr/bin/redshift-gtk").existsSync();
+    bool does_app_exist = doesExecutableExist("redshift-gtk");
     if (does_app_exist) {
       MintY.showMessage(context,
           AppLocalizations.of(context)!.redshiftIsInstalledAlready, callback);
@@ -341,7 +381,7 @@ class Linux {
     if (".".allMatches(appCode).length != 2) {
       return false;
     }
-    String flatpakList = await runCommandAndGetStdout(
+    String flatpakList = await runCommand(
         "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.FLATPAK)} list --columns=application");
     return flatpakList.toLowerCase().contains(appCode.toLowerCase());
   }
@@ -351,7 +391,7 @@ class Linux {
         .contains(SOFTWARE_MANAGERS.APT)) {
       return false;
     }
-    String output = await runCommandAndGetStdout("/usr/bin/dpkg -l $appCode");
+    String output = await runCommand("/usr/bin/dpkg -l $appCode");
     return output.contains("ii  $appCode");
   }
 
@@ -360,14 +400,14 @@ class Linux {
         .contains(SOFTWARE_MANAGERS.ZYPPER)) {
       return false;
     }
-    String output = await runCommandAndGetStdout(
+    String output = await runCommand(
         "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.ZYPPER)} --non-interactive info $appCode",
         environment: {"LC_ALL": "C"});
     return output.replaceAll(" ", "").contains("Installed:Yes");
   }
 
   static Future<bool> isSpecificSnapInstalled(appCode) async {
-    String output = await runCommandAndGetStdout(
+    String output = await runCommand(
         "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.SNAP)} info $appCode");
     return output.contains("installed: ");
   }
@@ -389,6 +429,15 @@ class Linux {
               userId: 0,
               command:
                   "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.APT)} remove $appCode -y",
+              environment: {"DEBIAN_FRONTEND": "noninteractive"},
+            ),
+          );
+
+          commandQueue.add(
+            LinuxCommand(
+              userId: 0,
+              command:
+                  "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.APT)} autoremove -y",
               environment: {"DEBIAN_FRONTEND": "noninteractive"},
             ),
           );
@@ -494,21 +543,21 @@ class Linux {
   }
 
   static Future<bool> isDebPackageAvailable(String appCode) async {
-    String output = await runCommandAndGetStdout(
+    String output = await runCommand(
         "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.APT)} show $appCode");
     return output.contains("Package: ") &&
         !output.contains("No packages found");
   }
 
   static Future<bool> isZypperPackageAvailable(String appCode) async {
-    String output = await runCommandAndGetStdout(
+    String output = await runCommand(
         "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.ZYPPER)} info $appCode");
     return !output.contains(" not found.");
   }
 
   /// returns the source under which the Flatpak is available, otherwise empty String
   static Future<String> isFlatpakAvailable(String appCode) async {
-    String output = await Linux.runCommandAndGetStdout(
+    String output = await runCommand(
         "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.FLATPAK)} search $appCode");
     if (output.split("\n").length >= 2) {
       List<String> lines = output.split("\n");
@@ -522,7 +571,7 @@ class Linux {
   }
 
   static Future<bool> isSnapAvailable(String appCode) async {
-    String output = await Linux.runCommandAndGetStdout(
+    String output = await Linux.runCommand(
         "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.SNAP)} info $appCode");
     return output.split("\n").length > 5;
   }
@@ -603,8 +652,7 @@ class Linux {
 
   static Future<List<ActionEntry>> getAllFolderEntriesOfUser(
       BuildContext context) async {
-    String foldersString =
-        await runCommandWithCustomArgumentsAndGetStdOut("python3", [
+    String foldersString = await runCommandWithCustomArguments("python3", [
       "${executableFolder}additional/python/get_folder_structure.py",
       "--recursion_depth=${ConfigHandler().getValueUnsafe("folder_recursion_depth", 3)}"
     ]);
@@ -614,8 +662,7 @@ class Linux {
     if (currentenvironment.desktop != DESKTOPS.KDE) {
       String home = getHomeDirectory();
       String bookmarksLocation = home + "/.config/gtk-3.0/bookmarks";
-      String bookmarksString =
-          await runCommandAndGetStdout("cat " + bookmarksLocation);
+      String bookmarksString = await runCommand("cat " + bookmarksLocation);
       List<String> bookmarkCandidates = bookmarksString.split("\n");
       for (String bookmarkCandidate in bookmarkCandidates) {
         String bookmark = bookmarkCandidate.split(" ")[0];
@@ -669,9 +716,8 @@ class Linux {
   }
 
   static Future<List<ActionEntry>> getAllAvailableApplications() async {
-    String applicationsString =
-        await runCommandWithCustomArgumentsAndGetStdOut("python3", [
-      "${executableFolder}additional/python/get_applications.py",
+    String applicationsString = await runCommandWithCustomArguments("python3", [
+      "$pythonScriptsFolder/get_applications.py",
       "--lang=${currentenvironment.language}",
       "--desktop=${currentenvironment.desktop.toString()}"
     ]);
@@ -706,9 +752,7 @@ class Linux {
   }
 
   static Future<List<ActionEntry>> getRecentFiles(BuildContext context) async {
-    String recentFileString = await runCommandWithCustomArgumentsAndGetStdOut(
-        "/usr/bin/python3",
-        ["${executableFolder}additional/python/get_recent_files.py"]);
+    String recentFileString = await runPythonScript("get_recent_files.py");
     List<String> recentFiles = recentFileString.split("\n");
     List<ActionEntry> actionEntries = [];
     for (String recentFile in recentFiles) {
@@ -724,8 +768,7 @@ class Linux {
   }
 
   static Future<Environment> getCurrentEnvironment() async {
-    String commandOutput = await runCommandWithCustomArgumentsAndGetStdOut(
-        "python3", ["${executableFolder}additional/python/get_environment.py"]);
+    String commandOutput = await runPythonScript("get_environment.py");
     List<String> lines = commandOutput.split("\n");
     Environment newEnvironment = Environment();
 
@@ -794,13 +837,16 @@ class Linux {
     newEnvironment.wayland = lines[5].contains("wayland");
 
     for (int i = 0; i < SOFTWARE_MANAGERS.values.length; i++) {
-      if (await File(
-              getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.values[i]))
-          .exists()) {
+      // Check if executable exists from root and from flatpak
+      if (doesExecutableExist(
+          getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.values[i]))) {
         newEnvironment.installedSoftwareManagers
             .add(SOFTWARE_MANAGERS.values[i]);
       }
     }
+
+    // are we running in flatpak? We already got this from Linux.init()
+    newEnvironment.runningInFlatpak = currentenvironment.runningInFlatpak;
 
     newEnvironment.currentUserId = await getUserIdOfCurrentUser();
     newEnvironment.hostname = await getHostname();
@@ -940,29 +986,30 @@ class Linux {
       List<String> arguments = const [],
       bool getErrorMessages = true}) async {
     List<String> commandList = [];
-    String executable = "";
+    String executable = "python3";
     if (root) {
       executable = "pkexec";
-      commandList.add("${executableFolder}additional/python/run_script.py");
-    } else {
-      executable = "${executableFolder}additional/python/run_script.py";
+      commandList.add("/usr/bin/python3");
     }
+    commandList.add("${pythonScriptsFolder}run_script.py");
     commandList.add(filename);
 
     commandList.addAll(arguments);
 
-    return runCommandWithCustomArgumentsAndGetStdOut(executable, commandList,
+    print("Run python script: $executable $commandList");
+
+    return runCommandWithCustomArguments(executable, commandList,
         getErrorMessages: getErrorMessages);
   }
 
   static Future<bool> isNvidiaCardInstalledOnSystem() async {
-    String output = await runCommandAndGetStdout("lshw");
+    String output = await runCommand("lshw");
     output = output.toLowerCase();
     return output.contains("nvidia");
   }
 
   static Future<bool> isNouveauCurrentGraphicsDriver() async {
-    String output = await runCommandAndGetStdout("lspci -nnk");
+    String output = await runCommand("lspci -nnk");
     output = output.toLowerCase();
     return output.contains("kernel driver in use: nouveau");
   }
@@ -1121,17 +1168,18 @@ class Linux {
 
     String checksum = Hashing.getMd5OfString(string);
 
-    File file = File('/tmp/linux_assistant_commands');
+    String filepath = '$homeFolder/.cache/linux_assistant_commands';
+    File file = File(filepath);
     file.writeAsString(string);
 
     String output = await runPythonScript("run_multiple_commands.py",
-        arguments: ["--md5=$checksum"], root: true);
+        arguments: ["--md5=$checksum", "--path=$filepath"], root: true);
 
     return output;
   }
 
   static Future<int> getUserIdOfCurrentUser() async {
-    String output = await Linux.runCommandAndGetStdout("id -u");
+    String output = await Linux.runCommand("id -u");
     return int.parse(output);
   }
 
@@ -1177,7 +1225,7 @@ class Linux {
     if (keyword.length <= 3) {
       return [];
     }
-    String output = await runCommandWithCustomArgumentsAndGetStdOut(
+    String output = await runCommandWithCustomArguments(
         getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.ZYPPER),
         ["--non-interactive", "search", keyword]);
     output = output.trim();
@@ -1228,8 +1276,7 @@ class Linux {
     List<String> returnValue = [];
 
     /// Run: /usr/bin/dpkg --get-selections | /usr/bin/awk '!/deinstall|purge|hold/' | /usr/bin/cut -f1 | /usr/bin/tr '\n' ' '
-    String output =
-        await Linux.runCommandWithCustomArgumentsAndGetStdOut("/usr/bin/dpkg", [
+    String output = await Linux.runCommandWithCustomArguments("/usr/bin/dpkg", [
       "--get-selections",
     ]);
 
@@ -1252,8 +1299,8 @@ class Linux {
     List<List<String>> returnValue = [];
 
     /// Run: zypper se --installed-only
-    String output = await Linux.runCommandWithCustomArgumentsAndGetStdOut(
-        "/usr/bin/zypper", [
+    String output =
+        await Linux.runCommandWithCustomArguments("/usr/bin/zypper", [
       "se",
       "--installed-only",
     ]);
@@ -1279,10 +1326,9 @@ class Linux {
       return [];
     }
     List<List<String>> returnValue = [];
-    String installedFlatpaks =
-        await Linux.runCommandWithCustomArgumentsAndGetStdOut(
-            "/usr/bin/flatpak",
-            ["list", "--app", "--columns=application,name,description"]);
+    String installedFlatpaks = await Linux.runCommandWithCustomArguments(
+        "/usr/bin/flatpak",
+        ["list", "--app", "--columns=application,name,description"]);
     List<String> lines = installedFlatpaks.split("\n");
     for (String line in lines) {
       if (line.isNotEmpty) {
@@ -1301,8 +1347,7 @@ class Linux {
     }
     List<String> returnValue = [];
     String installedSnaps =
-        await Linux.runCommandWithCustomArgumentsAndGetStdOut(
-            "/usr/bin/snap", ["list"]);
+        await Linux.runCommandWithCustomArguments("/usr/bin/snap", ["list"]);
     List<String> lines = installedSnaps.split("\n");
 
     /// Remove the heading line of the output of the command
@@ -1507,16 +1552,16 @@ class Linux {
   static Future<bool> isDarkThemeEnabled() async {
     switch (currentenvironment.desktop) {
       case DESKTOPS.CINNAMON:
-        String output = await runCommandAndGetStdout(
-            "gsettings get org.cinnamon.desktop.interface gtk-theme");
+        String output = await runCommand(
+            "/usr/bin/gsettings get org.cinnamon.desktop.interface gtk-theme");
         return output.toLowerCase().contains("dark");
       case DESKTOPS.GNOME:
-        String output = await runCommandAndGetStdout(
+        String output = await runCommand(
             "gsettings get org.gnome.desktop.interface gtk-theme");
         return output.toLowerCase().contains("dark");
       case DESKTOPS.XFCE:
-        String output = await runCommandAndGetStdout(
-            "xfconf-query -c xfwm4 -p /general/theme");
+        String output =
+            await runCommand("xfconf-query -c xfwm4 -p /general/theme");
         return output.toLowerCase().contains("dark");
       case DESKTOPS.KDE:
         String kdeGlobals =
@@ -1646,9 +1691,8 @@ class Linux {
 
     List<ActionEntry> returnValue = [];
     try {
-      String installedFlatpaks =
-          await Linux.runCommandWithCustomArgumentsAndGetStdOut(
-              "/usr/bin/flatpak", ["list", "--app", "--columns=application"]);
+      String installedFlatpaks = await Linux.runCommandWithCustomArguments(
+          "/usr/bin/flatpak", ["list", "--app", "--columns=application"]);
 
       File flathubIndexFile =
           File("$homeDir.config/linux-assistant/flathub_index.json");
@@ -1681,16 +1725,21 @@ class Linux {
 
   static Future<String> getUsername() async {
     final int id = currentenvironment.currentUserId;
-    return (await runCommandAndGetStdout("id -nu $id")).trim();
+    return (await runCommand("id -nu $id")).trim();
   }
 
   static Future<String> getHostname() async {
-    return (await runCommandAndGetStdout("hostname")).trim();
+    return (await runCommand("hostname")).trim();
   }
 
   static Future<String> getOsPrettyName() async {
+    String filePathAddition = "";
+    if (currentenvironment.runningInFlatpak) {
+      filePathAddition = "/var/run/host";
+    }
+
     try {
-      return (await File("/etc/os-release").readAsString())
+      return (await File("$filePathAddition/etc/os-release").readAsString())
           .split("\n")
           .firstWhere((x) => x.startsWith("PRETTY_NAME"))
           .split('"')
@@ -1726,7 +1775,7 @@ class Linux {
 
   static Future<String> getGpuModel() async {
     try {
-      return (await runCommandAndGetStdout("glxinfo -B"))
+      return (await runCommand("glxinfo -B"))
           .split("\n")
           .firstWhere((x) => x.startsWith("OpenGL renderer string"))
           .replaceFirst("OpenGL renderer string:", "")

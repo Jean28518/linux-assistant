@@ -21,8 +21,7 @@ void main() async {
   // For hot reload, `unregisterAll()` needs to be called.
   await HotKeyManager.instance.unregisterAll();
 
-  Linux.executableFolder = Linux.getExecutableFolder();
-  await Linux.loadCurrentEnvironment();
+  await Linux.init();
   bool darkTheme = await Linux.isDarkThemeEnabled();
   darkTheme = await ConfigHandler().getValue("dark_theme_activated", darkTheme);
 

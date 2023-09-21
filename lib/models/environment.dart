@@ -13,6 +13,7 @@ class Environment {
   List<SOFTWARE_MANAGERS> installedSoftwareManagers = [];
   var preferredSoftwareManager = SOFTWARE_MANAGERS.APT;
   bool wayland = false;
+  bool runningInFlatpak = false;
 
   /// All these variables are generated at runtime
   String username = "";

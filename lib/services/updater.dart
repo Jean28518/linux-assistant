@@ -11,6 +11,11 @@ class LinuxAssistantUpdater {
   static bool isNewerVersionAvailable() {
     // Lookup done by WeeklyTasks
 
+    // If we are running as flatpak we don't need to check for updates manually.
+    if (Linux.currentenvironment.runningInFlatpak) {
+      return false;
+    }
+
     String newestVersion = ConfigHandler().getValueUnsafe(
         "newest-linux-assistant-version", CURRENT_LINUX_ASSISTANT_VERSION);
 

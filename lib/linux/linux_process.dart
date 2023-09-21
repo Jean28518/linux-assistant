@@ -1,4 +1,5 @@
 import 'package:linux_assistant/helpers/command_helper.dart';
+import 'package:linux_assistant/services/linux.dart';
 
 class ProcessStat {
   final String metricValue;
@@ -10,15 +11,11 @@ class ProcessStat {
 abstract class LinuxProcess {
   static Future<List<ProcessStat>> _getTopProcesses(
       String metric, int count) async {
-    var cmdResult = await CommandHelper.runWithArguments(
+    var cmdResult = await Linux.runCommandWithCustomArguments(
         "/usr/bin/ps", ["-eo", "$metric,args", "--sort=-$metric"]);
 
-    if (!cmdResult.success) {
-      throw Exception(cmdResult.error);
-    }
-
     var processes = List<ProcessStat>.empty(growable: true);
-    for (var line in cmdResult.output.split("\n").skip(1).take(count)) {
+    for (var line in cmdResult.split("\n").skip(1).take(count)) {
       var values = line.split(" ");
       values.removeWhere((x) => x == "");
       processes.add(ProcessStat(values[0], values[1].split("/").last));
@@ -28,12 +25,10 @@ abstract class LinuxProcess {
   }
 
   static Future<int> processCount() async {
-    var cmdResult = await CommandHelper.runWithArguments("/usr/bin/ps", ["-e"]);
-    if (!cmdResult.success) {
-      throw Exception(cmdResult.error);
-    }
+    var cmdResult =
+        await Linux.runCommandWithCustomArguments("/usr/bin/ps", ["-e"]);
 
-    return cmdResult.output.split("\n").skip(1).length;
+    return cmdResult.split("\n").skip(1).length;
   }
 
   static Future<List<ProcessStat>> topProcessesByCpu(int count) async =>
@@ -43,13 +38,9 @@ abstract class LinuxProcess {
       await _getTopProcesses("pmem", count);
 
   static Future<int> zombieCount() async {
-    var cmdResult =
-        await CommandHelper.runWithArguments("/usr/bin/ps", ["-eo", "stat"]);
+    var cmdResult = await Linux.runCommandWithCustomArguments(
+        "/usr/bin/ps", ["-eo", "stat"]);
 
-    if (!cmdResult.success) {
-      throw Exception(cmdResult.error);
-    }
-
-    return cmdResult.output.split("\n").where((x) => x.trim() == "Z").length;
+    return cmdResult.split("\n").where((x) => x.trim() == "Z").length;
   }
 }

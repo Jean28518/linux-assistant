@@ -3,13 +3,13 @@ import jessentials
 import jfiles
 import hashlib
 
-FILE_PATH = "/tmp/linux_assistant_commands"
+FILE_PATH = jessentials.get_value_from_arguments("path", "")
 
 
 jessentials.ensure_root_privileges()
 
 if not jfiles.does_file_exist(FILE_PATH):
-    jessentials.fail(f"File '{FILE_PATH}' not found. Exiting..")
+    jessentials.fail(f"File '{FILE_PATH}' not found. Please provide the file path via --path. Exiting..")
 
 md5ChecksumFromExecutor = jessentials.get_value_from_arguments("md5", "")
 file = open(FILE_PATH, "r")

@@ -16,8 +16,12 @@ cp linux-assistant.sh linux-assistant-bundle/
 cp linux-assistant.png linux-assistant-bundle/
 cp version linux-assistant-bundle/
 
+# Get libkeybinder.so
+cp /lib/x86_64-linux-gnu/libkeybinder-3.0.so.0 linux-assistant-bundle/lib/
+
 # Delete old zip if present
 if [ -f "linux-assistant-bundle.zip" ]; then
     rm linux-assistant-bundle.zip
 fi
 zip -r linux-assistant-bundle.zip linux-assistant-bundle
+sha256sum linux-assistant-bundle.zip
