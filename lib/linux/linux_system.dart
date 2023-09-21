@@ -11,7 +11,8 @@ class Uptime {
 
 abstract class LinuxSystem {
   static Future<bool> hasSwap() async {
-    var cmdResult = await CommandHelper.run("/usr/bin/free");
+    var cmdResult =
+        await CommandHelper.run("/usr/bin/free", env: {"LC_ALL": "C"});
     if (!cmdResult.success) {
       throw Exception(cmdResult.error);
     }
