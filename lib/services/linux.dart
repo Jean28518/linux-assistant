@@ -109,13 +109,10 @@ class Linux {
       return command;
     }
     if (!command.startsWith("/usr/bin") &&
+        !command.startsWith("/sbin") &&
         !command.startsWith("/var/run/host")) {
       command = "/usr/bin/$command";
     }
-    // if (!command.startsWith("/var/run/host") &&
-    //     currentenvironment.runningInFlatpak) {
-    //   command = "/var/run/host$command";
-    // }
     return command;
   }
 
