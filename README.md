@@ -49,6 +49,8 @@ Repo: <https://github.com/Jean28518/flathub/tree/com.github.jean28518.Linux-Assi
 ```
 
 ```bash
+flatpak install runtime/org.freedesktop.Sdk/x86_64/23.08
+
 rm -r .flatpak-builder/ # Only if you built something before.
 flatpak-builder build-dir io.github.jean28518.Linux-Assistant.yml  --user --force-clean --install 
 flatpak run io.github.jean28518.Linux-Assistant
