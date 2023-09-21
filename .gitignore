@@ -50,3 +50,6 @@ linux-assistant.deb
 /deb/usr/
 
 /rpmbuild/SOURCES
+
+linux-assistant-bundle.zip
+linux-assistant-bundle/

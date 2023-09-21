@@ -1,6 +1,11 @@
 #!/bin/bash
 APP_DIR="/usr/lib/linux-assistant"
 
+# if the file "linux-assistant" is present in the same directory as this script, change APP_DIR
+if [ -f "linux-assistant" ]; then
+   APP_DIR="."
+fi
+
 # if /app/bin is present change APP_DIR (because then we are in flatpak)
 if [ -d "/app/bin" ]; then
    APP_DIR="/app/bin"
