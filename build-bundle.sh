@@ -14,6 +14,7 @@ mkdir -p linux-assistant-bundle
 cp -r build/linux/x64/release/bundle/* linux-assistant-bundle/
 cp linux-assistant.sh linux-assistant-bundle/
 cp linux-assistant.png linux-assistant-bundle/
+cp -r flatpak linux-assistant-bundle/
 cp version linux-assistant-bundle/
 
 # Get libkeybinder.so
