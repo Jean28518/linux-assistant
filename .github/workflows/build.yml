@@ -24,7 +24,7 @@ jobs:
       - run: flutter config --enable-linux-desktop
       - run: bash build-bundle.sh
       - name: Upload bundle
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           name: linux-assistant-bundle
           path: linux-assistant-bundle.zip
