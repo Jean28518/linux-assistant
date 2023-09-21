@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:hotkey_manager/hotkey_manager.dart';
 import 'package:linux_assistant/enums/distros.dart';
+import 'package:linux_assistant/layouts/greeter/flathub_permissions.dart';
 import 'package:linux_assistant/layouts/greeter/start_screen.dart';
 import 'package:linux_assistant/layouts/mint_y.dart';
 import 'package:linux_assistant/services/config_handler.dart';
@@ -21,34 +22,57 @@ void main() async {
   // For hot reload, `unregisterAll()` needs to be called.
   await HotKeyManager.instance.unregisterAll();
 
-  await Linux.init();
-  bool darkTheme = await Linux.isDarkThemeEnabled();
-  darkTheme = await ConfigHandler().getValue("dark_theme_activated", darkTheme);
+  StatelessWidget firstScreen = const StartScreen();
+  bool darkTheme = false;
 
-  String versionFile = "${Linux.executableFolder}/version";
-  if (await File(versionFile).exists()) {
-    try {
-      CURRENT_LINUX_ASSISTANT_VERSION =
-          (await File(versionFile).readAsString()).trim();
-    } catch (e) {
-      // Do nothing.
+  // Are we in a flatpak? Is the folder /app/bin/ present? // Do we have flatpak-spawn?
+  var runningInFlatpak = Directory("/app/bin/").existsSync();
+  if (runningInFlatpak) {
+    firstScreen = FlathubPermissionsPage();
+    var result = Process.runSync("flatpak-spawn", ["--host", "ls", "/"]);
+    if (result.stderr.toString().isEmpty) {
+      firstScreen = const StartScreen();
+    }
+    print(result.stdout.toString());
+    print(result.stderr.toString());
+  }
+
+  // Normal startup if everything is fine.
+  if (firstScreen is StartScreen) {
+    await Linux.init();
+
+    darkTheme = await Linux.isDarkThemeEnabled();
+    darkTheme =
+        await ConfigHandler().getValue("dark_theme_activated", darkTheme);
+
+    String versionFile = "${Linux.executableFolder}/version";
+    if (await File(versionFile).exists()) {
+      try {
+        CURRENT_LINUX_ASSISTANT_VERSION =
+            (await File(versionFile).readAsString()).trim();
+      } catch (e) {
+        // Do nothing.
+      }
     }
   }
 
   runApp(MyApp(
     darkTheme: darkTheme,
+    firstPage: firstScreen,
   ));
 }
 
 class MyApp extends StatelessWidget {
   late bool darkTheme;
-  MyApp({Key? key, this.darkTheme = false}) : super(key: key);
+  late StatelessWidget firstPage;
+  MyApp({Key? key, this.darkTheme = false, required this.firstPage})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     setMainColor();
     initHotkeyToShowUp();
     return MaterialApp(
-      title: 'Linux Assistant',
+      title: 'Linux-Assistant',
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -60,7 +84,7 @@ class MyApp extends StatelessWidget {
         Locale('de', ''),
       ],
       theme: darkTheme ? MintY.themeDark() : MintY.theme(),
-      home: StartScreen(),
+      home: firstPage,
     );
   }
 

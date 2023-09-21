@@ -312,6 +312,9 @@
     "description": "",
     "type": "text"
   },
+  "welcome": "Willkommen!",
+  "flathubPermissionsDescription": "Nur noch ein zwei Handgriffe sind nötig, damit wir loslegen können.\nDamit Linux-Assistant funktionieren kann, braucht es zusätzliche Einstellungen, die aufgrund flathub.org nicht standardmäßig gesetzt werden können.\nMit den zusätzlichen Einstellungen kann Linux-Assistant auf Dein Linux zugreifen und bspw. Software verwalten.\nLinux-Assistant ist dennoch technisch so limitiert, dass die Systemadministration nur mit Deiner Zustimmung geschehen kann.\n\nFüge bitte folgenden Befehl in einen Terminal ein und drücke die Eingabe-Taste. Es erscheint kein zusätzlicher Text, was vollkommen okay ist.",
+  "pleaseRestartLinuxAssistant": "Danach muss Linux-Assistant einmal neugestartet werden. Bitte beende Linux-Assistant und starte ihn sofort wieder. Bis gleich!",
   "@helloWorld": {
     "placeholders": {},
     "description": "",
