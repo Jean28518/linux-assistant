@@ -789,6 +789,8 @@ class Linux {
       newEnvironment.distribution = DISTROS.UBUNTU;
     } else if (lines[0].toLowerCase().contains("debian")) {
       newEnvironment.distribution = DISTROS.DEBIAN;
+    } else if (lines[0].toLowerCase().contains("lmde")) {
+      newEnvironment.distribution = DISTROS.LMDE;
     }
 
     // get version:
@@ -919,6 +921,7 @@ class Linux {
             environment: {"DEBIAN_FRONTEND": "noninteractive"}));
         break;
       case DISTROS.LINUX_MINT:
+      case DISTROS.LMDE:
         commandQueue.add(LinuxCommand(
             userId: 0,
             command:
@@ -1604,6 +1607,7 @@ class Linux {
       case DISTROS.DEBIAN:
       case DISTROS.MXLINUX:
       case DISTROS.LINUX_MINT:
+      case DISTROS.LMDE:
       case DISTROS.POPOS:
       case DISTROS.ZORINOS:
       case DISTROS.KDENEON:
@@ -1641,6 +1645,7 @@ class Linux {
         runCommand("/usr/bin/software-properties-gtk");
         break;
       case DISTROS.LINUX_MINT:
+      case DISTROS.LMDE:
         runCommandWithCustomArguments("/usr/bin/pkexec", ["mintsources"]);
         break;
       case DISTROS.OPENSUSE:

@@ -72,7 +72,7 @@ class MyApp extends StatelessWidget {
     setMainColor();
     initHotkeyToShowUp();
     return MaterialApp(
-      title: 'Linux-Assistant',
+      title: 'Linux Assistant',
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -109,6 +109,7 @@ class MyApp extends StatelessWidget {
         MintY.currentColor = const Color.fromARGB(255, 208, 7, 78);
         break;
       case DISTROS.LINUX_MINT:
+      case DISTROS.LMDE:
         MintY.currentColor = const Color.fromARGB(255, 53, 168, 84);
         break;
       case DISTROS.MXLINUX:
@@ -125,6 +126,9 @@ class MyApp extends StatelessWidget {
         break;
       case DISTROS.OPENSUSE:
         MintY.currentColor = const Color.fromARGB(255, 115, 186, 37);
+        break;
+      case DISTROS.UBUNTU:
+        MintY.currentColor = const Color.fromARGB(255, 233, 84, 32);
         break;
       default:
         MintY.currentColor = Colors.blue;

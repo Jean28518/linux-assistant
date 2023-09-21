@@ -7,6 +7,7 @@ enum DISTROS {
   ZORINOS,
   KDENEON,
   OPENSUSE,
+  LMDE,
 }
 
 String getNiceStringOfDistrosEnum(var distro) {
@@ -27,6 +28,8 @@ String getNiceStringOfDistrosEnum(var distro) {
       return "KDE neon";
     case DISTROS.OPENSUSE:
       return "openSUSE";
+    case DISTROS.LMDE:
+      return "LMDE";
     default:
       return "";
   }
