@@ -1,6 +1,6 @@
 Package: linux-assistant
-Version: 0.3.0
-Depends: libkeybinder-3.0-0, wmctrl, wget, python3, mesa-utils, pkexec
+Version: 0.3.2
+Depends: libkeybinder-3.0-0, wmctrl, wget, python3, mesa-utils, pkexec | policykit-1
 Maintainer: Jean28518
 Architecture: amd64
 Hompage: https://www.linux-assistant.org/
