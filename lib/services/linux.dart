@@ -33,8 +33,9 @@ class Linux {
   static Future<void> init() async {
     executableFolder = getExecutableFolder();
     homeFolder = getHomeDirectory();
-    pythonScriptsFolder = "$executableFolder/additional/python/";
-    additionalFolder = "$executableFolder/additional/";
+    pythonScriptsFolder =
+        "$executableFolder/additional/python/".replaceAll("//", "/");
+    additionalFolder = "$executableFolder/additional/".replaceAll("//", "/");
 
     // If /app/bin exists, we are running in a flatpak, we need this for every command issued
     if (await Directory("/app/bin").exists()) {
@@ -989,7 +990,12 @@ class Linux {
     String executable = "python3";
     if (root) {
       executable = "pkexec";
-      commandList.add("/usr/bin/python3");
+
+      // We don't need to add python3 to the command list,
+      // because pkexec will run the command as root and root has python3 installed
+      // also pkexec won't work correctly because of the path of the executable
+      // (it would display a wrong message to the user)
+      // commandList.add("/usr/bin/python3");
     }
     commandList.add("${pythonScriptsFolder}run_script.py");
     commandList.add(filename);
