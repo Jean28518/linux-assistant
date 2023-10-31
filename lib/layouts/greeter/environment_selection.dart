@@ -35,7 +35,7 @@ class _EnvironmentSelectionViewState extends State<EnvironmentSelectionView> {
                 "${AppLocalizations.of(context)!.distribution}: ",
                 style: Theme.of(context).textTheme.displayLarge,
               ),
-              SizedBox(
+              const SizedBox(
                 width: 16,
               ),
               MintYButton(
@@ -53,7 +53,7 @@ class _EnvironmentSelectionViewState extends State<EnvironmentSelectionView> {
               )
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 32,
           ),
           // Row(
@@ -100,7 +100,7 @@ class _EnvironmentSelectionViewState extends State<EnvironmentSelectionView> {
                 "${AppLocalizations.of(context)!.desktop}: ",
                 style: MintY.heading1,
               ),
-              SizedBox(
+              const SizedBox(
                 width: 16,
               ),
               MintYButton(
@@ -118,7 +118,7 @@ class _EnvironmentSelectionViewState extends State<EnvironmentSelectionView> {
               )
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 32,
           ),
           Row(
@@ -128,19 +128,19 @@ class _EnvironmentSelectionViewState extends State<EnvironmentSelectionView> {
                 "${AppLocalizations.of(context)!.language}: ",
                 style: MintY.heading1,
               ),
-              SizedBox(
+              const SizedBox(
                 width: 16,
               ),
-              Container(
+              SizedBox(
                 width: 150,
                 child: TextField(
                   decoration: InputDecoration(
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     hintText: environment.language,
-                    hintStyle: TextStyle(fontSize: 24),
+                    hintStyle: const TextStyle(fontSize: 24),
                   ),
                   autofocus: true,
-                  style: TextStyle(fontSize: 24),
+                  style: const TextStyle(fontSize: 24),
                   onChanged: (value) {
                     if (value.isNotEmpty) {
                       environment.language = value;
@@ -152,7 +152,7 @@ class _EnvironmentSelectionViewState extends State<EnvironmentSelectionView> {
               )
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 32,
           ),
           Row(

@@ -26,7 +26,7 @@ class WarningMessage extends StatelessWidget {
               Flexible(
                 child: Text(
                   text,
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),
             ],

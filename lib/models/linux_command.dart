@@ -22,6 +22,6 @@ class LinuxCommand {
   @override
   String toString() {
     // TODO: implement toString
-    return this.command;
+    return command;
   }
 }

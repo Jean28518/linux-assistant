@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hotkey_manager/hotkey_manager.dart';
 import 'package:linux_assistant/content/basic_entries.dart';
 import 'package:linux_assistant/content/recommendations.dart';
 import 'package:linux_assistant/layouts/main_screen/main_search.dart';

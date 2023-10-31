@@ -1,9 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/widgets.dart';
 import 'package:linux_assistant/enums/distros.dart';
 import 'package:linux_assistant/layouts/mint_y.dart';
 import 'package:linux_assistant/layouts/run_command_queue.dart';
@@ -59,7 +56,7 @@ class SecurityCheckOverview extends StatelessWidget {
                         style: MintY.heading4),
                     color: Colors.white,
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   MintYButtonNavigate(
                     route: const SecurityCheckOverview(),
                     text: Text(AppLocalizations.of(context)!.retry,
@@ -114,11 +111,11 @@ class SecurityCheckOverview extends StatelessWidget {
             title: AppLocalizations.of(context)!.securityCheck,
             contentElements: [
               AdditionSoftwareSources(additionalSources: additionalSources),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               UpdateCheck(availableUpdatePackages: availableUpdatePackages),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               HomeFolderSecurityCheck(homeFolderSecure: homeFolderSecure),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               NetworkSecurityCheck(
                   firewallNotInstalled: firewallNotInstalled,
                   firewallRunning: firewallRunning,
@@ -135,7 +132,7 @@ class SecurityCheckOverview extends StatelessWidget {
                       style: MintY.heading4),
                   color: Colors.white,
                 ),
-                SizedBox(width: 16),
+                const SizedBox(width: 16),
                 MintYButtonNavigate(
                   route: const SecurityCheckOverview(),
                   text: Text(AppLocalizations.of(context)!.reload,
@@ -170,20 +167,20 @@ class UpdateCheck extends StatelessWidget {
         style: Theme.of(context).textTheme.headlineLarge,
       ),
       Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: availableUpdatePackages == 0
               ? SuccessMessage(
                   text: AppLocalizations.of(context)!.systemIsUpToDate,
                 )
               : WarningMessage(
                   text:
-                      "${availableUpdatePackages} ${AppLocalizations.of(context)!.xPackagesShouldBeUpdated}",
+                      "$availableUpdatePackages ${AppLocalizations.of(context)!.xPackagesShouldBeUpdated}",
                   fixAction: () {
                     Linux.updateAllPackages();
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => RunCommandQueue(
                             title: AppLocalizations.of(context)!.update,
-                            route: SecurityCheckOverview())));
+                            route: const SecurityCheckOverview())));
                   },
                 ))
     ]);
@@ -206,7 +203,7 @@ class HomeFolderSecurityCheck extends StatelessWidget {
         style: Theme.of(context).textTheme.headlineLarge,
       ),
       Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: homeFolderSecure
               ? SuccessMessage(
                   text: AppLocalizations.of(context)!.homeFolderRightsOkay,
@@ -248,7 +245,7 @@ class NetworkSecurityCheck extends StatelessWidget {
         style: Theme.of(context).textTheme.headlineLarge,
       ),
       Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
               firewallNotInstalled
@@ -261,18 +258,18 @@ class NetworkSecurityCheck extends StatelessWidget {
                       : WarningMessage(
                           text:
                               AppLocalizations.of(context)!.firewallIsInactive),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               sshRunning
                   ? WarningMessage(
                       text:
                           AppLocalizations.of(context)!.sshFoundOnYourComputer)
                   : Container(),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               (sshRunning && !fail2banRunning)
                   ? WarningMessage(
                       text: AppLocalizations.of(context)!.noFail2BanFound)
                   : Container(),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               xrdpRunning
                   ? WarningMessage(
                       text: AppLocalizations.of(context)!
@@ -295,11 +292,9 @@ class AdditionSoftwareSources extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> additionalSourceTexts = [];
-    additionalSources.forEach(
-      (element) {
+    for (var element in additionalSources) {
         additionalSourceTexts.add(Text(element));
-      },
-    );
+      }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -310,7 +305,7 @@ class AdditionSoftwareSources extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: additionalSources.length != 0
+          child: additionalSources.isNotEmpty
               ? Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -321,14 +316,14 @@ class AdditionSoftwareSources extends StatelessWidget {
                         Linux.openAdditionalSoftwareSourcesSettings();
                       },
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 8,
                     ),
                     Container(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(8)),
                           color: Colors.grey),
-                      padding: EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(8),
                       child: Row(
                         children: [
                           Expanded(

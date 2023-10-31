@@ -53,7 +53,7 @@ class ActionHandler {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => GreeterIntroduction(forceOpen: true)),
+              builder: (context) => const GreeterIntroduction(forceOpen: true)),
         );
         break;
       case "setup_linux_assistant_shortcut":
@@ -95,7 +95,7 @@ class ActionHandler {
       case "linux_health":
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => LinuxHealthOverview()),
+          MaterialPageRoute(builder: (context) => const LinuxHealthOverview()),
         );
         break;
       case "after_installation":
@@ -223,7 +223,7 @@ class ActionHandler {
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => RunCommandQueue(
+            builder: (context) => const RunCommandQueue(
                   title: "Zypper",
                   message: "Your package will be installed in a few moments...",
                   route: MainSearchLoader(),
@@ -255,7 +255,7 @@ class ActionHandler {
             builder: (context) => RunCommandQueue(
                   title: "Flatpak",
                   message: AppLocalizations.of(context)!.packageWillBeInstalled,
-                  route: MainSearchLoader(),
+                  route: const MainSearchLoader(),
                 )),
       );
     }
@@ -271,7 +271,7 @@ class ActionHandler {
                   title: actionEntry.name,
                   message: AppLocalizations.of(context)!
                       .uninstallingXDescription(pkg),
-                  route: MainSearchLoader(),
+                  route: const MainSearchLoader(),
                 )),
       );
     }
@@ -287,7 +287,7 @@ class ActionHandler {
                   title: actionEntry.name,
                   message: AppLocalizations.of(context)!
                       .uninstallingXDescription(pkg),
-                  route: MainSearchLoader(),
+                  route: const MainSearchLoader(),
                 )),
       );
     }

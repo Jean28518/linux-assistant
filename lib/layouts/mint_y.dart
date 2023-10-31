@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MintY {
-  static Color currentColor = Color(0xff6db443);
+  static Color currentColor = const Color(0xff6db443);
 
-  static Color secondaryColor = Color(0xff2ab9a4);
+  static Color secondaryColor = const Color(0xff2ab9a4);
 
   static bool dark = false;
   static MaterialColor currentColorTheme = green;
@@ -14,45 +14,45 @@ class MintY {
     switch (color) {
       case "Green":
         // return Color(0xff92b372);
-        return Color(0xff6db443);
+        return const Color(0xff6db443);
       case "Aqua":
-        return Color(0xff6cabcd);
+        return const Color(0xff6cabcd);
       case "Blue":
-        return Color(0xff5b73c4);
+        return const Color(0xff5b73c4);
       case "Brown":
-        return Color(0xffaa876a);
+        return const Color(0xffaa876a);
       case "Grey":
-        return Color(0xff9d9d9d);
+        return const Color(0xff9d9d9d);
       case "Orange":
-        return Color(0xffdb9d61);
+        return const Color(0xffdb9d61);
       case "Pink":
-        return Color(0xffc76199);
+        return const Color(0xffc76199);
       case "Purple":
-        return Color(0xff8c6ec9);
+        return const Color(0xff8c6ec9);
       case "Red":
-        return Color(0xffc15b58);
+        return const Color(0xffc15b58);
       case "Sand":
-        return Color(0xffc8ac69);
+        return const Color(0xffc8ac69);
       case "Teal":
-        return Color(0xff5aaa9a);
+        return const Color(0xff5aaa9a);
     }
-    return Color(0xff92b372);
+    return const Color(0xff92b372);
   }
 
 // Generated with: https://maketintsandshades.com/
   static const green = MaterialColor(
     0xff6db443,
-    const <int, Color>{
-      50: const Color(0xffb6daa1), //50% Hell
-      100: const Color(0xffa7d28e), //40% Hell
-      200: const Color(0xff99cb7b), //30% Hell
-      300: const Color(0xff8ac369), //20% Hell
-      400: const Color(0xff7cbc56), //10% Hell
-      500: const Color(0xff62a23c), //10% Dunkel
-      600: const Color(0xff579036), //20% Dunkel
-      700: const Color(0xff4c7e2f), //30% Dunkel
-      800: const Color(0xff416c28), //40% Dunkel
-      900: const Color(0xff375a22), //50% Dunkel
+    <int, Color>{
+      50: Color(0xffb6daa1), //50% Hell
+      100: Color(0xffa7d28e), //40% Hell
+      200: Color(0xff99cb7b), //30% Hell
+      300: Color(0xff8ac369), //20% Hell
+      400: Color(0xff7cbc56), //10% Hell
+      500: Color(0xff62a23c), //10% Dunkel
+      600: Color(0xff579036), //20% Dunkel
+      700: Color(0xff4c7e2f), //30% Dunkel
+      800: Color(0xff416c28), //40% Dunkel
+      900: Color(0xff375a22), //50% Dunkel
     },
   );
 
@@ -227,7 +227,7 @@ class MintYPage extends StatelessWidget {
   Widget? bottom;
 
   MintYPage(
-      {String title = "",
+      {super.key, String title = "",
       List<Widget> contentElements = const [],
       Widget customContentElement = const Text(""),
       Widget? bottom}) {
@@ -268,10 +268,10 @@ class MintYPage extends StatelessWidget {
               ),
             ),
             Container(height: 8),
-            contentElements.length != 0
+            contentElements.isNotEmpty
                 ? Expanded(
                     child: Container(
-                      padding: EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.all(16.0),
                       child: Center(
                         child: ListView(
                           shrinkWrap: true,
@@ -283,7 +283,7 @@ class MintYPage extends StatelessWidget {
                 : customContentElement,
             Container(height: 8),
             bottom != null
-                ? Container(
+                ? SizedBox(
                     height: 80,
                     child: Center(child: bottom),
                   )
@@ -303,12 +303,12 @@ class MintYButton extends StatelessWidget {
   late double height;
 
   MintYButton(
-      {this.text = const Text(""),
+      {super.key, this.text = const Text(""),
       Color color = const Color.fromARGB(255, 232, 232, 232),
       VoidCallback? onPressed,
       double width = 110,
       double height = 40}) {
-    this.text = text;
+    text = text;
     this.color = color;
     this.onPressed = onPressed;
     this.width = width;
@@ -320,16 +320,16 @@ class MintYButton extends StatelessWidget {
         constraints: BoxConstraints(minWidth: width, minHeight: height),
         child: ElevatedButton(
           key: UniqueKey(),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[text],
-          ),
           onPressed: () {
             onPressed?.call();
           },
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(color),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[text],
           ),
         ),
       );
@@ -364,14 +364,12 @@ class MintYButtonNavigate extends StatelessWidget {
       width: width,
       height: height,
       onPressed: () {
-        if (route != null) {
-          onPressed?.call();
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => route),
-          );
-        }
-      },
+        onPressed?.call();
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => route),
+        );
+            },
     );
   }
 }
@@ -452,12 +450,12 @@ class _MintYSelectableCardWithIconState
             widget.onPressed?.call();
           },
           child: Container(
-            padding: EdgeInsets.all(15),
+            padding: const EdgeInsets.all(15),
             height: 400,
             width: 350,
             child: Column(children: [
               Container(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 height: 30,
                 child: widget.selected
                     ? Row(
@@ -473,13 +471,13 @@ class _MintYSelectableCardWithIconState
                     : null,
               ),
               widget.icon,
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               Text(widget.title,
                   style: Theme.of(context).textTheme.headlineMedium,
                   textAlign: TextAlign.center),
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
               Text(
@@ -641,18 +639,18 @@ class MintYButtonBigWithIcon extends StatelessWidget {
           onPressed?.call();
         },
         child: Container(
-          padding: EdgeInsets.all(15),
+          padding: const EdgeInsets.all(15),
           height: 400,
           width: 300,
           child: Column(
             children: [
-              SizedBox(height: 15),
+              const SizedBox(height: 15),
               icon,
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Text(title,
                   style: Theme.of(context).textTheme.headlineMedium,
                   textAlign: TextAlign.center),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Text(
                 text,
                 textAlign: TextAlign.center,
@@ -691,16 +689,16 @@ class MintYCardWithIconAndAction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
       child: Card(
         child: Container(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             children: [
               Row(
                 children: [
                   icon,
-                  SizedBox(
+                  const SizedBox(
                     width: 16,
                   ),
                   Flexible(
@@ -712,7 +710,7 @@ class MintYCardWithIconAndAction extends StatelessWidget {
                           title,
                           style: Theme.of(context).textTheme.headlineMedium,
                         ),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         Text(
                           text,
                           style: Theme.of(context).textTheme.bodyMedium,
@@ -722,7 +720,7 @@ class MintYCardWithIconAndAction extends StatelessWidget {
                   )
                 ],
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Center(
                 child: MintYButton(
                   text: Text(
@@ -833,10 +831,10 @@ class MintYProgressIndicatorCircle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Container(
-        child: CircularProgressIndicator(color: MintY.currentColor),
+      child: SizedBox(
         height: 80,
         width: 80,
+        child: CircularProgressIndicator(color: MintY.currentColor),
       ),
     );
   }
@@ -859,8 +857,8 @@ class MintYTable extends StatelessWidget {
             child: Text(
               data[i][j].toString(),
               style: i == 0
-                  ? Theme.of(context).textTheme.headline4
-                  : Theme.of(context).textTheme.bodyText1,
+                  ? Theme.of(context).textTheme.headlineMedium
+                  : Theme.of(context).textTheme.bodyLarge,
               textAlign: TextAlign.center,
             ),
           ),

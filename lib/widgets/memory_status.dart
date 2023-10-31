@@ -2,9 +2,6 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/widgets.dart';
 import 'package:linux_assistant/linux/linux_system.dart';
 import 'package:linux_assistant/widgets/hardware_info.dart';
 import 'package:linux_assistant/widgets/single_bar_chart.dart';
@@ -52,12 +49,12 @@ class _SystemStatusState extends State<SystemStatus> {
           widgets.add(SingleBarChart(
             value: cpuLoad < 0.9 ? cpuLoad + 0.1 : max(cpuLoad, 1),
             fillColor:
-                cpuLoad < 1 ? Color.fromARGB(255, 70, 153, 221) : Colors.red,
-            tooltip: (cpuLoad * 100).toStringAsFixed(2) + "% (~1 min)",
+                cpuLoad < 1 ? const Color.fromARGB(255, 70, 153, 221) : Colors.red,
+            tooltip: "${(cpuLoad * 100).toStringAsFixed(2)}% (~1 min)",
             text: "CPU",
           ));
 
-          widgets.add(SizedBox(
+          widgets.add(const SizedBox(
             width: 15,
           ));
 
@@ -66,13 +63,13 @@ class _SystemStatusState extends State<SystemStatus> {
             List<String> values = convertLineToList(lines[1]);
             widgets.add(SingleBarChart(
               value: double.parse(values[2]) / double.parse(values[1]),
-              fillColor: Color.fromARGB(255, 193, 119, 243),
-              tooltip: convertToGB(values[2]) + "/" + convertToGB(values[1]),
+              fillColor: const Color.fromARGB(255, 193, 119, 243),
+              tooltip: "${convertToGB(values[2])}/${convertToGB(values[1])}",
               text: "RAM",
             ));
           }
 
-          widgets.add(SizedBox(
+          widgets.add(const SizedBox(
             width: 15,
           ));
 
@@ -81,12 +78,12 @@ class _SystemStatusState extends State<SystemStatus> {
             List<String> values = convertLineToList(lines[2]);
             widgets.add(SingleBarChart(
               value: double.parse(values[2]) / double.parse(values[1]),
-              fillColor: Color.fromARGB(255, 223, 157, 58),
-              tooltip: convertToGB(values[2]) + "/" + convertToGB(values[1]),
+              fillColor: const Color.fromARGB(255, 223, 157, 58),
+              tooltip: "${convertToGB(values[2])}/${convertToGB(values[1])}",
               text: "Swap",
             ));
 
-            widgets.add(SizedBox(
+            widgets.add(const SizedBox(
               width: 15,
             ));
           }
@@ -116,7 +113,7 @@ class _SystemStatusState extends State<SystemStatus> {
             ),
           );
         } else {
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         }
       },
     );
@@ -133,6 +130,6 @@ class _SystemStatusState extends State<SystemStatus> {
     value /= 100;
     int v1 = value.ceil();
     double v2 = v1 / 10;
-    return v2.toString() + "G";
+    return "${v2}G";
   }
 }

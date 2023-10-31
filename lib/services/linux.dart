@@ -83,13 +83,10 @@ class Linux {
         arguments.insert(0, "--host");
       }
     }
-    print("Running linux command: " +
-        exec +
-        " with arguments: " +
-        arguments.toString());
+    print("Running linux command: $exec with arguments: $arguments");
     var result = await Process.run(exec, arguments,
         runInShell: true, environment: environment);
-    if (result.stderr is String && !result.stderr.toString().isEmpty) {
+    if (result.stderr is String && result.stderr.toString().isNotEmpty) {
       print(result.stderr);
       if (getErrorMessages) {
         String returnValue = result.stdout;
@@ -205,8 +202,8 @@ class Linux {
   /// [callback] is used for clearing and reoading the search.
   static void openOrInstallWarpinator(
       BuildContext context, VoidCallback callback) async {
-    bool does_warpinator_exist = doesExecutableExist("warpinator");
-    if (does_warpinator_exist) {
+    bool doesWarpinatorExist = doesExecutableExist("warpinator");
+    if (doesWarpinatorExist) {
       runCommand("/usr/bin/warpinator");
       callback();
       return;
@@ -216,9 +213,9 @@ class Linux {
           text: AppLocalizations.of(context)!.loading,
         ),
       ));
-      does_warpinator_exist =
+      doesWarpinatorExist =
           await isSpecificFlatpakInstalled("org.x.Warpinator");
-      if (does_warpinator_exist) {
+      if (doesWarpinatorExist) {
         runCommand("/usr/bin/flatpak run org.x.Warpinator");
         callback();
         return;
@@ -229,7 +226,7 @@ class Linux {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => RunCommandQueue(
           title: AppLocalizations.of(context)!.installX("Warpinator"),
-          route: MainSearchLoader(),
+          route: const MainSearchLoader(),
           message: AppLocalizations.of(context)!
               .installingXDescription("Warpinator")),
     ));
@@ -238,8 +235,8 @@ class Linux {
   /// [callback] is used for clearing and reoading the search.
   static void openOrInstallHardInfo(
       BuildContext context, VoidCallback callback) async {
-    bool does_app_exist = doesExecutableExist("hardinfo");
-    if (does_app_exist) {
+    bool doesAppExist = doesExecutableExist("hardinfo");
+    if (doesAppExist) {
       runCommand("/usr/bin/hardinfo");
       callback();
       return;
@@ -249,7 +246,7 @@ class Linux {
       Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => RunCommandQueue(
             title: AppLocalizations.of(context)!.installX("HardInfo"),
-            route: MainSearchLoader(),
+            route: const MainSearchLoader(),
             message: AppLocalizations.of(context)!
                 .installingXDescription("HardInfo")),
       ));
@@ -259,8 +256,8 @@ class Linux {
   /// [callback] is used for clearing and reoading the search.
   static void openOrInstallRedshift(
       BuildContext context, VoidCallback callback) async {
-    bool does_app_exist = doesExecutableExist("redshift-gtk");
-    if (does_app_exist) {
+    bool doesAppExist = doesExecutableExist("redshift-gtk");
+    if (doesAppExist) {
       MintY.showMessage(context,
           AppLocalizations.of(context)!.redshiftIsInstalledAlready, callback);
 
@@ -274,7 +271,7 @@ class Linux {
       Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => RunCommandQueue(
             title: AppLocalizations.of(context)!.installX("Redshift"),
-            route: MainSearchLoader(),
+            route: const MainSearchLoader(),
             message: AppLocalizations.of(context)!
                 .installingXDescription("Redshift")),
       ));
@@ -659,8 +656,8 @@ class Linux {
     // Get Bookmarks:
     if (currentenvironment.desktop != DESKTOPS.KDE) {
       String home = getHomeDirectory();
-      String bookmarksLocation = home + "/.config/gtk-3.0/bookmarks";
-      String bookmarksString = await runCommand("cat " + bookmarksLocation);
+      String bookmarksLocation = "$home/.config/gtk-3.0/bookmarks";
+      String bookmarksString = await runCommand("cat $bookmarksLocation");
       List<String> bookmarkCandidates = bookmarksString.split("\n");
       for (String bookmarkCandidate in bookmarkCandidates) {
         String bookmark = bookmarkCandidate.split(" ")[0];
@@ -705,8 +702,8 @@ class Linux {
       }
       ActionEntry entry = ActionEntry(
           name: folderName,
-          description: AppLocalizations.of(context)!.openX + " " + folder,
-          action: "openfolder:" + folder);
+          description: "${AppLocalizations.of(context)!.openX} $folder",
+          action: "openfolder:$folder");
       entry.priority = -10;
       actionEntries.add(entry);
     }
@@ -729,12 +726,12 @@ class Linux {
         continue;
       }
 
-      String app_id = values[0].split("/").last.replaceAll(".desktop", "");
+      String appId = values[0].split("/").last.replaceAll(".desktop", "");
 
       ActionEntry entry = ActionEntry(
           name: values[1],
           description: values[2],
-          action: "openapp:" + values[0]);
+          action: "openapp:${values[0]}");
 
       if (values.length >= 4) {
         entry.iconURI = values[3];
@@ -796,7 +793,7 @@ class Linux {
     // Only use first two numbers of version number
     List<String> splitVer = lines[1].split(".");
     if (splitVer.length >= 2) {
-      lines[1] = splitVer[0] + "." + splitVer[1];
+      lines[1] = "${splitVer[0]}.${splitVer[1]}";
     } else {
       lines[1] = splitVer[0];
     }
@@ -892,9 +889,9 @@ class Linux {
       if (part.trim().isEmpty) {
         continue;
       }
-      returnValue = "${returnValue}/${part}";
+      returnValue = "$returnValue/$part";
     }
-    returnValue = "${returnValue}/";
+    returnValue = "$returnValue/";
     return returnValue;
   }
 
@@ -1146,8 +1143,8 @@ class Linux {
       String fileName = e.split("/").last;
       ActionEntry actionEntry = ActionEntry(
           name: fileName,
-          description: AppLocalizations.of(context)!.openX + " " + e,
-          action: "openfile:" + e);
+          description: "${AppLocalizations.of(context)!.openX} $e",
+          action: "openfile:$e");
       actionEntry.priority = -5;
       actionEntries.add(actionEntry);
     }
@@ -1155,7 +1152,7 @@ class Linux {
   }
 
   static Future<String> executeCommandQueue() async {
-    if (commandQueue.length == 0) {
+    if (commandQueue.isEmpty) {
       return "No actions in queue.";
     }
 
@@ -1495,7 +1492,7 @@ class Linux {
       BuildContext context, List<ActionEntry> currentEntries) {
     List<String> allPaths = [];
 
-    currentEntries.forEach((element) {
+    for (var element in currentEntries) {
       if (element.action.startsWith("openfile:")) {
         String path = element.action.replaceFirst("openfile:", "");
         List<String> singleFolders = path.split("/");
@@ -1514,10 +1511,10 @@ class Linux {
           }
         }
       }
-    });
+    }
 
     List<ActionEntry> newEntries = [];
-    allPaths.forEach((path) {
+    for (var path in allPaths) {
       List<String> elements = path.split("/");
       if (elements.length > 1) {
         String name = elements[elements.length - 2];
@@ -1527,12 +1524,12 @@ class Linux {
         }
         ActionEntry newEntry = ActionEntry(
             name: name,
-            description: AppLocalizations.of(context)!.openX + " $path",
+            description: "${AppLocalizations.of(context)!.openX} $path",
             action: "openfolder:$path",
             priority: -10.0);
         newEntries.add(newEntry);
       }
-    });
+    }
     return newEntries;
   }
 

@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:linux_assistant/helpers/command_helper.dart';
 

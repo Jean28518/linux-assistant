@@ -17,12 +17,12 @@ class UninstallerQuestion extends StatelessWidget {
     return MintYPage(
       title: AppLocalizations.of(context)!.uninstallApp(app),
       contentElements: [
-        Icon(
+        const Icon(
           Icons.warning,
           color: Colors.red,
           size: 128,
         ),
-        SizedBox(
+        const SizedBox(
           height: 30,
         ),
         Text(

@@ -1,4 +1,3 @@
-import 'package:linux_assistant/helpers/command_helper.dart';
 import 'package:linux_assistant/services/linux.dart';
 
 class ProcessStat {

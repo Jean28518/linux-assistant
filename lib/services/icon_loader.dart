@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:linux_assistant/layouts/mint_y.dart';
 import 'package:linux_assistant/services/linux.dart';
@@ -33,9 +32,9 @@ class IconLoader {
   Future<Widget> getIconForAppOrFile(String appCode,
       {double iconSize = 48}) async {
     /// If the appCode is a path, use the last part of the path as appCode
-    String file_path = "";
+    String filePath = "";
     if (appCode.contains("/")) {
-      file_path = appCode;
+      filePath = appCode;
       appCode = appCode.split(".").last;
     }
 
@@ -53,7 +52,7 @@ class IconLoader {
       ]);
 
       /// Load icon for app
-    } else if (appCode != "" && file_path == "") {
+    } else if (appCode != "" && filePath == "") {
       iconPath = await Linux.runCommandWithCustomArguments("/usr/bin/python3", [
         "${Linux.pythonScriptsFolder}/get_icon_path_for_application.py",
         "--icon=$appCode",
@@ -61,10 +60,10 @@ class IconLoader {
       ]);
 
       /// Load icon for file type
-    } else if (file_path != "") {
+    } else if (filePath != "") {
       iconPath = await Linux.runCommandWithCustomArguments("/usr/bin/python3", [
         "${Linux.pythonScriptsFolder}/get_icon_path_for_file.py",
-        "--file='$file_path'",
+        "--file='$filePath'",
       ]);
     }
 

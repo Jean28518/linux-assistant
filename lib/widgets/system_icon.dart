@@ -4,7 +4,7 @@ import 'package:linux_assistant/services/icon_loader.dart';
 import 'package:linux_assistant/services/linux.dart';
 
 class SystemIcon extends StatelessWidget {
-  const SystemIcon({
+  const SystemIcon({super.key, 
     required this.iconString,
     this.iconSize = 100,
     this.spinner = true,
@@ -35,7 +35,7 @@ class SystemIcon extends StatelessWidget {
             return snapshot.data!;
           }
           return spinner
-              ? MintYProgressIndicatorCircle()
+              ? const MintYProgressIndicatorCircle()
               : Icon(
                   Icons.settings,
                   size: iconSize,

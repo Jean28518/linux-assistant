@@ -28,7 +28,7 @@ void main() async {
   // Are we in a flatpak? Is the folder /app/bin/ present? // Do we have flatpak-spawn?
   var runningInFlatpak = Directory("/app/bin/").existsSync();
   if (runningInFlatpak) {
-    firstScreen = FlathubPermissionsPage();
+    firstScreen = const FlathubPermissionsPage();
     var result = Process.runSync("flatpak-spawn", ["--host", "ls", "/"]);
     if (result.stderr.toString().isEmpty) {
       firstScreen = const StartScreen();
@@ -89,13 +89,13 @@ class MyApp extends StatelessWidget {
   }
 
   static void initHotkeyToShowUp() {
-    HotKey _hotKey = HotKey(
+    HotKey hotKey = HotKey(
       KeyCode.keyQ,
       modifiers: [KeyModifier.meta],
       scope: HotKeyScope.system,
     );
     hotKeyManager.register(
-      _hotKey,
+      hotKey,
       keyDownHandler: (hotKey) {
         Linux.runCommandWithCustomArguments(
             "wmctrl", ["-a", "Linux Assistant"]);

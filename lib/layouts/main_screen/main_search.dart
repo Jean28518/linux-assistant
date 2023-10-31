@@ -13,7 +13,6 @@ import 'package:linux_assistant/widgets/disk_space.dart';
 import 'package:linux_assistant/layouts/feedback/feedback_form.dart';
 import 'package:linux_assistant/layouts/settings/settings_start.dart';
 import 'package:linux_assistant/services/main_search_loader.dart';
-import 'package:linux_assistant/services/weekly_tasks.dart';
 import 'package:linux_assistant/widgets/memory_status.dart';
 import 'package:linux_assistant/layouts/mint_y.dart';
 import 'package:linux_assistant/layouts/main_screen/recommendation_card.dart';
@@ -344,7 +343,7 @@ class _MainSearchState extends State<MainSearch> {
     searchOnStoppedTyping?.cancel();
     searchOnStoppedTyping = Timer(duration, () => _runHeavyFilter(keyword));
 
-    RegExp? regExp = null;
+    RegExp? regExp;
     if (isRegex(keyword)) {
       regExp = RegExp(keyword, caseSensitive: false);
     } else {
