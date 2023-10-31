@@ -315,6 +315,23 @@
   "welcome": "Welcome!",
   "flathubPermissionsDescription": "Only two more steps are necessary to get started.\nFor Linux-Assistant to work, it needs additional settings that cannot be set by default due to flathub.org.\nWith the additional settings, Linux-Assistant can access your Linux and e.g. manage software.\nLinux-Assistant is nevertheless technically limited so that system administration can only happen with your permission.\n\nPlease enter the following command into a terminal and press the Enter key. No additional text appears, which is perfectly ok.",
   "pleaseRestartLinuxAssistant": "Afterwards, Linux-Assistant has to be restarted once. Please exit Linux-Assistant and start it again immediately. See you soon!",
+  "cleanDiskspace": "Clean diskspace",
+  "cleanDiskspaceDescription": "Clean your diskspace by removing old packages and caches.",
+  "clean": "Clean",
+  "cleaningDiskspace": "Cleaning diskspace...",
+  "free": "Free",
+  "cleanX": "Clean {app}",
+  "@cleanX": {
+    "placeholders": {
+      "app" : {}
+    },
+    "description": "",
+    "type": "text"
+  },
+  "removeSoftware": "Remove software",
+  "remove": "Remove",
+  "back": "Back",
+  "allBiggestFolders": "All biggest folders",
   "@helloWorld": {
     "placeholders": {},
     "description": "The conventional newborn programmer greeting",

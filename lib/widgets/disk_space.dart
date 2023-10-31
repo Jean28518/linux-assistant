@@ -9,7 +9,7 @@ class DiskSpace extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future<List<DeviceInfo>> systemDevices = LinuxFilesystem.devices();
+    Future<List<DeviceInfo>> systemDevices = LinuxFilesystem.disks();
     return FutureBuilder<List<DeviceInfo>>(
       future: systemDevices,
       builder: ((context, snapshot) {

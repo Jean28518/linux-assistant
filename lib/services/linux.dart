@@ -9,6 +9,7 @@ import 'package:linux_assistant/enums/distros.dart';
 import 'package:linux_assistant/enums/softwareManagers.dart';
 import 'package:linux_assistant/layouts/mint_y.dart';
 import 'package:linux_assistant/layouts/run_command_queue.dart';
+import 'package:linux_assistant/linux/linux_filesystem.dart';
 import 'package:linux_assistant/models/action_entry.dart';
 import 'package:linux_assistant/models/environment.dart';
 import 'package:linux_assistant/models/linux_command.dart';
@@ -373,7 +374,7 @@ class Linux {
 
   static Future<bool> isSpecificFlatpakInstalled(String appCode) async {
     // Only accept appCodes with two '.' in it. Example: 'com.example.app'
-    if (".".allMatches(appCode).length != 2) {
+    if (".".allMatches(appCode).length < 2) {
       return false;
     }
     String flatpakList = await runCommand(
@@ -411,6 +412,7 @@ class Linux {
   /// If you don't specify the softwareManager it will be tried to remove the application with all Software Managers
   static Future<void> removeApplications(List<String> appCodes,
       {SOFTWARE_MANAGERS? softwareManager}) async {
+    print(appCodes);
     for (String appCode in appCodes) {
       if (softwareManager == null || softwareManager == SOFTWARE_MANAGERS.APT) {
         // Deb Package
@@ -1804,6 +1806,87 @@ class Linux {
           .elementAt(0);
     } catch (e) {
       return "";
+    }
+  }
+
+  static Future<List<List<String>>> getBiggestFoldersOfPath(String path) async {
+    String output = await runCommandWithCustomArguments(
+        "bash", ["-c", "du -xhs $path/* | sort -rh"],
+        getErrorMessages: false); //  | sort -rh | head -n 5
+    List<String> lines = output.replaceAll("//", "/").split("\n");
+    List<List<String>> returnValue = [];
+
+    // Exclude all lines which are matching one of the mount points
+    List<DeviceInfo> mountPoints = await LinuxFilesystem.disks();
+    List<String> mountPointPaths = [];
+    for (DeviceInfo deviceInfo in mountPoints) {
+      mountPointPaths.add(deviceInfo.mountPoint);
+    }
+    mountPointPaths.remove("/");
+    mountPointPaths.add("/media");
+    mountPointPaths.add("/mnt");
+    mountPointPaths.remove(path);
+
+    for (String line in lines) {
+      List<String> lineParts = line.split("\t");
+      if (lineParts.length != 2) {
+        continue;
+      }
+      String size = lineParts[0];
+      String folderPath = lineParts[1];
+      bool ignore = false;
+      for (String mountPointPath in mountPointPaths) {
+        if (folderPath.startsWith(mountPointPath)) {
+          ignore = true;
+          break;
+        }
+      }
+      folderPath = folderPath.replaceFirst(path, "");
+      if (folderPath.startsWith("/")) {
+        folderPath = folderPath.replaceFirst("/", "");
+      }
+      if (!ignore && (size.contains("G") || size.contains("T"))) {
+        returnValue.add([size, folderPath]);
+      }
+    }
+    return returnValue;
+  }
+
+  /// Opens the disk space analyzer of the current environment.
+  /// If the tool is not installed, it will be installed.
+  /// Options are baobab and k4dirstat.
+  static void openDiskSpaceAnalyzer(context, path) {
+    if (currentenvironment.desktop == DESKTOPS.KDE) {
+      runCommandWithCustomArguments("k4dirstat", [path]);
+      ensureApplicationInstallation(["k4dirstat"]);
+      if (commandQueue.isEmpty) {
+        runCommandWithCustomArguments("k4dirstat", [path]);
+      } else {
+        commandQueue.add(LinuxCommand(
+          userId: currentenvironment.currentUserId,
+          command: "k4dirstat $path",
+        ));
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => RunCommandQueue(
+              title: AppLocalizations.of(context)!.installX("k4dirstat"),
+              route: MainSearchLoader()),
+        ));
+      }
+    } else {
+      ensureApplicationInstallation(["baobab"]);
+      if (commandQueue.isEmpty) {
+        runCommandWithCustomArguments("baobab", [path]);
+      } else {
+        commandQueue.add(LinuxCommand(
+          userId: currentenvironment.currentUserId,
+          command: "baobab $path",
+        ));
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => RunCommandQueue(
+              title: AppLocalizations.of(context)!.installX("baobab"),
+              route: MainSearchLoader()),
+        ));
+      }
     }
   }
 }

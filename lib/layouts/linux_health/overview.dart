@@ -23,7 +23,7 @@ class _LinuxHealthOverviewStat extends State<LinuxHealthOverview> {
   Widget build(BuildContext context) {
     int maxProcs = 3;
     var futures = [
-      LinuxFilesystem.devices(),
+      LinuxFilesystem.disks(),
       LinuxProcess.processCount(),
       LinuxProcess.topProcessesByCpu(maxProcs),
       LinuxProcess.topProcessesByMemory(maxProcs),

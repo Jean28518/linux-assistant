@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:linux_assistant/enums/desktops.dart';
 import 'package:linux_assistant/enums/softwareManagers.dart';
 import 'package:linux_assistant/layouts/after_installation/after_installation_entry.dart';
+import 'package:linux_assistant/layouts/disk_cleaner/cleaner_select_disk.dart';
 import 'package:linux_assistant/layouts/greeter/activate_hotkey.dart';
 import 'package:linux_assistant/layouts/greeter/introduction.dart';
 import 'package:linux_assistant/layouts/linux_health/overview.dart';
@@ -96,6 +97,13 @@ class ActionHandler {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const LinuxHealthOverview()),
+        );
+        break;
+      case "disk_cleaner":
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const CleanerSelectDiskPage()),
         );
         break;
       case "after_installation":

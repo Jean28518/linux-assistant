@@ -70,5 +70,15 @@ List<ActionEntry> getRecommendations(BuildContext context) {
         return Linux.currentenvironment.distribution == DISTROS.POPOS;
       },
     ),
+    ActionEntry(
+      name: AppLocalizations.of(context)!.cleanDiskspace,
+      description: AppLocalizations.of(context)!.cleanDiskspaceDescription,
+      action: "disk_cleaner",
+      iconWidget: Icon(
+        Icons.album,
+        size: 48,
+        color: MintY.currentColor,
+      ),
+    ),
   ];
 }
