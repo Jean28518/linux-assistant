@@ -1,6 +1,9 @@
 #!/bin/bash
 VERSION="$( cat version )"
 
+# Remove files from previous build
+rm -r deb/usr/
+
 # Build Linux Assistant
 chmod +x additional/python/run_script.py
 flutter build linux
