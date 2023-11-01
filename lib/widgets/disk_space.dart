@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:linux_assistant/enums/distros.dart';
+import 'package:linux_assistant/layouts/disk_cleaner/clean_disk.dart';
 import 'package:linux_assistant/linux/linux_filesystem.dart';
 import 'package:linux_assistant/widgets/single_bar_chart.dart';
 import 'package:linux_assistant/services/linux.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DiskSpace extends StatelessWidget {
   const DiskSpace({Key? key}) : super(key: key);
@@ -20,12 +22,23 @@ class DiskSpace extends StatelessWidget {
             if (device.mountPoint != "/boot/efi") {
               barCharts.add(
                 SingleBarChart(
-                  value: device.usedPercent / 100,
-                  text: "${getDisklabel(device.mountPoint)}: "
-                      "${device.usedPercent}%",
-                  tooltip: "${device.sizeUsed}/${device.size}",
-                  fillColor: const Color.fromARGB(255, 141, 141, 141),
-                ),
+                    value: device.usedPercent / 100,
+                    text: "${getDisklabel(device.mountPoint)}: "
+                        "${device.usedPercent}%",
+                    tooltip: "${device.sizeUsed}/${device.size}",
+                    fillColor: device.usedPercent > 89
+                        ? Colors.red
+                        : const Color.fromARGB(255, 141, 141, 141),
+                    customWidgetBetweenAtBottom: device.usedPercent > 89
+                        ? InkWell(
+                            onTap: () =>
+                                Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  CleanDiskPage(mountpoint: device.mountPoint),
+                            )),
+                            child: Text(AppLocalizations.of(context)!.clean),
+                          )
+                        : null),
               );
               barCharts.add(const SizedBox(
                 width: 20,

@@ -9,6 +9,7 @@ class SingleBarChart extends StatelessWidget {
   late String text;
   late String tooltip;
   late TextStyle textStyle;
+  late Widget? customWidgetBetweenAtBottom;
 
   SingleBarChart({
     Key? key,
@@ -19,6 +20,7 @@ class SingleBarChart extends StatelessWidget {
     this.text = "",
     this.textStyle = const TextStyle(),
     this.tooltip = "",
+    this.customWidgetBetweenAtBottom,
   }) : super(key: key);
 
   @override
@@ -66,6 +68,11 @@ class SingleBarChart extends StatelessWidget {
           text,
           style: textStyle,
         ),
+        if (customWidgetBetweenAtBottom != null)
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: customWidgetBetweenAtBottom!,
+          ),
       ],
     );
   }
