@@ -32,6 +32,7 @@ for line in lines:
     elements = line.split("\";\"")
 
     user_id = elements.pop(0)
+    user_id = user_id.replace("\"", "")
     if user_id.isnumeric():
         user_id = int(user_id)
     command = elements.pop(0)
@@ -41,7 +42,7 @@ for line in lines:
         value = e.split("=")[1][1:-1]
         env[key] = value
 
-    print(f"-- COMMAND: '{command}' ".ljust(128, "-"))
+    print(f"-- COMMAND: '{command}' ".ljust(96, "-"))
     jessentials.run_command(command=command, environment=env, user=user_id)
 
-print(" FINISHED ".center(128, "-"))
+print(" FINISHED ".center(96, "-"))

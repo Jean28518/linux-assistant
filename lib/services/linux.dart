@@ -1924,21 +1924,21 @@ class Linux {
           .contains(SOFTWARE_MANAGERS.SNAP)) {
         commandQueue.add(LinuxCommand(
           userId: 0,
-          command: "rm -rf /var/lib/snapd/cache/*",
+          command: "/usr/bin/rm -rf /var/lib/snapd/cache/",
         ));
       }
       commandQueue.add(LinuxCommand(
         userId: 0,
-        command: "rm -rf /var/tmp/",
+        command: "/usr/bin/rm -rf /var/tmp/",
       ));
       commandQueue.add(LinuxCommand(
-        userId: currentenvironment.currentUserId,
-        command: "rm -rf ~/.local/share/Trash/*",
+        userId: 0,
+        command: "/usr/bin/rm -rf ${getHomeDirectory()}/.local/share/Trash/",
       ));
     }
     commandQueue.add(LinuxCommand(
       userId: 0,
-      command: "rm -rf $path/.Trash-*",
+      command: "/usr/bin/rm -rf $path/.Trash-1000",
     ));
     Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => RunCommandQueue(
