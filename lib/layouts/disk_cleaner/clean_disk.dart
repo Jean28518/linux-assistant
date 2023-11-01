@@ -62,19 +62,6 @@ class CleanDiskPage extends StatelessWidget {
             path: mountpoint,
           ),
         ),
-        // Remove software
-        if (mountpoint == "/")
-          Text(
-            AppLocalizations.of(context)!.removeSoftware,
-            style: Theme.of(context).textTheme.headlineMedium,
-          ),
-        if (mountpoint == "/")
-          SizedBox(
-            height: 500,
-            width: MediaQuery.of(context).size.width - 50,
-            child: RemoveSoftwareWidget(
-                routeAfterRemoval: CleanDiskPage(mountpoint: mountpoint)),
-          ),
         // Timeshift
         if (Directory('$mountpoint/timeshift/snapshots/').existsSync())
           Text(
@@ -89,7 +76,16 @@ class CleanDiskPage extends StatelessWidget {
               routeAfterRemoval: CleanDiskPage(mountpoint: mountpoint),
               mountpoint: mountpoint,
             ),
-          )
+          ),
+        // Remove software
+        if (mountpoint == "/")
+          Text(
+            AppLocalizations.of(context)!.removeSoftware,
+            style: Theme.of(context).textTheme.headlineMedium,
+          ),
+        if (mountpoint == "/")
+          RemoveSoftwareWidget(
+              routeAfterRemoval: CleanDiskPage(mountpoint: mountpoint)),
       ],
       bottom: Row(
         mainAxisAlignment: MainAxisAlignment.center,

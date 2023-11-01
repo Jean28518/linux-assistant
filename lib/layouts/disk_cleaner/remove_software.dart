@@ -19,10 +19,10 @@ class RemoveSoftwareWidget extends StatelessWidget {
           if (snapshot.hasData) {
             List<dynamic> installedSoftwareList =
                 snapshot.data! as List<dynamic>;
-            return MintYGrid(
-              padding: 10,
-              ratio: 2,
-              widgetSize: 450,
+            return Column(
+              // padding: 10,
+              // ratio: 2,
+              // widgetSize: 450,
               children: [
                 for (var flatpak
                     in installedSoftwareList[0] as List<List<String>>)
