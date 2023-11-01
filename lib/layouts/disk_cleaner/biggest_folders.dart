@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:linux_assistant/layouts/mint_y.dart';
 import 'package:linux_assistant/services/linux.dart';
-import 'package:linux_assistant/widgets/system_icon.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BiggestFoldersWidget extends StatelessWidget {
   final String path;
@@ -54,7 +54,7 @@ class BiggestFoldersWidget extends StatelessWidget {
                 children: [
                   MintYButton(
                     onPressed: () => Linux.openDiskSpaceAnalyzer(context, path),
-                    text: Text("Speicherplatz genau analysieren",
+                    text: Text(AppLocalizations.of(context)!.analyseDiskspace,
                         style: MintY.heading4White),
                     color: MintY.currentColor,
                   )

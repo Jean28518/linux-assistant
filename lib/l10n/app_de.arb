@@ -322,6 +322,10 @@
   "cleanX": "Bereinige {app}",
   "removeSoftware": "Entferne Programme",
   "remove": "Entfernen",
+  "analyseDiskspace": "Speicherplatz genau analysieren",
+  "automaticCleanup": "Automatische Bereinigung",
+  "automaticCleanupDescription": "Bereinige Deinen Speicherplatz automatisch, indem Du temporäre Dateien und Paket-Caches löschst. Ebenfalls werden Mülleimer geleert.",
+  "diskUsage": "Speicherplatznutzung",
   "back": "Zurück",
   "@cleanX": {
     "placeholders": {

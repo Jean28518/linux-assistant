@@ -7,6 +7,7 @@ import 'package:linux_assistant/enums/browsers.dart';
 import 'package:linux_assistant/enums/desktops.dart';
 import 'package:linux_assistant/enums/distros.dart';
 import 'package:linux_assistant/enums/softwareManagers.dart';
+import 'package:linux_assistant/layouts/disk_cleaner/clean_disk.dart';
 import 'package:linux_assistant/layouts/mint_y.dart';
 import 'package:linux_assistant/layouts/run_command_queue.dart';
 import 'package:linux_assistant/linux/linux_filesystem.dart';
@@ -1888,5 +1889,63 @@ class Linux {
         ));
       }
     }
+  }
+
+  static void cleanDiskspace(context, path) {
+    if (path == "/") {
+      if (currentenvironment.installedSoftwareManagers
+          .contains(SOFTWARE_MANAGERS.APT)) {
+        commandQueue.add(LinuxCommand(
+          userId: 0,
+          command: "/usr/bin/apt autoremove -y",
+          environment: {"DEBIAN_FRONTEND": "noninteractive"},
+        ));
+        commandQueue.add(LinuxCommand(
+          userId: 0,
+          command: "/usr/bin/apt clean -y",
+          environment: {"DEBIAN_FRONTEND": "noninteractive"},
+        ));
+      }
+      if (currentenvironment.installedSoftwareManagers
+          .contains(SOFTWARE_MANAGERS.ZYPPER)) {
+        commandQueue.add(LinuxCommand(
+          userId: 0,
+          command: "/usr/bin/zypper clean -a",
+        ));
+      }
+      if (currentenvironment.installedSoftwareManagers
+          .contains(SOFTWARE_MANAGERS.FLATPAK)) {
+        commandQueue.add(LinuxCommand(
+          userId: 0,
+          command: "/usr/bin/flatpak uninstall --unused -y",
+        ));
+      }
+      if (currentenvironment.installedSoftwareManagers
+          .contains(SOFTWARE_MANAGERS.SNAP)) {
+        commandQueue.add(LinuxCommand(
+          userId: 0,
+          command: "rm -rf /var/lib/snapd/cache/*",
+        ));
+      }
+      commandQueue.add(LinuxCommand(
+        userId: 0,
+        command: "rm -rf /var/tmp/",
+      ));
+      commandQueue.add(LinuxCommand(
+        userId: currentenvironment.currentUserId,
+        command: "rm -rf ~/.local/share/Trash/*",
+      ));
+    }
+    commandQueue.add(LinuxCommand(
+      userId: 0,
+      command: "rm -rf $path/.Trash-*",
+    ));
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => RunCommandQueue(
+          title: AppLocalizations.of(context)!.cleanDiskspace,
+          route: CleanDiskPage(
+            mountpoint: path,
+          )),
+    ));
   }
 }

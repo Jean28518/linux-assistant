@@ -227,7 +227,8 @@ class MintYPage extends StatelessWidget {
   Widget? bottom;
 
   MintYPage(
-      {super.key, String title = "",
+      {super.key,
+      String title = "",
       List<Widget> contentElements = const [],
       Widget customContentElement = const Text(""),
       Widget? bottom}) {
@@ -303,7 +304,8 @@ class MintYButton extends StatelessWidget {
   late double height;
 
   MintYButton(
-      {super.key, this.text = const Text(""),
+      {super.key,
+      this.text = const Text(""),
       Color color = const Color.fromARGB(255, 232, 232, 232),
       VoidCallback? onPressed,
       double width = 110,
@@ -369,7 +371,7 @@ class MintYButtonNavigate extends StatelessWidget {
           context,
           MaterialPageRoute(builder: (context) => route),
         );
-            },
+      },
     );
   }
 }
@@ -669,22 +671,18 @@ class MintYCardWithIconAndAction extends StatelessWidget {
   late String title;
   late String text;
   late String buttonText;
+  late Widget? customWidgetBetweenButtonAndText;
   VoidCallback? onPressed;
 
   MintYCardWithIconAndAction({
     Key? key,
-    Widget icon = const Text(""),
-    String title = "Title",
-    String text = "Lorem ipsum...",
-    String buttonText = "Button",
-    VoidCallback? onPressed,
-  }) : super(key: key) {
-    this.icon = icon;
-    this.title = title;
-    this.text = text;
-    this.buttonText = buttonText;
-    this.onPressed = onPressed;
-  }
+    this.icon = const Text(""),
+    this.title = "Title",
+    this.text = "Lorem ipsum...",
+    this.buttonText = "Button",
+    this.customWidgetBetweenButtonAndText,
+    this.onPressed,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -720,7 +718,10 @@ class MintYCardWithIconAndAction extends StatelessWidget {
                   )
                 ],
               ),
-              const SizedBox(height: 8),
+              if (customWidgetBetweenButtonAndText != null)
+                customWidgetBetweenButtonAndText!,
+              if (customWidgetBetweenButtonAndText == null)
+                const SizedBox(height: 8),
               Center(
                 child: MintYButton(
                   text: Text(

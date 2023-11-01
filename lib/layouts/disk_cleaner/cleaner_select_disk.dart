@@ -36,12 +36,24 @@ class CleanerSelectDiskPage extends StatelessWidget {
                         CleanDiskPage(mountpoint: disk.mountPoint),
                   )),
                   buttonText: AppLocalizations.of(context)!.clean,
+                  customWidgetBetweenButtonAndText: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: LinearProgressIndicator(
+                      value: disk.usedPercent.toDouble() / 100.0,
+                      backgroundColor: Theme.of(context).secondaryHeaderColor,
+                      color: disk.usedPercent > 89
+                          ? Colors.red
+                          : MintY.currentColor,
+                      borderRadius: BorderRadius.circular(2),
+                      minHeight: 5,
+                    ),
+                  ),
                 ));
               }
               return MintYGrid(
                 children: cards,
                 padding: 10,
-                ratio: 1.5,
+                ratio: 1.3,
                 widgetSize: 300,
               );
             }
