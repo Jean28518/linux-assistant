@@ -44,11 +44,22 @@ def get_applications_of_dir(path, language, desktop):
                 keywords = get_value_of_line(line)
             if line.startswith("NoDisplay=true"):
                 skip = True
-            if line.startswith("OnlyShowIn=") and not desktop in line and desktop != "":
+            if line.startswith("OnlyShowIn=") and not desktop.lower() in line.lower() and desktop != "":
                 skip = True
             # We don't want to add the action, because then e.g. the name get's weird
             if line.startswith("[Desktop Action"):
                 break
+        # If a appdata meta file exists, we want to use it
+        files = jfolders.get_folder_entries("/usr/share/metainfo")
+        for file in files:
+            if name in file:
+                lines = jfiles.get_all_lines_from_file(file)
+                for line in lines:
+                    if f"<name xml:lang=\"{language}\">" in line:
+                        name = line.replace(f"<name xml:lang=\"{language}\">", "").replace("</name>", "").strip()
+                    if f"<summary xml:lang=\"{language}\">" in line:
+                        description = line.replace(f"<summary xml:lang=\"{language}\">", "").replace("</summary>", "").strip()
+                    
         if name != "" and not skip:
             app = app_entry(file, name, description, icon, keywords)
             return_value.append(app)
@@ -59,6 +70,11 @@ def get_applications_of_dir(path, language, desktop):
 if __name__ == '__main__':
     language = jessentials.get_value_from_arguments("lang", "en")
     desktop = jessentials.get_value_from_arguments("desktop", "")
+
+    desktop = desktop.lower().replace("desktops", "")
+    desktop = desktop.lower().replace("desktop", "")
+    desktop = desktop.replace(".", "")
+    desktop = desktop.replace("-", "")
 
     dataDirs = os.getenv("XDG_DATA_DIRS").split(":")
 
