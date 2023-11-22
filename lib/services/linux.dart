@@ -1948,4 +1948,32 @@ class Linux {
           )),
     ));
   }
+
+  static Future<void> installAndConfigureFirewall(context, route) async {
+    switch (currentenvironment.distribution) {
+      case DISTROS.OPENSUSE:
+        await installApplications(["firewalld"]);
+        commandQueue.add(LinuxCommand(
+          userId: 0,
+          command: "/usr/bin/systemctl enable firewalld --now",
+        ));
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => RunCommandQueue(
+                  title: AppLocalizations.of(context)!.cleanDiskspace,
+                  route: route,
+                )));
+        break;
+      default:
+        await installApplications(["gufw"]);
+        commandQueue.add(LinuxCommand(
+          userId: 0,
+          command: "/usr/sbin/ufw enable",
+        ));
+    }
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => RunCommandQueue(
+              title: AppLocalizations.of(context)!.settingUpFirewall,
+              route: route,
+            )));
+  }
 }

@@ -251,13 +251,22 @@ class NetworkSecurityCheck extends StatelessWidget {
               firewallNotInstalled
                   ? WarningMessage(
                       text: AppLocalizations.of(context)!.noFirewallRecognized,
+                      fixAction: () {
+                        Linux.installAndConfigureFirewall(
+                            context, const SecurityCheckOverview());
+                      },
                     )
                   : firewallRunning
                       ? SuccessMessage(
                           text: AppLocalizations.of(context)!.firewallIsRunning)
                       : WarningMessage(
                           text:
-                              AppLocalizations.of(context)!.firewallIsInactive),
+                              AppLocalizations.of(context)!.firewallIsInactive,
+                          fixAction: () {
+                            Linux.installAndConfigureFirewall(
+                                context, const SecurityCheckOverview());
+                          },
+                        ),
               const SizedBox(height: 8),
               sshRunning
                   ? WarningMessage(
@@ -293,8 +302,8 @@ class AdditionSoftwareSources extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> additionalSourceTexts = [];
     for (var element in additionalSources) {
-        additionalSourceTexts.add(Text(element));
-      }
+      additionalSourceTexts.add(Text(element));
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

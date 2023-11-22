@@ -336,6 +336,7 @@
   "automaticCleanup": "Automatic cleanup",
   "automaticCleanupDescription": "Automatically clean up your storage by deleting temporary files and package caches. Trash cans will also be emptied.",
   "diskUsage": "Disk usage",
+  "settingUpFirewall": "Configure firewall...",
   "@helloWorld": {
     "placeholders": {},
     "description": "The conventional newborn programmer greeting",

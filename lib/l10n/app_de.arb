@@ -336,6 +336,7 @@
   },
   "free": "Frei",
   "allBiggestFolders": "Alle größten Ordner",
+  "settingUpFirewall": "Konfiguriere Firewall...",
   "@helloWorld": {
     "placeholders": {},
     "description": "",
