@@ -444,7 +444,6 @@ class _MainSearchState extends State<MainSearch> {
         .contains(SOFTWARE_MANAGERS.APT)) {
       List<ActionEntry> pckgs =
           await Linux.getInstallableAptPackagesForKeyword(context, keyword);
-
       heavyEntries.addAll(pckgs);
     }
     // Search through zypper
@@ -452,8 +451,13 @@ class _MainSearchState extends State<MainSearch> {
         .contains(SOFTWARE_MANAGERS.ZYPPER)) {
       List<ActionEntry> pckgs =
           await Linux.getInstallableZypperPackagesForKeyword(keyword);
-
       heavyEntries.addAll(pckgs);
+    }
+    if (Linux.currentenvironment.installedSoftwareManagers
+        .contains(SOFTWARE_MANAGERS.SNAP)) {
+      List<ActionEntry> snaps =
+          await Linux.getInstallableSnapPackagesForKeyword(keyword);
+      heavyEntries.addAll(snaps);
     }
 
     // If in the meantime the user cleared the search bar, we don't want to

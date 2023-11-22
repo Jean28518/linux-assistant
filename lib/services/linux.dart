@@ -334,7 +334,6 @@ class Linux {
         }
 
         if (softwareManager == SOFTWARE_MANAGERS.FLATPAK) {
-          print("!228");
           // Check, if package is available:
           String repo = await isFlatpakAvailable(appCode);
           print("Repo: $repo");
@@ -1220,6 +1219,47 @@ class Linux {
         description: "Install via apt",
         action: "apt-install:$line",
         priority: -20,
+      ));
+    }
+    return results;
+  }
+
+  static Future<List<ActionEntry>> getInstallableSnapPackagesForKeyword(
+      String keyword) async {
+    if (keyword.length <= 3) {
+      return [];
+    }
+    String output = await runCommandWithCustomArguments(
+        getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.SNAP),
+        ["find", "--narrow", keyword]);
+    output = output.trim();
+    List<String> lines = output.split("\n");
+    // Remove the first line (this is the heading)
+    lines.removeAt(0);
+
+    // Cancel search, if too many search results.
+    if (lines.length > 100) {
+      return [];
+    }
+
+    List<ActionEntry> results = [];
+    for (String line in lines) {
+      // Get the only the first word of the line (with regex), not with .split(" ")
+      String snap_name = line.split(" ")[0];
+      // print the Unicode code point of every single character
+      if (snap_name.trim() == "") {
+        continue;
+      }
+      results.add(ActionEntry(
+        iconWidget: Icon(
+          Icons.archive,
+          size: 48,
+          color: MintY.currentColor,
+        ),
+        name: "Install $snap_name",
+        description: "Install via snap",
+        action: "snap-install:$snap_name",
+        priority: -21,
       ));
     }
     return results;

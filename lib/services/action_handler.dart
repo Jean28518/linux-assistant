@@ -284,6 +284,25 @@ class ActionHandler {
       );
     }
 
+    if (actionEntry.action.startsWith("snap-install:")) {
+      String pkg = actionEntry.action.replaceFirst("snap-install:", "");
+      Linux.commandQueue.add(LinuxCommand(
+        userId: 0,
+        command:
+            "${Linux.getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.SNAP)} install $pkg",
+        environment: {"DEBIAN_FRONTEND": "noninteractive"},
+      ));
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => RunCommandQueue(
+                  title: "Snap",
+                  message: AppLocalizations.of(context)!.packageWillBeInstalled,
+                  route: const MainSearchLoader(),
+                )),
+      );
+    }
+
     if (actionEntry.action.startsWith("snap-uninstall:")) {
       String pkg = actionEntry.action.replaceFirst("snap-uninstall:", "");
       await Linux.removeApplications([pkg],
