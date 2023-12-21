@@ -3,6 +3,7 @@ enum SOFTWARE_MANAGERS {
   SNAP,
   APT,
   ZYPPER,
+  DNF,
 }
 
 String getNiceStringOfSoftwareManagerEnum(SOFTWARE_MANAGERS input) {
@@ -15,6 +16,8 @@ String getNiceStringOfSoftwareManagerEnum(SOFTWARE_MANAGERS input) {
       return "APT";
     case SOFTWARE_MANAGERS.ZYPPER:
       return "Zypper";
+    case SOFTWARE_MANAGERS.DNF:
+      return "DNF";
     default:
       return "";
   }

@@ -50,10 +50,10 @@ def get_applications_of_dir(path, language, desktop):
             if line.startswith("[Desktop Action"):
                 break
         # If a appdata meta file exists, we want to use it
-        files = jfolders.get_folder_entries("/usr/share/metainfo")
-        for file in files:
-            if name in file:
-                lines = jfiles.get_all_lines_from_file(file)
+        metainfo_files = jfolders.get_folder_entries("/usr/share/metainfo")
+        for metainfo_file in metainfo_files:
+            if name in metainfo_file:
+                lines = jfiles.get_all_lines_from_file(metainfo_file)
                 for line in lines:
                     if f"<name xml:lang=\"{language}\">" in line:
                         name = line.replace(f"<name xml:lang=\"{language}\">", "").replace("</name>", "").strip()

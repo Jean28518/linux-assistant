@@ -22,6 +22,11 @@ class SecurityCheckOverview extends StatelessWidget {
           root: true,
           arguments: ["--home=${Platform.environment['HOME']}"],
           getErrorMessages: true);
+    }  else if (Linux.currentenvironment.distribution == DISTROS.FEDORA) {
+      checkerOutputString = Linux.runPythonScript("check_security_fedora.py",
+          root: true,
+          arguments: ["--home=${Platform.environment['HOME']}"],
+          getErrorMessages: true);
     } else {
       checkerOutputString = Linux.runPythonScript("check_security.py",
           root: true,

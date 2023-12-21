@@ -788,6 +788,8 @@ class Linux {
       newEnvironment.distribution = DISTROS.DEBIAN;
     } else if (lines[0].toLowerCase().contains("lmde")) {
       newEnvironment.distribution = DISTROS.LMDE;
+    } else if (lines[0].toLowerCase().contains("fedora")) {
+      newEnvironment.distribution = DISTROS.FEDORA;
     }
 
     // get version:
@@ -868,6 +870,8 @@ class Linux {
         return "/usr/bin/apt";
       case SOFTWARE_MANAGERS.ZYPPER:
         return "/usr/bin/zypper";
+      case SOFTWARE_MANAGERS.DNF:
+        return "/usr/bin/dnf";
       default:
         return "";
     }
@@ -1088,6 +1092,13 @@ class Linux {
         command: "/usr/bin/apt dist-upgrade -y",
         environment: {"DEBIAN_FRONTEND": "noninteractive"},
       ));
+    } else if (currentenvironment.installedSoftwareManagers
+          .contains(SOFTWARE_MANAGERS.DNF)) {
+          commandQueue.add(LinuxCommand(
+            userId: 0,
+            command:
+                "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.DNF)} update --refresh -y",
+          ));
     } else {
       if (currentenvironment.installedSoftwareManagers
           .contains(SOFTWARE_MANAGERS.ZYPPER)) {
@@ -1604,7 +1615,8 @@ class Linux {
       case DESKTOPS.GNOME:
         String output = await runCommand(
             "gsettings get org.gnome.desktop.interface gtk-theme");
-        return output.toLowerCase().contains("dark");
+        String output2 = await runCommand("gsettings get org.gnome.desktop.interface color-scheme");
+        return output.toLowerCase().contains("dark") || output2.toLowerCase().contains("dark");
       case DESKTOPS.XFCE:
         String output =
             await runCommand("xfconf-query -c xfwm4 -p /general/theme");
@@ -1704,6 +1716,9 @@ class Linux {
       case DISTROS.DEBIAN:
       case DISTROS.POPOS:
         runCommandWithCustomArguments("xdg-open", ["/etc/apt/sources.list.d/"]);
+        break;
+      case DISTROS.FEDORA:
+        runCommand("gnome-software");
         break;
       default:
     }
