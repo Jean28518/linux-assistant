@@ -9,25 +9,25 @@ Bookmark/Places folder search,yes,-,-,-,-,-,-,-,-,-,-,yes,yes,yes,yes,
 Recent file search,yes,-,-,-,-,-,-,-,-,-,-,yes,yes,yes,yes,
 Favorite file search,yes,-,-,-,-,-,-,-,-,-,-,no,no,yes,no,
 Browser bookmark search,yes,yes,?,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes," Currently works with firefox,chromium and chrome; needs to checked with firefox on snap  "
-Security check,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,,yes,yes,yes,yes,
-Health check,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,,,,,,
-After installation routine,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,,yes,yes,yes,yes,
-Warpinator,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,,yes,yes,yes,yes,Only works if flatpak is installed/available in the sources
-Nvidia installation,-,(yes),yes,yes,(yes),(yes),(yes),(yes),(yes),no,,-,-,-,-,
-Multimedia codecs installation,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,,-,-,-,-,
-Timeshift setup,yes,yes,yes,yes,yes,yes,yes,yes *,yes,no,,-,-,-,-,*) When you start timeshift the welcome dialog with config is started. But the timeshift.json is configured successfully??
-Automatic update setup,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,,-,-,-,-,integrates on Linux Mint with mintupdate
+Security check,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,
+Health check,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,,,,,
+After installation routine,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,
+Warpinator,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,Only works if flatpak is installed/available in the sources
+Nvidia installation,-,(yes),yes,yes,(yes),(yes),(yes),(yes),(yes),no,no,-,-,-,-,
+Multimedia codecs installation,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,-,-,-,-,
+Timeshift setup,yes,yes,yes,yes,yes,yes,yes,yes *,yes,no,no,-,-,-,-,*) When you start timeshift the welcome dialog with config is started. But the timeshift.json is configured successfully??
+Automatic update setup,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,-,-,-,-,integrates on Linux Mint with mintupdate
 Update full system (all packages of all pack. man.),yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,-,-,-,-,
-Search and installation of system packages,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,,-,-,-,-,
-General integration of system package manager,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,,-,-,-,-,
-General integration of flatpak,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,,-,-,-,-,
-General integration of snapd,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,,-,-,-,-,
-Recognition of drive space utilization,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,,,,,,
-Change user passwort dialog,yes,-,-,-,-,-,yes,-,no,-,,yes,yes,yes,no,
-open system information,yes,-,-,-,-,-,yes,-,no,-,,yes,yes,yes,no,
-automatic update check & install of linux assistant,no,yes,yes,yes,yes,yes,yes,yes,yes,yes,,-,-,-,-,
-openAdditionalSoftwareSourcesSettings,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,,-,-,-,-,
-Change Power Mode,yes,yes,yes,yes,yes,yes,yes,no,yes,?,,-,-,-,-,
-Change user profile,yes,-,-,-,yes,-,yes,-,no,-,,yes,yes,yes,no,
-hardinfo,yes,yes,yes,yes,yes,yes,yes,yes,yes,?,,-,-,-,-,
-redshift,yes,yes,yes,yes,yes,yes,yes,yes,yes,?,,yes,yes,yes,yes,
+Search and installation of system packages,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,-,-,-,-,
+General integration of system package manager,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,-,-,-,-,
+General integration of flatpak,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,-,-,-,-,
+General integration of snapd,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,-,-,-,-,
+Recognition of drive space utilization,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,,,,,
+Change user passwort dialog,yes,-,-,-,-,-,yes,-,no,-,yes,yes,yes,yes,no,
+open system information,yes,-,-,-,-,-,yes,-,no,-,yes,yes,yes,yes,no,
+automatic update check & install of linux assistant,no,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,-,-,-,-,
+openAdditionalSoftwareSourcesSettings,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes *,-,-,-,-,*) We can only open gnome-software here
+Change Power Mode,yes,yes,yes,yes,yes,yes,yes,no,yes,?,yes,-,-,-,-,
+Change user profile,yes,-,-,-,yes,-,yes,-,no,-,yes,yes,yes,yes,no,
+hardinfo,yes,yes,yes,yes,yes,yes,yes,yes,yes,?,no *,-,-,-,-,*) Fedora does not package hardinfo anymore
+redshift,yes,yes,yes,yes,yes,yes,yes,yes,yes,?,yes,yes,yes,yes,yes,
