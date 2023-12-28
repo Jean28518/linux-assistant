@@ -17,7 +17,8 @@ class AfterInstallationAutomaticConfiguration extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Disable functions for specific Distributions:
-    if (Linux.currentenvironment.distribution == DISTROS.OPENSUSE) {
+    if (Linux.currentenvironment.distribution == DISTROS.OPENSUSE ||
+        Linux.currentenvironment.distribution == DISTROS.FEDORA) {
       AfterInstallationService.installNvidiaDrivers =
           false; // disabled at the time
       AfterInstallationService.setupAutomaticSnapshots =

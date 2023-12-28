@@ -316,7 +316,8 @@ class _MainSearchState extends State<MainSearch> {
       /// an additional window would open.
       /// On x11 sessions we don't have the issue.
       if (Linux.currentenvironment.wayland) {
-        exit(0);
+        windowManager.minimize();
+        Future.delayed(const Duration(seconds: 5), () => exit(0));
       } else {
         windowManager.minimize();
       }
@@ -453,6 +454,14 @@ class _MainSearchState extends State<MainSearch> {
           await Linux.getInstallableZypperPackagesForKeyword(keyword);
       heavyEntries.addAll(pckgs);
     }
+    // Search through dnf
+    else if (Linux.currentenvironment.installedSoftwareManagers
+        .contains(SOFTWARE_MANAGERS.DNF)) {
+      List<ActionEntry> pckgs =
+          await Linux.getInstallableDNFPackagesForKeyword(keyword);
+      heavyEntries.addAll(pckgs);
+    }
+
     if (Linux.currentenvironment.installedSoftwareManagers
         .contains(SOFTWARE_MANAGERS.SNAP)) {
       List<ActionEntry> snaps =

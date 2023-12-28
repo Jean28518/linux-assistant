@@ -64,9 +64,14 @@ class AfterInstallationService {
   }
 
   static Future<void> applyCurrentOfficeSituation() async {
-    Future fLibreOffice = applyApplicationActionIfNecessary(
-        ["libreoffice-common", "libreoffice", "org.libreoffice.LibreOffice"],
-        libreOffice);
+    Future fLibreOffice = applyApplicationActionIfNecessary([
+      "libreoffice-common",
+      "libreoffice",
+      "org.libreoffice.LibreOffice",
+      "libreoffice-writer",
+      "libreoffice-calc",
+      "libreoffice-impress"
+    ], libreOffice);
     Future fOnlyOffice = applyApplicationActionIfNecessary(
         ["org.onlyoffice.desktopeditors", "onlyoffice-desktopeditors"],
         onlyOffice);

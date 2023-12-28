@@ -71,6 +71,9 @@ List<ActionEntry> getBasicEntries(BuildContext context) {
         size: 48,
         color: MintY.currentColor,
       ),
+      disableEntryIf: () {
+        return [DISTROS.FEDORA].contains(Linux.currentenvironment.distribution);
+      },
     ),
     ActionEntry(
       name: AppLocalizations.of(context)!.shutdown,
@@ -137,7 +140,8 @@ List<ActionEntry> getBasicEntries(BuildContext context) {
         color: MintY.currentColor,
       ),
       disableEntryIf: () {
-        return Linux.currentenvironment.distribution == DISTROS.OPENSUSE;
+        return [DISTROS.OPENSUSE, DISTROS.FEDORA]
+            .contains(Linux.currentenvironment.distribution);
       },
     ),
     ActionEntry(

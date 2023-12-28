@@ -224,7 +224,7 @@ class Linux {
       }
     }
     // if no warpinator is installed at all:
-    await installApplications(["warpinator", "org.x.Warpinator"]);
+    await installApplications(["org.x.Warpinator", "warpinator"]);
     Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => RunCommandQueue(
           title: AppLocalizations.of(context)!.installX("Warpinator"),
@@ -333,6 +333,24 @@ class Linux {
           return;
         }
 
+        if (softwareManager == SOFTWARE_MANAGERS.DNF) {
+          // Check, if package is available:
+          bool available = await isDNFPackageAvailable(appCode);
+          if (!available) {
+            continue;
+          }
+
+          commandQueue.add(
+            LinuxCommand(
+              command:
+                  "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.DNF)} install $appCode -y",
+              userId: 0,
+              environment: {},
+            ),
+          );
+          return;
+        }
+
         if (softwareManager == SOFTWARE_MANAGERS.FLATPAK) {
           // Check, if package is available:
           String repo = await isFlatpakAvailable(appCode);
@@ -402,6 +420,17 @@ class Linux {
     return output.replaceAll(" ", "").contains("Installed:Yes");
   }
 
+  static Future<bool> isSpecificDNFPackageInstalled(appCode) async {
+    if (!currentenvironment.installedSoftwareManagers
+        .contains(SOFTWARE_MANAGERS.DNF)) {
+      return false;
+    }
+    String output = await runCommand(
+        "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.DNF)} info $appCode",
+        environment: {"LC_ALL": "C"});
+    return output.replaceAll(" ", "").contains("InstalledPackages");
+  }
+
   static Future<bool> isSpecificSnapInstalled(appCode) async {
     String output = await runCommand(
         "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.SNAP)} info $appCode");
@@ -454,6 +483,22 @@ class Linux {
               userId: 0,
               command:
                   "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.ZYPPER)} --non-interactive remove $appCode",
+            ),
+          );
+        }
+      }
+
+      // DNF
+      if (softwareManager == null || softwareManager == SOFTWARE_MANAGERS.DNF) {
+        bool isPackageInstalled = await isSpecificDNFPackageInstalled(appCode);
+        if ((softwareManager == null ||
+                softwareManager == SOFTWARE_MANAGERS.DNF) &&
+            isPackageInstalled) {
+          commandQueue.add(
+            LinuxCommand(
+              userId: 0,
+              command:
+                  "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.DNF)} remove $appCode -y",
             ),
           );
         }
@@ -519,6 +564,15 @@ class Linux {
       }
     }
     if (currentenvironment.installedSoftwareManagers
+        .contains(SOFTWARE_MANAGERS.DNF)) {
+      for (String appCode in appCodes) {
+        bool isPackageInstalled = await isSpecificDNFPackageInstalled(appCode);
+        if (isPackageInstalled) {
+          return true;
+        }
+      }
+    }
+    if (currentenvironment.installedSoftwareManagers
         .contains(SOFTWARE_MANAGERS.FLATPAK)) {
       for (String appCode in appCodes) {
         bool isFlatpakInstalled = await isSpecificFlatpakInstalled(appCode);
@@ -550,6 +604,13 @@ class Linux {
     String output = await runCommand(
         "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.ZYPPER)} info $appCode");
     return !output.contains(" not found.");
+  }
+
+  static Future<bool> isDNFPackageAvailable(String appCode) async {
+    String output = await runCommand(
+        "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.DNF)} info $appCode",
+        environment: {"LC_ALL": "C"});
+    return !output.toLowerCase().contains("no matching packages to list");
   }
 
   /// returns the source under which the Flatpak is available, otherwise empty String
@@ -584,6 +645,10 @@ class Linux {
       if (available) {
         return true;
       }
+      available = await isDNFPackageAvailable(appCode);
+      if (available) {
+        return true;
+      }
       available = await isSnapAvailable(appCode);
       if (available) {
         return true;
@@ -604,7 +669,7 @@ class Linux {
   static Future<void> ensureApplicationInstallation(List<String> appCodes,
       {bool installed = true}) async {
     bool initial = await areApplicationsInstalled(appCodes);
-    print("App: $appCodes initial: $initial installed: $installed");
+    // print("App: $appCodes initial: $initial installed: $installed");
     if (installed && !initial) {
       await installApplications(appCodes);
     } else if (!installed && initial) {
@@ -712,6 +777,7 @@ class Linux {
     return actionEntries;
   }
 
+  // Get all available applications, which are installed and .destop files are present.
   static Future<List<ActionEntry>> getAllAvailableApplications() async {
     String applicationsString = await runCommandWithCustomArguments("python3", [
       "$pythonScriptsFolder/get_applications.py",
@@ -979,6 +1045,26 @@ class Linux {
         ));
 
         break;
+      case DISTROS.FEDORA:
+        // sudo dnf install gstreamer1-plugins-{bad-\*,good-\*,base} gstreamer1-plugin-openh264 gstreamer1-plugin-libav --exclude=gstreamer1-plugins-bad-free-devel
+        // sudo dnf install lame\* --exclude=lame-devel
+        // sudo dnf group upgrade --with-optional Multimedia
+        commandQueue.add(LinuxCommand(
+          userId: 0,
+          command:
+              "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.DNF)} install gstreamer1-plugins-{bad-*,good-*,base} gstreamer1-plugin-openh264 gstreamer1-plugin-libav --exclude=gstreamer1-plugins-bad-free-devel -y",
+        ));
+        commandQueue.add(LinuxCommand(
+          userId: 0,
+          command:
+              "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.DNF)} install lame* --exclude=lame-devel -y",
+        ));
+        commandQueue.add(LinuxCommand(
+          userId: 0,
+          command:
+              "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.DNF)} group upgrade --with-optional Multimedia -y",
+        ));
+        break;
       default:
     }
   }
@@ -1093,12 +1179,12 @@ class Linux {
         environment: {"DEBIAN_FRONTEND": "noninteractive"},
       ));
     } else if (currentenvironment.installedSoftwareManagers
-          .contains(SOFTWARE_MANAGERS.DNF)) {
-          commandQueue.add(LinuxCommand(
-            userId: 0,
-            command:
-                "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.DNF)} update --refresh -y",
-          ));
+        .contains(SOFTWARE_MANAGERS.DNF)) {
+      commandQueue.add(LinuxCommand(
+        userId: 0,
+        command:
+            "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.DNF)} update --refresh -y",
+      ));
     } else {
       if (currentenvironment.installedSoftwareManagers
           .contains(SOFTWARE_MANAGERS.ZYPPER)) {
@@ -1325,6 +1411,62 @@ class Linux {
     return results;
   }
 
+  static Future<List<ActionEntry>> getInstallableDNFPackagesForKeyword(
+      String keyword) async {
+    if (keyword.length <= 3) {
+      return [];
+    }
+    String output = await runCommandWithCustomArguments(
+        getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.DNF),
+        ["search", keyword],
+        environment: {"LC_ALL": "C"});
+    output = output.trim();
+    List<String> lines = output.split("\n");
+
+    // Cancel search, if too many search results.
+    if (lines.length > 100) {
+      return [];
+    }
+
+    List<List<String>> allInstalledPackages = await getInstalledDNFPackages();
+
+    List<ActionEntry> results = [];
+    for (String line in lines) {
+      if (line.trim() == "") {
+        continue;
+      }
+      String pkgName = line.split(".")[0];
+      if (pkgName.contains(" ")) {
+        continue;
+      }
+
+      // if already installed, skip entry
+      bool alreadyInstalled = false;
+      for (List<String> installedPackage in allInstalledPackages) {
+        if (installedPackage[0] == pkgName) {
+          alreadyInstalled = true;
+          break;
+        }
+      }
+      if (alreadyInstalled) {
+        continue;
+      }
+
+      results.add(ActionEntry(
+        iconWidget: Icon(
+          Icons.download_rounded,
+          size: 48,
+          color: MintY.currentColor,
+        ),
+        name: "Install $pkgName",
+        description: "Install via dnf",
+        action: "dnf-install:$pkgName",
+        priority: -20,
+      ));
+    }
+    return results;
+  }
+
   static Future<List<String>> getInstalledAPTPackages() async {
     if (!currentenvironment.installedSoftwareManagers
         .contains(SOFTWARE_MANAGERS.APT)) {
@@ -1372,6 +1514,43 @@ class Linux {
       String packageName = lineParts[1].trim();
       String description = lineParts[2].trim();
       returnValue.add([packageName, description]);
+    }
+    return returnValue;
+  }
+
+  /// Returns List of [package name]
+  static Future<List<List<String>>> getInstalledDNFPackages() async {
+    if (!currentenvironment.installedSoftwareManagers
+        .contains(SOFTWARE_MANAGERS.DNF)) {
+      return [];
+    }
+    List<List<String>> returnValue = [];
+
+    /// Run: zypper se --installed-only
+    String output = await Linux.runCommandWithCustomArguments(
+      "/usr/bin/dnf",
+      [
+        "list",
+        "installed",
+      ],
+      environment: {"LC_ALL": "C"},
+    );
+
+    List<String> lines = output.split("\n");
+
+    for (String line in lines) {
+      // Remove all double spaces with regex
+      line = line.replaceAll(RegExp(r"\s+"), " ");
+      line = line.trim();
+
+      List<String> lineParts = line.split(" ");
+
+      if (lineParts.length != 3) {
+        continue;
+      }
+      String packageName = lineParts[0].trim();
+      packageName = packageName.split(".")[0];
+      returnValue.add([packageName]);
     }
     return returnValue;
   }
@@ -1424,6 +1603,8 @@ class Linux {
     Future<List<String>> installedAptPackagesFuture = getInstalledAPTPackages();
     Future<List<List<String>>> installedZypperPackagesFuture =
         getInstalledZypperPackages();
+    Future<List<List<String>>> installedDNFPackagesFuture =
+        getInstalledDNFPackages();
     Future<List<List<String>>> installedFlatpaksFuture = getInstalledFlatpaks();
     Future<List<String>> installedSnapsFuture = getInstalledSnaps();
 
@@ -1459,6 +1640,29 @@ class Linux {
           name: AppLocalizations.of(context)!.uninstallApp(zypperEntry[0]),
           description: "${zypperEntry[1]} (Zypper)",
           action: "zypper-uninstall:${zypperEntry[0]}",
+          iconWidget: Icon(
+            Icons.delete,
+            size: 48,
+            color: MintY.currentColor,
+          ),
+          priority: -10,
+          excludeFromSearchProposal: true,
+        ),
+      );
+    }
+
+    /// DNF
+    List<List<String>> installedDNFPackages = await installedDNFPackagesFuture;
+    for (List<String> dnfEntry in installedDNFPackages) {
+      if (dnfEntry.length < 1) {
+        print("Wrong dnf entry: $dnfEntry");
+        continue;
+      }
+      returnValue.add(
+        ActionEntry(
+          name: AppLocalizations.of(context)!.uninstallApp(dnfEntry[0]),
+          description: "(DNF)",
+          action: "dnf-uninstall:${dnfEntry[0]}",
           iconWidget: Icon(
             Icons.delete,
             size: 48,
@@ -1615,8 +1819,10 @@ class Linux {
       case DESKTOPS.GNOME:
         String output = await runCommand(
             "gsettings get org.gnome.desktop.interface gtk-theme");
-        String output2 = await runCommand("gsettings get org.gnome.desktop.interface color-scheme");
-        return output.toLowerCase().contains("dark") || output2.toLowerCase().contains("dark");
+        String output2 = await runCommand(
+            "gsettings get org.gnome.desktop.interface color-scheme");
+        return output.toLowerCase().contains("dark") ||
+            output2.toLowerCase().contains("dark");
       case DESKTOPS.XFCE:
         String output =
             await runCommand("xfconf-query -c xfwm4 -p /general/theme");
@@ -1677,6 +1883,7 @@ class Linux {
   static bool usesCurrentEnvironmentRPMPackages() {
     switch (currentenvironment.distribution) {
       case DISTROS.OPENSUSE:
+      case DISTROS.FEDORA:
         return true;
       default:
         return false;
@@ -1969,6 +2176,13 @@ class Linux {
         ));
       }
       if (currentenvironment.installedSoftwareManagers
+          .contains(SOFTWARE_MANAGERS.DNF)) {
+        commandQueue.add(LinuxCommand(
+          userId: 0,
+          command: "/usr/bin/dnf clean all",
+        ));
+      }
+      if (currentenvironment.installedSoftwareManagers
           .contains(SOFTWARE_MANAGERS.FLATPAK)) {
         commandQueue.add(LinuxCommand(
           userId: 0,
@@ -1982,10 +2196,12 @@ class Linux {
           command: "/usr/bin/rm -rf /var/lib/snapd/cache/",
         ));
       }
-      commandQueue.add(LinuxCommand(
-        userId: 0,
-        command: "/usr/bin/rm -rf /var/tmp/",
-      ));
+      if (currentenvironment.distribution != DISTROS.FEDORA) {
+        commandQueue.add(LinuxCommand(
+          userId: 0,
+          command: "/usr/bin/rm -rf /var/tmp/",
+        ));
+      }
       commandQueue.add(LinuxCommand(
         userId: 0,
         command: "/usr/bin/rm -rf ${getHomeDirectory()}/.local/share/Trash/",
@@ -2007,6 +2223,7 @@ class Linux {
   static Future<void> installAndConfigureFirewall(context, route) async {
     switch (currentenvironment.distribution) {
       case DISTROS.OPENSUSE:
+      case DISTROS.FEDORA:
         await installApplications(["firewalld"]);
         commandQueue.add(LinuxCommand(
           userId: 0,

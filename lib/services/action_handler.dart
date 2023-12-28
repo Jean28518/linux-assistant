@@ -251,6 +251,35 @@ class ActionHandler {
           ));
     }
 
+    if (actionEntry.action.startsWith("dnf-install:")) {
+      String pkg = actionEntry.action.replaceFirst("dnf-install:", "");
+      Linux.commandQueue.add(LinuxCommand(
+          userId: 0,
+          command:
+              "${Linux.getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.DNF)} install $pkg -y"));
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => const RunCommandQueue(
+                  title: "DNF",
+                  message: "Your package will be installed in a few moments...",
+                  route: MainSearchLoader(),
+                )),
+      );
+    }
+
+    if (actionEntry.action.startsWith("dnf-uninstall:")) {
+      String pkg = actionEntry.action.replaceFirst("dnf-uninstall:", "");
+      await Linux.removeApplications([pkg],
+          softwareManager: SOFTWARE_MANAGERS.DNF);
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                UninstallerQuestion(action: actionEntry.action),
+          ));
+    }
+
     if (actionEntry.action.startsWith("flatpak-install:")) {
       String pkg = actionEntry.action.replaceFirst("flatpak-install:", "");
       Linux.commandQueue.add(LinuxCommand(

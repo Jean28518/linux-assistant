@@ -87,6 +87,13 @@ class LinuxAssistantUpdater {
               command:
                   "${Linux.getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.ZYPPER)} --non-interactive  --no-gpg-checks install /tmp/$fileName"));
         }
+        if (Linux.currentenvironment.installedSoftwareManagers
+            .contains(SOFTWARE_MANAGERS.DNF)) {
+          Linux.commandQueue.add(LinuxCommand(
+              userId: 0,
+              command:
+                  "${Linux.getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.DNF)} install /tmp/$fileName -y"));
+        }
       }
     }
   }

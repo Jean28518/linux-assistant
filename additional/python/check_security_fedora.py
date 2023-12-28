@@ -27,15 +27,17 @@ def get_additional_sources():
         lines = jfiles.get_all_lines_from_file(entry)
 
         name = ""
+        enabled = False
         for line in lines:
             if line.startswith("[") and line.strip().endswith("]"):
                 name = line.replace("[", "").replace("]", "")
             if line.startswith("name="):
                 name = line.replace("name=", "")
+            if ("enabled=1" in line):
+                enabled = True
             if ("enabled=0" in line):
-                name = ""
-                break
-        if name != "":
+                enabled = enabled or False
+        if name != "" and enabled:
             print(f"additionalsource: {name}")
 
 def get_available_updates():
@@ -51,11 +53,12 @@ def check_server_access():
     if (jfiles.does_file_exist("/usr/bin/firewall-cmd")):
         lines = jessentials.run_command("/usr/bin/systemctl status firewalld", False, True)
         firewalldActive = False
+        firewall_running = False
         for line in lines:
             if "active (running)" in line:
-                ufwUserFound = True
+                firewall_running = True
                 break
-        if not ufwUserFound:
+        if not firewall_running:
             print("firewallinactive")
     else:
         print("nofirewall")
