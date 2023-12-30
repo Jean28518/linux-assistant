@@ -1,5 +1,5 @@
 Name:           linux-assistant
-Version:        0.4.3
+Version:        0.4.4
 Release:        1%{?dist}
 Summary:        Daily Linux Helper with integrated search
 License:        GPL
@@ -9,7 +9,7 @@ Requires:       libkeybinder-3_0-0 wmctrl wget python3
 %else
 Requires:       keybinder wmctrl wget python3
 %endif
-Provides:       libflutter_linux_gtk.so()(64bit) libhotkey_manager_plugin.so()(64bit)
+Provides:       libflutter_linux_gtk.so()(64bit) libhotkey_manager_plugin.so()(64bit) libscreen_retriever_plugin.so()(64bit) libscreen_retriever_plugin.so()(64bit)
 
 %description
 Daily Linux Helper with integrated search
