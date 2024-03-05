@@ -1,0 +1,860 @@
+{
+  "@@locale": "it",
+  "@@last_modified": "2022-11-17T17:31:16.074",
+  "helloWorld": "Ciao mondo!",
+  "enterASearchTerm": "Inserisci un termine di ricerca...",
+  "securityCheckDescription": "Tieni sotto controllo la sicurezza del tuo computer.",
+  "warpinatorDescription": "Invia file rapidamente sulla rete locale. Per Linux, Android, iOS e Windows.",
+  "securityCheck": "Controllo di sicurezza",
+  "afterInstallation": "Dopo l'installazione",
+  "afterInstallationDescription": "Configura la tua macchina Linux in base alle tue esigenze.",
+  "openX": "Apri",
+  "searchInWebFor": "Cerca nel web per",
+  "lookForOnlineResults": "Cerca risultati online..",
+  "sendFeedback": "Invia Feedback",
+  "clear": "Pulisci",
+  "loading": "Caricamento in corso...",
+  "preparingSearch": "Preparazione della ricerca...",
+  "analysingSystemSecurity": "Analisi della sicurezza del sistema ...",
+  "additionalSoftwareSources": "Fonti software aggiuntive",
+  "securityCheckFailedBecauseNoRoot": "Non ha funzionato. Sono necessari i diritti di root per eseguire il controllo di sicurezza.",
+  "cancel": "Annulla",
+  "retry": "Riprova",
+  "backToSearch": "Torna alla ricerca",
+  "reload": "Ricaricare",
+  "analyzingSystemScurity": "Analisi della sicurezza del sistema...",
+  "updates": "Aggiornamenti",
+  "systemIsUpToDate": "Grandioso! Il tuo sistema è aggiornato.",
+  "xPackagesShouldBeUpdated": "i pacchetti dovrebbero essere aggiornati.",
+  "homeFolder": "Cartella Home",
+  "homeFolderRightsOkay": "I diritti della tua cartella Home sono a posto. Gli altri utenti non possono vedere i tuoi file.",
+  "homeFolderRightsNotOkay": "La tua cartella Home non è sicura. Altri utenti potrebbero vedere i tuoi file.",
+  "networkSecurity": "Sicurezza della rete",
+  "noFirewallRecognized": "Nessun firewall riconosciuto sul tuo sistema.\\nSi consiglia un firewall per i computer con accesso da Internet.",
+  "firewallIsRunning": "Il tuo firewall è attivo e funzionante. Ottimo lavoro!",
+  "password": "Password",
+  "firewallIsInactive": "Il tuo firewall è inattivo. Si consiglia un firewall per i computer con accesso da Internet.",
+  "sshFoundOnYourComputer": "Server SSH trovato sul tuo computer. Il tuo computer potrebbe essere accessibile dall'esterno. Disinstalla ssh-server se non ti serve.",
+  "noFail2BanFound": "Nessuna istanza fail2ban trovata sul tuo computer. Con esso il tuo computer è più immune agli attacchi di forza bruta ssh.",
+  "xrdpRunningOnYourComputer": "Xrdp è in esecuzione sul tuo computer. Si consiglia di disinstallarlo se non ne hai realmente bisogno.",
+  "additionalSoftwareSourcesDetected": "Sono state trovate alcune fonti software aggiuntive. Questi sono potenzialmente non sicuri.\\nSe non hai bisogno di aggiornamenti di sicurezza da questi, ti consigliamo di disattivarli.",
+  "noAdditionalSoftwareSourcesFound": "Bene! Nessuna fonte software aggiuntiva trovata.",
+  "changePasswordDescription": "Cambia la password dell'utente corrente",
+  "userProfile": "Profilo utente",
+  "changeUserProfile": "Modifica i dettagli dell'utente",
+  "systemInformation": "Informazioni di sistema",
+  "distribution": "Distribuzione",
+  "version": "Versione",
+  "desktop": "Desktop",
+  "language": "Lingua",
+  "next": "Successiva",
+  "selectYourDistribution": "Seleziona la tua distribuzione",
+  "selectYourDesktop": "Seleziona il tuo desktop",
+  "isTheRecognizedSystemCorrect": "Il sistema riconosciuto è corretto?",
+  "noIWantToChange": "No, voglio cambiare",
+  "yes": "Si",
+  "recognizingSystem": "Sistema di riconoscimento...",
+  "yourLinuxAssistant": "Il Tuo. Assistente.Linux",
+  "linuxAssistantLongDescription": "Linux Assistant è indipendente dalla distribuzione e progettato per aiutarti e guidarti nell'utilizzo quotidiano. Basta inserire alcune parole chiave nel campo di ricerca e trova quello che desideri! Linux Assistant viene fornito con utili scorciatoie a file, cartelle e applicazioni e ha anche alcune routine. Collegamenti a impostazioni e ad es. è disponibile anche il PC-Security Checker incluso.",
+  "welcomeToYourLinuxMachine": "Benvenuto nella tua nuova macchina Linux!",
+  "afterInstallationGreetingDescription": "Nei prossimi minuti configurerai la tua macchina Linux in base alle tue esigenze.",
+  "letsStart": "Iniziamo!",
+  "includeBasicSystemInformation": "Includere informazioni di sistema di base",
+  "setUpXWithRecommendedSettings": "Configurazione",
+  "setUpXWithRecommendedSettingsPart2": "con le impostazioni consigliate?",
+  "manualConfiguration": "Configurazione manuale",
+  "afterInstallationManualConfigurationDescription": "Esci da questa routine e mantieni il pieno controllo di ogni modifica sul tuo PC.",
+  "automaticConfiguration": "Configurazione automatica",
+  "applyConfiguration": "Applicare la configurazione del software",
+  "thisProcessCouldTakeManyMinutesDependingSoftwareChoosed": "Questo processo potrebbe richiedere molti minuti a seconda della configurazione software selezionata...",
+  "selectSpecificActionsOnTheNextSite": "Seleziona le azioni automatiche specifiche nella pagina successiva.",
+  "installMultimediaCodecs": "Installa i codec multimediali",
+  "installMultimediaCodecsDescription": "Installa codici multimediali proprietari aggiuntivi per la riproduzione di video e musica.",
+  "automaticSnapshots": "Snapshot automatici",
+  "automaticSnapshotsDescription": "Configura snapshot automatici con Timeshift. Timeshift sarà configurato per 2 snapshot automatici mensili sulla partizione root. Non eseguirà il backup dei tuoi file personali.",
+  "automaticNvidiaDriverInstallation": "Installazione automatica dei driver Nvidia",
+  "automaticNvidiaDriverInstallationDesciption": "Verranno installati tutti i driver consigliati.",
+  "automaticUpdateManagerConfiguration": "Configurazione del gestore aggiornamenti automatici",
+  "feedbackPlaceholder": "Ti manca un risultato di ricerca? Cosa stai cercando? Hai suggerimenti per migliorare?...",
+  "automaticUpdateManagerConfigurationDescription": "Verranno configurati gli aggiornamenti automatici e (se inclusi) la manutenzione.",
+  "welcomeToYourNewSystem": "Benvenuto nel tuo nuovo sistema!",
+  "automaticConfigurationIsRunningDescription": "Il sistema sta impostando e applicando la configurazione del software. Questo processo potrebbe richiedere molti minuti a seconda delle azioni e del software selezionati..",
+  "browserSelection": "Selezione del browser",
+  "firefoxDescription": "Browser Open Source con particolare attenzione alla privacy di Mozilla.",
+  "chromiumDescription": "Browser open source. Base gratuita di Google Chrome.",
+  "braveDescription": "Browser Open Source con particolare attenzione alla privacy.",
+  "chromeDescription": "Browser proprietario di Google.",
+  "thunderbirdDescription": "Client di posta elettronica open source di Mozilla. ",
+  "jitsiDescription": "Strumento di videoconferenza Open Source.",
+  "elementDescription": "Strumento di messaggistica Open Source basato su protocollo Matrix.",
+  "signalDescription": "Messaggistica open source. Funziona solo con l'app per smartphone.",
+  "discordDescription": "Software proprietario di chat di comunità",
+  "zoomDescription": "Software proprietario per conferenze.",
+  "teamsDescription": "Software proprietario di comunicazione per team.",
+  "communicationSoftware": "Software di comunicazione",
+  "flatpakIsNotInstalled": "Flatpak non è installato sul tuo sistema.",
+  "flatpakDescription": "Per un facile accesso a molte app popolari, si consiglia vivamente Flatpak. Flatpak è una nuova utility per la gestione dei pacchetti per Linux. Offre un ambiente sandbox in cui le app possono essere eseguite in isolamento dal resto del sistema. Collegando "Flathub" (il più grande repository per flatpak) puoi accedere a oltre 1800 diverse app Linux. Come svantaggio i Flatpak richiedono più spazio su disco.",
+  "skip": "Salta",
+  "settingUpFlatpak": "Configura Flatpak",
+  "officeSelection": "Selezione Ufficio",
+  "libreOfficeDescription": "Suite per ufficio open source di The Document Foundation. Ottimo per il formato documento aperto (.odt, .ods, .odp).",
+  "onlyOfficeDescription": "Suite per ufficio open source. Ottimo per il formato documento Microsoft (.docx, .xls, .ppt).",
+  "wpsOfficeDescription": "Suite per ufficio proprietaria. Buono per il formato documento Microsoft (.docx, .xls, .ppt).",
+  "includeSearchTermAndResults": "Includi il termine di ricerca e i risultati della ricerca",
+  "submit": "Invia",
+  "thankYouForTheFeedback": "Grazie mille per il tuo feedback!",
+  "feedbackSentSuccessfully": "Il tuo feedback è stato inviato agli sviluppatori con successo.",
+  "close": "Chiudi",
+  "sendingFeedbackFailed": "L'invio del feedback non è riuscito.",
+  "sendingFeedback": "Invio di feedback...",
+  "startAfterInstallationRoutine": "Avvia la configurazione iniziale del computer",
+  "timeToSetupYourComputer": "È ora di configurare il tuo computer",
+  "timeToSetupYourComputerDescription": "Configura la tua macchina Linux in base alle tue esigenze.",
+  "activateHotkey": "Attiva il tasto di scelta rapida",
+  "openLinuxAssistantFaster": "Apri l'Assistente Linux più velocemente.",
+  "openLinuxAssistantFasterDescription": "Puoi aprire Linux Assistant con i tasti {modificatore} + <Qn Questo è altamente raccomandato per massimizzare la tua produttività sotto Linux.",
+  "@openLinuxAssistantFasterDescription": {
+    "placeholders": {
+      "modifier" : {}
+    },
+    "description": "",
+    "type": "text"
+  },
+  "yesSetUpHotkey": "Sì, tasto di scelta rapida per l'impostazione",
+  "introduction": "Introduzione",
+  "theFollowingContentCanBeSearched": "È possibile cercare i seguenti contenuti:",
+  "applications": "Applicazioni",
+  "applicationSearchDescription": "Cerca tutte le tue applicazioni preferite e avviale in una frazione di secondo.",
+  "folders": "Cartelle",
+  "folderSearchDescription": "Linux Assistant esegue la scansione di tutte le tue cartelle importanti e te le offre anche nell'elenco dei risultati.",
+  "recentFiles": "File recenti",
+  "recentFilesDescription": "Finché il tuo sistema memorizza i file utilizzati di recente, puoi trovare questi e anche i tuoi file speciali.",
+  "browserBookmarks": "Segnalibri del tuo browser web.",
+  "browserBookmarksDescription": "Trova i tuoi siti preferiti se li hai contrassegnati come segnalibri nel tuo browser web.",
+  "specialFunctions": "Funzioni speciali di Linux-Assistant",
+  "specialFunctionsDescription": "Avvia il controllo di sicurezza o il servizio post-installazione e anche tante altre piccole routine che semplificano l'utilizzo quotidiano di Linux. Questi sono presentati sotto la barra di ricerca in ordine radomizzato.",
+  "hint": "Suggerimento",
+  "youCanOpenThisWindowBySearchingForIntroduction": "Puoi riaprire questo sito cercando "Introduzione a Linux-Assistant".",
+  "youCanOpenLinuxAssistantWithHotkey": "Puoi sempre aprire Linux Assistant con la combinazione di tasti {modifier} + <Q>. Se ancora non funziona, chiama "scorciatoia da tastiera" nella ricerca.",
+  "@youCanOpenLinuxAssistantWithHotkey": {
+    "placeholders": {
+      "modifier" : {}
+    },
+    "description": "",
+    "type": "text"
+  },
+  "introductionToLinuxAssistant": "Introduzione a Linux Assistant",
+  "introductionToLinuxAssistantDescription": "Presentazione di tutte le possibilità e voci di ricerca di Linux-Assistant.",
+  "changeBackground": "Cambia sfondo",
+  "analysingLinuxHealth": "AAnalisi dello stato di salute di Linux...",
+  "linuxHealth": "Salute di Linux",
+  "linuxHealthDescription": "Controlla lo stato attuale del tuo sistema Linux.",
+  "uptimeWarning": "Il tuo sistema Linux non è stato riavviato da molto tempo. Per evitare potenziali errori, si consigliano riavvii regolari. L'ultimo riavvio è avvenuto {time} {unit} fa.",
+  "@uptimeWarning": {
+    "placeholders": {
+      "time" : {},
+      "unit" : {}
+    },
+    "description": "",
+    "type": "text"
+  },
+  "uptimePass": "Il tuo sistema Linux è in esecuzione solo da {time} {unit}. Questo è buono!",
+  "@uptimePass": {
+    "placeholders": {
+      "time" : {},
+      "unit" : {}
+    },
+    "description": "",
+    "type": "text"
+  },
+  "diskspaceWarning1": "La tua partizione '",
+  "diskspaceWarning2": "' è molto pieno! Prova a liberare un po' di memoria. Memoria disponibile rimanente: ",
+  "diskspacePass": "Le tue partizioni non sono troppo piene. Ciò si traduce in prestazioni migliori. Molto bene!",
+  "processesWithZombiesMessage": "Attualmente sono in esecuzione {processes} processi. Di questi {zombies} sono stati trovati zombi.",
+  "@processesWithZombiesMessage": {
+    "placeholders": {
+      "processes" : {},
+      "zombies" : {}
+    },
+    "description": "",
+    "type": "text"
+  },
+  "removableDevicesWarning": "{removableDevices} sono stati trovati dispositivi/(partizioni) di archiviazione rimovibili. Se al momento non ne hai bisogno, ti consigliamo di rimuoverli per motivi di sicurezza e di salute di questi dispositivi.",
+  "@removableDevicesWarning": {
+    "placeholders": {
+      "removableDevices" : {}
+    },
+    "description": "",
+    "type": "text"
+  },
+  "removableDevicesPass": "Non è stato rilevato alcun dispositivo di archiviazione rimovibile.",
+  "swapsPass": "Il tuo sistema utilizza lo spazio di swap. Non è necessario fare nulla a riguardo.",
+  "swapsWarning": "Il tuo sistema non dispone di memoria di swap. Se la tua memoria è piena, il tuo sistema non ha più possibilità di scambiarla. Aggiungi un file di swap o una partizione di swap al tuo sistema.",
+  "topMemoryProcesses": "Attualmente la maggior parte dei processi ad uso intensivo di memoria",
+  "topCPUProcesses": "Attualmente i processi più intensivi dal punto di vista computazionale",
+  "cpuUsage": "Uso della CPU",
+  "memoryUsage": "Uso della RAM",
+  "process": "Processo",
+  "runtime": "Runtime",
+  "memoryAndStorage": "Memoria e archiviazione",
+  "applyUpdatesSinceRelease": "Aggiorna il sistema alla versione più recente",
+  "applyUpdatesSinceReleaseDescription": "Dal rilascio dell'attuale versione di {distro}, potrebbero essere disponibili aggiornamenti. Applica questi aggiornamenti.",
+  "@applyUpdatesSinceReleaseDescription": {
+    "placeholders": {
+      "distro" : {}
+    },
+    "description": "",
+    "type": "text"
+  },
+  "minutes": "minuti",
+  "hours": "ore",
+  "days": "giorni",
+  "linuxAssistantKeyboardShortcut": "Scorciatoia da tastiera di Linux Assistant",
+  "setUpLinuxAssistantKeyboardShortcut": "Imposta la combinazione di tastiera {modifier} + <Q> per aprire rapidamente Linux Assistant da qualsiasi luogo.",
+  "@setUpLinuxAssistantKeyboardShortcut": {
+    "placeholders": {
+      "modifier" : {}
+    },
+    "description": "",
+    "type": "text"
+  },
+  "update": "Update",
+  "aNewVersionIsAvailable": "Una nuova versione è disponibile!",
+  "doYouWantToUpdateNow": "Nuove funzionalità ti stanno aspettando. Vuoi aggiornare Linux-Assistant adesso? Solitamente l'operazione richiede solo pochi secondi.",
+  "later": "Dopo",
+  "updateNow": "Aggiorna ora",
+  "linuxAssistantIsUpdating": "Linux-Assistant si sta aggiornando. Successivamente, si consiglia di riavviare l'applicazione.",
+  "fix": "Fix",
+  "hardInfoDescription": "Informazioni di sistema e strumento di benchmark",
+  "installX": "Installa {app}",
+  "@installX": {
+    "placeholders": {
+      "app" : {}
+    },
+    "description": "",
+    "type": "text"
+  },
+  "installingXDescription": "Installazione di {app}...\Devi aprire {app} successivamente e separatamente.",
+  "@installingXDescription": {
+    "placeholders": {
+      "app" : {}
+    },
+    "description": "",
+    "type": "text"
+  },
+  "redshiftDescription": "Filtra la luce blu per ridurre l'affaticamento degli occhi.",
+  "redshiftIsInstalledAlready": "Redshift è già installato.\nApri Redshift indipendentemente dal menu di sistema.",
+  "settings": "Impostazione",
+  "searchSettings": "Impostazioni di ricerca",
+  "on": "On",
+  "off": "Off",
+  "includeApplications": "Includi applicazioni.",
+  "includeBasicFolders": "Includi cartelle di base.",
+  "includeRecentlyUsedFilesAndFolders": "Includi file e cartelle utilizzati di recente.",
+  "includeFavoriteFilesAndFolderBookmarks": "Includi i file preferiti e i segnalibri delle cartelle.",
+  "includeBrowserBookmarks": "Includi i segnalibri del browser.",
+  "shutdown": "Spegnimento",
+  "shutdownDescription": "Spegni subito la tua macchina Linux o impostane un orario.",
+  "shutdownIn": "Spegnimento",
+  "exit": "Esci",
+  "exitDescription": "Chiudi Linux-Assistant.",
+  "appearance_settings": "Impostazioni dell'aspetto",
+  "darkThemeEnabled": "Tema scuro (riavvio richiesto)",
+  "mainColorSetting": "Colore principale (riavvio richiesto)",
+  "secondaryColorSetting": "Colore secondario (riavvio richiesto)",
+  "colorfulBackground": "Sfondo colorato",
+  "theFollowingCommandsWillBeExecuted": "Verranno eseguiti i seguenti comandi",
+  "command" : "Command",
+  "showCommands": "Mostra comandi",
+  "hideCommands": "Nascondi comandi",
+  "description": "Descrizione",
+  "root": "Root",
+  "no": "No",
+  "selfLearningSearch": "Ricerca in autoapprendimento",
+  "updateSystemDescription": "Aggiorna la tua macchina Linux e tutte le applicazioni (aggiornamenti).\nQuesto processo potrebbe richiedere alcuni minuti.",
+  "featureOverview" : "Panoramica delle funzionalità",
+  "powerMode": "Power mode",
+  "powerModeDescription": "Passa dalla modalità di risparmio energetico a quella di prestazione.",
+  "powerSaver": "modalità di risparmio energetico",
+  "performance": "modalità di prestazione",
+  "balanced": "modalità bilanciata",
+  "activate": "Attivare",
+  "active": "Attiva",
+  "installPowerProfilesDeamonDescription": "Per modificare la modalità di risparmio energetico è necessario power-profiles-deamon. Vuoi installarlo?",
+  "folderRecursionDepth" : "Profondità di ricorsione della cartella",
+  "shutdownAfterwards": "Successivamente spegni Linux",
+  "versionOfLinuxAssistant": "Versione di Linux Assistant",
+  "urls": "URL",
+  "urlsDescription": "Inserisci un URL e aprilo nel browser predefinito.",
+  "packageWillBeInstalled": "Il tuo pacchetto verrà installato in pochi istanti...",
+  "thisApplicationWillBeRemoved": "Questa applicazione verrà rimossa.",
+  "uninstallingXDescription": "Disinstallazione di {app}...",
+  "@uninstallingXDescription": {
+    "placeholders": {
+      "app" : {}
+    },
+    "description": "",
+    "type": "text"
+  },
+  "uninstallApp": "Uninstall {app}",
+  "@uninstallApp": {
+    "placeholders": {
+      "app" : {}
+    },
+    "description": "",
+    "type": "text"
+  },
+  "uninstallAppWarning": "Vuoi davvero disinstallare {app}?\nIl sistema potrebbe non funzionare correttamente in seguito.\nDisinstalla solo i programmi che hai installato tu stesso.",
+  "@uninstallAppWarning": {
+    "placeholders": {
+      "app" : {}
+    }, 
+    "description": "",
+    "type": "text"
+  },
+  "welcome": "Welcome!",
+  "flathubPermissionsDescription": "Per iniziare sono necessari solo altri due passaggi.\nAffinché Linux-Assistant funzioni, sono necessarie impostazioni aggiuntive che non possono essere impostate per impostazione predefinita a causa di flathub.org.\nCon le impostazioni aggiuntive, Linux-Assistant può accedere al tuo sistema Linux e ad es. gestire il software.\nLinux-Assistant è tuttavia tecnicamente limitato, pertanto l'amministrazione del sistema può avvenire solo con il tuo permesso.\n\nInserisci il seguente comando in un terminale e premi il tasto Invio. Non viene visualizzato alcun testo aggiuntivo, il che è perfettamente ok.",
+  "pleaseRestartLinuxAssistant": "Successivamente, Linux-Assistant deve essere riavviato una volta. Uscire da Linux-Assistant e riavviarlo immediatamente. A presto!",
+  "cleanDiskspace": "Pulisci lo spazio su disco",
+  "cleanDiskspaceDescription": "Pulisci il tuo spazio su disco rimuovendo vecchi pacchetti e cache.",
+  "clean": "Pulisci",
+  "cleaningDiskspace": "Pulizia dello spazio su disco...",
+  "free": "Libero",
+  "cleanX": "Pulisci {app}",
+  "@cleanX": {
+    "placeholders": {
+      "app" : {}
+    },
+    "description": "",
+    "type": "text"
+  },
+  "removeSoftware": "Remuovi software",
+  "remove": "Rimuovi",
+  "back": "Indietro",
+  "analyseDiskspace": "Analizza lo spazio su disco",
+  "allBiggestFolders": "Tutte le cartelle più grandi",
+  "automaticCleanup": "Pulizia automatica",
+  "automaticCleanupDescription": "Pulisci automaticamente il tuo spazio di archiviazione eliminando file temporanei e cache dei pacchetti. Verranno svuotati anche i contenitori del cestino.",
+  "diskUsage": "Utilizzo del disco",
+  "settingUpFirewall": "Configura firewall...",
+  "@helloWorld": {
+    "placeholders": {},
+    "description": "Il saluto convenzionale del programmatore appena nato",
+    "type": "text"
+  },
+  "@enterASearchTerm": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@securityCheckDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@warpinatorDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@securityCheck": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@afterInstallation": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@afterInstallationDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@openX": {
+    "placeholders": {},
+    "description": "apri cartella/ apri file/, ...",
+    "type": "text"
+  },
+  "@searchInWebFor": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@lookForOnlineResults": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@sendFeedback": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@clear": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@loading": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@preparingSearch": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@analysingSystemSecurity": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@additionalSoftwareSources": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@securityCheckFailedBecauseNoRoot": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@cancel": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@retry": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@backToSearch": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@reload": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@analyzingSystemScurity": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@updates": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@systemIsUpToDate": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@xPackagesShouldBeUpdated": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@homeFolder": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@homeFolderRightsOkay": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@homeFolderRightsNotOkay": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@networkSecurity": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@noFirewallRecognized": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@firewallIsRunning": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@password": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@firewallIsInactive": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@sshFoundOnYourComputer": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@noFail2BanFound": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@xrdpRunningOnYourComputer": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@additionalSoftwareSourcesDetected": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@noAdditionalSoftwareSourcesFound": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@changePasswordDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@userProfile": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@changeUserProfile": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@systemInformation": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@distribution": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@version": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@desktop": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@language": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@next": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@selectYourDistribution": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@selectYourDesktop": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@isTheRecognizedSystemCorrect": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@noIWantToChange": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@yes": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@recognizingSystem": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@yourLinuxAssistant": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@linuxAssistantLongDescription": {
+    "placeholders": {},
+    "description": "description at start screen",
+    "type": "text"
+  },
+  "@welcomeToYourLinuxMachine": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@afterInstallationGreetingDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@letsStart": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@includeBasicSystemInformation": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@setUpXWithRecommendedSettings": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@setUpXWithRecommendedSettingsPart2": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@manualConfiguration": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@afterInstallationManualConfigurationDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@automaticConfiguration": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@applyConfiguration": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@thisProcessCouldTakeManyMinutesDependingSoftwareChoosed": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@selectSpecificActionsOnTheNextSite": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@installMultimediaCodecs": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@installMultimediaCodecsDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@automaticSnapshots": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@automaticSnapshotsDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@automaticNvidiaDriverInstallation": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@automaticNvidiaDriverInstallationDesciption": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@automaticUpdateManagerConfiguration": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@feedbackPlaceholder": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@automaticUpdateManagerConfigurationDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@welcomeToYourNewSystem": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@automaticConfigurationIsRunningDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@browserSelection": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@firefoxDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@chromiumDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@chromeDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@thunderbirdDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@jitsiDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@elementDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@discordDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@zoomDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@teamsDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@communicationSoftware": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@flatpakIsNotInstalled": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@flatpakDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@skip": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@settingUpFlatpak": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@officeSelection": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@libreOfficeDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@onlyOfficeDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@wpsOfficeDescription": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@includeSearchTermAndResults": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@submit": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@thankYouForTheFeedback": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@feedbackSentSuccessfully": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@close": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@sendingFeedbackFailed": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  },
+  "@sendingFeedback": {
+    "placeholders": {},
+    "description": "",
+    "type": "text"
+  }
+}
