@@ -339,6 +339,7 @@
   "settingUpFirewall": "Configure firewall...",
   "fixPackageManager": "Repair package management",
   "fixPackageManagerDescription": "Updates or installations can no longer be carried out? Try the automatic repair of the package management.",
+  "executeInTerminal": "Execute in terminal",
   "@helloWorld": {
     "placeholders": {},
     "description": "The conventional newborn programmer greeting",

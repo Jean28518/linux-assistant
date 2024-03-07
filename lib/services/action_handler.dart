@@ -368,5 +368,11 @@ class ActionHandler {
     if (actionEntry.action.startsWith("fix_package_manager")) {
       Linux.fixPackageManager(context);
     }
+
+    if (actionEntry.action.startsWith("bash:")) {
+      String command = actionEntry.action.replaceFirst("bash:", "");
+      Linux.openCommandInTerminal(command);
+      callback();
+    }
   }
 }

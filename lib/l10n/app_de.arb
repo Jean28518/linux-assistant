@@ -339,6 +339,7 @@
   "settingUpFirewall": "Konfiguriere Firewall...",
   "fixPackageManager": "Paketverwaltung reparieren",
   "fixPackageManagerDescription": "Updates oder Installationen können nicht mehr durchgeführt werden? Versuche die automatische Reparatur der Paketverwaltung.",
+  "executeInTerminal": "In Terminal ausführen",
   "@helloWorld": {
     "placeholders": {},
     "description": "",

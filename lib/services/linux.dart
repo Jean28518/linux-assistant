@@ -2301,4 +2301,42 @@ class Linux {
           route: MainSearchLoader()),
     ));
   }
+
+  static bool isStringBashCommand(String input) {
+    // Get the first word of the string
+    String firstWord = input.split(" ").first;
+    // Check if the first word is found in a path of the system
+    List<String> paths = getPATH().split(":");
+    for (String path in paths) {
+      if (File("$path/$firstWord").existsSync()) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  static void openCommandInTerminal(command) {
+    command =
+        "echo 'Running command: $command'; $command; echo 'Closing in 10 seconds...'; sleep 10";
+    print("Opening command in terminal: $command");
+    switch (currentenvironment.desktop) {
+      case DESKTOPS.KDE:
+        runCommandWithCustomArguments("konsole", ["-e" "bash", "-c", command]);
+        break;
+      case DESKTOPS.GNOME:
+      case DESKTOPS.CINNAMON:
+        runCommandWithCustomArguments(
+            "gnome-terminal", ["--", "bash", "-c", command]);
+        break;
+      case DESKTOPS.XFCE:
+        runCommandWithCustomArguments(
+            "xfce4-terminal", ["-e", "bash", "-c", command]);
+        break;
+      default:
+        // Xterm
+        if (File("/usr/bin/xterm").existsSync()) {
+          runCommandWithCustomArguments("xterm", ["-e", "bash", "-c", command]);
+        }
+    }
+  }
 }

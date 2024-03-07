@@ -338,6 +338,7 @@ class _MainSearchState extends State<MainSearch> {
     }
   }
 
+  /// The keyword could be here also a string with spaces between.
   void _runFilter(String keyword) {
     // Heavy search
     const duration = Duration(milliseconds: 800);
@@ -398,6 +399,17 @@ class _MainSearchState extends State<MainSearch> {
           description: "Open with default webbrowser",
           action: "openwebsite:$keyword");
       actionEntry.priority = 10;
+      results.add(actionEntry);
+    }
+
+    if (Linux.isStringBashCommand(keyword)) {
+      ActionEntry actionEntry = ActionEntry(
+        name: keyword,
+        description: AppLocalizations.of(context)!.executeInTerminal,
+        action: "bash:$keyword",
+        iconWidget: Icon(Icons.code, color: MintY.currentColor),
+      );
+      actionEntry.priority = -45;
       results.add(actionEntry);
     }
 
