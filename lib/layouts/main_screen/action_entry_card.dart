@@ -42,9 +42,11 @@ class _ActionEntryCardState extends State<ActionEntryCard> {
           tileColor: widget.selected
               ? Theme.of(context).focusColor
               : const Color.fromARGB(0, 0, 0, 0),
-          hoverColor: Colors.grey,
           title: Text(widget.actionEntry.name),
           subtitle: Text(widget.actionEntry.description),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
           // For debugging search index:
           // subtitle: Text(
           // "${widget.actionEntry.description} | ${widget.actionEntry.priority} | ${widget.actionEntry.tmpPriority} | ${widget.actionEntry.action} "),
