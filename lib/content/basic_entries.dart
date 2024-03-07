@@ -156,5 +156,12 @@ List<ActionEntry> getBasicEntries(BuildContext context) {
         color: MintY.currentColor,
       ),
     ),
+    ActionEntry(
+      name: AppLocalizations.of(context)!.fixPackageManager,
+      description: AppLocalizations.of(context)!.fixPackageManagerDescription,
+      action: "fix_package_manager",
+      iconWidget: Icon(Icons.bug_report, size: 48, color: MintY.currentColor),
+      keywords: ["fix", "package", "manager", "apt", "dpkg", "rpm", "zypper"],
+    ),
   ];
 }

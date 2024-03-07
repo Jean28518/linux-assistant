@@ -93,7 +93,7 @@
   "teamsDescription": "Software proprietario di comunicazione per team.",
   "communicationSoftware": "Software di comunicazione",
   "flatpakIsNotInstalled": "Flatpak non è installato sul tuo sistema.",
-  "flatpakDescription": "Per un facile accesso a molte app popolari, si consiglia vivamente Flatpak. Flatpak è una nuova utility per la gestione dei pacchetti per Linux. Offre un ambiente sandbox in cui le app possono essere eseguite in isolamento dal resto del sistema. Collegando "Flathub" (il più grande repository per flatpak) puoi accedere a oltre 1800 diverse app Linux. Come svantaggio i Flatpak richiedono più spazio su disco.",
+  "flatpakDescription": "Per un facile accesso a molte app popolari, si consiglia vivamente Flatpak. Flatpak è una nuova utility per la gestione dei pacchetti per Linux. Offre un ambiente sandbox in cui le app possono essere eseguite in isolamento dal resto del sistema. Collegando 'Flathub' (il più grande repository per flatpak) puoi accedere a oltre 1800 diverse app Linux. Come svantaggio i Flatpak richiedono più spazio su disco.",
   "skip": "Salta",
   "settingUpFlatpak": "Configura Flatpak",
   "officeSelection": "Selezione Ufficio",
@@ -112,7 +112,7 @@
   "timeToSetupYourComputerDescription": "Configura la tua macchina Linux in base alle tue esigenze.",
   "activateHotkey": "Attiva il tasto di scelta rapida",
   "openLinuxAssistantFaster": "Apri l'Assistente Linux più velocemente.",
-  "openLinuxAssistantFasterDescription": "Puoi aprire Linux Assistant con i tasti {modificatore} + <Qn Questo è altamente raccomandato per massimizzare la tua produttività sotto Linux.",
+  "openLinuxAssistantFasterDescription": "Puoi aprire Linux Assistant con i tasti {modifier} + <Qn Questo è altamente raccomandato per massimizzare la tua produttività sotto Linux.",
   "@openLinuxAssistantFasterDescription": {
     "placeholders": {
       "modifier" : {}
@@ -134,8 +134,8 @@
   "specialFunctions": "Funzioni speciali di Linux-Assistant",
   "specialFunctionsDescription": "Avvia il controllo di sicurezza o il servizio post-installazione e anche tante altre piccole routine che semplificano l'utilizzo quotidiano di Linux. Questi sono presentati sotto la barra di ricerca in ordine radomizzato.",
   "hint": "Suggerimento",
-  "youCanOpenThisWindowBySearchingForIntroduction": "Puoi riaprire questo sito cercando "Introduzione a Linux-Assistant".",
-  "youCanOpenLinuxAssistantWithHotkey": "Puoi sempre aprire Linux Assistant con la combinazione di tasti {modifier} + <Q>. Se ancora non funziona, chiama "scorciatoia da tastiera" nella ricerca.",
+  "youCanOpenThisWindowBySearchingForIntroduction": "Puoi riaprire questo sito cercando 'Introduzione a Linux-Assistant'.",
+  "youCanOpenLinuxAssistantWithHotkey": "Puoi sempre aprire Linux Assistant con la combinazione di tasti {modifier} + <Q>. Se ancora non funziona, chiama 'scorciatoia da tastiera' nella ricerca.",
   "@youCanOpenLinuxAssistantWithHotkey": {
     "placeholders": {
       "modifier" : {}
@@ -234,7 +234,7 @@
     "description": "",
     "type": "text"
   },
-  "installingXDescription": "Installazione di {app}...\Devi aprire {app} successivamente e separatamente.",
+  "installingXDescription": "Installazione di {app}...\nDevi aprire {app} successivamente e separatamente.",
   "@installingXDescription": {
     "placeholders": {
       "app" : {}

@@ -364,7 +364,9 @@ class ActionHandler {
     if (actionEntry.action.startsWith("just_callback")) {
       callback();
     }
-  }
 
-  static void handleRecommendation() {}
+    if (actionEntry.action.startsWith("fix_package_manager")) {
+      Linux.fixPackageManager(context);
+    }
+  }
 }

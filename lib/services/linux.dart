@@ -2248,4 +2248,57 @@ class Linux {
               route: route,
             )));
   }
+
+  static String getPATH() {
+    // Get the PATH variable via the environment
+    String? output = Platform.environment["PATH"];
+    if (output == null || output.isEmpty) {
+      return "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/sbin";
+    }
+    return output;
+  }
+
+  static void fixPackageManager(context) {
+    if (currentenvironment.installedSoftwareManagers
+        .contains(SOFTWARE_MANAGERS.APT)) {
+      commandQueue.add(LinuxCommand(
+        userId: 0,
+        command: "/usr/bin/dpkg --configure -a",
+        environment: {"DEBIAN_FRONTEND": "noninteractive", "PATH": getPATH()},
+      ));
+      commandQueue.add(LinuxCommand(
+        userId: 0,
+        command: "/usr/bin/apt install -f -y",
+        environment: {"DEBIAN_FRONTEND": "noninteractive"},
+      ));
+    }
+    if (currentenvironment.installedSoftwareManagers
+        .contains(SOFTWARE_MANAGERS.ZYPPER)) {
+      commandQueue.add(LinuxCommand(
+        userId: 0,
+        command: "/usr/bin/zypper --non-interactive --gpg-auto-import-keys ref",
+      ));
+      commandQueue.add(LinuxCommand(
+        userId: 0,
+        command: "/usr/bin/zypper --non-interactive --gpg-auto-import-keys up",
+      ));
+    }
+    if (currentenvironment.installedSoftwareManagers
+        .contains(SOFTWARE_MANAGERS.DNF)) {
+      commandQueue.add(LinuxCommand(
+        userId: 0,
+        command: "/usr/bin/dnf check",
+      ));
+      commandQueue.add(LinuxCommand(
+        userId: 0,
+        command: "/usr/bin/dnf install -y",
+      ));
+    }
+
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => RunCommandQueue(
+          title: AppLocalizations.of(context)!.fixPackageManager,
+          route: MainSearchLoader()),
+    ));
+  }
 }

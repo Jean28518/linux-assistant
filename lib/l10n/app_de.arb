@@ -337,6 +337,8 @@
   "free": "Frei",
   "allBiggestFolders": "Alle größten Ordner",
   "settingUpFirewall": "Konfiguriere Firewall...",
+  "fixPackageManager": "Paketverwaltung reparieren",
+  "fixPackageManagerDescription": "Updates oder Installationen können nicht mehr durchgeführt werden? Versuche die automatische Reparatur der Paketverwaltung.",
   "@helloWorld": {
     "placeholders": {},
     "description": "",

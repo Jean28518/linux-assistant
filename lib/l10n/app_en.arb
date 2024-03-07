@@ -337,6 +337,8 @@
   "automaticCleanupDescription": "Automatically clean up your storage by deleting temporary files and package caches. Trash cans will also be emptied.",
   "diskUsage": "Disk usage",
   "settingUpFirewall": "Configure firewall...",
+  "fixPackageManager": "Repair package management",
+  "fixPackageManagerDescription": "Updates or installations can no longer be carried out? Try the automatic repair of the package management.",
   "@helloWorld": {
     "placeholders": {},
     "description": "The conventional newborn programmer greeting",

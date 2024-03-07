@@ -82,6 +82,7 @@ class MyApp extends StatelessWidget {
       supportedLocales: const [
         Locale('en', ''),
         Locale('de', ''),
+        Locale('it', ''),
       ],
       theme: darkTheme ? MintY.themeDark() : MintY.theme(),
       home: firstPage,

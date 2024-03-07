@@ -64,7 +64,16 @@ flatpak run io.github.jean28518.Linux-Assistant
 
 - English
 - German
+- Italian
 
 ## Mission
 
 <https://github.com/Jean28518/linux-assistant/blob/main/MANIFEST.md>
+
+## Development
+
+```bash
+# Install flutter
+
+flutter run
+```

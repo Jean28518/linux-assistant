@@ -369,7 +369,8 @@ class _MainSearchState extends State<MainSearch> {
         // Otherwise check if all keys are contained in name or description
         for (String key in keys) {
           if (actionEntry.name.toLowerCase().contains(key) ||
-              actionEntry.description.toLowerCase().contains(key)) {
+              actionEntry.description.toLowerCase().contains(key) ||
+              actionEntry.keywords.contains(key)) {
             return true;
           }
         }
