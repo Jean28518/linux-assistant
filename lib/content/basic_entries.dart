@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:linux_assistant/enums/desktops.dart';
 import 'package:linux_assistant/enums/distros.dart';
+import 'package:linux_assistant/enums/softwareManagers.dart';
 import 'package:linux_assistant/layouts/mint_y.dart';
 import 'package:linux_assistant/main.dart';
 import 'package:linux_assistant/models/action_entry.dart';
@@ -162,6 +163,20 @@ List<ActionEntry> getBasicEntries(BuildContext context) {
       action: "fix_package_manager",
       iconWidget: Icon(Icons.bug_report, size: 48, color: MintY.currentColor),
       keywords: ["fix", "package", "manager", "apt", "dpkg", "rpm", "zypper"],
+    ),
+    ActionEntry(
+      name: AppLocalizations.of(context)!.setupSnap,
+      description: AppLocalizations.of(context)!.setupSnapDescription,
+      action: "setup_snap",
+      iconWidget: Icon(
+        Icons.apps,
+        size: 48,
+        color: MintY.currentColor,
+      ),
+      disableEntryIf: () {
+        return Linux.currentenvironment.installedSoftwareManagers
+            .contains(SOFTWARE_MANAGERS.SNAP);
+      },
     ),
   ];
 }

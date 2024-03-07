@@ -374,5 +374,9 @@ class ActionHandler {
       Linux.openCommandInTerminal(command);
       callback();
     }
+
+    if (actionEntry.action.startsWith("setup_snap")) {
+      Linux.setupSnapAndSnapStore(context);
+    }
   }
 }

@@ -340,6 +340,8 @@
   "fixPackageManager": "Paketverwaltung reparieren",
   "fixPackageManagerDescription": "Updates oder Installationen können nicht mehr durchgeführt werden? Versuche die automatische Reparatur der Paketverwaltung.",
   "executeInTerminal": "In Terminal ausführen",
+  "setupSnap": "Snap einrichten",
+  "setupSnapDescription": "Installiere Snap und den Snap-Store, um viele weitere Anwendungen zu installieren.\nDanach ist ein Neustart des Rechners empfohlen.",
   "@helloWorld": {
     "placeholders": {},
     "description": "",

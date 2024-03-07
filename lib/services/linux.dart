@@ -2339,4 +2339,52 @@ class Linux {
         }
     }
   }
+
+  static void setupSnapAndSnapStore(context) {
+    if (currentenvironment.distribution == DISTROS.LINUX_MINT) {
+      commandQueue.add(LinuxCommand(
+        userId: 0,
+        command: "rm /etc/apt/preferences.d/nosnap.pref",
+      ));
+      commandQueue.add(LinuxCommand(
+        userId: 0,
+        command: "/usr/bin/apt-get update",
+      ));
+    }
+
+    if (currentenvironment.installedSoftwareManagers
+        .contains(SOFTWARE_MANAGERS.APT)) {
+      commandQueue.add(LinuxCommand(
+        userId: 0,
+        command: "/usr/bin/apt-get install -y snapd",
+        environment: {"DEBIAN_FRONTEND": "noninteractive"},
+      ));
+    }
+    if (currentenvironment.installedSoftwareManagers
+        .contains(SOFTWARE_MANAGERS.DNF)) {
+      commandQueue.add(LinuxCommand(
+        userId: 0,
+        command: "/usr/bin/dnf install -y snapd",
+      ));
+    }
+    if (currentenvironment.installedSoftwareManagers
+        .contains(SOFTWARE_MANAGERS.ZYPPER)) {
+      commandQueue.add(LinuxCommand(
+        userId: 0,
+        command: "/usr/bin/zypper install -y snapd",
+      ));
+    }
+
+    commandQueue.add(LinuxCommand(
+      userId: 0,
+      command: "/usr/bin/snap install snap-store",
+    ));
+
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => RunCommandQueue(
+          title: AppLocalizations.of(context)!.setupSnap,
+          message: AppLocalizations.of(context)!.setupSnapDescription,
+          route: MainSearchLoader()),
+    ));
+  }
 }
