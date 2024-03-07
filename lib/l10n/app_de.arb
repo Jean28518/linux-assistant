@@ -343,6 +343,8 @@
   "setupSnap": "Snap einrichten",
   "setupSnapDescription": "Installiere Snap und den Snap-Store, um viele weitere Anwendungen zu installieren.\nDanach ist ein Neustart des Rechners empfohlen.",
   "vivaldiDescription": "Proprietärer Browser mit Fokus auf Privatsphäre und vielen Anpassungsmöglichkeiten.",
+  "makeAdministrator": "Aktuellen Benutzer zum Administrator machen",
+  "makeAdministratorDescription": "Füge den aktuellen Benutzer zur Gruppe 'sudo' hinzu, um Root-Rechte zu erhalten. Dafür ist das Passwort des Root-Benutzers nötig.\nDanach ist ein Neustart des Rechners empfohlen.",
   "@helloWorld": {
     "placeholders": {},
     "description": "",

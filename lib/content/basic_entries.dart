@@ -178,5 +178,18 @@ List<ActionEntry> getBasicEntries(BuildContext context) {
             .contains(SOFTWARE_MANAGERS.SNAP);
       },
     ),
+    ActionEntry(
+      name: AppLocalizations.of(context)!.makeAdministrator,
+      description: AppLocalizations.of(context)!.makeAdministratorDescription,
+      action: "make_administrator",
+      iconWidget: Icon(
+        Icons.admin_panel_settings,
+        size: 48,
+        color: MintY.currentColor,
+      ),
+      disableEntryIf: () {
+        return Linux.hasCurrentUserAdministratorRights();
+      },
+    )
   ];
 }

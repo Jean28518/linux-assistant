@@ -22,6 +22,7 @@ class Environment {
   String kernelVersion = "";
   String cpuModel = "";
   String gpuModel = "";
+  List<String> groups = [];
 
   /// POSIX User ID.
   var currentUserId = 1000;

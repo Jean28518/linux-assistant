@@ -378,5 +378,9 @@ class ActionHandler {
     if (actionEntry.action.startsWith("setup_snap")) {
       Linux.setupSnapAndSnapStore(context);
     }
+
+    if (actionEntry.action.startsWith("make_administrator")) {
+      Linux.makeCurrentUserToAdministrator(context);
+    }
   }
 }

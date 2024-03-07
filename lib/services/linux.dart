@@ -918,12 +918,18 @@ class Linux {
     newEnvironment.currentUserId = await getUserIdOfCurrentUser();
     newEnvironment.hostname = await getHostname();
     newEnvironment.username = await getUsername();
+    newEnvironment.groups = await getGroupsOfCurrentUser();
     newEnvironment.osPrettyName = await Linux.getOsPrettyName();
     newEnvironment.kernelVersion = await getKernelVersion();
     newEnvironment.cpuModel = await getCpuModel();
     newEnvironment.gpuModel = await getGpuModel();
 
     return newEnvironment;
+  }
+
+  static Future<List<String>> getGroupsOfCurrentUser() async {
+    String groups = await runCommand("groups");
+    return groups.split(" ");
   }
 
   static String getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS input) {
@@ -2384,6 +2390,26 @@ class Linux {
       builder: (context) => RunCommandQueue(
           title: AppLocalizations.of(context)!.setupSnap,
           message: AppLocalizations.of(context)!.setupSnapDescription,
+          route: MainSearchLoader()),
+    ));
+  }
+
+  /// Checks if the current user is in the group sudo
+  static bool hasCurrentUserAdministratorRights() {
+    return currentenvironment.groups.contains("sudo");
+  }
+
+  /// Adds the current user to sudo group
+  static void makeCurrentUserToAdministrator(context) {
+    commandQueue.add(LinuxCommand(
+      userId: 0,
+      command: "/usr/sbin/usermod -aG sudo ${currentenvironment.username}",
+    ));
+
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => RunCommandQueue(
+          title: AppLocalizations.of(context)!.makeAdministrator,
+          message: AppLocalizations.of(context)!.makeAdministratorDescription,
           route: MainSearchLoader()),
     ));
   }
