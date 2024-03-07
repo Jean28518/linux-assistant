@@ -342,6 +342,7 @@
   "executeInTerminal": "In Terminal ausführen",
   "setupSnap": "Snap einrichten",
   "setupSnapDescription": "Installiere Snap und den Snap-Store, um viele weitere Anwendungen zu installieren.\nDanach ist ein Neustart des Rechners empfohlen.",
+  "vivaldiDescription": "Proprietärer Browser mit Fokus auf Privatsphäre und vielen Anpassungsmöglichkeiten.",
   "@helloWorld": {
     "placeholders": {},
     "description": "",

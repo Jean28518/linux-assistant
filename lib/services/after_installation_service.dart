@@ -10,6 +10,7 @@ class AfterInstallationService {
   static List<bool> chromium = [false, false];
   static List<bool> brave = [false, false];
   static List<bool> googleChrome = [false, false];
+  static List<bool> vivaldi = [false, false];
 
   static List<bool> libreOffice = [false, false];
   static List<bool> onlyOffice = [false, false];
@@ -55,12 +56,16 @@ class AfterInstallationService {
     Future fChrome = applyApplicationActionIfNecessary(
         ["google-chrome-stable", "com.google.Chrome"], googleChrome);
 
+    Future fVivaldi = applyApplicationActionIfNecessary(
+        ["vivaldi", "com.vivaldi.Vivaldi"], vivaldi);
+
     /// We need to wait until every function has finished,
     /// because otherwise the command queue will get filled to late.
     await fFirefox;
     await fChromium;
     await fBrave;
     await fChrome;
+    await fVivaldi;
   }
 
   static Future<void> applyCurrentOfficeSituation() async {

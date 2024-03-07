@@ -342,6 +342,7 @@
   "executeInTerminal": "Execute in terminal",
   "setupSnap": "Set up Snap",
   "setupSnapDescription": "Install Snap and the Snap Store to install many more applications.\nAfterwards a restart of the computer is recommended.",
+  "vivaldiDescription": "Proprietary browser with focus on privacy and many customization options.",
   "@helloWorld": {
     "placeholders": {},
     "description": "The conventional newborn programmer greeting",

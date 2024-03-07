@@ -18,6 +18,8 @@ class AfterInstallationBrowserSelection extends StatelessWidget {
   static Future<bool> googleChromeStableInstalled =
       Linux.areApplicationsInstalled(
           ["google-chrome-stable", "com.google.Chrome"]);
+  static Future<bool> vivadiInstalled =
+      Linux.areApplicationsInstalled(["vivaldi", "com.vivaldi.Vivaldi"]);
 
   @override
   Widget build(BuildContext context) {
@@ -158,6 +160,44 @@ class AfterInstallationBrowserSelection extends StatelessWidget {
                     onPressed: () {
                       AfterInstallationService.googleChrome[1] =
                           !AfterInstallationService.googleChrome[1];
+                    },
+
+                    /// Display warning text if installed version will be removed by user
+                    infoText: snapshot.data.toString() == 'true'
+                        ? Text(
+                            AppLocalizations.of(context)!
+                                .thisApplicationWillBeRemoved,
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
+                                .copyWith(
+                                  color: Theme.of(context).colorScheme.error,
+                                ),
+                          )
+                        : null,
+                    showInfoTextAtThisSelectionState: false,
+                  );
+                } else {
+                  return const MintYProgressIndicatorCircle();
+                }
+              },
+            ),
+            FutureBuilder(
+              future: vivadiInstalled,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  AfterInstallationService.vivaldi[0] =
+                      snapshot.data.toString() == 'true';
+                  AfterInstallationService.vivaldi[1] =
+                      snapshot.data.toString() == 'true';
+                  return MintYSelectableEntryWithIconHorizontal(
+                    icon: const SystemIcon(iconString: "vivaldi", iconSize: 64),
+                    title: "Vivaldi",
+                    text: AppLocalizations.of(context)!.vivaldiDescription,
+                    selected: snapshot.data.toString() == 'true',
+                    onPressed: () {
+                      AfterInstallationService.vivaldi[1] =
+                          !AfterInstallationService.vivaldi[1];
                     },
 
                     /// Display warning text if installed version will be removed by user
