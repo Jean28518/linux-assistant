@@ -345,6 +345,7 @@
   "vivaldiDescription": "Proprietärer Browser mit Fokus auf Privatsphäre und vielen Anpassungsmöglichkeiten.",
   "makeAdministrator": "Aktuellen Benutzer zum Administrator machen",
   "makeAdministratorDescription": "Füge den aktuellen Benutzer zur Gruppe 'sudo' hinzu, um Root-Rechte zu erhalten. Dafür ist das Passwort des Root-Benutzers nötig.\nDanach ist ein Neustart des Rechners empfohlen.",
+  "yayInstalled": "Es wurde Yay gefunden. Yay ist ein AUR-Helper, der Dir das Installieren von AUR-Paketen erleichtert. Das AUR ist ein Community-Repository, in dem viele Pakete von der Community gepflegt werden und eventuell schädlich sein könnten.",
   "@helloWorld": {
     "placeholders": {},
     "description": "",

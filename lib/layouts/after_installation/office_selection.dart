@@ -11,6 +11,8 @@ class AfterInstallationOfficeSelection extends StatelessWidget {
 
   static Future<bool> libreOfficeInstalled = Linux.areApplicationsInstalled([
     "libreoffice-common",
+    "libreoffice-still",
+    "libreoffice-fresh",
     "org.libreoffice.LibreOffice",
     "libreoffice",
     "libreoffice-writer"

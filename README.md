@@ -35,6 +35,12 @@ sudo dpkg --install linux-assistant.deb
 
 # Option 3: Build .rpm package:
 bash ./build-rpm.sh
+
+# Option 3: Build Arch package
+# You can only do this on an arch based distro
+bash ./build-arch-pkg.sh
+# To Install:
+makepkg -s --skipchecksums --install
 ```
 
 ## Run as flatpak

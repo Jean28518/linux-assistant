@@ -266,7 +266,7 @@ class Linux {
       return;
     } else {
       // if app is not installed:
-      await installApplications(["redshift-gtk"]);
+      await installApplications(["redshift-gtk", "redshift"]);
       if (currentenvironment.desktop == DESKTOPS.KDE) {
         await installApplications(["plasma-applet-redshift-control"]);
       }
@@ -344,6 +344,24 @@ class Linux {
             LinuxCommand(
               command:
                   "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.DNF)} install $appCode -y",
+              userId: 0,
+              environment: {},
+            ),
+          );
+          return;
+        }
+
+        if (softwareManager == SOFTWARE_MANAGERS.PACMAN) {
+          // Check, if package is available:
+          bool available = await isPacmanPackageAvailable(appCode);
+          if (!available) {
+            continue;
+          }
+
+          commandQueue.add(
+            LinuxCommand(
+              command:
+                  "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.PACMAN)} -S $appCode --noconfirm",
               userId: 0,
               environment: {},
             ),
@@ -431,6 +449,17 @@ class Linux {
     return output.replaceAll(" ", "").contains("InstalledPackages");
   }
 
+  static Future<bool> isSpecificPacmanPackageInstalled(appCode) async {
+    if (!currentenvironment.installedSoftwareManagers
+        .contains(SOFTWARE_MANAGERS.PACMAN)) {
+      return false;
+    }
+    String output = await runCommand(
+        "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.PACMAN)} -Q $appCode",
+        environment: {"LC_ALL": "C"});
+    return !output.contains("was not found");
+  }
+
   static Future<bool> isSpecificSnapInstalled(appCode) async {
     String output = await runCommand(
         "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.SNAP)} info $appCode");
@@ -499,6 +528,24 @@ class Linux {
               userId: 0,
               command:
                   "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.DNF)} remove $appCode -y",
+            ),
+          );
+        }
+      }
+
+      // Pacman
+      if (softwareManager == null ||
+          softwareManager == SOFTWARE_MANAGERS.PACMAN) {
+        bool isPacmanPackageInstalled =
+            await isSpecificPacmanPackageInstalled(appCode);
+        if ((softwareManager == null ||
+                softwareManager == SOFTWARE_MANAGERS.PACMAN) &&
+            isPacmanPackageInstalled) {
+          commandQueue.add(
+            LinuxCommand(
+              userId: 0,
+              command:
+                  "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.PACMAN)} -R $appCode --noconfirm",
             ),
           );
         }
@@ -573,6 +620,16 @@ class Linux {
       }
     }
     if (currentenvironment.installedSoftwareManagers
+        .contains(SOFTWARE_MANAGERS.PACMAN)) {
+      for (String appCode in appCodes) {
+        bool isPacmanPackageInstalled =
+            await isSpecificPacmanPackageInstalled(appCode);
+        if (isPacmanPackageInstalled) {
+          return true;
+        }
+      }
+    }
+    if (currentenvironment.installedSoftwareManagers
         .contains(SOFTWARE_MANAGERS.FLATPAK)) {
       for (String appCode in appCodes) {
         bool isFlatpakInstalled = await isSpecificFlatpakInstalled(appCode);
@@ -611,6 +668,13 @@ class Linux {
         "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.DNF)} info $appCode",
         environment: {"LC_ALL": "C"});
     return !output.toLowerCase().contains("no matching packages to list");
+  }
+
+  static Future<bool> isPacmanPackageAvailable(String appCode) async {
+    String output = await runCommand(
+        "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.PACMAN)} -Ss $appCode");
+    return output.contains("community/$appCode") ||
+        output.contains("extra/$appCode");
   }
 
   /// returns the source under which the Flatpak is available, otherwise empty String
@@ -856,6 +920,8 @@ class Linux {
       newEnvironment.distribution = DISTROS.LMDE;
     } else if (lines[0].toLowerCase().contains("fedora")) {
       newEnvironment.distribution = DISTROS.FEDORA;
+    } else if (lines[0].toLowerCase().contains("arch")) {
+      newEnvironment.distribution = DISTROS.ARCH;
     }
 
     // get version:
@@ -944,6 +1010,8 @@ class Linux {
         return "/usr/bin/zypper";
       case SOFTWARE_MANAGERS.DNF:
         return "/usr/bin/dnf";
+      case SOFTWARE_MANAGERS.PACMAN:
+        return "/usr/bin/pacman";
       default:
         return "";
     }
@@ -1071,6 +1139,13 @@ class Linux {
               "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.DNF)} group upgrade --with-optional Multimedia -y",
         ));
         break;
+      case DISTROS.ARCH:
+        commandQueue.add(LinuxCommand(
+          userId: 0,
+          command:
+              "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.PACMAN)} -S --noconfirm vlc gstreamer libdvdcss libdvdread libdvdnav ffmpeg gst-plugins-base gst-plugins-good gst-plugins-bad gst-plugins-ugly",
+        ));
+        break;
       default:
     }
   }
@@ -1164,10 +1239,14 @@ class Linux {
   /// Only appends commands to [commandQueue]
   static Future<void> enableAutomaticSnapshots() async {
     await ensureApplicationInstallation(["timeshift"]);
+    String additional = "";
+    if (currentenvironment.distribution == DISTROS.ARCH) {
+      additional = "--daily";
+    }
     commandQueue.add(LinuxCommand(
         userId: 0,
         command:
-            "python3 ${executableFolder}additional/python/setup_automatic_snapshots.py"));
+            "python3 ${executableFolder}additional/python/setup_automatic_snapshots.py $additional"));
   }
 
   /// Only appends commands to [commandQueue]
@@ -1191,27 +1270,31 @@ class Linux {
         command:
             "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.DNF)} update --refresh -y",
       ));
-    } else {
-      if (currentenvironment.installedSoftwareManagers
-          .contains(SOFTWARE_MANAGERS.ZYPPER)) {
-        // Check if we are in tumbleweed:
-        String file = await getEtcOsRelease();
-        if (file.toLowerCase().contains("tumbleweed")) {
-          // Tumbleweed
-          commandQueue.add(LinuxCommand(
-            userId: 0,
-            command:
-                "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.ZYPPER)} --non-interactive dup",
-          ));
-        } else {
-          // Leap or other
-          commandQueue.add(LinuxCommand(
-            userId: 0,
-            command:
-                "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.ZYPPER)} --non-interactive up",
-          ));
-        }
+    } else if (currentenvironment.installedSoftwareManagers
+        .contains(SOFTWARE_MANAGERS.ZYPPER)) {
+      String file = await getEtcOsRelease();
+      if (file.toLowerCase().contains("tumbleweed")) {
+        // Tumbleweed
+        commandQueue.add(LinuxCommand(
+          userId: 0,
+          command:
+              "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.ZYPPER)} --non-interactive dup",
+        ));
+      } else {
+        // Leap or other
+        commandQueue.add(LinuxCommand(
+          userId: 0,
+          command:
+              "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.ZYPPER)} --non-interactive up",
+        ));
       }
+    } else if (currentenvironment.installedSoftwareManagers
+        .contains(SOFTWARE_MANAGERS.PACMAN)) {
+      commandQueue.add(LinuxCommand(
+        userId: 0,
+        command:
+            "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.PACMAN)} -Syu --noconfirm",
+      ));
     }
 
     if (currentenvironment.installedSoftwareManagers
@@ -1473,6 +1556,53 @@ class Linux {
     return results;
   }
 
+  static Future<List<ActionEntry>> getInstallablePacmanPakagesForKeyword(
+      keyword) {
+    if (keyword.length <= 3) {
+      return Future.value([]);
+    }
+    return runCommandWithCustomArguments(
+        getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.PACMAN),
+        ["-Ss", keyword]).then((output) {
+      output = output.trim();
+      List<String> lines = output.split("\n");
+
+      // Cancel search, if too many search results.
+      if (lines.length > 100) {
+        return [];
+      }
+
+// $ pacman -Ss htop
+// extra/bashtop 0.9.25-1
+//     Linux resource monitor
+
+      List<ActionEntry> results = [];
+      for (String line in lines) {
+        if (line.trim() == "") {
+          continue;
+        }
+        List<String> lineParts = line.split(" ");
+        String packageName = lineParts[0].trim();
+        if (!packageName.contains("/")) {
+          continue;
+        }
+        packageName = packageName.split("/")[1];
+        results.add(ActionEntry(
+          iconWidget: Icon(
+            Icons.download_rounded,
+            size: 48,
+            color: MintY.currentColor,
+          ),
+          name: "Install $packageName",
+          description: "Install via pacman",
+          action: "pacman-install:$packageName",
+          priority: -20,
+        ));
+      }
+      return results;
+    });
+  }
+
   static Future<List<String>> getInstalledAPTPackages() async {
     if (!currentenvironment.installedSoftwareManagers
         .contains(SOFTWARE_MANAGERS.APT)) {
@@ -1561,6 +1691,35 @@ class Linux {
     return returnValue;
   }
 
+  /// Returns List of [package name]
+  static Future<List<String>> getInstalledPacmanPackages() async {
+    if (!currentenvironment.installedSoftwareManagers
+        .contains(SOFTWARE_MANAGERS.PACMAN)) {
+      return [];
+    }
+    List<String> returnValue = [];
+
+    /// Run: pacman -Q
+    String output = await Linux.runCommandWithCustomArguments(
+      "/usr/bin/pacman",
+      [
+        "-Q",
+      ],
+    );
+
+    List<String> lines = output.split("\n");
+
+    for (String line in lines) {
+      List<String> lineParts = line.split(" ");
+      if (lineParts.length < 2) {
+        continue;
+      }
+      String packageName = lineParts[0].trim();
+      returnValue.add(packageName);
+    }
+    return returnValue;
+  }
+
   /// Return value: List of [app id, app name, app description];
   static Future<List<List<String>>> getInstalledFlatpaks() async {
     if (!currentenvironment.installedSoftwareManagers
@@ -1611,6 +1770,8 @@ class Linux {
         getInstalledZypperPackages();
     Future<List<List<String>>> installedDNFPackagesFuture =
         getInstalledDNFPackages();
+    Future<List<String>> installedPackagesPacmanFuture =
+        getInstalledPacmanPackages();
     Future<List<List<String>>> installedFlatpaksFuture = getInstalledFlatpaks();
     Future<List<String>> installedSnapsFuture = getInstalledSnaps();
 
@@ -1669,6 +1830,25 @@ class Linux {
           name: AppLocalizations.of(context)!.uninstallApp(dnfEntry[0]),
           description: "(DNF)",
           action: "dnf-uninstall:${dnfEntry[0]}",
+          iconWidget: Icon(
+            Icons.delete,
+            size: 48,
+            color: MintY.currentColor,
+          ),
+          priority: -10,
+          excludeFromSearchProposal: true,
+        ),
+      );
+    }
+
+    /// Pacman
+    List<String> installedPacmanPackages = await installedPackagesPacmanFuture;
+    for (String pacmanEntry in installedPacmanPackages) {
+      returnValue.add(
+        ActionEntry(
+          name: AppLocalizations.of(context)!.uninstallApp(pacmanEntry),
+          description: "(Pacman)",
+          action: "pacman-uninstall:$pacmanEntry",
           iconWidget: Icon(
             Icons.delete,
             size: 48,
@@ -2005,7 +2185,11 @@ class Linux {
   }
 
   static Future<String> getHostname() async {
-    return (await runCommand("hostname")).trim();
+    if (File("/etc/hostname").existsSync()) {
+      return (await File("/etc/hostname").readAsString()).trim();
+    } else {
+      return (await runCommand("hostname")).trim();
+    }
   }
 
   static Future<String> getOsPrettyName() async {
@@ -2050,6 +2234,21 @@ class Linux {
   }
 
   static Future<String> getGpuModel() async {
+    // If glxinfo is not installed we are doing this with lspci:
+    // lspci -k | grep -A 2 -E "(VGA|3D)"
+    if (!File("/usr/bin/glxinfo").existsSync()) {
+      String output =
+          // await runCommand("bash -c \"lspci -k | grep -A 2 -E '(VGA|3D)'\"");
+          await runCommandWithCustomArguments(
+              "bash", ["-c", "lspci -k | grep -A 2 -E '(VGA|3D)'"]);
+      List<String> lines = output.split("\n");
+      for (String line in lines) {
+        if (line.contains("VGA") || line.contains("3D")) {
+          return line.split(":").last.trim();
+        }
+      }
+    }
+
     try {
       return (await runCommand("glxinfo -B"))
           .split("\n")
@@ -2189,6 +2388,13 @@ class Linux {
         ));
       }
       if (currentenvironment.installedSoftwareManagers
+          .contains(SOFTWARE_MANAGERS.PACMAN)) {
+        commandQueue.add(LinuxCommand(
+          userId: 0,
+          command: "/usr/bin/pacman -Sc --noconfirm",
+        ));
+      }
+      if (currentenvironment.installedSoftwareManagers
           .contains(SOFTWARE_MANAGERS.FLATPAK)) {
         commandQueue.add(LinuxCommand(
           userId: 0,
@@ -2246,6 +2452,7 @@ class Linux {
         commandQueue.add(LinuxCommand(
           userId: 0,
           command: "/usr/sbin/ufw enable",
+          environment: {"PATH": getPATH()},
         ));
     }
     Navigator.of(context).push(MaterialPageRoute(
@@ -2331,8 +2538,12 @@ class Linux {
         break;
       case DESKTOPS.GNOME:
       case DESKTOPS.CINNAMON:
-        runCommandWithCustomArguments(
-            "gnome-terminal", ["--", "bash", "-c", command]);
+        if (File("/usr/bin/kgx").existsSync()) {
+          runCommandWithCustomArguments("kgx", ["-e", "bash", "-c", command]);
+        } else if (File("/usr/bin/gnome-terminal").existsSync()) {
+          runCommandWithCustomArguments(
+              "gnome-terminal", ["--", "bash", "-c", command]);
+        }
         break;
       case DESKTOPS.XFCE:
         runCommandWithCustomArguments(
@@ -2379,6 +2590,43 @@ class Linux {
       commandQueue.add(LinuxCommand(
         userId: 0,
         command: "/usr/bin/snap install snapd",
+      ));
+    }
+    // Arch: https://snapcraft.io/install/snapd/arch
+    // pacman -S git --noconfirm
+    // Clone it to the tmp folder
+    // git clone https://aur.archlinux.org/snapd.git
+    // cd snapd
+    // makepkg -si --noconfirm
+    // sudo systemctl enable --now snapd.socket
+    // sudo ln -s /var/lib/snapd/snap /snap
+    // sudo snap install snapd
+    if (currentenvironment.installedSoftwareManagers
+        .contains(SOFTWARE_MANAGERS.PACMAN)) {
+      installApplications(["git"],
+          preferredSoftwareManager: SOFTWARE_MANAGERS.PACMAN);
+      String bashCode =
+          "git clone https://aur.archlinux.org/snapd.git /tmp/snapd; cd /tmp/snapd; makepkg -si --noconfirm;";
+      commandQueue.add(LinuxCommand(
+        userId: currentenvironment.currentUserId,
+        command: "bash -c '$bashCode'",
+        environment: {"PATH": getPATH(), "HOME": getHomeDirectory()},
+      ));
+      commandQueue.add(LinuxCommand(
+        userId: 0,
+        command: "/usr/bin/systemctl enable --now snapd.socket",
+      ));
+      commandQueue.add(LinuxCommand(
+        userId: 0,
+        command: "ln -s /var/lib/snapd/snap /snap",
+      ));
+      commandQueue.add(LinuxCommand(
+        userId: 0,
+        command: "/usr/bin/snap install snapd",
+      ));
+      commandQueue.add(LinuxCommand(
+        userId: 0,
+        command: "/usr/bin/rm -rf /tmp/snapd",
       ));
     }
     // openSUSE is a bit more complicated: https://snapcraft.io/install/snapd/opensuse

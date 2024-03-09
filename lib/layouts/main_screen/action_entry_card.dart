@@ -43,13 +43,13 @@ class _ActionEntryCardState extends State<ActionEntryCard> {
               ? Theme.of(context).focusColor
               : const Color.fromARGB(0, 0, 0, 0),
           title: Text(widget.actionEntry.name),
-          subtitle: Text(widget.actionEntry.description),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
           ),
+          subtitle: Text(widget.actionEntry.description),
           // For debugging search index:
           // subtitle: Text(
-          // "${widget.actionEntry.description} | ${widget.actionEntry.priority} | ${widget.actionEntry.tmpPriority} | ${widget.actionEntry.action} "),
+          //     "${widget.actionEntry.description} | ${widget.actionEntry.priority} | ${widget.actionEntry.tmpPriority} | ${widget.actionEntry.action} "),
           leading: icon,
         ),
         onTap: () {

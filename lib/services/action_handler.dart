@@ -280,6 +280,37 @@ class ActionHandler {
           ));
     }
 
+    if (actionEntry.action.startsWith("pacman-install:")) {
+      String pkg = actionEntry.action.replaceFirst("pacman-install:", "");
+      Linux.commandQueue.add(LinuxCommand(
+          userId: 0,
+          command:
+              "${Linux.getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.PACMAN)} -S $pkg --noconfirm"));
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => RunCommandQueue(
+                  title: "Pacman",
+                  message: AppLocalizations.of(context)!.packageWillBeInstalled,
+                  route: const MainSearchLoader(),
+                )),
+      );
+    }
+
+    if (actionEntry.action.startsWith("pacman-uninstall:")) {
+      String pkg = actionEntry.action.replaceFirst("pacman-uninstall:", "");
+      Linux.commandQueue.add(LinuxCommand(
+          userId: 0,
+          command:
+              "${Linux.getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.PACMAN)} -R $pkg --noconfirm"));
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                UninstallerQuestion(action: actionEntry.action),
+          ));
+    }
+
     if (actionEntry.action.startsWith("flatpak-install:")) {
       String pkg = actionEntry.action.replaceFirst("flatpak-install:", "");
       Linux.commandQueue.add(LinuxCommand(

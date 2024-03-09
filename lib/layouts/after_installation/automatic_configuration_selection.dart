@@ -25,6 +25,11 @@ class AfterInstallationAutomaticConfiguration extends StatelessWidget {
           false; // disabled because of snapper
     }
 
+    if (Linux.currentenvironment.distribution == DISTROS.ARCH) {
+      AfterInstallationService.setupAutomaticUpdates = false;
+      AfterInstallationService.installNvidiaDrivers = false;
+    }
+
     List<Widget> content = [
       MintYSelectableEntryWithIconHorizontal(
         icon: const SystemIcon(
@@ -123,6 +128,19 @@ class AfterInstallationAutomaticConfiguration extends StatelessWidget {
     ];
     content.removeWhere((element) =>
         element.runtimeType != MintYSelectableEntryWithIconHorizontal);
+
+    // Remove the Nvidia Card Installation and the Automatic Update Manager Configuration if the distribution is Arch
+    if (Linux.currentenvironment.distribution == DISTROS.ARCH) {
+      content.removeWhere((element) =>
+          element.runtimeType == MintYSelectableEntryWithIconHorizontal &&
+          (element as MintYSelectableEntryWithIconHorizontal).title ==
+              AppLocalizations.of(context)!
+                  .automaticUpdateManagerConfiguration);
+      content.removeWhere((element) =>
+          element.runtimeType == MintYSelectableEntryWithIconHorizontal &&
+          (element as MintYSelectableEntryWithIconHorizontal).title ==
+              AppLocalizations.of(context)!.automaticNvidiaDriverInstallation);
+    }
 
     return MintYPage(
       title: AppLocalizations.of(context)!.automaticConfiguration,

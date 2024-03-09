@@ -439,7 +439,8 @@ class _MainSearchState extends State<MainSearch> {
   /// This runs fast but only removes direct neighbours.
   void _removeDuplicatedEntries() {
     for (int i = 0; i < _foundEntries.length - 1; i++) {
-      if (_foundEntries[i].action == _foundEntries[i + 1].action) {
+      if (_foundEntries[i].action.trim() ==
+          _foundEntries[i + 1].action.trim()) {
         _foundEntries.removeAt(i);
       }
     }
@@ -480,6 +481,13 @@ class _MainSearchState extends State<MainSearch> {
       List<ActionEntry> snaps =
           await Linux.getInstallableSnapPackagesForKeyword(keyword);
       heavyEntries.addAll(snaps);
+    }
+
+    if (Linux.currentenvironment.installedSoftwareManagers
+        .contains(SOFTWARE_MANAGERS.PACMAN)) {
+      List<ActionEntry> pacmanEntries =
+          await Linux.getInstallablePacmanPakagesForKeyword(keyword);
+      heavyEntries.addAll(pacmanEntries);
     }
 
     // If in the meantime the user cleared the search bar, we don't want to

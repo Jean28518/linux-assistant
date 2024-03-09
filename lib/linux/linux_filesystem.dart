@@ -15,6 +15,8 @@ class DeviceInfo {
 
 abstract class LinuxFilesystem {
   static final List<String> _ignoreDevices = [
+    "dev",
+    "run",
     "df:",
     "udev",
     "tmpfs",

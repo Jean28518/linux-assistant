@@ -16,6 +16,8 @@ cp linux-assistant.sh linux-assistant-bundle/
 cp linux-assistant.png linux-assistant-bundle/
 cp -r flatpak linux-assistant-bundle/
 cp version linux-assistant-bundle/
+cp linux-assistant.desktop linux-assistant-bundle/
+cp org.linux-assistant.operations.policy linux-assistant-bundle/
 
 # Get libkeybinder.so
 cp /lib/x86_64-linux-gnu/libkeybinder-3.0.so.0 linux-assistant-bundle/lib/

@@ -56,6 +56,9 @@ List<ActionEntry> getRecommendations(BuildContext context) {
         size: 48,
         color: MintY.currentColor,
       ),
+      disableEntryIf: () {
+        return [DISTROS.ARCH].contains(Linux.currentenvironment.distribution);
+      },
     ),
     ActionEntry(
       name: AppLocalizations.of(context)!.powerMode,

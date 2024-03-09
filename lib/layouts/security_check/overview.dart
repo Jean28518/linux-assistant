@@ -22,8 +22,13 @@ class SecurityCheckOverview extends StatelessWidget {
           root: true,
           arguments: ["--home=${Platform.environment['HOME']}"],
           getErrorMessages: true);
-    }  else if (Linux.currentenvironment.distribution == DISTROS.FEDORA) {
+    } else if (Linux.currentenvironment.distribution == DISTROS.FEDORA) {
       checkerOutputString = Linux.runPythonScript("check_security_fedora.py",
+          root: true,
+          arguments: ["--home=${Platform.environment['HOME']}"],
+          getErrorMessages: true);
+    } else if (Linux.currentenvironment.distribution == DISTROS.ARCH) {
+      checkerOutputString = Linux.runPythonScript("check_security_arch.py",
           root: true,
           arguments: ["--home=${Platform.environment['HOME']}"],
           getErrorMessages: true);
@@ -75,6 +80,7 @@ class SecurityCheckOverview extends StatelessWidget {
 
           // At first set everything to "safe":
           List<String> additionalSources = [];
+          bool yayInstalled = false;
           int availableUpdatePackages = 0;
           bool homeFolderSecure = true;
           bool firewallNotInstalled = false;
@@ -87,6 +93,9 @@ class SecurityCheckOverview extends StatelessWidget {
             if (line.startsWith("additionalsource:")) {
               additionalSources
                   .add(line.replaceFirst("additionalsource: ", ""));
+            }
+            if (line.startsWith("yayinstalled")) {
+              yayInstalled = true;
             }
             if (line.startsWith("upgradeablepackage:")) {
               availableUpdatePackages++;
@@ -115,7 +124,9 @@ class SecurityCheckOverview extends StatelessWidget {
               body: MintYPage(
             title: AppLocalizations.of(context)!.securityCheck,
             contentElements: [
-              AdditionSoftwareSources(additionalSources: additionalSources),
+              AdditionSoftwareSources(
+                  additionalSources: additionalSources,
+                  yayInstalled: yayInstalled),
               const SizedBox(height: 16),
               UpdateCheck(availableUpdatePackages: availableUpdatePackages),
               const SizedBox(height: 16),
@@ -299,15 +310,27 @@ class AdditionSoftwareSources extends StatelessWidget {
   const AdditionSoftwareSources({
     Key? key,
     required this.additionalSources,
+    required this.yayInstalled,
   }) : super(key: key);
 
   final List<String> additionalSources;
+  final bool yayInstalled;
 
   @override
   Widget build(BuildContext context) {
     List<Widget> additionalSourceTexts = [];
     for (var element in additionalSources) {
       additionalSourceTexts.add(Text(element));
+    }
+
+    // If yay is installed, then we show a warning message instead of the success message.
+    Widget ourChild = SuccessMessage(
+        text: AppLocalizations.of(context)!.noAdditionalSoftwareSourcesFound);
+
+    if (yayInstalled) {
+      ourChild = WarningMessage(
+        text: AppLocalizations.of(context)!.yayInstalled,
+      );
     }
 
     return Column(
@@ -318,43 +341,41 @@ class AdditionSoftwareSources extends StatelessWidget {
           style: Theme.of(context).textTheme.headlineLarge,
         ),
         Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: additionalSources.isNotEmpty
-              ? Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    WarningMessage(
-                      text: AppLocalizations.of(context)!
-                          .additionalSoftwareSourcesDetected,
-                      fixAction: () {
-                        Linux.openAdditionalSoftwareSourcesSettings();
-                      },
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Container(
-                      decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
-                          color: Colors.grey),
-                      padding: const EdgeInsets.all(8),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: additionalSourceTexts,
-                            ),
-                          ),
-                        ],
+            padding: const EdgeInsets.all(8.0),
+            child: additionalSources.isNotEmpty
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      WarningMessage(
+                        text: AppLocalizations.of(context)!
+                            .additionalSoftwareSourcesDetected,
+                        fixAction: () {
+                          Linux.openAdditionalSoftwareSourcesSettings();
+                        },
                       ),
-                    ),
-                  ],
-                )
-              : SuccessMessage(
-                  text: AppLocalizations.of(context)!
-                      .noAdditionalSoftwareSourcesFound),
-        )
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Container(
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
+                            color: Colors.grey),
+                        padding: const EdgeInsets.all(8),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: additionalSourceTexts,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  )
+                // If no software source found we wether show a correct success message or a warning message if yay is installed.
+                : ourChild)
       ],
     );
   }

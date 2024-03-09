@@ -73,7 +73,8 @@ List<ActionEntry> getBasicEntries(BuildContext context) {
         color: MintY.currentColor,
       ),
       disableEntryIf: () {
-        return [DISTROS.FEDORA].contains(Linux.currentenvironment.distribution);
+        return [DISTROS.FEDORA, DISTROS.ARCH]
+            .contains(Linux.currentenvironment.distribution);
       },
     ),
     ActionEntry(
@@ -130,6 +131,9 @@ List<ActionEntry> getBasicEntries(BuildContext context) {
         size: 48,
         color: MintY.currentColor,
       ),
+      disableEntryIf: () =>
+          // We disable this entry on arch because the user should check the update manager by himself.
+          Linux.currentenvironment.distribution == DISTROS.ARCH,
     ),
     ActionEntry(
       name: AppLocalizations.of(context)!.automaticSnapshots,
@@ -163,6 +167,9 @@ List<ActionEntry> getBasicEntries(BuildContext context) {
       action: "fix_package_manager",
       iconWidget: Icon(Icons.bug_report, size: 48, color: MintY.currentColor),
       keywords: ["fix", "package", "manager", "apt", "dpkg", "rpm", "zypper"],
+      disableEntryIf: () {
+        return [DISTROS.ARCH].contains(Linux.currentenvironment.distribution);
+      },
     ),
     ActionEntry(
       name: AppLocalizations.of(context)!.setupSnap,
