@@ -31,3 +31,7 @@ Change Power Mode,yes,yes,yes,yes,yes,yes,yes,no,yes,?,yes,-,-,-,-,
 Change user profile,yes,-,-,-,yes,-,yes,-,no,-,yes,yes,yes,yes,no,
 hardinfo,yes,yes,yes,yes,yes,yes,yes,yes,yes,?,no *,-,-,-,-,*) Fedora does not package hardinfo anymore
 redshift,yes,yes,yes,yes,yes,yes,yes,yes,yes,?,yes,yes,yes,yes,yes,
+makeCurrentUserToAdministrator,?,yes,yes,yes,yes,yes,yes,yes,yes,?,yes,-,-,-,-,
+setupSnapAndInstallSnapStore,?,yes,yes,yes,yes,yes,yes,yes,yes,no,yes,-,-,-,-,
+Commands in Searchbar,?,-,-,-,-,-,-,-,-,-,-,yes,yes,yes,yes,
+AutomaticRepairOfPackageManager,?,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,-,-,-,-,

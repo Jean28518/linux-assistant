@@ -175,7 +175,8 @@ List<ActionEntry> getBasicEntries(BuildContext context) {
       ),
       disableEntryIf: () {
         return Linux.currentenvironment.installedSoftwareManagers
-            .contains(SOFTWARE_MANAGERS.SNAP);
+                .contains(SOFTWARE_MANAGERS.SNAP) ||
+            Linux.currentenvironment.distribution == DISTROS.OPENSUSE;
       },
     ),
     ActionEntry(

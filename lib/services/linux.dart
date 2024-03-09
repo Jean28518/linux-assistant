@@ -2372,14 +2372,23 @@ class Linux {
         userId: 0,
         command: "/usr/bin/dnf install -y snapd",
       ));
-    }
-    if (currentenvironment.installedSoftwareManagers
-        .contains(SOFTWARE_MANAGERS.ZYPPER)) {
       commandQueue.add(LinuxCommand(
         userId: 0,
-        command: "/usr/bin/zypper install -y snapd",
+        command: "ln -s /var/lib/snapd/snap /snap",
+      ));
+      commandQueue.add(LinuxCommand(
+        userId: 0,
+        command: "/usr/bin/snap install snapd",
       ));
     }
+    // openSUSE is a bit more complicated: https://snapcraft.io/install/snapd/opensuse
+    // if (currentenvironment.installedSoftwareManagers
+    //     .contains(SOFTWARE_MANAGERS.ZYPPER)) {
+    //   commandQueue.add(LinuxCommand(
+    //     userId: 0,
+    //     command: "/usr/bin/zypper install -y snapd",
+    //   ));
+    // }
 
     commandQueue.add(LinuxCommand(
       userId: 0,
