@@ -1,3 +1,4 @@
+import 'package:linux_assistant/enums/distros.dart';
 import 'package:linux_assistant/enums/softwareManagers.dart';
 import 'package:linux_assistant/main.dart';
 import 'package:linux_assistant/models/linux_command.dart';
@@ -13,6 +14,13 @@ class LinuxAssistantUpdater {
 
     // If we are running as flatpak we don't need to check for updates manually.
     if (Linux.currentenvironment.runningInFlatpak) {
+      return false;
+    }
+
+    // Return false if we are running on Arch Linux and the user has it not running in flatpak.
+    // We are missing an update mechanism for Arch Linux at the current time.
+    if (!Linux.currentenvironment.runningInFlatpak &&
+        Linux.currentenvironment.distribution == DISTROS.ARCH) {
       return false;
     }
 
