@@ -8,12 +8,12 @@ license=('GPL-3.0-or-later')
 
 source=("https://github.com/Jean28518/linux-assistant/releases/latest/download/linux-assistant-bundle.zip")
 
-depends=("libkeybinder3", "wmctrl", "wget", "python", "mesa-utils", "polkit")
+depends=("libkeybinder3" "wmctrl" "wget" "python" "mesa-utils" "polkit")
 
 package() {
     mkdir -p "$pkgdir/usr/bin"
     cp -f "$srcdir/linux-assistant-bundle/linux-assistant.sh" "$pkgdir/usr/bin/linux-assistant"
-    chmod +x "$srcdir/usr/bin/linux-assistant"
+    chmod +x "$pkgdir/usr/bin/linux-assistant"
 
     mkdir -p "$pkgdir/usr/share/polkit-1/actions"
     cp -f "$srcdir/linux-assistant-bundle/org.linux-assistant.operations.policy" "$pkgdir/usr/share/polkit-1/actions/org.linux-assistant.operations.policy"
