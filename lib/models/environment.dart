@@ -46,7 +46,7 @@ class Environment {
   }
 
   Environment.fromJson(Map<String, dynamic> input) {
-    distribution = getDistrosEnumOfString(input['distribution']);
+    distribution = getEnumFromString(input['distribution']);
     version = input['version'];
     desktop = getDektopEnumOfString(input['desktop']);
     browser = getBrowserEnumOfString(input['browser']);

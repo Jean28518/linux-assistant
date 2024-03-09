@@ -1912,8 +1912,12 @@ class Linux {
     currentenvironment = await getCurrentEnvironment();
     ConfigHandler configHandler = ConfigHandler();
     await configHandler.ensureConfigIsLoaded();
-    currentenvironment.distribution = configHandler.getValueUnsafe(
-        "distribution", currentenvironment.distribution);
+
+    String distribution = configHandler.getValueUnsafe("distribution", "");
+    if (distribution.isNotEmpty) {
+      currentenvironment.distribution = getEnumFromString(distribution);
+    }
+
     currentenvironment.version =
         configHandler.getValueUnsafe("version", currentenvironment.version);
     currentenvironment.versionString = configHandler.getValueUnsafe(

@@ -34,6 +34,7 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
     returnValue.entries.addAll(getBasicEntries(context));
 
     if (configHandler.getValueUnsafe("search_filter_basic_folders", true)) {
+      print("Loading basic folders");
       var folderEntries = await Linux.getAllFolderEntriesOfUser(context)
           .timeout(
               timeoutDuration,
@@ -42,6 +43,7 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
       returnValue.entries.addAll(folderEntries);
     }
     if (configHandler.getValueUnsafe("search_filter_applications", true)) {
+      print("Loading applications");
       var applicationEntries = await Linux.getAllAvailableApplications()
           .timeout(timeoutDuration,
               onTimeout: () =>
@@ -51,6 +53,7 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
 
     if (configHandler.getValueUnsafe(
         "search_filter_recently_used_files_and_folders", true)) {
+      print("Loading recently used files and folders");
       var recentFiles = await Linux.getRecentFiles(context).timeout(
           timeoutDuration,
           onTimeout: () => _onTimeoutOfSearchLoadingModule("recentFiles"));
@@ -59,6 +62,7 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
 
     if (configHandler.getValueUnsafe(
         "search_filter_favorite_files_and_folder_bookmarks", true)) {
+      print("Loading favorite files and folder bookmarks");
       var favoriteFiles = await Linux.getFavoriteFiles(context).timeout(
           timeoutDuration,
           onTimeout: () => _onTimeoutOfSearchLoadingModule("favoriteFiles"));
@@ -66,6 +70,7 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
     }
 
     if (configHandler.getValueUnsafe("search_filter_bookmarks", true)) {
+      print("Loading browser bookmarks");
       var browserBookmarks = await Linux.getBrowserBookmarks(context).timeout(
           timeoutDuration,
           onTimeout: () => _onTimeoutOfSearchLoadingModule("browserBookmarks"));
@@ -74,6 +79,7 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
 
     if (configHandler.getValueUnsafe(
         "search_filter_recently_used_files_and_folders", true)) {
+      print("Loading recently used files and folders");
       var additionalFolders =
           Linux.getFoldersOfActionEntries(context, returnValue.entries);
       returnValue.entries.addAll(additionalFolders);
@@ -81,6 +87,7 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
 
     // Flatpak Index Installations
     if (configHandler.getValueUnsafe("search_filter_install_software", true)) {
+      print("Loading flatpaks");
       var flatpaks = await Linux.getAvailableFlatpaks(context).timeout(
           timeoutDuration,
           onTimeout: () => _onTimeoutOfSearchLoadingModule("flatpaks"));
@@ -90,6 +97,7 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
     // Deinstallation Entries.
     if (configHandler.getValueUnsafe(
         "search_filter_uninstall_software", true)) {
+      print("Loading uninstall entries");
       var actions = await Linux.getUninstallEntries(context).timeout(
           timeoutDuration,
           onTimeout: () =>
@@ -98,6 +106,7 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
     }
 
     // Remove action entries for specific environments
+    print("Removing disabled entries");
     List<ActionEntry> entriesToRemove = [];
     for (ActionEntry entry in returnValue.entries) {
       if (entry.disableEntryIf != null) {
@@ -110,7 +119,7 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
     for (ActionEntry entry in entriesToRemove) {
       returnValue.entries.remove(entry);
     }
-
+    print("Initiating configHandler");
     await configHandler.setValue("runFirstStartUp", false);
     await clearOldEntries;
 

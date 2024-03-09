@@ -226,8 +226,8 @@ class _EnvironmentSelectionViewState extends State<EnvironmentSelectionView> {
                           onPressed: (() {
                             setState(() {
                               environment.distribution = DISTROS.values[index];
-                              configHandler.setValue(
-                                  "distribution", environment.distribution);
+                              configHandler.setValue("distribution",
+                                  environment.distribution.name);
                               Navigator.of(context).pop();
                             });
                           }),

@@ -41,6 +41,6 @@ String getNiceStringOfDistrosEnum(var distro) {
   }
 }
 
-DISTROS getDistrosEnumOfString(str) {
-  return DISTROS.values.firstWhere((e) => e.toString() == str);
+DISTROS getEnumFromString(String str) {
+  return DISTROS.values.firstWhere((e) => e.name == str);
 }
