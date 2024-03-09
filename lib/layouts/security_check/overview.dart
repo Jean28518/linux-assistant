@@ -27,7 +27,8 @@ class SecurityCheckOverview extends StatelessWidget {
           root: true,
           arguments: ["--home=${Platform.environment['HOME']}"],
           getErrorMessages: true);
-    } else if (Linux.currentenvironment.distribution == DISTROS.ARCH) {
+    } else if ([DISTROS.ARCH, DISTROS.MANJARO, DISTROS.ENDEAVOUR]
+        .contains(Linux.currentenvironment.distribution)) {
       checkerOutputString = Linux.runPythonScript("check_security_arch.py",
           root: true,
           arguments: ["--home=${Platform.environment['HOME']}"],

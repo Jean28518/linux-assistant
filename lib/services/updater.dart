@@ -20,7 +20,8 @@ class LinuxAssistantUpdater {
     // Return false if we are running on Arch Linux and the user has it not running in flatpak.
     // We are missing an update mechanism for Arch Linux at the current time.
     if (!Linux.currentenvironment.runningInFlatpak &&
-        Linux.currentenvironment.distribution == DISTROS.ARCH) {
+        [DISTROS.ARCH, DISTROS.MANJARO, DISTROS.ENDEAVOUR]
+            .contains(Linux.currentenvironment.distribution)) {
       return false;
     }
 

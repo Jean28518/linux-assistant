@@ -92,7 +92,9 @@ def add_linux_assistant_keybinding_gnome():
 # Xfce ----------------------------------------------------------------------------------
 
 def add_linux_assistant_keybinding_xfce():
-    jessentials.run_command(f"xfconf-query -c xfce4-keyboard-shortcuts -p '/commands/custom/{KEY_MODIFIER}q' -n -t string -s linux-assistant")
+    os.environ["DBUS_SESSION_BUS_ADDRESS"] = "unix:path=/run/user/" + str(os.getuid()) + "/bus"
+    os.system(f"xfconf-query -c xfce4-keyboard-shortcuts -p '/commands/custom/{KEY_MODIFIER}q' -n -t string -s linux-assistant")
+    #jessentials.run_command(f"xfconf-query -c xfce4-keyboard-shortcuts -p '/commands/custom/{KEY_MODIFIER}q' -n -t string -s linux-assistant")
 
 # KDE ----------------------------------------------------------------------------------
 # Keymodifier is always <Alt> here.

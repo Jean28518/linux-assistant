@@ -55,6 +55,15 @@ class Linux {
     await loadCurrentEnvironment();
   }
 
+  static String getCacheDirectory() {
+    homeFolder = getHomeDirectory();
+    String cacheDir = "$homeFolder/.cache/linux-assistant/";
+    cacheDir = cacheDir.replaceAll("//", "/");
+    // Ensure that the cache directory exists
+    Directory(cacheDir).createSync(recursive: true);
+    return cacheDir;
+  }
+
   /// Returns the stdout and the stderr.
   ///
   /// If [hostOnFlatpak] is set to false, the command will be issued in the flatpak sandbox, if available.
@@ -922,6 +931,10 @@ class Linux {
       newEnvironment.distribution = DISTROS.FEDORA;
     } else if (lines[0].toLowerCase().contains("arch")) {
       newEnvironment.distribution = DISTROS.ARCH;
+    } else if (lines[0].toLowerCase().contains("manjaro")) {
+      newEnvironment.distribution = DISTROS.MANJARO;
+    } else if (lines[0].toLowerCase().contains("endeavour")) {
+      newEnvironment.distribution = DISTROS.ENDEAVOUR;
     }
 
     // get version:
@@ -1140,6 +1153,8 @@ class Linux {
         ));
         break;
       case DISTROS.ARCH:
+      case DISTROS.MANJARO:
+      case DISTROS.ENDEAVOUR:
         commandQueue.add(LinuxCommand(
           userId: 0,
           command:
@@ -1175,7 +1190,7 @@ class Linux {
     print("Run python script: $executable $commandList");
 
     return runCommandWithCustomArguments(executable, commandList,
-        getErrorMessages: getErrorMessages);
+        getErrorMessages: getErrorMessages, environment: Platform.environment);
   }
 
   static Future<bool> isNvidiaCardInstalledOnSystem() async {
@@ -1240,7 +1255,8 @@ class Linux {
   static Future<void> enableAutomaticSnapshots() async {
     await ensureApplicationInstallation(["timeshift"]);
     String additional = "";
-    if (currentenvironment.distribution == DISTROS.ARCH) {
+    if ([DISTROS.ARCH, DISTROS.MANJARO, DISTROS.ENDEAVOUR]
+        .contains(currentenvironment.distribution)) {
       additional = "--daily";
     }
     commandQueue.add(LinuxCommand(
@@ -2535,6 +2551,11 @@ class Linux {
   static void openCommandInTerminal(command) {
     command =
         "echo 'Running command: $command'; $command; echo 'Closing in 10 seconds...'; sleep 10";
+    // Write the command into a temporary file
+    String cacheDir = getCacheDirectory();
+    String tempFile = "$cacheDir/temp_command.sh";
+    File(tempFile).writeAsStringSync(command);
+
     print("Opening command in terminal: $command");
     switch (currentenvironment.desktop) {
       case DESKTOPS.KDE:
@@ -2551,7 +2572,7 @@ class Linux {
         break;
       case DESKTOPS.XFCE:
         runCommandWithCustomArguments(
-            "xfce4-terminal", ["-e", "bash", "-c", command]);
+            "xfce4-terminal", ["-e", "bash $cacheDir/temp_command.sh"]);
         break;
       default:
         // Xterm

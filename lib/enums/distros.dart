@@ -10,6 +10,8 @@ enum DISTROS {
   LMDE,
   FEDORA,
   ARCH,
+  MANJARO,
+  ENDEAVOUR,
 }
 
 String getNiceStringOfDistrosEnum(var distro) {
@@ -36,6 +38,10 @@ String getNiceStringOfDistrosEnum(var distro) {
       return "Fedora";
     case DISTROS.ARCH:
       return "Arch";
+    case DISTROS.MANJARO:
+      return "Manjaro";
+    case DISTROS.ENDEAVOUR:
+      return "EndeavourOS";
     default:
       return "";
   }

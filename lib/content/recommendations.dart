@@ -57,7 +57,9 @@ List<ActionEntry> getRecommendations(BuildContext context) {
         color: MintY.currentColor,
       ),
       disableEntryIf: () {
-        return [DISTROS.ARCH].contains(Linux.currentenvironment.distribution);
+        return [
+          DISTROS.ARCH,
+        ].contains(Linux.currentenvironment.distribution);
       },
     ),
     ActionEntry(

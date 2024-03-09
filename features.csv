@@ -1,37 +1,37 @@
-Feature,Flatpak,Debian,Ubuntu,Linux Mint,LMDE,PopOS,MX Linux,Zorin OS,KDE neon,openSUSE,Fedora,Arch,Gnome,Xfce,Cinnamon,KDE,Notes
-Adabtable dark mode,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes *,yes,yes,yes,"*) depends on window theme,not gtk  "
-Hotkey handling,yes,yes *,yes *,yes,yes,yes,yes,yes,yes,yes,yes *,yes,yes *,yes,yes,yes,*) only works on wayland with workaround described in #24
-Feedback function,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,-,-,-,-,
-Automatic recognition of environment,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,
-App search,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,
-Folder structure search,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,
-Bookmark/Places folder search,yes,-,-,-,-,-,-,-,-,-,-,-,yes,yes,yes,yes,
-Recent file search,yes,-,-,-,-,-,-,-,-,-,-,-,yes,yes,yes,yes,
-Favorite file search,yes,-,-,-,-,-,-,-,-,-,-,-,no,no,yes,no,
-Browser bookmark search,yes,yes,?,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes," Currently works with firefox,chromium and chrome; needs to checked with firefox on snap  "
-Security check,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,
-Health check,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,,,,,
-After installation routine,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,
-Warpinator,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,Only works if flatpak is installed/available in the sources
-Nvidia installation,-,(yes),yes,yes,(yes),(yes),(yes),(yes),(yes),no,no,no,-,-,-,-,
-Multimedia codecs installation,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,-,-,-,-,
-Timeshift setup,yes,yes,yes,yes,yes,yes,yes,yes *,yes,no,no,yes,-,-,-,-,*) When you start timeshift the welcome dialog with config is started. But the timeshift.json is configured successfully??
-Automatic update setup,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,no,-,-,-,-,integrates on Linux Mint with mintupdate
-Update full system (all packages of all pack. man.),yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,-,-,-,-,
-Search and installation/uninstallation of system packages,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,-,-,-,-,
-General integration of system package manager,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,-,-,-,-,
-General integration of flatpak,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,-,-,-,-,
-General integration of snapd,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,-,-,-,-,
-Recognition of drive space utilization,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,,,,,
-Change user passwort dialog,yes,-,-,-,-,-,yes,-,no,-,yes,-,yes,yes,yes,no,
-open system information,yes,-,-,-,-,-,yes,-,no,-,yes,-,yes,yes,yes,no,
-automatic update check & install of linux assistant,no,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,no,-,-,-,-,
-openAdditionalSoftwareSourcesSettings,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes *,no,-,-,-,-,*) We can only open gnome-software here
-Change Power Mode,yes,yes,yes,yes,yes,yes,yes,no,yes,?,yes,yes,-,-,-,-,
-Change user profile,yes,-,-,-,yes,-,yes,-,no,-,yes,-,yes,yes,yes,no,
-hardinfo,yes,yes,yes,yes,yes,yes,yes,yes,yes,?,no *,no *,-,-,-,-,*) Fedora and arch do not have package hardinfo anymore
-redshift,yes,yes,yes,yes,yes,yes,yes,yes,yes,?,yes,no *,yes,yes,yes,yes,*) Does only work with further complicated setup. 
-makeCurrentUserToAdministrator,?,yes,yes,yes,yes,yes,yes,yes,yes,?,yes,yes,-,-,-,-,
-setupSnapAndInstallSnapStore,?,yes,yes,yes,yes,yes,yes,yes,yes,no,yes,yes,-,-,-,-,
-Commands in Searchbar,?,-,-,-,-,-,-,-,-,-,-,-,yes,yes,yes,yes,
-AutomaticRepairOfPackageManager,?,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,no,-,-,-,-,
+Feature,Flatpak,Debian,Ubuntu,Linux Mint,LMDE,PopOS,MX Linux,Zorin OS,KDE neon,openSUSE,Fedora,Arch,Manjaro,Endeavour,Gnome,Xfce,Cinnamon,KDE,Notes
+Adabtable dark mode,yes,-,-,-,-,-,-,-,-,-,-,-,-,-,yes *,yes,yes,yes,"*) depends on window theme,not gtk  "
+Hotkey handling,yes,yes *,yes *,yes,yes,yes,yes,yes,yes,yes,yes *,yes,?,?,yes *,yes,yes,yes,*) only works on wayland with workaround described in #24
+Feedback function,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,-,-,-,-,
+Automatic recognition of environment,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,
+App search,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes*,yes,yes,yes,yes,*) Icons are very small here
+Folder structure search,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,
+Bookmark/Places folder search,yes,-,-,-,-,-,-,-,-,-,-,-,-,-,yes,yes,yes,yes,
+Recent file search,yes,-,-,-,-,-,-,-,-,-,-,-,-,-,yes,yes,yes,yes,
+Favorite file search,yes,-,-,-,-,-,-,-,-,-,-,-,-,-,no,no,yes,no,
+Browser bookmark search,yes,yes,?,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes," Currently works with firefox,chromium and chrome; needs to checked with firefox on snap  "
+Security check,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,?,?,yes,yes,yes,yes,
+Health check,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,,,,,
+After installation routine,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,
+Warpinator,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,Only works if flatpak is installed/available in the sources
+Nvidia installation,-,(yes),yes,yes,(yes),(yes),(yes),(yes),(yes),no,no,no,no,no,-,-,-,-,
+Multimedia codecs installation,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,-,-,-,-,
+Timeshift setup,yes,yes,yes,yes,yes,yes,yes,yes *,yes,no,no,yes,yes,yes,-,-,-,-,*) When you start timeshift the welcome dialog with config is started. But the timeshift.json is configured successfully??
+Automatic update setup,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,no,no,no,-,-,-,-,integrates on Linux Mint with mintupdate
+Update full system (all packages of all pack. man.),yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,-,-,-,-,
+Search and installation/uninstallation of system packages,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,-,-,-,-,
+General integration of system package manager,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,-,-,-,-,
+General integration of flatpak,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,-,-,-,-,
+General integration of snapd,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,-,-,-,-,
+Recognition of drive space utilization,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,,,,,
+Change user passwort dialog,yes,-,-,-,-,-,yes,-,no,-,yes,-,,,yes,yes,yes,no,
+open system information,yes,-,-,-,-,-,yes,-,no,-,yes,-,yes,yes,yes,yes,yes,no,
+automatic update check & install of linux assistant,no,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,no,no,no,-,-,-,-,
+openAdditionalSoftwareSourcesSettings,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes *,no,no,no,-,-,-,-,*) We can only open gnome-software here
+Change Power Mode,yes,yes,yes,yes,yes,yes,yes,no,yes,?,yes,yes,yes,yes,-,-,-,-,
+Change user profile,yes,-,-,-,yes,-,yes,-,no,-,yes,-,-,-,yes,yes,yes,no,
+hardinfo,yes,yes,yes,yes,yes,yes,yes,yes,yes,?,no *,no *,no *,no *,-,-,-,-,*) Fedora and arch do not have package hardinfo anymore
+redshift,yes,yes,yes,yes,yes,yes,yes,yes,yes,?,yes,no *,yes,yes,yes,yes,yes,yes,*) Does only work with further complicated setup. 
+makeCurrentUserToAdministrator,?,yes,yes,yes,yes,yes,yes,yes,yes,?,yes,yes,yes,yes,-,-,-,-,
+setupSnapAndInstallSnapStore,?,yes,yes,yes,yes,yes,yes,yes,yes,no,yes,yes,?,?,-,-,-,-,
+Commands in Searchbar,?,-,-,-,-,-,-,-,-,-,-,-,yes,yes,yes,yes,yes,yes,
+AutomaticRepairOfPackageManager,?,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,no,no,no,-,-,-,-,
