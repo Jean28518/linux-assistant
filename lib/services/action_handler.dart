@@ -413,5 +413,10 @@ class ActionHandler {
     if (actionEntry.action.startsWith("make_administrator")) {
       Linux.makeCurrentUserToAdministrator(context);
     }
+
+    if (actionEntry.action.startsWith("open_software_center")) {
+      Linux.openSoftwareCenter(context);
+      callback();
+    }
   }
 }

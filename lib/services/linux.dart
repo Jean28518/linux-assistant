@@ -2695,4 +2695,39 @@ class Linux {
           route: MainSearchLoader()),
     ));
   }
+
+  static Future<void> openSoftwareCenter(context) async {
+    switch (currentenvironment.distribution) {
+      case DISTROS.LINUX_MINT:
+      case DISTROS.LMDE:
+        runCommand("/usr/bin/mintinstall");
+        break;
+      case DISTROS.UBUNTU:
+      case DISTROS.ZORINOS:
+      case DISTROS.POPOS:
+        runCommand("/usr/bin/gnome-software");
+        break;
+      case DISTROS.FEDORA:
+        runCommand("/usr/bin/gnome-software");
+        break;
+      case DISTROS.OPENSUSE:
+        if (currentenvironment.desktop == DESKTOPS.KDE) {
+          runCommand("/usr/bin/plasma-discover");
+        } else {
+          runCommand("/usr/bin/gnome-software");
+        }
+        break;
+      case DISTROS.MXLINUX:
+        runCommand("/usr/bin/mx-packageinstaller");
+        break;
+      case DISTROS.KDENEON:
+        runCommand("/usr/bin/plasma-discover");
+        break;
+      case DISTROS.DEBIAN:
+        runCommand("/usr/bin/synaptic");
+        break;
+      default:
+        runCommand("/usr/bin/gnome-software");
+    }
+  }
 }

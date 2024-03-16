@@ -204,6 +204,16 @@ List<ActionEntry> getBasicEntries(BuildContext context) {
       disableEntryIf: () {
         return Linux.hasCurrentUserAdministratorRights();
       },
-    )
+    ),
+    ActionEntry(
+      name: AppLocalizations.of(context)!.openSoftwareCenter,
+      description: AppLocalizations.of(context)!.openSoftwareCenterDescription,
+      action: "open_software_center",
+      iconWidget: Icon(
+        Icons.store,
+        size: 48,
+        color: MintY.currentColor,
+      ),
+    ),
   ];
 }

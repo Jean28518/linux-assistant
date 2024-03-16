@@ -35,3 +35,4 @@ makeCurrentUserToAdministrator,?,yes,yes,yes,yes,yes,yes,yes,yes,?,yes,yes,yes,y
 setupSnapAndInstallSnapStore,?,yes,yes,yes,yes,yes,yes,yes,yes,no,yes,yes,?,?,-,-,-,-,
 Commands in Searchbar,?,-,-,-,-,-,-,-,-,-,-,-,yes,yes,yes,yes,yes,yes,
 AutomaticRepairOfPackageManager,?,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,no,no,no,-,-,-,-,
+openSoftwareCenter,?,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,
