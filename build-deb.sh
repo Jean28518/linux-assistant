@@ -2,7 +2,7 @@
 VERSION="$( cat version )"
 
 # Remove files from previous build
-rm -r deb/usr/
+sudo rm -r deb/usr/
 
 # Build Linux Assistant
 chmod +x additional/python/run_script.py
@@ -23,8 +23,11 @@ mkdir -p deb/usr/share/polkit-1/actions/
 cp org.linux-assistant.operations.policy deb/usr/share/polkit-1/actions/
 mkdir -p deb/usr/bin/
 cp linux-assistant.sh deb/usr/bin/linux-assistant
-chmod +x deb/usr/bin/linux-assistant
-chmod 755 deb/DEBIAN
+
+# chmod and chown
+sudo chown -R root:root deb/
+sudo chmod -R 755 deb/
+sudo chmod +x deb/usr/bin/linux-assistant
 
 # Build deb package
 sed -i "2s/.*/Version: $VERSION/" deb/DEBIAN/control
