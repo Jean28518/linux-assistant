@@ -1248,6 +1248,19 @@ class Linux {
             userId: 0,
             command:
                 "python3 ${executableFolder}additional/python/setup_automatic_updates_debian.py"));
+        if (currentenvironment.distribution == DISTROS.LINUX_MINT) {
+          /// Set com.linuxmint.updates auto-update-cinnamon-spices true
+          commandQueue.add(LinuxCommand(
+              userId: currentenvironment.currentUserId,
+              command:
+                  "gsettings set com.linuxmint.updates auto-update-cinnamon-spices true"));
+
+          /// Set com.linuxmint.updates auto-update-flatpaks true
+          commandQueue.add(LinuxCommand(
+              userId: currentenvironment.currentUserId,
+              command:
+                  "gsettings set com.linuxmint.updates auto-update-flatpaks true"));
+        }
     }
   }
 

@@ -7,7 +7,7 @@ if jfiles.does_file_exist("/usr/bin/mintupdate-automation"):
     jessentials.run_command("mintupdate-automation upgrade enable")
     jessentials.run_command("mintupdate-automation autoremove enable")
 
-    # Enable flatpak and spices update:
+    # Enable flatpak and spices update: (this is now directly executed in linux-assistant itself)
     # Has to be run without root!
     # settings = Gio.Settings(schema_id="com.linuxmint.updates")
     # settings.set_boolean("auto-update-cinnamon-spices", True)
