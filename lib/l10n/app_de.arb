@@ -350,6 +350,13 @@
   "openSoftwareCenterDescription": "Öffne das Software-Center, um weitere Anwendungen/Apps zu installieren.",
   "disableCdromSource": "Deaktiviere CD-ROM-Quelle",
   "disableCdromSourceDescription": "Ein Relikt der Debian-Installation. Deaktiviere die CDROM-Quelle, um Fehlermeldungen zu vermeiden.",
+  "grubConfiguration": "Grub-Konfiguration",
+  "grubConfigurationDescription": "Konfiguriere den Grub-Bootloader. Dieser Schritt ist nur für fortgeschrittene Benutzer empfohlen.",
+  "grubVisible": "Bootmenü sichtbar",
+  "enableBigFont": "Große Schrift aktivieren",
+  "grubCountdown": "Zeit bis zum automatischen Start (in Sekunden)",
+  "startLastBootedEntry": "Starte den zuletzt gebooteten Eintrag",
+  "save": "Speichern",
   "@helloWorld": {
     "placeholders": {},
     "description": "",

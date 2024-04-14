@@ -350,6 +350,13 @@
   "openSoftwareCenterDescription": "Open the Software Center to install additional applications/apps.",
   "disableCdromSource": "Disable CD-ROM source",
   "disableCdromSourceDescription": "A relic of the Debian installation. Disable the CDROM source to avoid error messages.",
+  "grubConfiguration": "Grub configuration",
+  "grubConfigurationDescription": "Configure the Grub bootloader. This step is recommended for advanced users only.",
+  "grubVisible": "Bootmenu visible",
+  "enableBigFont": "Enable large font",
+  "grubCountdown": "Time until automatic start (in seconds)",
+  "startLastBootedEntry": "Start the last booted entry",
+  "save": "Save",
   "@helloWorld": {
     "placeholders": {},
     "description": "The conventional newborn programmer greeting",

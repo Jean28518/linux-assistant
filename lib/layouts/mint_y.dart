@@ -908,3 +908,112 @@ class MintYLoadingPage extends StatelessWidget {
     );
   }
 }
+
+class MintYCheckboxSetting extends StatefulWidget {
+  late String text;
+  late bool value;
+
+  /// Callback function that takes as parameter the new value of the setting
+  late Function(bool) onChanged;
+
+  MintYCheckboxSetting(
+      {super.key,
+      required this.text,
+      required this.value,
+      required this.onChanged});
+
+  @override
+  State<MintYCheckboxSetting> createState() => _MintYCheckboxSettingState();
+}
+
+class _MintYCheckboxSettingState extends State<MintYCheckboxSetting> {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 100.0, vertical: 8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            widget.text,
+            style: Theme.of(context).textTheme.headlineMedium,
+          ),
+          Checkbox(
+            value: widget.value,
+            onChanged: (bool? newValue) {
+              setState(() {
+                widget.value = newValue!;
+                widget.onChanged.call(newValue);
+              });
+            },
+            activeColor: MintY.currentColor,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class MintYTextSetting extends StatefulWidget {
+  late String text;
+  late String value;
+  late TextAlign textAlign;
+  late Function(String) onChanged;
+
+  MintYTextSetting(
+      {super.key,
+      required this.text,
+      required this.value,
+      required this.textAlign,
+      required this.onChanged});
+
+  @override
+  State<MintYTextSetting> createState() => _MintYTextSettingState();
+}
+
+class _MintYTextSettingState extends State<MintYTextSetting> {
+  late TextEditingController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = TextEditingController(text: widget.value);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 100.0, vertical: 8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            widget.text,
+            style: Theme.of(context).textTheme.headlineMedium,
+          ),
+          SizedBox(
+            width: 200,
+            child: TextField(
+              controller: controller,
+              onChanged: (String newValue) {
+                widget.onChanged.call(newValue);
+              },
+              textAlign: widget.textAlign,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: MintY.currentColor),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: MintY.currentColor,
+                      width: 2,
+                      style: BorderStyle.solid),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

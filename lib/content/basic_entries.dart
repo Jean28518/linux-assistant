@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:linux_assistant/enums/desktops.dart';
 import 'package:linux_assistant/enums/distros.dart';
 import 'package:linux_assistant/enums/softwareManagers.dart';
+import 'package:linux_assistant/layouts/grub_config/grub_config.dart';
 import 'package:linux_assistant/layouts/mint_y.dart';
 import 'package:linux_assistant/main.dart';
 import 'package:linux_assistant/models/action_entry.dart';
@@ -224,6 +225,19 @@ List<ActionEntry> getBasicEntries(BuildContext context) {
       },
       handlerFunction: (VoidCallback callback, BuildContext context) {
         Linux.disableCdromSourceInDebian(context);
+      },
+    ),
+    ActionEntry(
+      name: AppLocalizations.of(context)!.grubConfiguration,
+      description: AppLocalizations.of(context)!.grubConfigurationDescription,
+      iconWidget: Icon(Icons.dns, size: 48, color: MintY.currentColor),
+      handlerFunction: (VoidCallback callback, BuildContext context) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => GrubConfigPage(),
+          ),
+        );
       },
     ),
   ];

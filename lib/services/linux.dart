@@ -2647,7 +2647,7 @@ class Linux {
           "git clone https://aur.archlinux.org/snapd.git /tmp/snapd; cd /tmp/snapd; makepkg -si --noconfirm;";
       commandQueue.add(LinuxCommand(
         userId: currentenvironment.currentUserId,
-        command: "bash -c '$bashCode'",
+        command: bashCode,
         environment: {"PATH": getPATH(), "HOME": getHomeDirectory()},
       ));
       commandQueue.add(LinuxCommand(
@@ -2773,6 +2773,116 @@ class Linux {
             message:
                 AppLocalizations.of(context)!.disableCdromSourceDescription,
             route: MainSearchLoader()),
+      ));
+    }
+  }
+
+  static Map<String, dynamic> getGrubSettings() {
+    String grubFileContent = File("/etc/default/grub").readAsStringSync();
+    List<String> lines = grubFileContent.split("\n");
+    Map<String, String> settingsFileMap = {};
+    for (String line in lines) {
+      if (line.contains("=") && !line.trim().startsWith("#")) {
+        List<String> parts = line.split("=");
+        settingsFileMap[parts[0]] = parts[1];
+      }
+    }
+
+    Map<String, dynamic> returnValue = {};
+    returnValue["grubVisible"] =
+        settingsFileMap["GRUB_TIMEOUT_STYLE"] == "menu" ||
+            settingsFileMap["GRUB_TIMEOUT_STYLE"] == null;
+    returnValue["enableBigFont"] = settingsFileMap["GRUB_GFXMODE"] == "640x480";
+    if (settingsFileMap["GRUB_TIMEOUT"] == null) {
+      settingsFileMap["GRUB_TIMEOUT"] = "0";
+    }
+    returnValue["timeout"] =
+        int.tryParse(settingsFileMap["GRUB_TIMEOUT"]!) ?? 0;
+    returnValue["startLastBootedOne"] =
+        settingsFileMap["GRUB_DEFAULT"] == "saved";
+
+    return returnValue;
+  }
+
+  static void ensureGrubSettings(context, bool grubVisible, bool enableBigFont,
+      int timeout, bool startLastBootedOne) {
+    String grub_timeout_style = grubVisible ? "menu" : "hidden";
+    String grub_timeout = timeout.toString();
+    String grub_default = startLastBootedOne ? "saved" : "0";
+    String grub_save_default = startLastBootedOne ? "true" : "false";
+    String grub_gfxmode = enableBigFont ? "640x480" : "";
+
+    if (grub_timeout_style == "menu" && timeout < 1) {
+      grub_timeout = "1";
+    }
+
+    if (grub_timeout_style == "hidden" && timeout < 0) {
+      grub_timeout = "0";
+    }
+
+    ensureOptionInConfigFile(
+        "GRUB_TIMEOUT_STYLE", grub_timeout_style, "/etc/default/grub");
+    ensureOptionInConfigFile("GRUB_TIMEOUT", grub_timeout, "/etc/default/grub");
+    ensureOptionInConfigFile("GRUB_DEFAULT", grub_default, "/etc/default/grub");
+    ensureOptionInConfigFile(
+        "GRUB_SAVEDEFAULT", grub_save_default, "/etc/default/grub");
+    ensureOptionInConfigFile("GRUB_GFXMODE", grub_gfxmode, "/etc/default/grub");
+
+    if (currentenvironment.distribution != DISTROS.FEDORA) {
+      commandQueue.add(LinuxCommand(
+        userId: 0,
+        command: "/usr/sbin/grub-mkconfig -o /boot/grub/grub.cfg",
+      ));
+    } else {
+      commandQueue.add(LinuxCommand(
+        userId: 0,
+        command: "/usr/sbin/grub2-mkconfig -o /boot/grub2/grub.cfg",
+      ));
+    }
+
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => RunCommandQueue(
+          title: AppLocalizations.of(context)!.grubConfiguration,
+          route: MainSearchLoader()),
+    ));
+  }
+
+  /// Used for config files like /etc/default/grub.
+  ///
+  /// Only adds the commands to the command queue to ensure that the key is set to the value.
+  /// If the value is empty, the key will be removed from the file.
+  static void ensureOptionInConfigFile(String key, String value, String path) {
+    /// Remove the key from the file if the value is empty
+    if (value.isEmpty) {
+      commandQueue.add(LinuxCommand(
+        userId: 0,
+        command: "sed -i '/$key/d' $path",
+      ));
+      return;
+    }
+
+    bool settingFound = false;
+    // Check if the key is already in the file and is not commented out
+    String fileContent = File(path).readAsStringSync();
+    List<String> lines = fileContent.split("\n");
+    for (String line in lines) {
+      if (line.contains("$key=") && !line.trim().startsWith("#")) {
+        settingFound = true;
+        break;
+      }
+    }
+
+    if (!settingFound) {
+      // Add the key to the file
+      commandQueue.add(LinuxCommand(
+        userId: 0,
+        command: "echo '$key=$value' >> $path",
+      ));
+    } else {
+      // Replace the key in the file
+      commandQueue.add(LinuxCommand(
+        userId: 0,
+        command: "sed -i 's/$key=.*/$key=$value/' $path",
       ));
     }
   }

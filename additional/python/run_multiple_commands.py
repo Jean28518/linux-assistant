@@ -43,6 +43,6 @@ for line in lines:
         env[key] = value
 
     print(f"-- COMMAND: '{command}' ".ljust(96, "-"))
-    jessentials.run_command(command=command, environment=env, user=user_id)
+    jessentials.run_command(command=f"bash -c \"{command}\"", environment=env, user=user_id)
 
 print(" FINISHED ".center(96, "-"))
