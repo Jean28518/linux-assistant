@@ -62,6 +62,10 @@ class ConfigHandler {
       configMap["config_initialized"] = true;
     } else {
       String configString = await configFile.readAsString();
+      if (configString.trim() == "") {
+        configMap["config_initialized"] = true;
+        return;
+      }
       configMap = jsonDecode(configString);
       configMap["config_initialized"] = true;
     }
