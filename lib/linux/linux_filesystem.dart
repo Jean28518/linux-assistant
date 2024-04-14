@@ -22,7 +22,8 @@ abstract class LinuxFilesystem {
     "tmpfs",
     "/dev/loop",
     "revokefs-fuse",
-    "cgroup"
+    "cgroup",
+    "efivarfs"
   ];
 
   static final List<String> _removableDevices = ["/media/", "/mnt/"];
