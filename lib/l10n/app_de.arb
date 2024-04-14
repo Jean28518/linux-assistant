@@ -348,6 +348,8 @@
   "yayInstalled": "Es wurde Yay gefunden. Yay ist ein AUR-Helper, der Dir das Installieren von AUR-Paketen erleichtert. Das AUR ist ein Community-Repository, in dem viele Pakete von der Community gepflegt werden und eventuell schädlich sein könnten.",
   "openSoftwareCenter": "Öffne Software-Center",
   "openSoftwareCenterDescription": "Öffne das Software-Center, um weitere Anwendungen/Apps zu installieren.",
+  "disableCdromSource": "Deaktiviere CD-ROM-Quelle",
+  "disableCdromSourceDescription": "Ein Relikt der Debian-Installation. Deaktiviere die CDROM-Quelle, um Fehlermeldungen zu vermeiden.",
   "@helloWorld": {
     "placeholders": {},
     "description": "",

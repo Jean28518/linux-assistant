@@ -215,5 +215,16 @@ List<ActionEntry> getBasicEntries(BuildContext context) {
         color: MintY.currentColor,
       ),
     ),
+    ActionEntry(
+      name: AppLocalizations.of(context)!.disableCdromSource,
+      description: AppLocalizations.of(context)!.disableCdromSourceDescription,
+      iconWidget: Icon(Icons.album, size: 48, color: MintY.currentColor),
+      disableEntryIf: () {
+        return !Linux.isCdromSourceEnabledInDebian();
+      },
+      handlerFunction: (VoidCallback callback, BuildContext context) {
+        Linux.disableCdromSourceInDebian(context);
+      },
+    ),
   ];
 }

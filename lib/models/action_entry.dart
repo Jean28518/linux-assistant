@@ -16,17 +16,24 @@ class ActionEntry {
   /// If true, this entry will not be shown in the search bar at the start screen randomly.
   final bool excludeFromSearchProposal;
 
-  ActionEntry(
-      {required this.name,
-      required this.description,
-      required this.action,
-      this.iconURI = "",
-      this.priority = 0,
-      this.keywords = const [],
-      this.iconWidget,
-      this.tmpPriority = 0,
-      this.disableEntryIf,
-      this.excludeFromSearchProposal = false});
+  /// Handler Function which takes a string.
+  /// This function is called when the action String is empty by the action_handler.
+  /// VoidCallback is usally used to get back to start screen and to minimize the window.
+  late Function(VoidCallback, BuildContext)? handlerFunction;
+
+  ActionEntry({
+    required this.name,
+    required this.description,
+    this.action = "",
+    this.handlerFunction,
+    this.iconURI = "",
+    this.priority = 0,
+    this.keywords = const [],
+    this.iconWidget,
+    this.tmpPriority = 0,
+    this.disableEntryIf,
+    this.excludeFromSearchProposal = false,
+  });
 
   @override
   String toString() {

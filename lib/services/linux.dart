@@ -2730,4 +2730,37 @@ class Linux {
         runCommand("/usr/bin/gnome-software");
     }
   }
+
+  static bool isCdromSourceEnabledInDebian() {
+    if (![DISTROS.DEBIAN, DISTROS.MXLINUX, DISTROS.LMDE]
+        .contains(currentenvironment.distribution)) {
+      return false;
+    }
+    if (File("/etc/apt/sources.list").existsSync()) {
+      String fileString = File("/etc/apt/sources.list").readAsStringSync();
+      for (String line in fileString.split("\n")) {
+        if (line.contains("cdrom") && !line.trim().startsWith("#")) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  static void disableCdromSourceInDebian(context) {
+    if ([DISTROS.DEBIAN, DISTROS.MXLINUX, DISTROS.LMDE]
+        .contains(currentenvironment.distribution)) {
+      commandQueue.add(LinuxCommand(
+        userId: 0,
+        command: "/usr/bin/sed -i '/cdrom/d' /etc/apt/sources.list",
+      ));
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => RunCommandQueue(
+            title: AppLocalizations.of(context)!.disableCdromSource,
+            message:
+                AppLocalizations.of(context)!.disableCdromSourceDescription,
+            route: MainSearchLoader()),
+      ));
+    }
+  }
 }

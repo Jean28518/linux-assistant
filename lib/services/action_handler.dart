@@ -25,6 +25,13 @@ class ActionHandler {
   /// The callback is usually the clear function.
   static Future<void> handleActionEntry(ActionEntry actionEntry,
       VoidCallback callback, BuildContext context) async {
+    if (actionEntry.action.isEmpty) {
+      if (actionEntry.handlerFunction != null) {
+        actionEntry.handlerFunction!(callback, context);
+      }
+      return;
+    }
+
     print(actionEntry.action);
 
     // Save opened for intelligent search
