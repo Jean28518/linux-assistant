@@ -28,5 +28,5 @@ chmod 755 deb/DEBIAN
 
 # Build deb package
 sed -i "2s/.*/Version: $VERSION/" deb/DEBIAN/control
-dpkg-deb --build -Zxz deb 
+dpkg-deb --build -Zxz --root-owner-group deb
 mv deb.deb linux-assistant.deb
