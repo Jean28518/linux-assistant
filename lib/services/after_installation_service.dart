@@ -70,9 +70,9 @@ class AfterInstallationService {
 
   static Future<void> applyCurrentOfficeSituation() async {
     Future fLibreOffice = applyApplicationActionIfNecessary([
-      "libreoffice-common",
       "libreoffice-still",
       "libreoffice",
+      "libreoffice-common",
       "org.libreoffice.LibreOffice",
       "libreoffice-writer",
       "libreoffice-calc",
