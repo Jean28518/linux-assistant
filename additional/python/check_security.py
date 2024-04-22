@@ -36,6 +36,8 @@ def get_additional_sources():
             continue
         if "ubuntu-esm-infra.list" in entry: # Ubuntu ESM
             continue
+        if "ubuntu.sources" in entry: # Ubuntu ESM
+            continue
         lines = jfiles.get_all_lines_from_file(entry)
 
         for line in lines:
