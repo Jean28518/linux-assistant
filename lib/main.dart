@@ -130,6 +130,7 @@ class MyApp extends StatelessWidget {
         break;
       case DISTROS.UBUNTU:
         MintY.currentColor = const Color.fromARGB(255, 233, 84, 32);
+        MintY.secondaryColor = const Color.fromARGB(255, 122, 42, 82);
         break;
       case DISTROS.FEDORA:
         MintY.currentColor = const Color.fromARGB(255, 81, 162, 218);
