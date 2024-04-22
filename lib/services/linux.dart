@@ -2076,6 +2076,7 @@ class Linux {
     switch (currentenvironment.distribution) {
       case DISTROS.POPOS:
       case DISTROS.ZORINOS:
+      case DISTROS.UBUNTU:
         return "<Alt>";
       default:
         return "<Super/Windows> ";
