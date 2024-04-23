@@ -29,52 +29,69 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
     Future clearOldEntries = configHandler.clearOldDatesOfOpenendEntries();
 
     // prepare Action Entries
-    ActionEntryList returnValue = ActionEntryList(entries: []);
-    returnValue.entries.addAll(getRecommendations(context));
-    returnValue.entries.addAll(getBasicEntries(context));
+
+    List<Future<List<ActionEntry>>> futures = [];
 
     if (configHandler.getValueUnsafe("search_filter_basic_folders", true)) {
       print("Loading basic folders");
-      var folderEntries = await Linux.getAllFolderEntriesOfUser(context)
-          .timeout(
-              timeoutDuration,
-              onTimeout: () =>
-                  _onTimeoutOfSearchLoadingModule("folderEntries"));
-      returnValue.entries.addAll(folderEntries);
+      futures.add(Linux.getAllFolderEntriesOfUser(context).timeout(
+          timeoutDuration,
+          onTimeout: () =>
+              _onTimeoutOfSearchLoadingModule("applicationEntries")));
+      // future1 = Linux.getAllFolderEntriesOfUser(context);
     }
+
     if (configHandler.getValueUnsafe("search_filter_applications", true)) {
       print("Loading applications");
-      var applicationEntries = await Linux.getAllAvailableApplications()
-          .timeout(timeoutDuration,
-              onTimeout: () =>
-                  _onTimeoutOfSearchLoadingModule("applicationEntries"));
-      returnValue.entries.addAll(applicationEntries);
+      futures.add(Linux.getAllAvailableApplications().timeout(timeoutDuration,
+          onTimeout: () =>
+              _onTimeoutOfSearchLoadingModule("applicationEntries")));
     }
 
     if (configHandler.getValueUnsafe(
         "search_filter_recently_used_files_and_folders", true)) {
       print("Loading recently used files and folders");
-      var recentFiles = await Linux.getRecentFiles(context).timeout(
-          timeoutDuration,
-          onTimeout: () => _onTimeoutOfSearchLoadingModule("recentFiles"));
-      returnValue.entries.addAll(recentFiles);
+      futures.add(Linux.getRecentFiles(context).timeout(timeoutDuration,
+          onTimeout: () => _onTimeoutOfSearchLoadingModule("recentFiles")));
     }
 
     if (configHandler.getValueUnsafe(
         "search_filter_favorite_files_and_folder_bookmarks", true)) {
       print("Loading favorite files and folder bookmarks");
-      var favoriteFiles = await Linux.getFavoriteFiles(context).timeout(
-          timeoutDuration,
-          onTimeout: () => _onTimeoutOfSearchLoadingModule("favoriteFiles"));
-      returnValue.entries.addAll(favoriteFiles);
+      futures.add(Linux.getFavoriteFiles(context).timeout(timeoutDuration,
+          onTimeout: () => _onTimeoutOfSearchLoadingModule("favoriteFiles")));
     }
 
     if (configHandler.getValueUnsafe("search_filter_bookmarks", true)) {
       print("Loading browser bookmarks");
-      var browserBookmarks = await Linux.getBrowserBookmarks(context).timeout(
-          timeoutDuration,
-          onTimeout: () => _onTimeoutOfSearchLoadingModule("browserBookmarks"));
-      returnValue.entries.addAll(browserBookmarks);
+      futures.add(Linux.getBrowserBookmarks(context).timeout(timeoutDuration,
+          onTimeout: () =>
+              _onTimeoutOfSearchLoadingModule("browserBookmarks")));
+    }
+
+    // Flatpak Index Installations
+    if (configHandler.getValueUnsafe("search_filter_install_software", true)) {
+      print("Loading flatpaks");
+      futures.add(Linux.getAvailableFlatpaks(context).timeout(timeoutDuration,
+          onTimeout: () => _onTimeoutOfSearchLoadingModule("flatpaks")));
+    }
+
+    // Deinstallation Entries.
+    if (configHandler.getValueUnsafe(
+        "search_filter_uninstall_software", true)) {
+      print("Loading uninstall entries");
+      futures.add(Linux.getUninstallEntries(context).timeout(timeoutDuration,
+          onTimeout: () =>
+              _onTimeoutOfSearchLoadingModule("uninstall_entries")));
+    }
+
+    ActionEntryList returnValue = ActionEntryList(entries: []);
+    returnValue.entries.addAll(getRecommendations(context));
+    returnValue.entries.addAll(getBasicEntries(context));
+
+    // Collect all Futures in our returnValue.
+    for (Future<List<ActionEntry>> future in futures) {
+      returnValue.entries.addAll(await future);
     }
 
     if (configHandler.getValueUnsafe(
@@ -82,27 +99,8 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
       print("Loading recently used files and folders");
       var additionalFolders =
           Linux.getFoldersOfActionEntries(context, returnValue.entries);
+      print("Finished: search_filter_recently_used_files_and_folders");
       returnValue.entries.addAll(additionalFolders);
-    }
-
-    // Flatpak Index Installations
-    if (configHandler.getValueUnsafe("search_filter_install_software", true)) {
-      print("Loading flatpaks");
-      var flatpaks = await Linux.getAvailableFlatpaks(context).timeout(
-          timeoutDuration,
-          onTimeout: () => _onTimeoutOfSearchLoadingModule("flatpaks"));
-      returnValue.entries.addAll(flatpaks);
-    }
-
-    // Deinstallation Entries.
-    if (configHandler.getValueUnsafe(
-        "search_filter_uninstall_software", true)) {
-      print("Loading uninstall entries");
-      var actions = await Linux.getUninstallEntries(context).timeout(
-          timeoutDuration,
-          onTimeout: () =>
-              _onTimeoutOfSearchLoadingModule("uninstall_entries"));
-      returnValue.entries.addAll(actions);
     }
 
     // Remove action entries for specific environments
@@ -122,6 +120,10 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
     print("Initiating configHandler");
     await configHandler.setValue("runFirstStartUp", false);
     await clearOldEntries;
+
+    // EntryCache.saveEntries(returnValue.entries);
+
+    // returnValue = EntryCache.loadEntries();
 
     return returnValue;
   }
