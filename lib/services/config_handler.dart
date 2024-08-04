@@ -53,21 +53,25 @@ class ConfigHandler {
   }
 
   Future<void> loadConfigFromFile() async {
-    String homeDir = Linux.getHomeDirectory();
+    try {
+      String homeDir = Linux.getHomeDirectory();
 
-    File configFile = File("$homeDir.config/linux-assistant/config.json");
-    if (!await configFile.exists()) {
-      await Linux.runCommand(
-          "/usr/bin/mkdir -p $homeDir.config/linux-assistant/");
-      configMap["config_initialized"] = true;
-    } else {
-      String configString = await configFile.readAsString();
-      if (configString.trim() == "") {
+      File configFile = File("$homeDir.config/linux-assistant/config.json");
+      if (!await configFile.exists()) {
+        await Linux.runCommand(
+            "/usr/bin/mkdir -p $homeDir.config/linux-assistant/");
         configMap["config_initialized"] = true;
-        return;
+      } else {
+        String configString = await configFile.readAsString();
+        if (configString.trim() == "") {
+          configMap["config_initialized"] = true;
+          return;
+        }
+        configMap = jsonDecode(configString);
+        configMap["config_initialized"] = true;
       }
-      configMap = jsonDecode(configString);
-      configMap["config_initialized"] = true;
+    } catch (e) {
+      print("Error: Loading linux-assistant config failed: $e");
     }
   }
 
