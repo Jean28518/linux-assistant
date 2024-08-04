@@ -32,9 +32,9 @@ def get_additional_sources():
             continue        
         if "preinstalled-pool.list" in entry: # KDE neon
             continue
-        if "ubuntu-esm-apps.list" in entry: # Ubuntu ESM
+        if "ubuntu-esm-apps.sources" in entry: # Ubuntu ESM
             continue
-        if "ubuntu-esm-infra.list" in entry: # Ubuntu ESM
+        if "ubuntu-esm-infra.sources" in entry: # Ubuntu ESM
             continue
         if "ubuntu.sources" in entry: # Ubuntu ESM
             continue
