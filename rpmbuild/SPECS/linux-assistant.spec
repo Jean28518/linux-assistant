@@ -7,7 +7,7 @@ Source0:        %{name}-%{version}.tar.gz
 %if 0%{?suse_version}
 Requires:       libkeybinder-3_0-0 wmctrl wget python3
 %else
-Requires:       keybinder wmctrl wget python3
+Requires:       keybinder3 wmctrl wget python3
 %endif
 Provides:       libflutter_linux_gtk.so()(64bit) libhotkey_manager_plugin.so()(64bit) libscreen_retriever_plugin.so()(64bit) libscreen_retriever_plugin.so()(64bit) libwindow_manager_plugin.so()(64bit)
 
