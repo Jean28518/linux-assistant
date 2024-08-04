@@ -42,12 +42,12 @@ class AppearanceSettings extends StatelessWidget {
               parseFunction: _parseHexColor),
           InkWell(
             child: Text(
-              "Google color ticker for HEX code: https://g.co/kgs/y9cdNg",
+              "Web color picker for HEX code: https://www.fffuel.co/cccolor/",
               style: Theme.of(context).textTheme.bodyMedium,
               textAlign: TextAlign.center,
             ),
             onTap: () {
-              Linux.openWebbrowserWithSite("https://g.co/kgs/y9cdNg");
+              Linux.openWebbrowserWithSite("https://www.fffuel.co/cccolor/");
             },
           )
         ],
