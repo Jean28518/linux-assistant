@@ -6,7 +6,7 @@ import 'package:linux_assistant/enums/desktops.dart';
 import 'package:linux_assistant/enums/softwareManagers.dart';
 import 'package:linux_assistant/layouts/after_installation/after_installation_entry.dart';
 import 'package:linux_assistant/layouts/disk_cleaner/cleaner_select_disk.dart';
-import 'package:linux_assistant/layouts/greeter/activate_hotkey.dart';
+import 'package:linux_assistant/layouts/after_installation/activate_hotkey.dart';
 import 'package:linux_assistant/layouts/greeter/introduction.dart';
 import 'package:linux_assistant/layouts/linux_health/overview.dart';
 import 'package:linux_assistant/layouts/power_mode/power_mode.dart';

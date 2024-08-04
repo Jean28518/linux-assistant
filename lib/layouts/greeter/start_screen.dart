@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:linux_assistant/layouts/greeter/introduction.dart';
-import 'package:linux_assistant/layouts/greeter/is_environment_correct.dart';
 import 'package:linux_assistant/layouts/mint_y.dart';
 import 'package:linux_assistant/services/config_handler.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -57,7 +56,7 @@ class StartScreen extends StatelessWidget {
                 overflow: TextOverflow.visible,
               ),
             ),
-            MintYButtonNext(route: const IsYourEnvironmentCorrectView())
+            MintYButtonNext(route: const GreeterIntroduction())
           ],
         ),
       ),

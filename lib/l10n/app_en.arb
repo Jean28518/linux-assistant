@@ -6,7 +6,7 @@
   "securityCheckDescription": "Keep the security of your computer in track.",
   "warpinatorDescription": "Send files quickly over the local network. To Linux, Android, iOS and Windows.",
   "securityCheck": "Security Check",
-  "afterInstallation": "After Installation",
+  "afterInstallation": "First steps after installation",
   "afterInstallationDescription": "Set up your linux machine to your needs.",
   "openX": "Open",
   "searchInWebFor": "Search in web for",
@@ -357,6 +357,7 @@
   "grubCountdown": "Time until automatic start (in seconds)",
   "startLastBootedEntry": "Start the last booted entry",
   "save": "Save",
+  "distribution_selection": "Distribution selection",
   "@helloWorld": {
     "placeholders": {},
     "description": "The conventional newborn programmer greeting",

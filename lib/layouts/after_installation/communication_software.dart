@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linux_assistant/layouts/after_installation/activate_hotkey.dart';
 import 'package:linux_assistant/layouts/after_installation/automatic_configuration_entry.dart';
 import 'package:linux_assistant/layouts/mint_y.dart';
 import 'package:linux_assistant/widgets/system_icon.dart';
@@ -284,7 +285,9 @@ class AfterInstallationCommunicationSoftwareSelection extends StatelessWidget {
         ],
       ),
       bottom: MintYButtonNext(
-        route: const AfterInstallationAutomaticConfigurationEntry(),
+        route: ActivateHotkeyQuestion(
+          route: const AfterInstallationAutomaticConfigurationEntry(),
+        ),
         onPressedFuture: () async {
           await AfterInstallationService.applyCommunicationSituation();
         },

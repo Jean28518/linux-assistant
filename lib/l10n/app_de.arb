@@ -7,7 +7,7 @@
   "warpinatorDescription": "Sende Dateien schnell über das lokale Netzwerk. Zu Linux, Android, iOS und Windows.",
   "sendFeedback": "Sende Feedback",
   "securityCheck": "Sicherheitsüberprüfung",
-  "afterInstallation": "Nach der Installation",
+  "afterInstallation": "Erste Schritte nach der Installation",
   "afterInstallationDescription": "Setze Deinen Linux-Rechner nach Deinen Bedürfnissen auf.",
   "openX": "Öffne",
   "searchInWebFor": "Suche im Internet nach",
@@ -357,6 +357,7 @@
   "grubCountdown": "Zeit bis zum automatischen Start (in Sekunden)",
   "startLastBootedEntry": "Starte den zuletzt gebooteten Eintrag",
   "save": "Speichern",
+  "distribution_selection": "Distributions-Auswahl",
   "@helloWorld": {
     "placeholders": {},
     "description": "",

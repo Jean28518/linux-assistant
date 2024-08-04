@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:linux_assistant/content/recommendations.dart';
 import 'package:linux_assistant/models/action_entry.dart';
 import 'package:linux_assistant/services/action_handler.dart';
+import 'package:linux_assistant/services/config_handler.dart';
 
 class RecommendationCard extends StatelessWidget {
   const RecommendationCard({Key? key}) : super(key: key);
@@ -11,6 +12,18 @@ class RecommendationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     int rand = Random().nextInt(getRecommendations(context).length);
     ActionEntry entry = getRecommendations(context)[rand];
+
+    // Ensure to display the after installation recommendation 5 times directly after installation of the app
+    int displayedAfterInstallationRecommendation = ConfigHandler()
+        .getValueUnsafe("displayedAfterInstallationRecommendation", 0);
+    if (displayedAfterInstallationRecommendation < 5) {
+      entry = getRecommendations(context)
+          .firstWhere((element) => element.action == "after_installation");
+      displayedAfterInstallationRecommendation++;
+      ConfigHandler().setValue("displayedAfterInstallationRecommendation",
+          displayedAfterInstallationRecommendation);
+    }
+
     return Card(
       child: InkWell(
         onTap: () {

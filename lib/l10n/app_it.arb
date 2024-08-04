@@ -337,6 +337,7 @@
   "automaticCleanupDescription": "Pulisci automaticamente il tuo spazio di archiviazione eliminando file temporanei e cache dei pacchetti. Verranno svuotati anche i contenitori del cestino.",
   "diskUsage": "Utilizzo del disco",
   "settingUpFirewall": "Configura firewall...",
+  "distribution_selection": "Selezione della distribuzione",
   "@helloWorld": {
     "placeholders": {},
     "description": "Il saluto convenzionale del programmatore appena nato",
