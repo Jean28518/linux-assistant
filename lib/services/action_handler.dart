@@ -209,7 +209,7 @@ class ActionHandler {
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => const RunCommandQueue(
+            builder: (context) => RunCommandQueue(
                   title: "APT",
                   message: "Your package will be installed in a few moments...",
                   route: MainSearchLoader(),
@@ -238,7 +238,7 @@ class ActionHandler {
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => const RunCommandQueue(
+            builder: (context) => RunCommandQueue(
                   title: "Zypper",
                   message: "Your package will be installed in a few moments...",
                   route: MainSearchLoader(),
@@ -267,7 +267,7 @@ class ActionHandler {
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => const RunCommandQueue(
+            builder: (context) => RunCommandQueue(
                   title: "DNF",
                   message: "Your package will be installed in a few moments...",
                   route: MainSearchLoader(),

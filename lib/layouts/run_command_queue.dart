@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:hotkey_manager/hotkey_manager.dart';
 
 import 'package:linux_assistant/layouts/mint_y.dart';
 import 'package:linux_assistant/models/linux_command.dart';
@@ -14,8 +15,9 @@ class RunCommandQueue extends StatelessWidget {
   final Widget route;
   final bool offerShutdownAfterwards;
   static bool shutdownAfterwards = false;
+  bool commandQueueCompleted = false;
 
-  const RunCommandQueue({
+  RunCommandQueue({
     super.key,
     this.message = "",
     required this.title,
@@ -28,6 +30,8 @@ class RunCommandQueue extends StatelessWidget {
     if (Linux.commandQueue.isEmpty) {
       return route;
     }
+
+    initHotkeysForKeyboardUse(context);
 
     // Build data for table
     List<LinuxCommand> commands = Linux.commandQueue;
@@ -56,6 +60,7 @@ class RunCommandQueue extends StatelessWidget {
           if (offerShutdownAfterwards && shutdownAfterwards) {
             Linux.shutdown();
           }
+          commandQueueCompleted = true;
           return MintYPage(
             title: title,
             contentElements: [
@@ -169,6 +174,22 @@ class RunCommandQueue extends StatelessWidget {
         }
       },
     );
+  }
+
+  void initHotkeysForKeyboardUse(BuildContext context) {
+    HotKey enter = HotKey(
+      KeyCode.enter,
+      scope: HotKeyScope.inapp,
+    );
+    hotKeyManager.register(enter, keyDownHandler: (hotKey) {
+      if (commandQueueCompleted) {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => route,
+          ),
+        );
+      }
+    });
   }
 }
 
