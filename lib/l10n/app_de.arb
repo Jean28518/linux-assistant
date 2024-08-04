@@ -358,6 +358,7 @@
   "startLastBootedEntry": "Starte den zuletzt gebooteten Eintrag",
   "save": "Speichern",
   "distribution_selection": "Distributions-Auswahl",
+  "copyCommands": "Befehle kopieren",
   "@helloWorld": {
     "placeholders": {},
     "description": "",

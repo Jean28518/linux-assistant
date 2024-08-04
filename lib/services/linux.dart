@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:linux_assistant/enums/browsers.dart';
 import 'package:linux_assistant/enums/desktops.dart';
 import 'package:linux_assistant/enums/distros.dart';
@@ -2886,5 +2887,9 @@ class Linux {
         command: "sed -i 's/$key=.*/$key=$value/' $path",
       ));
     }
+  }
+
+  static void copyToClipboard(String text) {
+    Clipboard.setData(ClipboardData(text: text));
   }
 }

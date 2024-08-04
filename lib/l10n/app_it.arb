@@ -338,6 +338,7 @@
   "diskUsage": "Utilizzo del disco",
   "settingUpFirewall": "Configura firewall...",
   "distribution_selection": "Selezione della distribuzione",
+  "copyCommands": "Copia comandi",
   "@helloWorld": {
     "placeholders": {},
     "description": "Il saluto convenzionale del programmatore appena nato",

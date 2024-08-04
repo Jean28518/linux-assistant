@@ -358,6 +358,7 @@
   "startLastBootedEntry": "Start the last booted entry",
   "save": "Save",
   "distribution_selection": "Distribution selection",
+  "copyCommands": "Copy commands",
   "@helloWorld": {
     "placeholders": {},
     "description": "The conventional newborn programmer greeting",

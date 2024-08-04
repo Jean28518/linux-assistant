@@ -253,6 +253,21 @@ class _CommandTableState extends State<CommandTable> {
                 child: MintYTable(data: widget.tableData),
               )
             : Container(),
+        showTable
+            ? MintYButton(
+                text: Text(AppLocalizations.of(context)!.copyCommands,
+                    style: MintY.heading4),
+                onPressed: () {
+                  // Get all commands as a string
+                  String commands = "";
+                  // Skip first row
+                  for (int i = 1; i < widget.tableData.length; i++) {
+                    commands += "${widget.tableData[i][0]}\n";
+                  }
+                  Linux.copyToClipboard(commands);
+                },
+              )
+            : Container(),
       ],
     );
   }
