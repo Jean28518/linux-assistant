@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:linux_assistant/enums/distros.dart';
 import 'package:linux_assistant/layouts/disk_cleaner/clean_disk.dart';
@@ -7,7 +9,9 @@ import 'package:linux_assistant/services/linux.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DiskSpace extends StatelessWidget {
-  const DiskSpace({Key? key}) : super(key: key);
+  DiskSpace({Key? key}) : super(key: key);
+
+  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -48,12 +52,21 @@ class DiskSpace extends StatelessWidget {
           barCharts.removeLast();
           return Card(
             child: Container(
+              width: min(MediaQuery.of(context).size.width - 700,
+                  barCharts.length * 55.0),
+              height: 150,
               padding: const EdgeInsets.all(10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: barCharts,
-              ),
+              child: Scrollbar(
+                  controller: _scrollController,
+                  thumbVisibility: true,
+                  child: ListView.builder(
+                    controller: _scrollController,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: barCharts.length,
+                    itemBuilder: (context, index) {
+                      return barCharts[index];
+                    },
+                  )),
             ),
           );
         } else {

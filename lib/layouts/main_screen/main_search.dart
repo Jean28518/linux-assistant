@@ -91,7 +91,7 @@ class _MainSearchState extends State<MainSearch> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     _foundEntries.isEmpty
-                        ? const Row(
+                        ? Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               SizedBox(width: 16),
