@@ -72,11 +72,44 @@ class RunCommandQueue extends StatelessWidget {
               const SizedBox(
                 height: 16,
               ),
-              Text(
-                "Complete.",
-                style: Theme.of(context).textTheme.bodyMedium,
-                textAlign: TextAlign.center,
-              ),
+              snapshot.data!.contains(
+                      "Error executing command as another user: Request dismissed")
+                  ? Column(
+                      children: [
+                        Text(
+                          AppLocalizations.of(context)!.errorThisDidntWork,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        MintYButton(
+                          text: Text(
+                            AppLocalizations.of(context)!.retry,
+                            style: MintY.heading4White,
+                          ),
+                          color: MintY.currentColor,
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  builder: (context) => RunCommandQueue(
+                                        route: route,
+                                        title: title,
+                                        message: message,
+                                        offerShutdownAfterwards:
+                                            offerShutdownAfterwards,
+                                      )),
+                            );
+                          },
+                        )
+                      ],
+                    )
+                  : Text(
+                      AppLocalizations.of(context)!.complete,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                      textAlign: TextAlign.center,
+                    ),
             ],
             bottom: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -135,6 +168,9 @@ class RunCommandQueue extends StatelessWidget {
                 ),
                 MintYButtonNext(
                   route: route,
+                  onPressed: () {
+                    Linux.clearCommandQueue();
+                  },
                 ),
               ],
             ),
@@ -183,6 +219,7 @@ class RunCommandQueue extends StatelessWidget {
     );
     hotKeyManager.register(enter, keyDownHandler: (hotKey) {
       if (commandQueueCompleted) {
+        Linux.clearCommandQueue();
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => route,

@@ -359,6 +359,8 @@
   "save": "Save",
   "distribution_selection": "Distribution selection",
   "copyCommands": "Copy commands",
+  "errorThisDidntWork": "That didn't work.",
+  "complete": "Complete",
   "@helloWorld": {
     "placeholders": {},
     "description": "The conventional newborn programmer greeting",

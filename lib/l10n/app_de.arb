@@ -359,6 +359,8 @@
   "save": "Speichern",
   "distribution_selection": "Distributions-Auswahl",
   "copyCommands": "Befehle kopieren",
+  "errorThisDidntWork": "Das hat leider nicht funktioniert.",
+  "complete": "Abgeschlossen",
   "@helloWorld": {
     "placeholders": {},
     "description": "",

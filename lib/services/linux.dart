@@ -1385,7 +1385,6 @@ class Linux {
 
     // Example of a line:
     // "0";"apt update";"DEBIAN_NONINTERACTIVE='true'";
-    commandQueue.clear();
 
     String checksum = Hashing.getMd5OfString(string);
 
@@ -1397,6 +1396,10 @@ class Linux {
         arguments: ["--md5=$checksum", "--path=$filepath"], root: true);
 
     return output;
+  }
+
+  static void clearCommandQueue() {
+    commandQueue.clear();
   }
 
   static Future<int> getUserIdOfCurrentUser() async {

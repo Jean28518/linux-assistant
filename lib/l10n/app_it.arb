@@ -339,6 +339,8 @@
   "settingUpFirewall": "Configura firewall...",
   "distribution_selection": "Selezione della distribuzione",
   "copyCommands": "Copia comandi",
+  "errorThisDidntWork": "Errore! Questo non ha funzionato.",
+  "complete": "Completa",
   "@helloWorld": {
     "placeholders": {},
     "description": "Il saluto convenzionale del programmatore appena nato",
