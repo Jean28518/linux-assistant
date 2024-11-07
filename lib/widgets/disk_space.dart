@@ -53,7 +53,7 @@ class DiskSpace extends StatelessWidget {
           return Card(
             child: Container(
               width: min(MediaQuery.of(context).size.width - 700,
-                  barCharts.length * 55.0 + 55.0),
+                  barCharts.length * 55.0 + 75.0),
               height: 150,
               padding: const EdgeInsets.all(10),
               child: Scrollbar(
