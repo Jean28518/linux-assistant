@@ -569,13 +569,16 @@ class Linux {
         if ((softwareManager == null ||
                 softwareManager == SOFTWARE_MANAGERS.FLATPAK) &&
             isFlatpakInstalled) {
-          commandQueue.add(
-            LinuxCommand(
-              userId: currentenvironment.currentUserId,
-              command:
-                  "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.FLATPAK)} remove $appCode -y --noninteractive",
-            ),
-          );
+          commandQueue.add(LinuxCommand(
+            userId: currentenvironment.currentUserId,
+            command:
+                "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.FLATPAK)} remove $appCode -y --noninteractive",
+          ));
+          commandQueue.add(LinuxCommand(
+            userId: 0,
+            command:
+                "${getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.FLATPAK)} uninstall $appCode -y --noninteractive --system",
+          ));
         }
       }
 
@@ -1484,6 +1487,53 @@ class Linux {
     return results;
   }
 
+  static Future<List<ActionEntry>> getInstallableFlatpakPackagesForKeyword(
+      String keyword) async {
+    if (keyword.length <= 3) {
+      return [];
+    }
+    String output = await runCommandWithCustomArguments(
+        getExecutablePathOfSoftwareManager(SOFTWARE_MANAGERS.FLATPAK),
+        ["search", keyword, "--columns=application,name,description"]);
+    output = output.trim();
+    List<String> lines = output.split("\n");
+
+    if (output.contains("No matches found")) {
+      return [];
+    }
+
+    print(output);
+    print(lines.length);
+
+    if (lines.length > 100) {
+      return [];
+    }
+
+    List<ActionEntry> results = [];
+    for (String line in lines) {
+      List<String> lineParts = line.split("\t");
+      if (lineParts.length < 3) {
+        continue;
+      }
+      String appID = lineParts[0].trim();
+      String appName = lineParts[1].trim();
+      String appDescription = lineParts[2].trim();
+      results.add(ActionEntry(
+        iconWidget: Icon(
+          Icons.archive,
+          size: 48,
+          color: MintY.currentColor,
+        ),
+        name: "Install $appName (Flatpak)",
+        description: appDescription,
+        action: "flatpak-install:$appID",
+        priority: -20,
+      ));
+    }
+
+    return results;
+  }
+
   /// Only returns results if keyword is longer than 3 and there are under 100 results.
   static Future<List<ActionEntry>> getInstallableZypperPackagesForKeyword(
       String keyword) async {
@@ -2177,44 +2227,6 @@ class Linux {
 
   static void shutdown({int minutes = 0}) {
     Linux.runCommand("/sbin/shutdown $minutes");
-  }
-
-  static Future<List<ActionEntry>> getAvailableFlatpaks(
-      BuildContext context) async {
-    String homeDir = Linux.getHomeDirectory();
-
-    List<ActionEntry> returnValue = [];
-    try {
-      String installedFlatpaks = await Linux.runCommandWithCustomArguments(
-          "/usr/bin/flatpak", ["list", "--app", "--columns=application"]);
-
-      File flathubIndexFile =
-          File("$homeDir.config/linux-assistant/flathub_index.json");
-      List<dynamic> responseMap =
-          json.decode(flathubIndexFile.readAsStringSync());
-      for (Map<String, dynamic> app in responseMap) {
-        if (!installedFlatpaks
-            .contains(app["flatpakAppId"].toString().trim())) {
-          ActionEntry entry = ActionEntry(
-            name: AppLocalizations.of(context)!
-                .installX("${app["name"]} (Flatpak)"),
-            description: app["summary"],
-            action: "flatpak-install:${app["flatpakAppId"]}",
-            priority: -19.0,
-            iconWidget: Icon(
-              Icons.archive_rounded,
-              size: 48,
-              color: MintY.currentColor,
-            ),
-            excludeFromSearchProposal: true,
-          );
-          returnValue.add(entry);
-        }
-      }
-    } catch (e) {
-      print(e.toString());
-    }
-    return returnValue;
   }
 
   static Future<String> getUsername() async {

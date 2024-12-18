@@ -69,13 +69,6 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
               _onTimeoutOfSearchLoadingModule("browserBookmarks")));
     }
 
-    // Flatpak Index Installations
-    if (configHandler.getValueUnsafe("search_filter_install_software", true)) {
-      print("Loading flatpaks");
-      futures.add(Linux.getAvailableFlatpaks(context).timeout(timeoutDuration,
-          onTimeout: () => _onTimeoutOfSearchLoadingModule("flatpaks")));
-    }
-
     // Deinstallation Entries.
     if (configHandler.getValueUnsafe(
         "search_filter_uninstall_software", true)) {

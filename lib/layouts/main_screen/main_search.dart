@@ -484,6 +484,13 @@ class _MainSearchState extends State<MainSearch> {
     }
 
     if (Linux.currentenvironment.installedSoftwareManagers
+        .contains(SOFTWARE_MANAGERS.FLATPAK)) {
+      List<ActionEntry> flatpaks =
+          await Linux.getInstallableFlatpakPackagesForKeyword(keyword);
+      heavyEntries.addAll(flatpaks);
+    }
+
+    if (Linux.currentenvironment.installedSoftwareManagers
         .contains(SOFTWARE_MANAGERS.PACMAN)) {
       List<ActionEntry> pacmanEntries =
           await Linux.getInstallablePacmanPakagesForKeyword(keyword);
