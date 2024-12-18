@@ -26,6 +26,10 @@ cp linux-assistant.sh deb/usr/bin/linux-assistant
 chmod +x deb/usr/bin/linux-assistant
 chmod 755 deb/DEBIAN
 
+# Estimate the installed size by summing the sizes of all files in the deb directory
+SIZE=$(du -s deb | cut -f1)
+sed -i "s/Installed-Size: .*/Installed-Size: $SIZE/" deb/DEBIAN/control
+
 # Build deb package
 sed -i "2s/.*/Version: $VERSION/" deb/DEBIAN/control
 dpkg-deb --build -Zxz --root-owner-group deb
