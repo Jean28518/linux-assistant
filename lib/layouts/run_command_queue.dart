@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hotkey_manager/hotkey_manager.dart';
 
 import 'package:linux_assistant/layouts/mint_y.dart';
@@ -214,7 +215,7 @@ class RunCommandQueue extends StatelessWidget {
 
   void initHotkeysForKeyboardUse(BuildContext context) {
     HotKey enter = HotKey(
-      KeyCode.enter,
+      key: PhysicalKeyboardKey.enter,
       scope: HotKeyScope.inapp,
     );
     hotKeyManager.register(enter, keyDownHandler: (hotKey) {

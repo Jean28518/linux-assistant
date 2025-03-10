@@ -40,20 +40,22 @@ class SingleBarChart extends StatelessWidget {
               maxY: size,
               minY: 0,
               alignment: BarChartAlignment.spaceEvenly,
-              barTouchData: BarTouchData(
-                  touchTooltipData: BarTouchTooltipData(
-                      tooltipBgColor: backgroundColor,
-                      getTooltipItem: ((group, groupIndex, rod, rodIndex) {
-                        if (tooltip == "") {
-                          return null;
-                        }
-                        switch (groupIndex) {
-                          case 0:
-                            return BarTooltipItem(tooltip, textStyle);
-                          default:
-                            return null;
-                        }
-                      }))),
+              barTouchData: BarTouchData(touchTooltipData: BarTouchTooltipData(
+                  getTooltipItem: ((group, groupIndex, rod, rodIndex) {
+                if (tooltip == "") {
+                  return null;
+                }
+                switch (groupIndex) {
+                  case 0:
+                    return BarTooltipItem(
+                        tooltip,
+                        TextStyle(
+                          color: Colors.white,
+                        ));
+                  default:
+                    return null;
+                }
+              }))),
               borderData: FlBorderData(show: false),
               gridData: FlGridData(show: false),
               barGroups: [generateGroupData()],

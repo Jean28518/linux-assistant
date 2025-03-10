@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hotkey_manager/hotkey_manager.dart';
 import 'package:linux_assistant/content/top_level_domains.dart';
 import 'package:linux_assistant/enums/softwareManagers.dart';
@@ -551,7 +552,7 @@ class _MainSearchState extends State<MainSearch> {
 
   void initHotkeysForKeyboardUse() {
     HotKey down = HotKey(
-      KeyCode.arrowDown,
+      key: PhysicalKeyboardKey.arrowDown,
       scope: HotKeyScope.inapp,
     );
     hotKeyManager.register(
@@ -571,7 +572,7 @@ class _MainSearchState extends State<MainSearch> {
     );
 
     HotKey up = HotKey(
-      KeyCode.arrowUp,
+      key: PhysicalKeyboardKey.arrowUp,
       scope: HotKeyScope.inapp,
     );
     hotKeyManager.register(
@@ -591,7 +592,7 @@ class _MainSearchState extends State<MainSearch> {
     );
 
     HotKey escape = HotKey(
-      KeyCode.escape,
+      key: PhysicalKeyboardKey.escape,
       scope: HotKeyScope.inapp,
     );
     hotKeyManager.register(
@@ -603,8 +604,8 @@ class _MainSearchState extends State<MainSearch> {
 
     // Debug Call
     HotKey hotKeyDebug = HotKey(
-      KeyCode.keyD,
-      modifiers: [KeyModifier.control],
+      key: PhysicalKeyboardKey.keyD,
+      modifiers: [HotKeyModifier.control],
       scope: HotKeyScope.inapp,
     );
     hotKeyManager.register(

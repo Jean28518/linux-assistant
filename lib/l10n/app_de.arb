@@ -115,7 +115,9 @@
   "openLinuxAssistantFasterDescription": "Mit der Tastenkombination {modifier} + <Q> könntest Du direkt Deinen Assistenten schneller öffnen.\nUm mit Deinem Rechner produktiver zu arbeiten, wird dieser Schritt wärmstens empfohlen.",
   "@openLinuxAssistantFasterDescription": {
     "placeholders": {
-      "modifier" : {}
+      "modifier" : {
+        "type": "Object"
+      }
     },
     "description": "",
     "type": "text"
@@ -138,7 +140,9 @@
   "youCanOpenLinuxAssistantWithHotkey": "Du kannst den Linux-Assistant immer mit der Tastenkombination {modifier} + <Q> öffnen. Wenn dies noch nicht funktioniert, rufe in der Suche 'Tastatur Kurzbefehl' auf.",
   "@youCanOpenLinuxAssistantWithHotkey": {
     "placeholders": {
-      "modifier" : {}
+      "modifier" : {
+        "type": "Object"
+      }
     },
     "description": "",
     "type": "text"
@@ -152,8 +156,12 @@
   "uptimeWarning": "Dein Linux-System wurde schon lange nicht mehr neu gestartet. Um potentielle Fehler zu vermeiden werden regelmäßige Neustarts empfohlen. Der letzte Neustart war vor {time} {unit}.",
   "@uptimeWarning": {
     "placeholders": {
-      "time" : {},
-      "unit" : {}
+      "time" : {
+        "type": "Object"
+      },
+      "unit" : {
+        "type": "Object"
+      }
     },
     "description": "",
     "type": "text"
@@ -161,8 +169,12 @@
   "uptimePass": "Dein Linux-System läuft erst seit {time} {unit}. Das ist gut!",
   "@uptimePass": {
     "placeholders": {
-      "time" : {},
-      "unit" : {}
+      "time" : {
+        "type": "Object"
+      },
+      "unit" : {
+        "type": "Object"
+      }
     },
     "description": "",
     "type": "text"
@@ -173,8 +185,12 @@
   "processesWithZombiesMessage": "Aktuell laufen {processes} Prozesse. Von diesen wurden {zombies} Zombies gefunden.",
   "@processesWithZombiesMessage": {
     "placeholders": {
-      "processes" : {},
-      "zombies" : {}
+      "processes" : {
+        "type": "Object"
+      },
+      "zombies" : {
+        "type": "Object"
+      }
     },
     "description": "",
     "type": "text"
@@ -182,7 +198,9 @@
   "removableDevicesWarning": "Es wurden {removableDevices} entfernbare Speicher-Geräte/(Partitionen) gefunden. Wenn Du diese aktuell nicht benötigst, wird aufgrund Sicherheitsgründen und der Gesundheit dieser Geräte empfohlen, diese zu entfernen.",
   "@removableDevicesWarning": {
     "placeholders": {
-      "removableDevices" : {}
+      "removableDevices" : {
+        "type": "Object"
+      }
     },
     "description": "",
     "type": "text"
@@ -201,7 +219,9 @@
   "applyUpdatesSinceReleaseDescription": "Seit der Veröffentlichung der aktuellen {distro}-Version sind unter Umständen Aktualisierungen verfügbar. Wende diese Aktualisierungen an.",
   "@applyUpdatesSinceReleaseDescription": {
     "placeholders": {
-      "distro" : {}
+      "distro" : {
+        "type": "Object"
+      }
     },
     "description": "",
     "type": "text"
@@ -213,7 +233,9 @@
   "setUpLinuxAssistantKeyboardShortcut": "Richte die Tastenkombination {modifier} + <Q> ein, um Linux-Assistant von überall aus schnell zu öffnen.",
   "@setUpLinuxAssistantKeyboardShortcut": {
     "placeholders": {
-      "modifier" : {}
+      "modifier" : {
+        "type": "Object"
+      }
     },
     "description": "",
     "type": "text"
@@ -229,7 +251,9 @@
   "installX": "Installiere {app}",
   "@installX": {
     "placeholders": {
-      "app" : {}
+      "app" : {
+        "type": "Object"
+      }
     },
     "description": "",
     "type": "text"
@@ -237,7 +261,9 @@
   "installingXDescription": "Installiere {app}...\nSie müssen {app} danach separat öffnen.",
   "@installingXDescription": {
     "placeholders": {
-      "app" : {}
+      "app" : {
+        "type": "Object"
+      }
     },
     "description": "",
     "type": "text"
@@ -291,7 +317,9 @@
   "uninstallingXDescription": "Deinstalliere {app}...",
   "@uninstallingXDescription": {
     "placeholders": {
-      "app" : {}
+      "app" : {
+        "type": "Object"
+      }
     },
     "description": "",
     "type": "text"
@@ -299,7 +327,9 @@
   "uninstallApp": "Deinstalliere {app}",
   "@uninstallApp": {
     "placeholders": {
-      "app" : {}
+      "app" : {
+        "type": "Object"
+      }
     },
     "description": "",
     "type": "text"
@@ -307,7 +337,9 @@
   "uninstallAppWarning": "Möchtest Du wirklich {app} deinstallieren?\nDas System könnte danach nicht mehr richtig funktionieren.\nBitte deinstalliere nur Programme, die Du selber installiert hast.",
   "@uninstallAppWarning": {
     "placeholders": {
-      "app" : {}
+      "app" : {
+        "type": "Object"
+      }
     },
     "description": "",
     "type": "text"
@@ -329,7 +361,9 @@
   "back": "Zurück",
   "@cleanX": {
     "placeholders": {
-      "app" : {}
+      "app" : {
+        "type": "Object"
+      }
     },
     "description": "",
     "type": "text"

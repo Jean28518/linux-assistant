@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:hotkey_manager/hotkey_manager.dart';
 import 'package:linux_assistant/enums/distros.dart';
@@ -91,8 +92,8 @@ class MyApp extends StatelessWidget {
 
   static void initHotkeyToShowUp() {
     HotKey hotKey = HotKey(
-      KeyCode.keyQ,
-      modifiers: [KeyModifier.meta],
+      key: PhysicalKeyboardKey.keyQ,
+      modifiers: [HotKeyModifier.meta],
       scope: HotKeyScope.system,
     );
     hotKeyManager.register(

@@ -115,7 +115,9 @@
   "openLinuxAssistantFasterDescription": "Puoi aprire Linux Assistant con i tasti {modifier} + <Qn Questo è altamente raccomandato per massimizzare la tua produttività sotto Linux.",
   "@openLinuxAssistantFasterDescription": {
     "placeholders": {
-      "modifier" : {}
+      "modifier" : {
+        "type": "Object"
+      }
     },
     "description": "",
     "type": "text"
@@ -138,7 +140,9 @@
   "youCanOpenLinuxAssistantWithHotkey": "Puoi sempre aprire Linux Assistant con la combinazione di tasti {modifier} + <Q>. Se ancora non funziona, chiama 'scorciatoia da tastiera' nella ricerca.",
   "@youCanOpenLinuxAssistantWithHotkey": {
     "placeholders": {
-      "modifier" : {}
+      "modifier" : {
+        "type": "Object"
+      }
     },
     "description": "",
     "type": "text"
@@ -152,8 +156,12 @@
   "uptimeWarning": "Il tuo sistema Linux non è stato riavviato da molto tempo. Per evitare potenziali errori, si consigliano riavvii regolari. L'ultimo riavvio è avvenuto {time} {unit} fa.",
   "@uptimeWarning": {
     "placeholders": {
-      "time" : {},
-      "unit" : {}
+      "time" : {
+        "type": "Object"
+      },
+      "unit" : {
+        "type": "Object"
+      }
     },
     "description": "",
     "type": "text"
@@ -161,8 +169,12 @@
   "uptimePass": "Il tuo sistema Linux è in esecuzione solo da {time} {unit}. Questo è buono!",
   "@uptimePass": {
     "placeholders": {
-      "time" : {},
-      "unit" : {}
+      "time" : {
+        "type": "Object"
+      },
+      "unit" : {
+        "type": "Object"
+      }
     },
     "description": "",
     "type": "text"
@@ -173,8 +185,12 @@
   "processesWithZombiesMessage": "Attualmente sono in esecuzione {processes} processi. Di questi {zombies} sono stati trovati zombi.",
   "@processesWithZombiesMessage": {
     "placeholders": {
-      "processes" : {},
-      "zombies" : {}
+      "processes" : {
+        "type": "Object"
+      },
+      "zombies" : {
+        "type": "Object"
+      }
     },
     "description": "",
     "type": "text"
@@ -182,7 +198,9 @@
   "removableDevicesWarning": "{removableDevices} sono stati trovati dispositivi/(partizioni) di archiviazione rimovibili. Se al momento non ne hai bisogno, ti consigliamo di rimuoverli per motivi di sicurezza e di salute di questi dispositivi.",
   "@removableDevicesWarning": {
     "placeholders": {
-      "removableDevices" : {}
+      "removableDevices" : {
+        "type": "Object"
+      }
     },
     "description": "",
     "type": "text"
@@ -201,7 +219,9 @@
   "applyUpdatesSinceReleaseDescription": "Dal rilascio dell'attuale versione di {distro}, potrebbero essere disponibili aggiornamenti. Applica questi aggiornamenti.",
   "@applyUpdatesSinceReleaseDescription": {
     "placeholders": {
-      "distro" : {}
+      "distro" : {
+        "type": "Object"
+      }
     },
     "description": "",
     "type": "text"
@@ -213,7 +233,9 @@
   "setUpLinuxAssistantKeyboardShortcut": "Imposta la combinazione di tastiera {modifier} + <Q> per aprire rapidamente Linux Assistant da qualsiasi luogo.",
   "@setUpLinuxAssistantKeyboardShortcut": {
     "placeholders": {
-      "modifier" : {}
+      "modifier" : {
+        "type": "Object"
+      }
     },
     "description": "",
     "type": "text"
@@ -229,7 +251,9 @@
   "installX": "Installa {app}",
   "@installX": {
     "placeholders": {
-      "app" : {}
+      "app" : {
+        "type": "Object"
+      }
     },
     "description": "",
     "type": "text"
@@ -237,7 +261,9 @@
   "installingXDescription": "Installazione di {app}...\nDevi aprire {app} successivamente e separatamente.",
   "@installingXDescription": {
     "placeholders": {
-      "app" : {}
+      "app" : {
+        "type": "Object"
+      }
     },
     "description": "",
     "type": "text"
@@ -291,7 +317,9 @@
   "uninstallingXDescription": "Disinstallazione di {app}...",
   "@uninstallingXDescription": {
     "placeholders": {
-      "app" : {}
+      "app" : {
+        "type": "Object"
+      }
     },
     "description": "",
     "type": "text"
@@ -299,7 +327,9 @@
   "uninstallApp": "Uninstall {app}",
   "@uninstallApp": {
     "placeholders": {
-      "app" : {}
+      "app" : {
+        "type": "Object"
+      }
     },
     "description": "",
     "type": "text"
@@ -307,7 +337,9 @@
   "uninstallAppWarning": "Vuoi davvero disinstallare {app}?\nIl sistema potrebbe non funzionare correttamente in seguito.\nDisinstalla solo i programmi che hai installato tu stesso.",
   "@uninstallAppWarning": {
     "placeholders": {
-      "app" : {}
+      "app" : {
+        "type": "Object"
+      }
     }, 
     "description": "",
     "type": "text"
@@ -323,7 +355,9 @@
   "cleanX": "Pulisci {app}",
   "@cleanX": {
     "placeholders": {
-      "app" : {}
+      "app" : {
+        "type": "Object"
+      }
     },
     "description": "",
     "type": "text"
