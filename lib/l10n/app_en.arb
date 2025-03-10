@@ -55,7 +55,7 @@
   "yes": "Yes",
   "recognizingSystem": "Recognizing system...",
   "yourLinuxAssistant": "Your. Linux. Assistant.",
-  "linuxAssistantLongDescription": "Linux Assistant is distribution indenpendent and designed to help and guide you through your daily usage. Just enter some keywords into the search field and find whatever you desire! Linux Assistant comes with useful shortcuts to files, folders and applications and also has some routines. Links to settings and e.g. the included PC-Security checker are also available.",
+  "linuxAssistantLongDescription": "Linux Assistant is distribution-independent and designed to help and guide you through your daily usage. Just enter some keywords into the search field and find whatever you desire! Linux Assistant comes with useful shortcuts to files, folders and applications and also has some routines. Links to settings and e.g. the included PC-Security checker are also available.",
   "welcomeToYourLinuxMachine": "Welcome to your new linux machine!",
   "afterInstallationGreetingDescription": "In the next minutes you will configure your linux machine to your needs.",
   "letsStart": "Let's start!",
