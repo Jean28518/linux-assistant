@@ -24,13 +24,13 @@ jobs:
       - run: flutter config --enable-linux-desktop
       - run: bash build-deb.sh
       - name: Upload deb
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: linux-assistant-deb
           path: linux-assistant.deb
       - run: bash build-rpm.sh
       - name: Upload rpm
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: linux-assistant-rpm
           path: /home/runner/rpmbuild/RPMS/x86_64/
