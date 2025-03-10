@@ -13,7 +13,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
@@ -30,7 +30,7 @@ jobs:
           path: linux-assistant.deb
       - run: bash build-rpm.sh
       - name: Upload rpm
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v3
         with:
           name: linux-assistant-rpm
           path: /home/runner/rpmbuild/RPMS/x86_64/
