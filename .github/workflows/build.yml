@@ -24,7 +24,7 @@ jobs:
       - run: flutter config --enable-linux-desktop
       - run: bash build-deb.sh
       - name: Upload deb
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v3
         with:
           name: linux-assistant-deb
           path: linux-assistant.deb
