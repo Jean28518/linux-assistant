@@ -81,6 +81,13 @@ class DiskSpace extends StatelessWidget {
     if (label == "") {
       label = getNiceStringOfDistrosEnum(Linux.currentenvironment.distribution);
     }
+
+    // Limit the length of the label of guids
+    if (label.contains("-") && label.length > 20) {
+      label = label.split("-").first;
+      label += "...";
+    }
+
     return label;
   }
 }
