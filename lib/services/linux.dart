@@ -2167,7 +2167,13 @@ class Linux {
   /// removes all rights for others at the home folder
   static Future<void> fixHomeFolderPermissions() async {
     runCommandWithCustomArguments(
-        "/usr/bin/chmod", ["o-rwx", Linux.getHomeDirectory()]);
+      "/usr/bin/chmod",
+      ["o-rwx", Linux.getHomeDirectory()],
+    );
+    runCommandWithCustomArguments(
+      "/usr/bin/chmod",
+      ["g-w", Linux.getHomeDirectory()],
+    );
   }
 
   static Future<void> openAdditionalSoftwareSourcesSettings() async {
