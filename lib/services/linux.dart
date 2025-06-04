@@ -803,11 +803,8 @@ class Linux {
       ["-c", "find -L $homeFolder* -type d"],
       environment: {"PWD": "/"},
     ).then((value) {
-      folders = value
-          .toLowerCase()
-          .split("\n")
-          .where((element) => element.isNotEmpty)
-          .toList();
+      folders =
+          value.split("\n").where((element) => element.isNotEmpty).toList();
     });
 
     // print("Folders: $folders");
