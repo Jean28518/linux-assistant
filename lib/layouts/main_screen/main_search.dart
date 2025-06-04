@@ -111,164 +111,167 @@ class _MainSearchState extends State<MainSearch> {
                       _foundEntries.isEmpty
                           ? const SizedBox(height: 16)
                           : Container(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width > 750
-                                ? 600
-                                : MediaQuery.of(context).size.width - 50,
-                            child: TextField(
-                              decoration: InputDecoration(
-                                fillColor: Theme.of(context).canvasColor,
-                                filled: true,
-                                // border: const OutlineInputBorder(
-                                //     borderSide: BorderSide(color: Colors.white)),
-                                contentPadding: _foundEntries.isEmpty
-                                    ? null
-                                    : const EdgeInsets.only(
-                                        bottom: -20.0,
-                                        left: 12,
-                                        right: 3,
-                                      ),
-                                hintText: suggestion != null
-                                    ? suggestion!.name
-                                    : AppLocalizations.of(
-                                        context,
-                                      )!
-                                        .enterASearchTerm,
-                                prefixIcon: _foundEntries.isEmpty
-                                    ? const Icon(
-                                        Icons.search,
-                                        color: Colors.grey,
-                                      )
-                                    : null,
-                                suffix: _foundEntries.isEmpty
-                                    ? null
-                                    : IconButton(
-                                        iconSize: 14,
-                                        splashRadius: 14,
-                                        icon: const Icon(Icons.clear),
-                                        onPressed: () => clear(minimze: false),
-                                        padding: EdgeInsets.zero,
-                                        tooltip: AppLocalizations.of(
-                                          context,
-                                        )!
-                                            .clear,
-                                      ),
-                              ),
-                              style: Theme.of(context).textTheme.bodyMedium,
-                              cursorColor: MintY.currentColor,
-                              controller: searchBarController,
-                              autofocus: true,
-                              onChanged: (value) => _runFilter(value),
-                              onSubmitted: (value) {
-                                if (_foundEntries.isNotEmpty) {
-                                  ActionHandler.handleActionEntry(
-                                    _foundEntries[selectedIndex],
-                                    clear,
-                                    context,
-                                  );
-                                } else if (suggestion != null) {
-                                  ActionHandler.handleActionEntry(
-                                    suggestion!,
-                                    clear,
-                                    context,
-                                  );
-                                }
-                              },
-                            ),
-                          ),
-                          _foundEntries.isEmpty
-                              ? Container()
-                              : const SizedBox(width: 10),
-                          _foundEntries.isEmpty
-                              ? Container()
-                              : MintYButton(
-                                  textColor: listFolders
-                                      ? backgroundColor
-                                      : MintY.currentColor,
-                                  backgroundColor: listFolders
-                                      ? MintY.currentColor
-                                      : backgroundColor,
-                                  icon: Icons.folder,
-                                  width: 40,
-                                  tooltip: listFolders
-                                      ? AppLocalizations.of(
-                                          context,
-                                        )!
-                                          .hideFolders
+                      ExcludeSemantics(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width > 750
+                                  ? 600
+                                  : MediaQuery.of(context).size.width - 50,
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  fillColor: Theme.of(context).canvasColor,
+                                  filled: true,
+                                  // border: const OutlineInputBorder(
+                                  //     borderSide: BorderSide(color: Colors.white)),
+                                  contentPadding: _foundEntries.isEmpty
+                                      ? null
+                                      : const EdgeInsets.only(
+                                          bottom: -20.0,
+                                          left: 12,
+                                          right: 3,
+                                        ),
+                                  hintText: suggestion != null
+                                      ? suggestion!.name
                                       : AppLocalizations.of(
                                           context,
                                         )!
-                                          .showFolders,
-                                  onPressed: () {
-                                    setState(() {
-                                      listFolders = !listFolders;
-                                      _runFilter(_lastKeyword);
-                                    });
-                                  },
-                                ),
-                          _foundEntries.isEmpty
-                              ? Container()
-                              : const SizedBox(width: 10),
-                          _foundEntries.isEmpty
-                              ? Container()
-                              : MintYButton(
-                                  textColor: listPackageManagerActions
-                                      ? backgroundColor
-                                      : MintY.currentColor,
-                                  backgroundColor: listPackageManagerActions
-                                      ? MintY.currentColor
-                                      : backgroundColor,
-                                  icon: Icons.archive,
-                                  width: 40,
-                                  tooltip: listPackageManagerActions
-                                      ? AppLocalizations.of(
-                                          context,
-                                        )!
-                                          .hidePackageManagerActions
-                                      : AppLocalizations.of(
-                                          context,
-                                        )!
-                                          .showPackageManagerActions,
-                                  onPressed: () {
-                                    setState(() {
-                                      listPackageManagerActions =
-                                          !listPackageManagerActions;
-                                      _runFilter(_lastKeyword);
-                                    });
-                                  },
-                                ),
-                          _foundEntries.isEmpty
-                              ? Container()
-                              : const SizedBox(width: 10),
-                          _foundEntries.isEmpty
-                              ? Container()
-                              : IconButton(
-                                  iconSize: 24,
-                                  splashRadius: 24,
-                                  icon: Icon(
-                                    Icons.feedback,
-                                    color: widget.colorfulBackground
-                                        ? Colors.white
-                                        : Theme.of(
+                                          .enterASearchTerm,
+                                  prefixIcon: _foundEntries.isEmpty
+                                      ? const Icon(
+                                          Icons.search,
+                                          color: Colors.grey,
+                                        )
+                                      : null,
+                                  suffix: _foundEntries.isEmpty
+                                      ? null
+                                      : IconButton(
+                                          iconSize: 14,
+                                          splashRadius: 14,
+                                          icon: const Icon(Icons.clear),
+                                          onPressed: () =>
+                                              clear(minimze: false),
+                                          padding: EdgeInsets.zero,
+                                          tooltip: AppLocalizations.of(
                                             context,
-                                          ).textTheme.displayLarge!.color,
-                                  ),
-                                  onPressed: () => showDialog(
-                                    context: context,
-                                    builder: (context) => FeedbackDialog(
-                                      calledFromHome: false,
-                                      foundEntries: _foundEntries,
-                                      searchText: _lastKeyword,
-                                    ),
-                                  ),
-                                  padding: EdgeInsets.zero,
-                                  tooltip: AppLocalizations.of(context)!
-                                      .sendFeedback,
+                                          )!
+                                              .clear,
+                                        ),
                                 ),
-                        ],
+                                style: Theme.of(context).textTheme.bodyMedium,
+                                cursorColor: MintY.currentColor,
+                                controller: searchBarController,
+                                autofocus: true,
+                                onChanged: (value) => _runFilter(value),
+                                onSubmitted: (value) {
+                                  if (_foundEntries.isNotEmpty) {
+                                    ActionHandler.handleActionEntry(
+                                      _foundEntries[selectedIndex],
+                                      clear,
+                                      context,
+                                    );
+                                  } else if (suggestion != null) {
+                                    ActionHandler.handleActionEntry(
+                                      suggestion!,
+                                      clear,
+                                      context,
+                                    );
+                                  }
+                                },
+                              ),
+                            ),
+                            _foundEntries.isEmpty
+                                ? Container()
+                                : const SizedBox(width: 10),
+                            _foundEntries.isEmpty
+                                ? Container()
+                                : MintYButton(
+                                    textColor: listFolders
+                                        ? backgroundColor
+                                        : MintY.currentColor,
+                                    backgroundColor: listFolders
+                                        ? MintY.currentColor
+                                        : backgroundColor,
+                                    icon: Icons.folder,
+                                    width: 40,
+                                    tooltip: listFolders
+                                        ? AppLocalizations.of(
+                                            context,
+                                          )!
+                                            .hideFolders
+                                        : AppLocalizations.of(
+                                            context,
+                                          )!
+                                            .showFolders,
+                                    onPressed: () {
+                                      setState(() {
+                                        listFolders = !listFolders;
+                                        _runFilter(_lastKeyword);
+                                      });
+                                    },
+                                  ),
+                            _foundEntries.isEmpty
+                                ? Container()
+                                : const SizedBox(width: 10),
+                            _foundEntries.isEmpty
+                                ? Container()
+                                : MintYButton(
+                                    textColor: listPackageManagerActions
+                                        ? backgroundColor
+                                        : MintY.currentColor,
+                                    backgroundColor: listPackageManagerActions
+                                        ? MintY.currentColor
+                                        : backgroundColor,
+                                    icon: Icons.archive,
+                                    width: 40,
+                                    tooltip: listPackageManagerActions
+                                        ? AppLocalizations.of(
+                                            context,
+                                          )!
+                                            .hidePackageManagerActions
+                                        : AppLocalizations.of(
+                                            context,
+                                          )!
+                                            .showPackageManagerActions,
+                                    onPressed: () {
+                                      setState(() {
+                                        listPackageManagerActions =
+                                            !listPackageManagerActions;
+                                        _runFilter(_lastKeyword);
+                                      });
+                                    },
+                                  ),
+                            _foundEntries.isEmpty
+                                ? Container()
+                                : const SizedBox(width: 10),
+                            _foundEntries.isEmpty
+                                ? Container()
+                                : IconButton(
+                                    iconSize: 24,
+                                    splashRadius: 24,
+                                    icon: Icon(
+                                      Icons.feedback,
+                                      color: widget.colorfulBackground
+                                          ? Colors.white
+                                          : Theme.of(
+                                              context,
+                                            ).textTheme.displayLarge!.color,
+                                    ),
+                                    onPressed: () => showDialog(
+                                      context: context,
+                                      builder: (context) => FeedbackDialog(
+                                        calledFromHome: false,
+                                        foundEntries: _foundEntries,
+                                        searchText: _lastKeyword,
+                                      ),
+                                    ),
+                                    padding: EdgeInsets.zero,
+                                    tooltip: AppLocalizations.of(context)!
+                                        .sendFeedback,
+                                  ),
+                          ],
+                        ),
                       ),
                       _foundEntries.isEmpty
                           ? const SizedBox(height: 50)
