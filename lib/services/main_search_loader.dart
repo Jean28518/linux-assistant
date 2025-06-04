@@ -44,7 +44,11 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
 
     ActionEntryListService.clearEntries();
 
-    Linux.getAllFolderEntriesOfUser(context);
+    if ("search_filter_basic_folders" ==
+        configHandler.getValueUnsafe("search_filter_basic_folders", true)) {
+      print("Loading basic folders");
+      Linux.getAllFolderEntriesOfUser(context);
+    }
 
     // if (configHandler.getValueUnsafe("search_filter_applications", true)) {
     //   print("Loading applications");
@@ -53,7 +57,10 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
     //           _onTimeoutOfSearchLoadingModule("applicationEntries")));
     // }
 
-    Linux.getAllAvailableApplications();
+    if (configHandler.getValueUnsafe("search_filter_applications", true)) {
+      print("Loading applications");
+      Linux.getAllAvailableApplications();
+    }
 
     // if (configHandler.getValueUnsafe(
     //     "search_filter_recently_used_files_and_folders", true)) {
@@ -61,7 +68,12 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
     //   futures.add(Linux.getRecentFiles(context).timeout(timeoutDuration,
     //       onTimeout: () => _onTimeoutOfSearchLoadingModule("recentFiles")));
     // }
-    Linux.getRecentFiles(context);
+
+    if (configHandler.getValueUnsafe(
+        "search_filter_recently_used_files_and_folders", true)) {
+      print("Loading recently used files and folders");
+      Linux.getRecentFiles(context);
+    }
 
     // if (configHandler.getValueUnsafe(
     //     "search_filter_favorite_files_and_folder_bookmarks", true)) {
@@ -69,7 +81,11 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
     //   futures.add(Linux.getFavoriteFiles(context).timeout(timeoutDuration,
     //       onTimeout: () => _onTimeoutOfSearchLoadingModule("favoriteFiles")));
     // }
-    Linux.getFavoriteFiles(context);
+
+    if (configHandler.getValueUnsafe(
+        "search_filter_favorite_files_and_folder_bookmarks", true)) {
+      Linux.getFavoriteFiles(context);
+    }
 
     // if (configHandler.getValueUnsafe("search_filter_bookmarks", true)) {
     //   print("Loading browser bookmarks");
@@ -78,7 +94,10 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
     //           _onTimeoutOfSearchLoadingModule("browserBookmarks")));
     // }
 
-    Linux.getBrowserBookmarks(context);
+    if (configHandler.getValueUnsafe("search_filter_bookmarks", true)) {
+      print("Loading browser bookmarks");
+      Linux.getBrowserBookmarks(context);
+    }
 
     // Deinstallation Entries.
     // if (configHandler.getValueUnsafe(
@@ -88,7 +107,11 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
     //       onTimeout: () =>
     //           _onTimeoutOfSearchLoadingModule("uninstall_entries")));
     // }
-    Linux.getUninstallEntries(context);
+    if (configHandler.getValueUnsafe(
+        "search_filter_uninstall_software", true)) {
+      print("Loading uninstall entries");
+      Linux.getUninstallEntries(context);
+    }
 
     ActionEntryList returnValue = ActionEntryList(entries: []);
     returnValue.entries.addAll(getRecommendations(context));
@@ -154,8 +177,4 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
       },
     );
   }
-
-  // void prepareActionEntryList() async {
-
-  // }
 }
