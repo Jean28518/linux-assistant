@@ -44,8 +44,7 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
 
     ActionEntryListService.clearEntries();
 
-    if ("search_filter_basic_folders" ==
-        configHandler.getValueUnsafe("search_filter_basic_folders", true)) {
+    if (configHandler.getValueUnsafe("search_filter_basic_folders", true)) {
       print("Loading basic folders");
       Linux.getAllFolderEntriesOfUser(context);
     }
