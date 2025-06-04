@@ -19,9 +19,9 @@ class MainSearchLoader extends StatefulWidget {
 }
 
 class _MainSearchLoaderState extends State<MainSearchLoader> {
-  late Future<ActionEntryList> futureActionEntryList;
+  late Future<void> futureVoid;
 
-  Future<ActionEntryList> prepare() async {
+  Future<void> prepare() async {
     MainSearch.unregisterHotkeysForKeyboardUse();
     const Duration timeoutDuration = Duration(seconds: 5);
 
@@ -112,28 +112,32 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
       Linux.getUninstallEntries(context);
     }
 
-    ActionEntryList returnValue = ActionEntryList(entries: []);
-    returnValue.entries.addAll(getRecommendations(context));
-    returnValue.entries.addAll(getBasicEntries(context));
+    // ActionEntryList returnValue = ActionEntryList(entries: []);
+    // returnValue.entries.addAll(getRecommendations(context));
+    // returnValue.entries.addAll(getBasicEntries(context));
+    List<ActionEntry> functionEntries = [];
+    functionEntries.addAll(getRecommendations(context));
+    functionEntries.addAll(getBasicEntries(context));
 
     // // Collect all Futures in our returnValue.
     // for (Future<List<ActionEntry>> future in futures) {
     //   returnValue.entries.addAll(await future);
     // }
 
-    if (configHandler.getValueUnsafe(
-        "search_filter_recently_used_files_and_folders", true)) {
-      print("Loading recently used files and folders");
-      var additionalFolders =
-          Linux.getFoldersOfActionEntries(context, returnValue.entries);
-      print("Finished: search_filter_recently_used_files_and_folders");
-      returnValue.entries.addAll(additionalFolders);
-    }
+    // if (configHandler.getValueUnsafe(
+    //     "search_filter_recently_used_files_and_folders", true)) {
+    //   print("Loading recently used files and folders");
+    //   var additionalFolders =
+    //       Linux.getFoldersOfActionEntries(context, ActionEntryListService.getEntries());
+    //   print("Finished: search_filter_recently_used_files_and_folders");
+    //   // returnValue.entries.addAll(additionalFolders);
+    //   ActionEntryListService.addEntries(additionalFolders);
+    // }
 
     // Remove action entries for specific environments
     print("Removing disabled entries");
     List<ActionEntry> entriesToRemove = [];
-    for (ActionEntry entry in returnValue.entries) {
+    for (ActionEntry entry in functionEntries) {
       if (entry.disableEntryIf != null) {
         // If the disableEntryIf function of the entry gets true, remove:
         if (entry.disableEntryIf!()) {
@@ -142,8 +146,10 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
       }
     }
     for (ActionEntry entry in entriesToRemove) {
-      returnValue.entries.remove(entry);
+      // returnValue.entries.remove(entry);
+      functionEntries.remove(entry);
     }
+    ActionEntryListService.addEntries(functionEntries);
     print("Initiating configHandler");
     await configHandler.setValue("runFirstStartUp", false);
     await clearOldEntries;
@@ -152,7 +158,7 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
 
     // returnValue = EntryCache.loadEntries();
 
-    return returnValue;
+    // return returnValue;
   }
 
   List<ActionEntry> _onTimeoutOfSearchLoadingModule(String module) {
@@ -163,11 +169,11 @@ class _MainSearchLoaderState extends State<MainSearchLoader> {
 
   @override
   Widget build(BuildContext context) {
-    futureActionEntryList = prepare();
+    futureVoid = prepare();
     return FutureBuilder<dynamic>(
-      future: futureActionEntryList,
+      future: futureVoid,
       builder: (context, snapshot) {
-        if (snapshot.hasData) {
+        if (snapshot.connectionState == ConnectionState.done) {
           return (MainSearch());
         } else {
           return MintYLoadingPage(

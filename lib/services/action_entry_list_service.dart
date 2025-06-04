@@ -31,4 +31,10 @@ class ActionEntryListService {
     mutex.release();
     return copy;
   }
+
+  static Future<void> removeEntry(ActionEntry entry) async {
+    await mutex.acquire();
+    entries.remove(entry);
+    mutex.release();
+  }
 }

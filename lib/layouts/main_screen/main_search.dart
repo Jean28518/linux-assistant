@@ -417,6 +417,14 @@ class _MainSearchState extends State<MainSearch> {
 
   /// The keyword could be here also a string with spaces between.
   void _runFilter(String keyword) async {
+    if (keyword.length < 3) {
+      // If the keyword is too short, we don't want to run the filter
+      // and just clear the results.
+      _foundEntries = [];
+      setState(() {});
+      return;
+    }
+
     // Heavy search
     const duration = Duration(milliseconds: 800);
     searchOnStoppedTyping?.cancel();
