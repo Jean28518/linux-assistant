@@ -15,6 +15,7 @@ import 'package:linux_assistant/linux/linux_filesystem.dart';
 import 'package:linux_assistant/models/action_entry.dart';
 import 'package:linux_assistant/models/environment.dart';
 import 'package:linux_assistant/models/linux_command.dart';
+import 'package:linux_assistant/services/action_entry_list_service.dart';
 import 'package:linux_assistant/services/config_handler.dart';
 import 'package:linux_assistant/services/hashing.dart';
 import 'package:linux_assistant/services/main_search_loader.dart';
@@ -789,13 +790,27 @@ class Linux {
     }
   }
 
-  static Future<List<ActionEntry>> getAllFolderEntriesOfUser(
-      BuildContext context) async {
-    String foldersString = await runCommandWithCustomArguments("python3", [
-      "${executableFolder}additional/python/get_folder_structure.py",
-      "--recursion_depth=${ConfigHandler().getValueUnsafe("folder_recursion_depth", 3)}"
-    ]);
-    List<String> folders = foldersString.split('\n');
+  static void getAllFolderEntriesOfUser(BuildContext context) async {
+    // String foldersString = await runCommandWithCustomArguments("python3", [
+    //   "${executableFolder}additional/python/get_folder_structure.py",
+    //   "--recursion_depth=${ConfigHandler().getValueUnsafe("folder_recursion_depth", 3)}"
+    // ]);
+    // List<String> folders = foldersString.split('\n');
+    List<String> folders = [];
+    homeFolder = getHomeDirectory();
+    await Linux.runCommandWithCustomArguments(
+      "bash",
+      ["-c", "find -L $homeFolder* -type d"],
+      environment: {"PWD": "/"},
+    ).then((value) {
+      folders = value
+          .toLowerCase()
+          .split("\n")
+          .where((element) => element.isNotEmpty)
+          .toList();
+    });
+
+    // print("Folders: $folders");
 
     // Get Bookmarks:
     if (currentenvironment.desktop != DESKTOPS.KDE) {
@@ -851,11 +866,11 @@ class Linux {
       entry.priority = -10;
       actionEntries.add(entry);
     }
-    return actionEntries;
+    await ActionEntryListService.addEntries(actionEntries);
   }
 
   // Get all available applications, which are installed and .destop files are present.
-  static Future<List<ActionEntry>> getAllAvailableApplications() async {
+  static void getAllAvailableApplications() async {
     String applicationsString = await runCommandWithCustomArguments("python3", [
       "$pythonScriptsFolder/get_applications.py",
       "--lang=${currentenvironment.language}",
@@ -888,10 +903,11 @@ class Linux {
       entry.priority = -5;
       actionEntries.add(entry);
     }
-    return actionEntries;
+    // return actionEntries;
+    await ActionEntryListService.addEntries(actionEntries);
   }
 
-  static Future<List<ActionEntry>> getRecentFiles(BuildContext context) async {
+  static void getRecentFiles(BuildContext context) async {
     String recentFileString = await runPythonScript("get_recent_files.py");
     List<String> recentFiles = recentFileString.split("\n");
     List<ActionEntry> actionEntries = [];
@@ -904,7 +920,8 @@ class Linux {
       actionEntry.priority = -15;
       actionEntries.add(actionEntry);
     }
-    return actionEntries;
+    // return actionEntries;
+    await ActionEntryListService.addEntries(actionEntries);
   }
 
   static Future<Environment> getCurrentEnvironment() async {
@@ -1353,8 +1370,7 @@ class Linux {
     return await File("/etc/os-release").readAsString();
   }
 
-  static Future<List<ActionEntry>> getFavoriteFiles(
-      BuildContext context) async {
+  static void getFavoriteFiles(BuildContext context) async {
     String output = await runPythonScript("get_favorite_files.py");
     output = output.trim();
     List<String> list = output.split("\n");
@@ -1369,7 +1385,8 @@ class Linux {
       actionEntry.priority = -5;
       actionEntries.add(actionEntry);
     }
-    return actionEntries;
+    // return actionEntries;
+    await ActionEntryListService.addEntries(actionEntries);
   }
 
   static Future<String> executeCommandQueue() async {
@@ -1846,7 +1863,7 @@ class Linux {
   }
 
   /// For all package managers including flatpak and snap
-  static Future<List<ActionEntry>> getUninstallEntries(context) async {
+  static void getUninstallEntries(context) async {
     List<ActionEntry> returnValue = [];
     Future<List<String>> installedAptPackagesFuture = getInstalledAPTPackages();
     Future<List<List<String>>> installedZypperPackagesFuture =
@@ -1987,7 +2004,7 @@ class Linux {
       );
     }
 
-    return returnValue;
+    await ActionEntryListService.addEntries(returnValue);
   }
 
   /// Used while startup of the application
@@ -2064,8 +2081,7 @@ class Linux {
     return newEntries;
   }
 
-  static Future<List<ActionEntry>> getBrowserBookmarks(
-      BuildContext context) async {
+  static void getBrowserBookmarks(BuildContext context) async {
     String outputString = await runPythonScript("get_bookmarks.py");
     List<String> lines = outputString.split("\n");
     List<ActionEntry> returnValue = [];
@@ -2080,7 +2096,8 @@ class Linux {
             priority: -5.0));
       }
     }
-    return returnValue;
+    // return returnValue;
+    await ActionEntryListService.addEntries(returnValue);
   }
 
   static Future<bool> isDarkThemeEnabled() async {

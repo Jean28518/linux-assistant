@@ -37,18 +37,18 @@ class SearchSettings extends StatelessWidget {
           SettingWidgetOnOff(
               settingKey: "self_learning_search",
               text: AppLocalizations.of(context)!.selfLearningSearch),
-          SettingWidgetText(
-              settingKey: "folder_recursion_depth",
-              text: AppLocalizations.of(context)!.folderRecursionDepth,
-              defaultValue: "3",
-              hintText: "3",
-              parseFunction: (String p0) {
-                int? parsed = int.tryParse(p0);
-                if (parsed == null) {
-                  return "3";
-                }
-                return parsed.toString();
-              }),
+          // SettingWidgetText(
+          //     settingKey: "folder_recursion_depth",
+          //     text: AppLocalizations.of(context)!.folderRecursionDepth,
+          //     defaultValue: "3",
+          //     hintText: "3",
+          //     parseFunction: (String p0) {
+          //       int? parsed = int.tryParse(p0);
+          //       if (parsed == null) {
+          //         return "3";
+          //       }
+          //       return parsed.toString();
+          //     }),
         ],
       ),
     );

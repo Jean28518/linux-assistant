@@ -10,6 +10,7 @@ import 'package:linux_assistant/enums/softwareManagers.dart';
 import 'package:linux_assistant/layouts/feature_overview/feature_overview.dart';
 import 'package:linux_assistant/layouts/greeter/introduction.dart';
 import 'package:linux_assistant/layouts/main_screen/action_entry_card.dart';
+import 'package:linux_assistant/services/action_entry_list_service.dart';
 import 'package:linux_assistant/widgets/disk_space.dart';
 import 'package:linux_assistant/layouts/feedback/feedback_form.dart';
 import 'package:linux_assistant/layouts/settings/settings_start.dart';
@@ -26,18 +27,16 @@ import 'package:window_manager/window_manager.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MainSearch extends StatefulWidget {
-  late List<ActionEntry> actionEntries;
   late bool colorfulBackground;
 
-  MainSearch({Key? key, required this.actionEntries}) {
+  MainSearch({Key? key}) {
     ConfigHandler configHandler = ConfigHandler();
     colorfulBackground =
         configHandler.getValueUnsafe("colorfulBackground", true);
   }
 
   @override
-  State<MainSearch> createState() =>
-      _MainSearchState(actionEntries: actionEntries);
+  State<MainSearch> createState() => _MainSearchState();
 
   static void unregisterHotkeysForKeyboardUse() {
     hotKeyManager.unregisterAll();
@@ -46,8 +45,6 @@ class MainSearch extends StatefulWidget {
 }
 
 class _MainSearchState extends State<MainSearch> {
-  late List<ActionEntry> actionEntries;
-
   String _lastKeyword = "";
 
   List<ActionEntry> _foundEntries = [];
@@ -67,7 +64,7 @@ class _MainSearchState extends State<MainSearch> {
 
   ActionEntry? suggestion;
 
-  _MainSearchState({required this.actionEntries}) {
+  _MainSearchState() {
     initHotkeysForKeyboardUse();
   }
 
@@ -340,7 +337,7 @@ class _MainSearchState extends State<MainSearch> {
   }
 
   /// The keyword could be here also a string with spaces between.
-  void _runFilter(String keyword) {
+  void _runFilter(String keyword) async {
     // Heavy search
     const duration = Duration(milliseconds: 800);
     searchOnStoppedTyping?.cancel();
@@ -361,7 +358,8 @@ class _MainSearchState extends State<MainSearch> {
     if (keyword.isEmpty) {
       results = [];
     } else {
-      results = actionEntries.where((actionEntry) {
+      var entries = await ActionEntryListService.getEntries();
+      results = entries.where((actionEntry) {
         // If regualar expression is used and matches return true
         if (regExp != null &&
             (regExp.hasMatch(actionEntry.name) ||
@@ -620,18 +618,19 @@ class _MainSearchState extends State<MainSearch> {
     );
   }
 
-  void _handleSuggestions() {
+  void _handleSuggestions() async {
+    var entries = await ActionEntryListService.getEntries();
     // If the main search window is present and the user has not typed anything
     if (_foundEntries.isEmpty) {
       int random = 0;
       while (true) {
-        random = Random().nextInt(widget.actionEntries.length - 1);
-        if (!widget.actionEntries[random].excludeFromSearchProposal) {
+        random = Random().nextInt(entries.length - 1);
+        if (entries[random].excludeFromSearchProposal) {
           break;
         }
       }
       setState(() {
-        suggestion = actionEntries[random];
+        suggestion = entries[random];
       });
     }
   }
