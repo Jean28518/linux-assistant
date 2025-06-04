@@ -395,6 +395,10 @@
   "copyCommands": "Befehle kopieren",
   "errorThisDidntWork": "Das hat leider nicht funktioniert.",
   "complete": "Abgeschlossen",
+  "hideFolders": "Ordner ausblenden",
+  "showFolders": "Ordner anzeigen",
+  "hidePackageManagerActions": "Paketmanager-Aktionen ausblenden",
+  "showPackageManagerActions": "Paketmanager-Aktionen anzeigen",
   "@helloWorld": {
     "placeholders": {},
     "description": "",

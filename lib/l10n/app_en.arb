@@ -361,6 +361,10 @@
   "copyCommands": "Copy commands",
   "errorThisDidntWork": "That didn't work.",
   "complete": "Complete",
+  "hideFolders": "Hide folders",
+  "showFolders": "Show folders",
+  "hidePackageManagerActions": "Hide package manager actions",
+  "showPackageManagerActions": "Show package manager actions",
   "@helloWorld": {
     "placeholders": {},
     "description": "The conventional newborn programmer greeting",

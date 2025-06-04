@@ -31,8 +31,10 @@ class MainSearch extends StatefulWidget {
 
   MainSearch({Key? key}) {
     ConfigHandler configHandler = ConfigHandler();
-    colorfulBackground =
-        configHandler.getValueUnsafe("colorfulBackground", true);
+    colorfulBackground = configHandler.getValueUnsafe(
+      "colorfulBackground",
+      true,
+    );
   }
 
   @override
@@ -59,6 +61,9 @@ class _MainSearchState extends State<MainSearch> {
   final searchBarController = TextEditingController();
   final scrollController = ScrollController();
 
+  bool listFolders = true;
+  bool listPackageManagerActions = true;
+
   Timer? searchOnStoppedTyping;
   Timer? suggestionTimer;
 
@@ -71,7 +76,11 @@ class _MainSearchState extends State<MainSearch> {
   @override
   Widget build(BuildContext context) {
     suggestionTimer ??= Timer.periodic(
-        const Duration(seconds: 5), ((timer) => _handleSuggestions()));
+      const Duration(seconds: 5),
+      ((timer) => _handleSuggestions()),
+    );
+
+    var backgroundColor = Theme.of(context).cardColor;
 
     // Complete height of a search entry is 64 + 8 (padding)
     visibleEntries =
@@ -85,136 +94,203 @@ class _MainSearchState extends State<MainSearch> {
               child: Container(
                 padding: const EdgeInsets.all(20),
                 child: Center(
-                    child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _foundEntries.isEmpty
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(width: 16),
-                              DiskSpace(),
-                              SizedBox(width: 16),
-                              SystemStatus(),
-                            ],
-                          )
-                        : Container(),
-                    _foundEntries.isEmpty
-                        ? const SizedBox(
-                            height: 16,
-                          )
-                        : Container(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width > 750
-                              ? 600
-                              : MediaQuery.of(context).size.width - 50,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              fillColor: Theme.of(context).canvasColor,
-                              filled: true,
-                              // border: const OutlineInputBorder(
-                              //     borderSide: BorderSide(color: Colors.white)),
-                              contentPadding: _foundEntries.isEmpty
-                                  ? null
-                                  : const EdgeInsets.only(
-                                      bottom: -20.0, left: 12, right: 3),
-                              hintText: suggestion != null
-                                  ? suggestion!.name
-                                  : AppLocalizations.of(context)!
-                                      .enterASearchTerm,
-                              prefixIcon: _foundEntries.isEmpty
-                                  ? const Icon(
-                                      Icons.search,
-                                      color: Colors.grey,
-                                    )
-                                  : null,
-                              suffix: _foundEntries.isEmpty
-                                  ? null
-                                  : IconButton(
-                                      iconSize: 14,
-                                      splashRadius: 14,
-                                      icon: const Icon(Icons.clear),
-                                      onPressed: () => clear(minimze: false),
-                                      padding: EdgeInsets.zero,
-                                      tooltip:
-                                          AppLocalizations.of(context)!.clear,
-                                    ),
-                            ),
-                            style: Theme.of(context).textTheme.bodyMedium,
-                            cursorColor: MintY.currentColor,
-                            controller: searchBarController,
-                            autofocus: true,
-                            onChanged: (value) => _runFilter(value),
-                            onSubmitted: (value) {
-                              if (_foundEntries.isNotEmpty) {
-                                ActionHandler.handleActionEntry(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      _foundEntries.isEmpty
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(width: 16),
+                                DiskSpace(),
+                                SizedBox(width: 16),
+                                SystemStatus(),
+                              ],
+                            )
+                          : Container(),
+                      _foundEntries.isEmpty
+                          ? const SizedBox(height: 16)
+                          : Container(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width > 750
+                                ? 600
+                                : MediaQuery.of(context).size.width - 50,
+                            child: TextField(
+                              decoration: InputDecoration(
+                                fillColor: Theme.of(context).canvasColor,
+                                filled: true,
+                                // border: const OutlineInputBorder(
+                                //     borderSide: BorderSide(color: Colors.white)),
+                                contentPadding: _foundEntries.isEmpty
+                                    ? null
+                                    : const EdgeInsets.only(
+                                        bottom: -20.0,
+                                        left: 12,
+                                        right: 3,
+                                      ),
+                                hintText: suggestion != null
+                                    ? suggestion!.name
+                                    : AppLocalizations.of(
+                                        context,
+                                      )!
+                                        .enterASearchTerm,
+                                prefixIcon: _foundEntries.isEmpty
+                                    ? const Icon(
+                                        Icons.search,
+                                        color: Colors.grey,
+                                      )
+                                    : null,
+                                suffix: _foundEntries.isEmpty
+                                    ? null
+                                    : IconButton(
+                                        iconSize: 14,
+                                        splashRadius: 14,
+                                        icon: const Icon(Icons.clear),
+                                        onPressed: () => clear(minimze: false),
+                                        padding: EdgeInsets.zero,
+                                        tooltip: AppLocalizations.of(
+                                          context,
+                                        )!
+                                            .clear,
+                                      ),
+                              ),
+                              style: Theme.of(context).textTheme.bodyMedium,
+                              cursorColor: MintY.currentColor,
+                              controller: searchBarController,
+                              autofocus: true,
+                              onChanged: (value) => _runFilter(value),
+                              onSubmitted: (value) {
+                                if (_foundEntries.isNotEmpty) {
+                                  ActionHandler.handleActionEntry(
                                     _foundEntries[selectedIndex],
                                     clear,
-                                    context);
-                              } else if (suggestion != null) {
-                                ActionHandler.handleActionEntry(
-                                    suggestion!, clear, context);
-                              }
-                            },
-                          ),
-                        ),
-                        _foundEntries.isEmpty
-                            ? Container()
-                            : const SizedBox(
-                                width: 10,
-                              ),
-                        _foundEntries.isEmpty
-                            ? Container()
-                            : IconButton(
-                                iconSize: 24,
-                                splashRadius: 24,
-                                icon: Icon(
-                                  Icons.feedback,
-                                  color: widget.colorfulBackground
-                                      ? Colors.white
-                                      : Theme.of(context)
-                                          .textTheme
-                                          .displayLarge!
-                                          .color,
-                                ),
-                                onPressed: () => showDialog(
-                                  context: context,
-                                  builder: (context) => FeedbackDialog(
-                                      calledFromHome: false,
-                                      foundEntries: _foundEntries,
-                                      searchText: _lastKeyword),
-                                ),
-                                padding: EdgeInsets.zero,
-                                tooltip:
-                                    AppLocalizations.of(context)!.sendFeedback,
-                              ),
-                      ],
-                    ),
-                    _foundEntries.isEmpty
-                        ? const SizedBox(
-                            height: 50,
-                          )
-                        : const SizedBox(
-                            height: 10,
-                          ),
-                    _foundEntries.isEmpty
-                        ? Container()
-                        : Expanded(
-                            child: ListView(
-                              controller: scrollController,
-                              children: List.generate(
-                                  _foundEntries.length,
-                                  (index) => ActionEntryCard(
-                                      actionEntry: _foundEntries[index],
-                                      callback: clear,
-                                      selected: selectedIndex == index)),
+                                    context,
+                                  );
+                                } else if (suggestion != null) {
+                                  ActionHandler.handleActionEntry(
+                                    suggestion!,
+                                    clear,
+                                    context,
+                                  );
+                                }
+                              },
                             ),
                           ),
-                  ],
-                )),
+                          _foundEntries.isEmpty
+                              ? Container()
+                              : const SizedBox(width: 10),
+                          _foundEntries.isEmpty
+                              ? Container()
+                              : MintYButton(
+                                  textColor: listFolders
+                                      ? backgroundColor
+                                      : MintY.currentColor,
+                                  backgroundColor: listFolders
+                                      ? MintY.currentColor
+                                      : backgroundColor,
+                                  icon: Icons.folder,
+                                  width: 40,
+                                  tooltip: listFolders
+                                      ? AppLocalizations.of(
+                                          context,
+                                        )!
+                                          .hideFolders
+                                      : AppLocalizations.of(
+                                          context,
+                                        )!
+                                          .showFolders,
+                                  onPressed: () {
+                                    setState(() {
+                                      listFolders = !listFolders;
+                                      _runFilter(_lastKeyword);
+                                    });
+                                  },
+                                ),
+                          _foundEntries.isEmpty
+                              ? Container()
+                              : const SizedBox(width: 10),
+                          _foundEntries.isEmpty
+                              ? Container()
+                              : MintYButton(
+                                  textColor: listPackageManagerActions
+                                      ? backgroundColor
+                                      : MintY.currentColor,
+                                  backgroundColor: listPackageManagerActions
+                                      ? MintY.currentColor
+                                      : backgroundColor,
+                                  icon: Icons.archive,
+                                  width: 40,
+                                  tooltip: listPackageManagerActions
+                                      ? AppLocalizations.of(
+                                          context,
+                                        )!
+                                          .hidePackageManagerActions
+                                      : AppLocalizations.of(
+                                          context,
+                                        )!
+                                          .showPackageManagerActions,
+                                  onPressed: () {
+                                    setState(() {
+                                      listPackageManagerActions =
+                                          !listPackageManagerActions;
+                                      _runFilter(_lastKeyword);
+                                    });
+                                  },
+                                ),
+                          _foundEntries.isEmpty
+                              ? Container()
+                              : const SizedBox(width: 10),
+                          _foundEntries.isEmpty
+                              ? Container()
+                              : IconButton(
+                                  iconSize: 24,
+                                  splashRadius: 24,
+                                  icon: Icon(
+                                    Icons.feedback,
+                                    color: widget.colorfulBackground
+                                        ? Colors.white
+                                        : Theme.of(
+                                            context,
+                                          ).textTheme.displayLarge!.color,
+                                  ),
+                                  onPressed: () => showDialog(
+                                    context: context,
+                                    builder: (context) => FeedbackDialog(
+                                      calledFromHome: false,
+                                      foundEntries: _foundEntries,
+                                      searchText: _lastKeyword,
+                                    ),
+                                  ),
+                                  padding: EdgeInsets.zero,
+                                  tooltip: AppLocalizations.of(context)!
+                                      .sendFeedback,
+                                ),
+                        ],
+                      ),
+                      _foundEntries.isEmpty
+                          ? const SizedBox(height: 50)
+                          : const SizedBox(height: 10),
+                      _foundEntries.isEmpty
+                          ? Container()
+                          : Expanded(
+                              child: ListView(
+                                controller: scrollController,
+                                children: List.generate(
+                                  _foundEntries.length,
+                                  (index) => ActionEntryCard(
+                                    actionEntry: _foundEntries[index],
+                                    callback: clear,
+                                    selected: selectedIndex == index,
+                                  ),
+                                ),
+                              ),
+                            ),
+                    ],
+                  ),
+                ),
               ),
             ),
 
@@ -227,9 +303,7 @@ class _MainSearchState extends State<MainSearch> {
                       // Left Bottom
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(),
-                        ],
+                        children: [Container()],
                       ),
                       // Recommendation Card
                       Expanded(child: Container()),
@@ -252,18 +326,20 @@ class _MainSearchState extends State<MainSearch> {
 
                             IconButton(
                               onPressed: () => {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const FeatureOverview(),
-                                ))
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const FeatureOverview(),
+                                  ),
+                                ),
                               },
                               icon: Icon(
                                 Icons.apps,
                                 color: widget.colorfulBackground
                                     ? Colors.white
-                                    : Theme.of(context)
-                                        .textTheme
-                                        .displayLarge!
-                                        .color,
+                                    : Theme.of(
+                                        context,
+                                      ).textTheme.displayLarge!.color,
                               ),
                               tooltip:
                                   AppLocalizations.of(context)!.featureOverview,
@@ -277,10 +353,9 @@ class _MainSearchState extends State<MainSearch> {
                                 Icons.settings,
                                 color: widget.colorfulBackground
                                     ? Colors.white
-                                    : Theme.of(context)
-                                        .textTheme
-                                        .displayLarge!
-                                        .color,
+                                    : Theme.of(
+                                        context,
+                                      ).textTheme.displayLarge!.color,
                               ),
                               onPressed: () => showDialog(
                                 context: context,
@@ -291,9 +366,10 @@ class _MainSearchState extends State<MainSearch> {
                             ),
                             // Feedback Button at start page
                             FeedbackButton(
-                                widget: widget,
-                                foundEntries: _foundEntries,
-                                lastKeyword: _lastKeyword),
+                              widget: widget,
+                              foundEntries: _foundEntries,
+                              lastKeyword: _lastKeyword,
+                            ),
                           ],
                         ),
                       ),
@@ -360,6 +436,18 @@ class _MainSearchState extends State<MainSearch> {
     } else {
       var entries = await ActionEntryListService.getEntries();
       results = entries.where((actionEntry) {
+        // If entry is openfolder: and show_folders is false, skip it
+        if (actionEntry.action.startsWith("openfolder:") && !listFolders) {
+          return false;
+        }
+
+        // If entry is package manager action and show_package_manager_actions is false, skip it
+        if (listPackageManagerActions == false &&
+            (actionEntry.action.contains("-install:") ||
+                actionEntry.action.contains("-uninstall:"))) {
+          return false;
+        }
+
         // If regualar expression is used and matches return true
         if (regExp != null &&
             (regExp.hasMatch(actionEntry.name) ||
@@ -394,9 +482,10 @@ class _MainSearchState extends State<MainSearch> {
 
     if (uriRecognized) {
       ActionEntry actionEntry = ActionEntry(
-          name: "${AppLocalizations.of(context)!.openX} $keyword",
-          description: "Open with default webbrowser",
-          action: "openwebsite:$keyword");
+        name: "${AppLocalizations.of(context)!.openX} $keyword",
+        description: "Open with default webbrowser",
+        action: "openwebsite:$keyword",
+      );
       actionEntry.priority = 10;
       results.add(actionEntry);
     }
@@ -413,10 +502,13 @@ class _MainSearchState extends State<MainSearch> {
     }
 
     if (keyword != "") {
-      results.add(ActionEntry(
+      results.add(
+        ActionEntry(
           name: "${AppLocalizations.of(context)!.searchInWebFor} $keyword",
           description: AppLocalizations.of(context)!.lookForOnlineResults,
-          action: "websearch:$keyword"));
+          action: "websearch:$keyword",
+        ),
+      );
       results.last.priority = -50;
     }
 
@@ -453,47 +545,55 @@ class _MainSearchState extends State<MainSearch> {
 
     List<ActionEntry> heavyEntries = [];
 
-    // Search through apt
-    if (Linux.currentenvironment.installedSoftwareManagers
-        .contains(SOFTWARE_MANAGERS.APT)) {
-      List<ActionEntry> pckgs =
-          await Linux.getInstallableAptPackagesForKeyword(context, keyword);
-      heavyEntries.addAll(pckgs);
-    }
-    // Search through zypper
-    else if (Linux.currentenvironment.installedSoftwareManagers
-        .contains(SOFTWARE_MANAGERS.ZYPPER)) {
-      List<ActionEntry> pckgs =
-          await Linux.getInstallableZypperPackagesForKeyword(keyword);
-      heavyEntries.addAll(pckgs);
-    }
-    // Search through dnf
-    else if (Linux.currentenvironment.installedSoftwareManagers
-        .contains(SOFTWARE_MANAGERS.DNF)) {
-      List<ActionEntry> pckgs =
-          await Linux.getInstallableDNFPackagesForKeyword(keyword);
-      heavyEntries.addAll(pckgs);
-    }
+    if (listPackageManagerActions) {
+      // Search through apt
+      if (Linux.currentenvironment.installedSoftwareManagers.contains(
+        SOFTWARE_MANAGERS.APT,
+      )) {
+        List<ActionEntry> pckgs =
+            await Linux.getInstallableAptPackagesForKeyword(context, keyword);
+        heavyEntries.addAll(pckgs);
+      }
+      // Search through zypper
+      else if (Linux.currentenvironment.installedSoftwareManagers.contains(
+        SOFTWARE_MANAGERS.ZYPPER,
+      )) {
+        List<ActionEntry> pckgs =
+            await Linux.getInstallableZypperPackagesForKeyword(keyword);
+        heavyEntries.addAll(pckgs);
+      }
+      // Search through dnf
+      else if (Linux.currentenvironment.installedSoftwareManagers.contains(
+        SOFTWARE_MANAGERS.DNF,
+      )) {
+        List<ActionEntry> pckgs =
+            await Linux.getInstallableDNFPackagesForKeyword(keyword);
+        heavyEntries.addAll(pckgs);
+      }
 
-    if (Linux.currentenvironment.installedSoftwareManagers
-        .contains(SOFTWARE_MANAGERS.SNAP)) {
-      List<ActionEntry> snaps =
-          await Linux.getInstallableSnapPackagesForKeyword(keyword);
-      heavyEntries.addAll(snaps);
-    }
+      if (Linux.currentenvironment.installedSoftwareManagers.contains(
+        SOFTWARE_MANAGERS.SNAP,
+      )) {
+        List<ActionEntry> snaps =
+            await Linux.getInstallableSnapPackagesForKeyword(keyword);
+        heavyEntries.addAll(snaps);
+      }
 
-    if (Linux.currentenvironment.installedSoftwareManagers
-        .contains(SOFTWARE_MANAGERS.FLATPAK)) {
-      List<ActionEntry> flatpaks =
-          await Linux.getInstallableFlatpakPackagesForKeyword(keyword);
-      heavyEntries.addAll(flatpaks);
-    }
+      if (Linux.currentenvironment.installedSoftwareManagers.contains(
+        SOFTWARE_MANAGERS.FLATPAK,
+      )) {
+        List<ActionEntry> flatpaks =
+            await Linux.getInstallableFlatpakPackagesForKeyword(keyword);
+        heavyEntries.addAll(flatpaks);
+      }
 
-    if (Linux.currentenvironment.installedSoftwareManagers
-        .contains(SOFTWARE_MANAGERS.PACMAN)) {
-      List<ActionEntry> pacmanEntries =
-          await Linux.getInstallablePacmanPakagesForKeyword(keyword);
-      heavyEntries.addAll(pacmanEntries);
+      if (Linux.currentenvironment.installedSoftwareManagers.contains(
+        SOFTWARE_MANAGERS.PACMAN,
+      )) {
+        List<ActionEntry> pacmanEntries =
+            await Linux.getInstallablePacmanPakagesForKeyword(keyword);
+        heavyEntries.addAll(pacmanEntries);
+      }
     }
 
     // If in the meantime the user cleared the search bar, we don't want to
@@ -533,8 +633,10 @@ class _MainSearchState extends State<MainSearch> {
     }
     if (ConfigHandler().getValueUnsafe("self_learning_search", true)) {
       for (var element in _foundEntries) {
-        String datesString =
-            ConfigHandler().getValueUnsafe("opened.${element.action}", "");
+        String datesString = ConfigHandler().getValueUnsafe(
+          "opened.${element.action}",
+          "",
+        );
 
         /// length of an date entry is 11: "1970-01-01;".length = 11
         int openTimes = (datesString.length / 11.0).round();
@@ -544,8 +646,10 @@ class _MainSearchState extends State<MainSearch> {
 
     _foundEntries.sort((a, b) => (a.name).compareTo(b.name));
 
-    _foundEntries.sort((a, b) =>
-        (b.priority + b.tmpPriority).compareTo(a.priority + a.tmpPriority));
+    _foundEntries.sort(
+      (a, b) =>
+          (b.priority + b.tmpPriority).compareTo(a.priority + a.tmpPriority),
+    );
   }
 
   void initHotkeysForKeyboardUse() {
@@ -663,9 +767,10 @@ class FeedbackButton extends StatelessWidget {
       onPressed: () => showDialog(
         context: context,
         builder: (context) => FeedbackDialog(
-            calledFromHome: true,
-            foundEntries: _foundEntries,
-            searchText: _lastKeyword),
+          calledFromHome: true,
+          foundEntries: _foundEntries,
+          searchText: _lastKeyword,
+        ),
       ),
       padding: EdgeInsets.zero,
       tooltip: AppLocalizations.of(context)!.sendFeedback,
@@ -674,10 +779,7 @@ class FeedbackButton extends StatelessWidget {
 }
 
 class HelpButton extends StatelessWidget {
-  const HelpButton({
-    super.key,
-    required this.widget,
-  });
+  const HelpButton({super.key, required this.widget});
 
   final MainSearch widget;
 
@@ -696,7 +798,8 @@ class HelpButton extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => const GreeterIntroduction(forceOpen: true)),
+            builder: (context) => const GreeterIntroduction(forceOpen: true),
+          ),
         );
       },
       padding: EdgeInsets.zero,
@@ -706,10 +809,7 @@ class HelpButton extends StatelessWidget {
 }
 
 class ReloadSearchButton extends StatelessWidget {
-  const ReloadSearchButton({
-    super.key,
-    required this.widget,
-  });
+  const ReloadSearchButton({super.key, required this.widget});
 
   final MainSearch widget;
 
@@ -726,10 +826,9 @@ class ReloadSearchButton extends StatelessWidget {
       ),
       onPressed: () {
         Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const MainSearchLoader(),
-            ));
+          context,
+          MaterialPageRoute(builder: (context) => const MainSearchLoader()),
+        );
       },
       padding: EdgeInsets.zero,
       tooltip: AppLocalizations.of(context)!.reload,

@@ -313,6 +313,10 @@
  "copyCommands": "Kopioi komennot",
  "errorThisDidntWork": "Se ei toiminut.",
  "complete": "Täydellinen",
+ "hideFolders": "Piilota kansiot",
+ "showFolders": "Näytä kansiot",
+ "hidePackageManagerActions": "Piilota paketinhallinnan toiminnot",
+ "showPackageManagerActions": "Näytä paketinhallinnan toiminnot",
  "@helloWorld": {
  "paikkamerkit": {},
  "description": "Perinteinen vastasyntyneen ohjelmoijan tervehdys",

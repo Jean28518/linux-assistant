@@ -375,6 +375,10 @@
   "copyCommands": "Copia comandi",
   "errorThisDidntWork": "Errore! Questo non ha funzionato.",
   "complete": "Completa",
+  "hideFolders": "Nascondi cartelle",
+  "showFolders": "Mostra cartelle",
+  "hidePackageManagerActions": "Nascondi azioni del gestore pacchetti",
+  "showPackageManagerActions": "Mostra azioni del gestore pacchetti",
   "@helloWorld": {
     "placeholders": {},
     "description": "Il saluto convenzionale del programmatore appena nato",

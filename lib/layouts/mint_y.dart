@@ -298,15 +298,31 @@ class MintYPage extends StatelessWidget {
 
 class MintYButton extends StatelessWidget {
   late Widget text;
+  late IconData? icon;
+
+  /// deprecated, use [textColor] and [backgroundColor] instead
   late Color color;
+  late Color backgroundColor;
+
+  /// Only used for icon color currently:
+  late Color textColor;
   VoidCallback? onPressed;
   late double width;
   late double height;
+  late String? tooltip;
 
   MintYButton(
       {super.key,
       this.text = const Text(""),
-      Color color = const Color.fromARGB(255, 232, 232, 232),
+      this.icon,
+
+      /// deprecated, use [textColor] and [backgroundColor] instead
+      Color color = const Color.fromARGB(0, 0, 0, 0),
+      this.backgroundColor = const Color.fromARGB(0, 0, 0, 0),
+
+      /// Only used for icon color currently:
+      this.textColor = const Color.fromARGB(255, 255, 255, 255),
+      this.tooltip,
       VoidCallback? onPressed,
       double width = 110,
       double height = 40}) {
@@ -315,26 +331,66 @@ class MintYButton extends StatelessWidget {
     this.onPressed = onPressed;
     this.width = width;
     this.height = height;
+
+    if (backgroundColor == const Color.fromARGB(0, 0, 0, 0)) {
+      this.backgroundColor = color;
+    } else {
+      this.backgroundColor = backgroundColor;
+    }
   }
 
   @override
-  Widget build(BuildContext context) => Container(
-        constraints: BoxConstraints(minWidth: width, minHeight: height),
-        child: ElevatedButton(
-          key: UniqueKey(),
-          onPressed: () {
-            onPressed?.call();
-          },
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(color),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[text],
-          ),
+  Widget build(BuildContext context) {
+    var buttonChildren = <Widget>[];
+
+    if (icon != null) {
+      buttonChildren.add(
+        Icon(
+          icon,
+          color: textColor,
         ),
       );
+      if (text is Text && (text as Text).data.toString().isNotEmpty) {
+        buttonChildren.add(const SizedBox(width: 8));
+      } else if (text is String && text.toString().isNotEmpty) {
+        buttonChildren.add(const SizedBox(width: 8));
+      }
+    }
+
+    if (text is Text) {
+      buttonChildren.add(
+        text as Text,
+      );
+    } else {
+      buttonChildren.add(text);
+    }
+
+    Widget button = Container(
+      constraints: BoxConstraints(minWidth: width, minHeight: height),
+      child: ElevatedButton(
+        key: UniqueKey(),
+        onPressed: () {
+          onPressed?.call();
+        },
+        style: ButtonStyle(
+          backgroundColor: WidgetStateProperty.all(backgroundColor),
+        ),
+        child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: buttonChildren),
+      ),
+    );
+
+    if (tooltip != null && tooltip!.isNotEmpty) {
+      return Tooltip(
+        message: tooltip!,
+        child: button,
+      );
+    } else {
+      return button;
+    }
+  }
 }
 
 class MintYButtonNavigate extends StatelessWidget {
