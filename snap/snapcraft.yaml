@@ -1,5 +1,5 @@
 name: linux-assistant
-base: core22
+base: core24
 version: '0.6.1'
 summary: A daily Linux helper
 description: |
@@ -20,17 +20,25 @@ website: https://www.linux-assistant.org/
 
 grade: stable
 # if the policykit option is too complex or cannot function properly, then 'confinement: classic' must be used here.
-confinement: strict
-#confinement: classic
+#confinement: strict
+confinement: classic
 
 apps:
   linux-assistant:
     command: bin/linux-assistant
-    extensions: [gnome] # add gnome plugin, depended by flutter apps
     desktop: gui/linux-assistant.desktop
     environment:
       PATH: $SNAP/bin:$SNAP/usr/bin:$PATH
       LD_LIBRARY_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET:$SNAP/lib/$SNAPCRAFT_ARCH_TRIPLET"
+      XDG_DATA_DIRS: $SNAP/usr/share:$SNAP/share:$XDG_DATA_DIRS
+      GTK_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/gtk-4.0
+      GSETTINGS_SCHEMA_DIR: $SNAP/share/glib-2.0/schemas
+      GI_TYPELIB_PATH: $SNAP/usr/lib/girepository-1.0:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/girepository-1.0
+      GIO_EXTRA_MODULES: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/gio/modules
+      GTK_USE_PORTAL: "1"
+      GDK_DISABLE_MEDIA: "1"
+      #GSK_RENDERER: "cairo"
+      GTK_MEDIA_BACKEND: "none"
     plugs:
       - network
       - network-bind
@@ -46,12 +54,7 @@ apps:
       - system-observe
      
       
-plugs:
-  gnome:
-    interface: content
-    target: $SNAP/gnome-platform
-    default-provider: gnome-42-2204
-   
+plugs:  
   dbus:
     interface: dbus
     bus: session
@@ -65,7 +68,12 @@ slots:
     interface: dbus
     bus: session
     name: io.github.jean28518.linux-assistant
-    
+ 
+environment:
+  LIBGL_DRIVERS_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/dri
+  LIBGL_DEBUG: verbose
+  MESA_LOADER_DRIVER_OVERRIDE: swrast
+  
 # split the snap building
 parts:
   # get the binary, lib, data, additional from the latest release 
@@ -78,6 +86,45 @@ parts:
       linux-assistant-bundle/data/*: /bin/lib/data/
       linux-assistant-bundle/lib/*: /bin/lib/lib/
       linux-assistant-bundle/linux-assistant: bin/lib/linux-assistant
+    build-packages: 
+      - libglib2.0-dev-bin
+      - libglib2.0-bin
+    stage-packages:
+      # GTK3 rt
+      - libglib2.0-0
+      - libgtk-3-0
+      - libpango-1.0-0
+      - libcairo2
+      - libatk1.0-0
+      - libgdk-pixbuf-2.0-0
+      # GTK4 rt
+      - libgtk-4-1
+      - libadwaita-1-0
+      # themes & icons
+      - adwaita-icon-theme
+      - hicolor-icon-theme
+      - gnome-themes-extra
+      - shared-mime-info
+      - librsvg2-common
+      # other packages
+      - libcanberra-gtk3-0
+      - libcanberra-gtk-module
+      - libnotify4
+      - gvfs
+      - dconf-gsettings-backend
+      - coreutils
+      - dconf-gsettings-backend
+      - xdg-desktop-portal
+      - xdg-desktop-portal-gtk
+      - xdg-utils
+      - libproxy1v5
+      - libproxy1-plugin-gsettings
+      - libproxy1-plugin-networkmanager
+      - curl
+      - pkexec
+    override-build: |
+      glib-compile-schemas $SNAPCRAFT_PART_INSTALL/usr/share/glib-2.0/schemas
+      gio-querymodules $SNAPCRAFT_PART_INSTALL/usr/lib/x86_64-linux-gnu/gio/modules
   
   # get the local linux-assistant.sh, .desktop, linux-assistant.png 
   linux-assistant-local: # use local files, because the .desktop file need other icon dir
@@ -95,18 +142,4 @@ parts:
       cp linux-assistant.png $SNAPCRAFT_PART_INSTALL/meta/gui/linux-assistant.png
       mkdir -p $SNAPCRAFT_PART_INSTALL/gui
       cp linux-assistant.desktop $SNAPCRAFT_PART_INSTALL/gui/linux-assistant.desktop
-      sed -i 's@^Icon=.*$@Icon=${SNAP}/meta/gui/linux-assistant.png@' \
-        $SNAPCRAFT_PART_INSTALL/gui/linux-assistant.desktop
-        
-  polkit-policy: # add policy for root calls
-    plugin: dump
-    source: .
-    organize:
-      org.linux-assistant.operations.policy: usr/share/polkit-1/actions/io.github.jean28518.linux-assistant.policy
-    stage-packages:
-      - policykit-1
-
-layout:
-  /usr/share/polkit-1:
-    bind: $SNAP/usr/share/polkit-1
-
+      sed -i 's@^Icon=.*$@Icon=${SNAP}/meta/gui/linux-assistant.png@' $SNAPCRAFT_PART_INSTALL/gui/linux-assistant.desktop

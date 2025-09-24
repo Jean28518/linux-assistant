@@ -58,7 +58,7 @@ lxd init --minimal
 # 6. Start building snap
 snapcraft pack
 # 7. Install:
-sudo snap install ./linux-assistant_*_amd64.snap
+sudo snap install ./linux-assistant_*_amd64.snap --dangerous --classic
 # 8. Cleanup:
 snapcraft clean
 ```
