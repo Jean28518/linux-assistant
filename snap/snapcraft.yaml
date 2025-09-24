@@ -1,0 +1,110 @@
+name: linux-assistant
+base: core24
+version: '0.6.1'
+summary: A daily Linux helper
+description: |
+  Linux Assistant - a daily Linux helper with powerful search,
+  routine checks, and management tools.
+  System interventions are secured via Polkit.
+  
+# required for metadata
+title: Linux Assistant
+contact: your-email@example.com # who wants to stand here?
+license: GPL-3.0-only 
+
+# required by lint
+donation: https://www.linuxguides.de/unterstuetzen/
+issues: https://github.com/Jean28518/linux-assistant/issues
+source-code: https://github.com/Jean28518/linux-assistant
+website: https://www.linux-assistant.org/
+
+grade: stable
+# if the policykit option is too complex or cannot function properly, then 'confinement: classic' must be used here.
+confinement: strict
+#confinement: classic
+
+apps:
+  linux-assistant:
+    command: bin/linux-assistant
+    extensions: [gnome] # add gnome plugin, depended by flutter apps
+    desktop: gui/linux-assistant.desktop
+    environment:
+      PATH: $SNAP/bin:$SNAP/usr/bin:$PATH
+    plugs:
+      - network
+      - network-bind
+      - home
+      - x11
+      - wayland
+      - opengl
+      - desktop
+      - desktop-legacy
+      - pulseaudio
+      - camera
+      - removable-media
+      - system-observe
+      
+plugs:
+  gnome:
+    interface: content
+    target: $SNAP/gnome-platform
+    default-provider: gnome-46-2404
+   
+  dbus:
+    interface: dbus
+    bus: session
+    name: org.freedesktop.portal.Desktop
+  
+  opengl:
+    interface: opengl
+
+slots:
+  linux-assistant:
+    interface: dbus
+    bus: session
+    name: io.github.jean28518.linux-assistant
+    
+# split the snap building
+parts:
+  # get the binary, lib, data, additional from the latest release 
+  linux-assistant-release: # I use this methode, because building from doesn't work with device/snapcraft setup
+    plugin: dump
+    source: https://github.com/Jean28518/linux-assistant/releases/download/v0.6.1/linux-assistant-bundle.zip
+    source-type: zip
+    organize:
+      linux-assistant-bundle/additional/*: /bin/lib/additional/
+      linux-assistant-bundle/data/*: /bin/lib/data/
+      linux-assistant-bundle/lib/*: /bin/lib/lib/
+      linux-assistant-bundle/linux-assistant: bin/lib/linux-assistant
+  
+  # get the local linux-assistant.sh, .desktop, linux-assistant.png 
+  linux-assistant-local: # use local files, because the .desktop file need other icon dir
+    plugin: dump
+    source: .
+    organize:
+      linux-assistant.sh: bin/linux-assistant
+      linux-assistant.png: meta/gui/linux-assistant.png
+      linux-assistant.desktop: gui/linux-assistant.desktop
+    override-build: | 
+      set -eux
+      mkdir -p $SNAPCRAFT_PART_INSTALL/bin
+      cp linux-assistant.sh $SNAPCRAFT_PART_INSTALL/bin/linux-assistant
+      mkdir -p $SNAPCRAFT_PART_INSTALL/meta/gui
+      cp linux-assistant.png $SNAPCRAFT_PART_INSTALL/meta/gui/linux-assistant.png
+      mkdir -p $SNAPCRAFT_PART_INSTALL/gui
+      cp linux-assistant.desktop $SNAPCRAFT_PART_INSTALL/gui/linux-assistant.desktop
+      sed -i 's@^Icon=.*$@Icon=${SNAP}/meta/gui/linux-assistant.png@' \
+        $SNAPCRAFT_PART_INSTALL/gui/linux-assistant.desktop
+        
+  polkit-policy: # add policy for root calls
+    plugin: dump
+    source: .
+    organize:
+      org.linux-assistant.operations.policy: usr/share/polkit-1/actions/io.github.jean28518.linux-assistant.policy
+    stage-packages:
+      - policykit-1
+
+layout:
+  /usr/share/polkit-1:
+    bind: $SNAP/usr/share/polkit-1
+

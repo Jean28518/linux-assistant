@@ -1,18 +1,33 @@
 #!/bin/bash
-APP_DIR="/usr/lib/linux-assistant"
 
-# if the file "linux-assistant" is present in the same directory as this script, change APP_DIR
-if [ -f "linux-assistant" ]; then
-   APP_DIR="."
+APP_DIR="" # leave it empty
+
+# if the application is running as a Snap
+# snap applications are installed in /snap/<appname>/<version> and the script is in bin
+# so the lib dir is at $SNAP/bin/lib
+if [ -n "$SNAP" ]; then
+    APP_DIR="$SNAP/bin/lib"
+    echo "[LA] Using snap"
+    
+# running as LA as flatpak
+elif [ -d "/app/bin" ]; then
+    APP_DIR="/app/bin"
+    echo "[LA] Using flatpak"
+    
+# running LA local
+elif [ -f "linux-assistant" ]; then
+    APP_DIR="."
+    echo "[LA] Using local"
+else
+    # use /usr/lib as fallback 
+    APP_DIR="/usr/lib/linux-assistant"
+    echo "[LA] Using standard installation"
 fi
 
-# if /app/bin is present change APP_DIR (because then we are in flatpak)
-if [ -d "/app/bin" ]; then
-   APP_DIR="/app/bin"
-fi
+echo "[LA] App_DIR: $APP_DIR"
 
-echo "App_DIR: $APP_DIR"
-
+# TODO: Rework this for snap logic 
+# This won't work in the snap
 if [[ "$1" == "-v" || "$1" == "--version" ]]; then
   VERSION=""
   if [ -f "$APP_DIR/version" ]; then

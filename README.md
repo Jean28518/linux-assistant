@@ -43,6 +43,28 @@ bash ./build-arch-pkg.sh
 sudo pacman -U linux-assistant-*.pkg.tar.zst
 ```
 
+### Build Snap
+```bash
+# 1. Install snapcraft:
+sudo snap install snapcraft --classic
+# 2. Install lxd:
+sudo snap install lxd
+# 3. Add yourself to the group for lxd
+sudo usermod -a -G lxd $USER
+# 4. Reboot your system
+sudo reboot
+# 5. Run this command to init lxd
+lxd init --minimal
+# 6. Start building snap
+snapcraft pack
+# 7. Install:
+sudo snap install ./linux-assistant_*_amd64.snap
+# 8. Cleanup:
+snapcraft clean
+```
+
+
+
 ## Run as flatpak
 
 Repo: <https://github.com/Jean28518/flathub/tree/com.github.jean28518.Linux-Assistant>
