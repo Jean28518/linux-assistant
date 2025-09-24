@@ -1,9 +1,9 @@
 name: linux-assistant
-base: core24
+base: core22
 version: '0.6.1'
 summary: A daily Linux helper
 description: |
-  Linux Assistant - a daily Linux helper with powerful search,
+  Linux Assistant \E2\80\93 a daily Linux helper with powerful search,
   routine checks, and management tools.
   System interventions are secured via Polkit.
   
@@ -30,6 +30,7 @@ apps:
     desktop: gui/linux-assistant.desktop
     environment:
       PATH: $SNAP/bin:$SNAP/usr/bin:$PATH
+      LD_LIBRARY_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET:$SNAP/lib/$SNAPCRAFT_ARCH_TRIPLET"
     plugs:
       - network
       - network-bind
@@ -43,12 +44,13 @@ apps:
       - camera
       - removable-media
       - system-observe
+     
       
 plugs:
   gnome:
     interface: content
     target: $SNAP/gnome-platform
-    default-provider: gnome-46-2404
+    default-provider: gnome-42-2204
    
   dbus:
     interface: dbus
