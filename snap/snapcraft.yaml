@@ -37,6 +37,7 @@ apps:
       GDK_DISABLE_MEDIA: "1"
       GSK_RENDERER: "cairo"
       GTK_MEDIA_BACKEND: "none"
+      PYTHONPATH: $SNAP/bin/lib/additional/python
     plugs:
       - network
       - network-bind
@@ -50,8 +51,27 @@ apps:
       - camera
       - removable-media
       - system-observe
+      - mount-observe
+      - hardware-observe
+      - network-observe
+      - process-control
       
-plugs:  
+plugs:
+  gtk-3-themes:
+    interface: content
+    target: $SNAP/data-dir/themes
+    default-provider: gtk-common-themes
+
+  gtk-themes:
+    interface: content
+    target: $SNAP/data-dir/themes
+    default-provider: gtk-common-themes
+    
+  icon-themes:
+    interface: content
+    target: $SNAP/data-dir/icons
+    default-provider: gtk-common-themes
+    
   dbus:
     interface: dbus
     bus: session
@@ -79,7 +99,7 @@ parts:
     source: https://github.com/Jean28518/linux-assistant/releases/download/v0.6.1/linux-assistant-bundle.zip
     source-type: zip
     organize:
-      linux-assistant-bundle/additional: /bin/lib/additional/
+      #linux-assistant-bundle/additional: /bin/lib/additional/
       linux-assistant-bundle/data: /bin/lib/data/
       linux-assistant-bundle/lib: /bin/lib/lib/
       linux-assistant-bundle/linux-assistant: bin/lib/linux-assistant
@@ -123,6 +143,8 @@ parts:
       - libgl1
       - libegl1
       - libgles2
+      - wget
+      - unzip
     override-build: |
       craftctl default
       glib-compile-schemas $SNAPCRAFT_PART_INSTALL/usr/share/glib-2.0/schemas
@@ -133,6 +155,7 @@ parts:
     plugin: dump
     source: .
     organize:
+      additional: /bin/lib/additional/
       linux-assistant.sh: bin/linux-assistant
       linux-assistant.png: meta/gui/linux-assistant.png
       linux-assistant.desktop: gui/linux-assistant.desktop
@@ -145,3 +168,5 @@ parts:
       mkdir -p $SNAPCRAFT_PART_INSTALL/gui
       cp linux-assistant.desktop $SNAPCRAFT_PART_INSTALL/gui/linux-assistant.desktop
       sed -i 's@^Icon=.*$@Icon=${SNAP}/meta/gui/linux-assistant.png@' $SNAPCRAFT_PART_INSTALL/gui/linux-assistant.desktop
+      mkdir -p $SNAPCRAFT_PART_INSTALL/bin/lib/additional/
+      cp -r additional/* $SNAPCRAFT_PART_INSTALL/bin/lib/additional/

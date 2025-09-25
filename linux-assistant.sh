@@ -5,8 +5,18 @@ APP_DIR="" # leave it empty
 # if the application is running as a Snap
 # snap applications are installed in /snap/<appname>/<version> and the script is in bin
 # so the lib dir is at $SNAP/bin/lib
+# unset some variables to prevent conflicts
 if [ -n "$SNAP" ]; then
     APP_DIR="$SNAP/bin/lib"
+    # disable some variables
+    unset LD_LIBRARY_PATH
+    unset XDG_DATA_DIRS
+    unset GTK_PATH
+    unset GSETTINGS_SCHEMA_DIR
+    unset GI_TYPELIB_PATH
+    unset GIO_EXTRA_MODULES
+    unset GTK_USE_PORTAL
+    unset GDK_DISABLE_MEDIA
     echo "[LA] Using snap"
     
 # running as LA as flatpak
@@ -26,14 +36,12 @@ fi
 
 echo "[LA] App_DIR: $APP_DIR"
 
-# TODO: Rework this for snap logic 
-# This won't work in the snap
 if [[ "$1" == "-v" || "$1" == "--version" ]]; then
   VERSION=""
   if [ -f "$APP_DIR/version" ]; then
     VERSION=$( cat "$APP_DIR/version" )
   fi
-
+  echo ""
   echo "Linux-Assistant $VERSION"
   echo "A daily linux helper with powerful integrated search, routines and checks."
   echo "Homepage: https://www.linux-assistant.org"

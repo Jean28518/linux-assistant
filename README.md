@@ -55,11 +55,14 @@ sudo usermod -a -G lxd $USER
 sudo reboot
 # 5. Run this command to init lxd
 lxd init --minimal
-# 6. Start building snap
+# 6. Clone the Repo:
+git clone https://github.com/Jean28518/linux-assistant.git
+cd linux-assistant
+# 7. Start building snap
 snapcraft pack
-# 7. Install:
+# 8. Install:
 sudo snap install ./linux-assistant_*_amd64.snap --dangerous --classic
-# 8. Cleanup:
+# 9. Cleanup:
 snapcraft clean
 ```
 

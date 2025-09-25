@@ -76,8 +76,11 @@ if __name__ == '__main__':
     desktop = desktop.replace(".", "")
     desktop = desktop.replace("-", "")
 
-    dataDirs = os.getenv("XDG_DATA_DIRS").split(":")
-
+    # add fallback for XDG_DATA_DIRS to avoid 'NoneType' errors 
+    # use default paths /usr/local/share and /usr/share
+    xdg_data_dirs_value = os.getenv("XDG_DATA_DIRS", "/usr/local/share/:/usr/share/")
+    dataDirs = xdg_data_dirs_value.split(":") 
+    
     if jfolders.does_folder_exist(os.getenv("HOME") + "/.local/share/applications"):
         dataDirs.append(os.getenv("HOME") + "/.local/share")
 
