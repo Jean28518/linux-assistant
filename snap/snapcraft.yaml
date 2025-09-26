@@ -55,6 +55,11 @@ apps:
       - hardware-observe
       - network-observe
       - process-control
+      - raw-usb
+      - gsettings
+      - cups
+      - uhid
+      - unity7
       
 plugs:
   gtk-3-themes:
