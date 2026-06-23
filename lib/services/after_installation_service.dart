@@ -51,7 +51,7 @@ class AfterInstallationService {
     }
 
     Future fBrave = applyApplicationActionIfNecessary(
-        ["com.brave.Browser", "brave"], brave);
+        ["brave-browser", "com.brave.Browser", "brave"], brave);
 
     Future fChrome = applyApplicationActionIfNecessary(
         ["google-chrome-stable", "com.google.Chrome"], googleChrome);
