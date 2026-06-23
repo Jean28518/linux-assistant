@@ -736,17 +736,16 @@ class _MainSearchState extends State<MainSearch> {
   void _handleSuggestions() async {
     var entries = await ActionEntryListService.getEntries();
     // If the main search window is present and the user has not typed anything
-    if (_foundEntries.isEmpty) {
-      int random = 0;
-      while (true) {
-        random = Random().nextInt(entries.length - 1);
-        if (entries[random].excludeFromSearchProposal) {
-          break;
+    if (_foundEntries.isEmpty && entries.isNotEmpty) {
+      var proposals = entries.where((e) => !e.excludeFromSearchProposal).toList();
+      if (proposals.isNotEmpty) {
+        int random = Random().nextInt(proposals.length);
+        if (mounted) {
+          setState(() {
+            suggestion = proposals[random];
+          });
         }
       }
-      setState(() {
-        suggestion = entries[random];
-      });
     }
   }
 }
