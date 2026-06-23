@@ -304,6 +304,36 @@ class AppLocalizationsFi extends AppLocalizations {
       'Avoimen lähdekoodin selain, joka on suunniteltu suojaamaan yksityisyyttäsi ja anonymiteettiäsi verkossa Tor-verkon avulla.';
 
   @override
+  String get utilitiesSelection => 'Lisäohjelmistot';
+
+  @override
+  String get keepassxcDescription =>
+      'Offline-salasananhallinta vahvalla salauksella.';
+
+  @override
+  String get bitwardenDescription =>
+      'Turvallinen pilvipohjainen salasananhallinta.';
+
+  @override
+  String get pikaDescription =>
+      'Yksinkertainen varmuuskopiointityökalu, joka perustuu BorgBackupiin.';
+
+  @override
+  String get nextcloudDescription =>
+      'Synkronoi tiedostosi, kalenterisi ja yhteystietosi Nextcloudin kanssa.';
+
+  @override
+  String get vortaDescription => 'BorgBackup-työpöytäasiakas.';
+
+  @override
+  String get obsidianDescription =>
+      'Tehokas markdown-pohjainen tietokanta ja muistiinpanosovellus.';
+
+  @override
+  String get terminalToolsDescription =>
+      'Tärkeimmät komentorivityökalut (vim, ufw, htop, git, curl, fail2ban jne.).';
+
+  @override
   String get thunderbirdDescription =>
       'Avoimen lähdekoodin sähköpostiohjelma Mozillalta.';
 

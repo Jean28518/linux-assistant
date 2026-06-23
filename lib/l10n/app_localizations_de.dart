@@ -304,6 +304,36 @@ class AppLocalizationsDe extends AppLocalizations {
       'Open Source Browser, der entwickelt wurde, um Ihre Privatsphäre und Anonymität im Tor-Netzwerk zu schützen.';
 
   @override
+  String get utilitiesSelection => 'Zusätzliche Software';
+
+  @override
+  String get keepassxcDescription =>
+      'Offline-Passwort-Manager mit starker Verschlüsselung.';
+
+  @override
+  String get bitwardenDescription =>
+      'Sicherer Cloud-basierter Passwort-Manager.';
+
+  @override
+  String get pikaDescription =>
+      'Einfaches Backup-Werkzeug basierend auf BorgBackup.';
+
+  @override
+  String get nextcloudDescription =>
+      'Synchronisiere Deine Dateien, Kalender und Kontakte mit Nextcloud.';
+
+  @override
+  String get vortaDescription => 'Desktop-Client für BorgBackup.';
+
+  @override
+  String get obsidianDescription =>
+      'Leistungsstarke Markdown-basierte Wissensdatenbank und Notiz-App.';
+
+  @override
+  String get terminalToolsDescription =>
+      'Wichtige Befehlszeilen-Utilities (vim, ufw, htop, git, curl, fail2ban usw.).';
+
+  @override
   String get thunderbirdDescription => 'Open Source E-Mail Client von Mozilla.';
 
   @override

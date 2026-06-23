@@ -618,6 +618,54 @@ abstract class AppLocalizations {
   /// **'Open Source browser designed to protect your privacy and anonymity online using the Tor network.'**
   String get torbrowserDescription;
 
+  /// No description provided for @utilitiesSelection.
+  ///
+  /// In en, this message translates to:
+  /// **'Utilities & Tools'**
+  String get utilitiesSelection;
+
+  /// No description provided for @keepassxcDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline password manager with strong encryption.'**
+  String get keepassxcDescription;
+
+  /// No description provided for @bitwardenDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Secure cloud-based password manager.'**
+  String get bitwardenDescription;
+
+  /// No description provided for @pikaDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Simple backup tool based on BorgBackup.'**
+  String get pikaDescription;
+
+  /// No description provided for @nextcloudDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync your files, calendar, and contacts with Nextcloud.'**
+  String get nextcloudDescription;
+
+  /// No description provided for @vortaDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Desktop client for BorgBackup.'**
+  String get vortaDescription;
+
+  /// No description provided for @obsidianDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Powerful markdown-based knowledge base and note-taking app.'**
+  String get obsidianDescription;
+
+  /// No description provided for @terminalToolsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Essential command-line utilities (vim, ufw, htop, git, curl, fail2ban, etc.).'**
+  String get terminalToolsDescription;
+
   ///
   ///
   /// In en, this message translates to:
