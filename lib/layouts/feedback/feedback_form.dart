@@ -3,7 +3,7 @@ import 'package:linux_assistant/layouts/feedback/feedback_send.dart';
 import 'package:linux_assistant/layouts/mint_y.dart';
 import 'package:linux_assistant/models/action_entry.dart';
 import 'package:linux_assistant/services/feedback_service.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:linux_assistant/l10n/app_localizations.dart';
 
 class FeedbackDialog extends StatefulWidget {
   final String searchText;

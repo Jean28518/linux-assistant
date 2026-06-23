@@ -4,7 +4,7 @@ import 'package:linux_assistant/layouts/mint_y.dart';
 import 'package:linux_assistant/linux/linux_filesystem.dart';
 import 'package:linux_assistant/linux/linux_process.dart';
 import 'package:linux_assistant/linux/linux_system.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:linux_assistant/l10n/app_localizations.dart';
 import 'package:linux_assistant/services/main_search_loader.dart';
 import 'package:linux_assistant/widgets/success_message.dart';
 import 'package:linux_assistant/widgets/warning_message.dart';

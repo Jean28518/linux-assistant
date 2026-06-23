@@ -6,7 +6,7 @@ import 'package:linux_assistant/layouts/disk_cleaner/clean_disk.dart';
 import 'package:linux_assistant/linux/linux_filesystem.dart';
 import 'package:linux_assistant/widgets/single_bar_chart.dart';
 import 'package:linux_assistant/services/linux.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:linux_assistant/l10n/app_localizations.dart';
 
 class DiskSpace extends StatelessWidget {
   DiskSpace({Key? key}) : super(key: key);

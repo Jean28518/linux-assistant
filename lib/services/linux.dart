@@ -19,7 +19,7 @@ import 'package:linux_assistant/services/action_entry_list_service.dart';
 import 'package:linux_assistant/services/config_handler.dart';
 import 'package:linux_assistant/services/hashing.dart';
 import 'package:linux_assistant/services/main_search_loader.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:linux_assistant/l10n/app_localizations.dart';
 
 class Linux {
   static Environment currentenvironment = Environment();

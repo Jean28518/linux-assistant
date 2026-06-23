@@ -7,7 +7,7 @@ import 'package:linux_assistant/layouts/mint_y.dart';
 import 'package:linux_assistant/models/environment.dart';
 import 'package:linux_assistant/services/config_handler.dart';
 import 'package:linux_assistant/services/linux.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:linux_assistant/l10n/app_localizations.dart';
 
 class EnvironmentSelectionView extends StatefulWidget {
   const EnvironmentSelectionView({Key? key}) : super(key: key);

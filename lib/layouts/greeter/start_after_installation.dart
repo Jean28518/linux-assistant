@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:linux_assistant/layouts/after_installation/after_installation_entry.dart';
 import 'package:linux_assistant/layouts/greeter/introduction.dart';
 import 'package:linux_assistant/layouts/mint_y.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:linux_assistant/l10n/app_localizations.dart';
 
 class StartAfterInstallationRoutineQuestion extends StatelessWidget {
   const StartAfterInstallationRoutineQuestion({super.key});

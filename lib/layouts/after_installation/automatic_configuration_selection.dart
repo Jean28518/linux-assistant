@@ -6,7 +6,7 @@ import 'package:linux_assistant/layouts/run_command_queue.dart';
 import 'package:linux_assistant/widgets/system_icon.dart';
 import 'package:linux_assistant/services/after_installation_service.dart';
 import 'package:linux_assistant/services/linux.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:linux_assistant/l10n/app_localizations.dart';
 
 class AfterInstallationAutomaticConfiguration extends StatelessWidget {
   AfterInstallationAutomaticConfiguration({Key? key}) : super(key: key);

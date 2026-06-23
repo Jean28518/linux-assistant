@@ -7,7 +7,7 @@ import 'package:linux_assistant/layouts/disk_cleaner/remove_software.dart';
 import 'package:linux_assistant/layouts/mint_y.dart';
 import 'package:linux_assistant/linux/linux_filesystem.dart';
 import 'package:linux_assistant/services/linux.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:linux_assistant/l10n/app_localizations.dart';
 import 'dart:io';
 
 class CleanDiskPage extends StatelessWidget {

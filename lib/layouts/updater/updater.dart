@@ -3,7 +3,7 @@ import 'package:linux_assistant/layouts/mint_y.dart';
 import 'package:linux_assistant/layouts/run_command_queue.dart';
 import 'package:linux_assistant/services/main_search_loader.dart';
 import 'package:linux_assistant/services/updater.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:linux_assistant/l10n/app_localizations.dart';
 import 'package:linux_assistant/services/weekly_tasks.dart';
 
 class LinuxAssistantUpdatePage extends StatelessWidget {

@@ -8,7 +8,7 @@ import 'package:linux_assistant/models/action_entry_list.dart';
 import 'package:linux_assistant/services/action_entry_list_service.dart';
 import 'package:linux_assistant/services/config_handler.dart';
 import 'package:linux_assistant/services/linux.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:linux_assistant/l10n/app_localizations.dart';
 import 'package:logger/logger.dart';
 
 class MainSearchLoader extends StatefulWidget {

@@ -7,7 +7,7 @@ import 'package:linux_assistant/layouts/mint_y.dart';
 import 'package:linux_assistant/main.dart';
 import 'package:linux_assistant/models/action_entry.dart';
 import 'package:linux_assistant/services/linux.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:linux_assistant/l10n/app_localizations.dart';
 
 List<ActionEntry> getBasicEntries(BuildContext context) {
   return [

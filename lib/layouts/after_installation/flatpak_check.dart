@@ -5,7 +5,7 @@ import 'package:linux_assistant/layouts/after_installation/browser_selection.dar
 import 'package:linux_assistant/layouts/mint_y.dart';
 import 'package:linux_assistant/layouts/run_command_queue.dart';
 import 'package:linux_assistant/services/linux.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:linux_assistant/l10n/app_localizations.dart';
 
 class AfterInstallationFlatpakCheck extends StatelessWidget {
   const AfterInstallationFlatpakCheck({super.key});
