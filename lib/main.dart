@@ -106,28 +106,36 @@ class MyApp extends StatelessWidget {
   }
 
   static void setMainColor() {
+    MintY.secondaryColor = const Color(0xff2ab9a4);
     switch (Linux.currentenvironment.distribution) {
       case DISTROS.DEBIAN:
         MintY.currentColor = const Color.fromARGB(255, 208, 7, 78);
+        MintY.secondaryColor = const Color.fromARGB(255, 75, 5, 35);
         break;
       case DISTROS.LINUX_MINT:
       case DISTROS.LMDE:
         MintY.currentColor = const Color.fromARGB(255, 53, 168, 84);
+        MintY.secondaryColor = const Color.fromARGB(255, 35, 130, 70);
         break;
       case DISTROS.MXLINUX:
         MintY.currentColor = const Color.fromARGB(255, 34, 34, 34);
+        MintY.secondaryColor = const Color.fromARGB(255, 70, 80, 95);
         break;
       case DISTROS.POPOS:
         MintY.currentColor = const Color.fromARGB(255, 72, 185, 199);
+        MintY.secondaryColor = const Color.fromARGB(255, 15, 80, 100);
         break;
       case DISTROS.ZORINOS:
         MintY.currentColor = const Color.fromARGB(255, 21, 166, 240);
+        MintY.secondaryColor = const Color.fromARGB(255, 10, 85, 180);
         break;
       case DISTROS.KDENEON:
         MintY.currentColor = const Color.fromARGB(255, 35, 104, 150);
+        MintY.secondaryColor = const Color.fromARGB(255, 24, 160, 135);
         break;
       case DISTROS.OPENSUSE:
         MintY.currentColor = const Color.fromARGB(255, 115, 186, 37);
+        MintY.secondaryColor = const Color.fromARGB(255, 15, 95, 75);
         break;
       case DISTROS.UBUNTU:
         MintY.currentColor = const Color.fromARGB(255, 233, 84, 32);
@@ -135,12 +143,15 @@ class MyApp extends StatelessWidget {
         break;
       case DISTROS.FEDORA:
         MintY.currentColor = const Color.fromARGB(255, 81, 162, 218);
+        MintY.secondaryColor = const Color.fromARGB(255, 41, 65, 114);
         break;
       case DISTROS.ARCH:
         MintY.currentColor = const Color.fromARGB(255, 15, 148, 210);
+        MintY.secondaryColor = const Color.fromARGB(255, 28, 40, 51);
         break;
       case DISTROS.MANJARO:
         MintY.currentColor = const Color.fromARGB(255, 53, 191, 164);
+        MintY.secondaryColor = const Color.fromARGB(255, 26, 40, 37);
         break;
       case DISTROS.ENDEAVOUR:
         MintY.currentColor = const Color.fromARGB(255, 127, 63, 191);

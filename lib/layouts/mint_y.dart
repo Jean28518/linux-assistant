@@ -74,7 +74,7 @@ class MintY {
       decoration: TextDecoration.none);
 
   static const heading1 = TextStyle(
-      color: Colors.black87,
+      color: Colors.black,
       fontSize: 32,
       fontWeight: FontWeight.w500,
       decoration: TextDecoration.none);
@@ -86,7 +86,7 @@ class MintY {
       decoration: TextDecoration.none);
 
   static const heading2 = TextStyle(
-      color: Colors.black87,
+      color: Colors.black,
       fontSize: 24,
       fontWeight: FontWeight.w400,
       decoration: TextDecoration.none);
@@ -98,7 +98,7 @@ class MintY {
       decoration: TextDecoration.none);
 
   static const heading3 = TextStyle(
-      color: Colors.black87,
+      color: Colors.black,
       fontSize: 20,
       fontWeight: FontWeight.w400,
       decoration: TextDecoration.none);
@@ -110,14 +110,14 @@ class MintY {
       decoration: TextDecoration.none);
 
   static const heading4 = TextStyle(
-      color: Colors.black87,
+      color: Colors.black,
       fontSize: 17,
       fontWeight: FontWeight.w400,
       decoration: TextDecoration.none);
 
   static const paragraph = TextStyle(
-      fontWeight: FontWeight.w300,
-      color: Colors.black87,
+      fontWeight: FontWeight.w400,
+      color: Colors.black,
       decoration: TextDecoration.none,
       fontSize: 15);
 
@@ -135,10 +135,20 @@ class MintY {
       // backgroundColor: Colors.white70,
       textTheme: const TextTheme(
         displayLarge: heading1,
+        displayMedium: heading1,
+        displaySmall: heading2,
         headlineLarge: heading2,
         headlineMedium: heading3,
         headlineSmall: heading4,
+        titleLarge: heading3,
+        titleMedium: heading4,
+        titleSmall: paragraph,
+        bodyLarge: paragraph,
         bodyMedium: paragraph,
+        bodySmall: paragraph,
+        labelLarge: paragraph,
+        labelMedium: paragraph,
+        labelSmall: paragraph,
       ),
       inputDecorationTheme: InputDecorationTheme(
         border: OutlineInputBorder(
@@ -162,10 +172,20 @@ class MintY {
       highlightColor: _white,
       textTheme: const TextTheme(
         displayLarge: heading1White,
+        displayMedium: heading1White,
+        displaySmall: heading2White,
         headlineLarge: heading2White,
         headlineMedium: heading3White,
         headlineSmall: heading4White,
+        titleLarge: heading3White,
+        titleMedium: heading4White,
+        titleSmall: paragraphWhite,
+        bodyLarge: paragraphWhite,
         bodyMedium: paragraphWhite,
+        bodySmall: paragraphWhite,
+        labelLarge: paragraphWhite,
+        labelMedium: paragraphWhite,
+        labelSmall: paragraphWhite,
       ),
       inputDecorationTheme: InputDecorationTheme(
         border: OutlineInputBorder(
