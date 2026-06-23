@@ -779,17 +779,6 @@ class Linux {
     runCommand("/usr/bin/xdg-open $website");
   }
 
-  static String getWebbrowserCommand(var browser) {
-    switch (browser) {
-      case BROWSERS.FIREFOX:
-        return "firefox";
-      case BROWSERS.CHROMIUM:
-        return "chromium";
-      default:
-        return "#";
-    }
-  }
-
   static void getAllFolderEntriesOfUser(BuildContext context) async {
     // String foldersString = await runCommandWithCustomArguments("python3", [
     //   "${executableFolder}additional/python/get_folder_structure.py",
@@ -997,6 +986,13 @@ class Linux {
       newEnvironment.browser = BROWSERS.FIREFOX;
     } else if (lines[4].toLowerCase().contains("opera")) {
       newEnvironment.browser = BROWSERS.OPERA;
+    } else if (lines[4].toLowerCase().contains("librewolf")) {
+      newEnvironment.browser = BROWSERS.LIBREWOLF;
+    } else if (lines[4].toLowerCase().contains("waterfox")) {
+      newEnvironment.browser = BROWSERS.WATERFOX;
+    } else if (lines[4].toLowerCase().contains("torbrowser") ||
+        lines[4].toLowerCase().contains("tor-browser")) {
+      newEnvironment.browser = BROWSERS.TORBROWSER;
     }
     newEnvironment.wayland = lines[5].contains("wayland");
 
@@ -2346,7 +2342,6 @@ class Linux {
       return "";
     }
   }
-
 
   /// Opens the disk space analyzer of the current environment.
   /// If the tool is not installed, it will be installed.

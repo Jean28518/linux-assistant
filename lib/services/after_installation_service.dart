@@ -11,6 +11,9 @@ class AfterInstallationService {
   static List<bool> brave = [false, false];
   static List<bool> googleChrome = [false, false];
   static List<bool> vivaldi = [false, false];
+  static List<bool> librewolf = [false, false];
+  static List<bool> waterfox = [false, false];
+  static List<bool> torBrowser = [false, false];
 
   static List<bool> libreOffice = [false, false];
   static List<bool> onlyOffice = [false, false];
@@ -59,6 +62,15 @@ class AfterInstallationService {
     Future fVivaldi = applyApplicationActionIfNecessary(
         ["vivaldi", "com.vivaldi.Vivaldi"], vivaldi);
 
+    Future fLibreWolf = applyApplicationActionIfNecessary(
+        ["librewolf", "io.gitlab.librewolf-community", "librewolf"], librewolf);
+
+    Future fWaterfox = applyApplicationActionIfNecessary(
+        ["waterfox", "net.waterfox.waterfox", "waterfox"], waterfox);
+
+    Future fTorBrowser = applyApplicationActionIfNecessary(
+        ["torbrowser-launcher", "org.torproject.torbrowser-launcher"], torBrowser);
+
     /// We need to wait until every function has finished,
     /// because otherwise the command queue will get filled to late.
     await fFirefox;
@@ -66,6 +78,9 @@ class AfterInstallationService {
     await fBrave;
     await fChrome;
     await fVivaldi;
+    await fLibreWolf;
+    await fWaterfox;
+    await fTorBrowser;
   }
 
   static Future<void> applyCurrentOfficeSituation() async {

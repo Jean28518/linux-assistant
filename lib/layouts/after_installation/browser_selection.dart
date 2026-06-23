@@ -20,6 +20,12 @@ class AfterInstallationBrowserSelection extends StatelessWidget {
           ["google-chrome-stable", "com.google.Chrome"]);
   static Future<bool> vivadiInstalled =
       Linux.areApplicationsInstalled(["vivaldi", "com.vivaldi.Vivaldi"]);
+  static Future<bool> librewolfInstalled = Linux.areApplicationsInstalled(
+      ["librewolf", "io.gitlab.librewolf-community", "librewolf"]);
+  static Future<bool> waterfoxInstalled = Linux.areApplicationsInstalled(
+      ["waterfox", "net.waterfox.waterfox", "waterfox"]);
+  static Future<bool> torBrowserInstalled = Linux.areApplicationsInstalled(
+      ["torbrowser-launcher", "org.torproject.torbrowser-launcher"]);
 
   @override
   Widget build(BuildContext context) {
@@ -198,6 +204,120 @@ class AfterInstallationBrowserSelection extends StatelessWidget {
                     onPressed: () {
                       AfterInstallationService.vivaldi[1] =
                           !AfterInstallationService.vivaldi[1];
+                    },
+
+                    /// Display warning text if installed version will be removed by user
+                    infoText: snapshot.data.toString() == 'true'
+                        ? Text(
+                            AppLocalizations.of(context)!
+                                .thisApplicationWillBeRemoved,
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
+                                .copyWith(
+                                  color: Theme.of(context).colorScheme.error,
+                                ),
+                          )
+                        : null,
+                    showInfoTextAtThisSelectionState: false,
+                  );
+                } else {
+                  return const MintYProgressIndicatorCircle();
+                }
+              },
+            ),
+            FutureBuilder(
+              future: librewolfInstalled,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  AfterInstallationService.librewolf[0] =
+                      snapshot.data.toString() == 'true';
+                  AfterInstallationService.librewolf[1] =
+                      snapshot.data.toString() == 'true';
+                  return MintYSelectableEntryWithIconHorizontal(
+                    icon: const SystemIcon(iconString: "librewolf", iconSize: 64),
+                    title: "LibreWolf",
+                    text: AppLocalizations.of(context)!.librewolfDescription,
+                    selected: snapshot.data.toString() == 'true',
+                    onPressed: () {
+                      AfterInstallationService.librewolf[1] =
+                          !AfterInstallationService.librewolf[1];
+                    },
+
+                    /// Display warning text if installed version will be removed by user
+                    infoText: snapshot.data.toString() == 'true'
+                        ? Text(
+                            AppLocalizations.of(context)!
+                                .thisApplicationWillBeRemoved,
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
+                                .copyWith(
+                                  color: Theme.of(context).colorScheme.error,
+                                ),
+                          )
+                        : null,
+                    showInfoTextAtThisSelectionState: false,
+                  );
+                } else {
+                  return const MintYProgressIndicatorCircle();
+                }
+              },
+            ),
+            FutureBuilder(
+              future: waterfoxInstalled,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  AfterInstallationService.waterfox[0] =
+                      snapshot.data.toString() == 'true';
+                  AfterInstallationService.waterfox[1] =
+                      snapshot.data.toString() == 'true';
+                  return MintYSelectableEntryWithIconHorizontal(
+                    icon: const SystemIcon(iconString: "waterfox", iconSize: 64),
+                    title: "Waterfox",
+                    text: AppLocalizations.of(context)!.waterfoxDescription,
+                    selected: snapshot.data.toString() == 'true',
+                    onPressed: () {
+                      AfterInstallationService.waterfox[1] =
+                          !AfterInstallationService.waterfox[1];
+                    },
+
+                    /// Display warning text if installed version will be removed by user
+                    infoText: snapshot.data.toString() == 'true'
+                        ? Text(
+                            AppLocalizations.of(context)!
+                                .thisApplicationWillBeRemoved,
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
+                                .copyWith(
+                                  color: Theme.of(context).colorScheme.error,
+                                ),
+                          )
+                        : null,
+                    showInfoTextAtThisSelectionState: false,
+                  );
+                } else {
+                  return const MintYProgressIndicatorCircle();
+                }
+              },
+            ),
+            FutureBuilder(
+              future: torBrowserInstalled,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  AfterInstallationService.torBrowser[0] =
+                      snapshot.data.toString() == 'true';
+                  AfterInstallationService.torBrowser[1] =
+                      snapshot.data.toString() == 'true';
+                  return MintYSelectableEntryWithIconHorizontal(
+                    icon: const SystemIcon(iconString: "tor-browser", iconSize: 64),
+                    title: "Tor Browser",
+                    text: AppLocalizations.of(context)!.torbrowserDescription,
+                    selected: snapshot.data.toString() == 'true',
+                    onPressed: () {
+                      AfterInstallationService.torBrowser[1] =
+                          !AfterInstallationService.torBrowser[1];
                     },
 
                     /// Display warning text if installed version will be removed by user

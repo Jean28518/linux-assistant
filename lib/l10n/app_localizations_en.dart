@@ -288,6 +288,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chromeDescription => 'Proprietary browser from Google.';
 
   @override
+  String get librewolfDescription =>
+      'Open Source fork of Firefox, focused on privacy, security and user freedom.';
+
+  @override
+  String get waterfoxDescription =>
+      'Open Source browser based on Firefox, designed for privacy and performance.';
+
+  @override
+  String get torbrowserDescription =>
+      'Open Source browser designed to protect your privacy and anonymity online using the Tor network.';
+
+  @override
   String get thunderbirdDescription =>
       'Open Source E-Mail Client from Mozilla.';
 

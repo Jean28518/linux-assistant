@@ -600,6 +600,24 @@ abstract class AppLocalizations {
   /// **'Proprietary browser from Google.'**
   String get chromeDescription;
 
+  /// No description provided for @librewolfDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Source fork of Firefox, focused on privacy, security and user freedom.'**
+  String get librewolfDescription;
+
+  /// No description provided for @waterfoxDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Source browser based on Firefox, designed for privacy and performance.'**
+  String get waterfoxDescription;
+
+  /// No description provided for @torbrowserDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Source browser designed to protect your privacy and anonymity online using the Tor network.'**
+  String get torbrowserDescription;
+
   ///
   ///
   /// In en, this message translates to:

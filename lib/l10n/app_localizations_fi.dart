@@ -292,6 +292,18 @@ class AppLocalizationsFi extends AppLocalizations {
   String get chromeDescription => 'Googlen oma selain.';
 
   @override
+  String get librewolfDescription =>
+      'Firefoxiin perustuva avoimen lähdekoodin selain, joka keskittyy yksityisyyteen, turvallisuuteen ja käyttäjän vapauteen.';
+
+  @override
+  String get waterfoxDescription =>
+      'Firefoxiin perustuva avoimen lähdekoodin selain, joka on suunniteltu yksityisyyttä ja suorituskykyä varten.';
+
+  @override
+  String get torbrowserDescription =>
+      'Avoimen lähdekoodin selain, joka on suunniteltu suojaamaan yksityisyyttäsi ja anonymiteettiäsi verkossa Tor-verkon avulla.';
+
+  @override
   String get thunderbirdDescription =>
       'Avoimen lähdekoodin sähköpostiohjelma Mozillalta.';
 

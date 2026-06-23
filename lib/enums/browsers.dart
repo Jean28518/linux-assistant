@@ -5,6 +5,9 @@ enum BROWSERS {
   EDGE,
   BRAVE,
   OPERA,
+  LIBREWOLF,
+  WATERFOX,
+  TORBROWSER,
 }
 
 BROWSERS getBrowserEnumOfString(str) {
