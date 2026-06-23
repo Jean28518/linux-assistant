@@ -33,14 +33,21 @@ class DiskSpace extends StatelessWidget {
                     fillColor: device.usedPercent > 89
                         ? Colors.red
                         : const Color.fromARGB(255, 141, 141, 141),
-                    customWidgetBetweenAtBottom: device.usedPercent > 89
+                    customWidgetRightOfBar: device.usedPercent > 89
                         ? InkWell(
                             onTap: () =>
                                 Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) =>
                                   CleanDiskPage(mountpoint: device.mountPoint),
                             )),
-                            child: Text(AppLocalizations.of(context)!.clean),
+                            child: Tooltip(
+                              message: AppLocalizations.of(context)!.clean,
+                              child: const Icon(
+                                Icons.cleaning_services,
+                                color: Colors.red,
+                                size: 20,
+                              ),
+                            ),
                           )
                         : null),
               );

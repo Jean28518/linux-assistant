@@ -2347,48 +2347,6 @@ class Linux {
     }
   }
 
-  static Future<List<List<String>>> getBiggestFoldersOfPath(String path) async {
-    String output = await runCommandWithCustomArguments(
-        "bash", ["-c", "du -xhs $path/* | sort -rh"],
-        getErrorMessages: false); //  | sort -rh | head -n 5
-    List<String> lines = output.replaceAll("//", "/").split("\n");
-    List<List<String>> returnValue = [];
-
-    // Exclude all lines which are matching one of the mount points
-    List<DeviceInfo> mountPoints = await LinuxFilesystem.disks();
-    List<String> mountPointPaths = [];
-    for (DeviceInfo deviceInfo in mountPoints) {
-      mountPointPaths.add(deviceInfo.mountPoint);
-    }
-    mountPointPaths.remove("/");
-    mountPointPaths.add("/media");
-    mountPointPaths.add("/mnt");
-    mountPointPaths.remove(path);
-
-    for (String line in lines) {
-      List<String> lineParts = line.split("\t");
-      if (lineParts.length != 2) {
-        continue;
-      }
-      String size = lineParts[0];
-      String folderPath = lineParts[1];
-      bool ignore = false;
-      for (String mountPointPath in mountPointPaths) {
-        if (folderPath.startsWith(mountPointPath)) {
-          ignore = true;
-          break;
-        }
-      }
-      folderPath = folderPath.replaceFirst(path, "");
-      if (folderPath.startsWith("/")) {
-        folderPath = folderPath.replaceFirst("/", "");
-      }
-      if (!ignore && (size.contains("G") || size.contains("T"))) {
-        returnValue.add([size, folderPath]);
-      }
-    }
-    return returnValue;
-  }
 
   /// Opens the disk space analyzer of the current environment.
   /// If the tool is not installed, it will be installed.

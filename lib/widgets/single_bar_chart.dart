@@ -9,7 +9,7 @@ class SingleBarChart extends StatelessWidget {
   late String text;
   late String tooltip;
   late TextStyle textStyle;
-  late Widget? customWidgetBetweenAtBottom;
+  late Widget? customWidgetRightOfBar;
 
   SingleBarChart({
     Key? key,
@@ -20,7 +20,7 @@ class SingleBarChart extends StatelessWidget {
     this.text = "",
     this.textStyle = const TextStyle(),
     this.tooltip = "",
-    this.customWidgetBetweenAtBottom,
+    this.customWidgetRightOfBar,
   }) : super(key: key);
 
   @override
@@ -32,36 +32,46 @@ class SingleBarChart extends StatelessWidget {
     }
     return Column(
       children: [
-        SizedBox(
-          width: 30,
-          height: size,
-          child: BarChart(
-            BarChartData(
-              maxY: size,
-              minY: 0,
-              alignment: BarChartAlignment.spaceEvenly,
-              barTouchData: BarTouchData(touchTooltipData: BarTouchTooltipData(
-                  getTooltipItem: ((group, groupIndex, rod, rodIndex) {
-                if (tooltip == "") {
-                  return null;
-                }
-                switch (groupIndex) {
-                  case 0:
-                    return BarTooltipItem(
-                        tooltip,
-                        TextStyle(
-                          color: Colors.white,
-                        ));
-                  default:
-                    return null;
-                }
-              }))),
-              borderData: FlBorderData(show: false),
-              gridData: FlGridData(show: false),
-              barGroups: [generateGroupData()],
-              titlesData: FlTitlesData(show: false),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: 30,
+              height: size,
+              child: BarChart(
+                BarChartData(
+                  maxY: size,
+                  minY: 0,
+                  alignment: BarChartAlignment.spaceEvenly,
+                  barTouchData: BarTouchData(touchTooltipData: BarTouchTooltipData(
+                      getTooltipItem: ((group, groupIndex, rod, rodIndex) {
+                    if (tooltip == "") {
+                      return null;
+                    }
+                    switch (groupIndex) {
+                      case 0:
+                        return BarTooltipItem(
+                            tooltip,
+                            const TextStyle(
+                              color: Colors.white,
+                            ));
+                      default:
+                        return null;
+                    }
+                  }))),
+                  borderData: FlBorderData(show: false),
+                  gridData: FlGridData(show: false),
+                  barGroups: [generateGroupData()],
+                  titlesData: FlTitlesData(show: false),
+                ),
+              ),
             ),
-          ),
+            if (customWidgetRightOfBar != null) ...[
+              const SizedBox(width: 5),
+              customWidgetRightOfBar!,
+            ],
+          ],
         ),
         const SizedBox(
           height: 5,
@@ -70,11 +80,6 @@ class SingleBarChart extends StatelessWidget {
           text,
           style: textStyle,
         ),
-        if (customWidgetBetweenAtBottom != null)
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: customWidgetBetweenAtBottom!,
-          ),
       ],
     );
   }

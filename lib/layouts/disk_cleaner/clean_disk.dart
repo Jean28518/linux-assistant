@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:linux_assistant/enums/distros.dart';
 import 'package:linux_assistant/layouts/disk_cleaner/clean_timeshift.dart';
-import 'package:linux_assistant/layouts/disk_cleaner/biggest_folders.dart';
 import 'package:linux_assistant/layouts/disk_cleaner/cleaner_select_disk.dart';
 import 'package:linux_assistant/layouts/disk_cleaner/remove_software.dart';
 import 'package:linux_assistant/layouts/mint_y.dart';
@@ -50,17 +49,20 @@ class CleanDiskPage extends StatelessWidget {
             )
           ],
         ),
-        // biggest folders
-        Text(
-          AppLocalizations.of(context)!.allBiggestFolders,
-          style: Theme.of(context).textTheme.headlineMedium,
-        ),
-        SizedBox(
-          height: 200,
-          width: MediaQuery.of(context).size.width - 50,
-          child: BiggestFoldersWidget(
-            path: mountpoint,
-          ),
+        // Analyse diskspace button
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: MintYButton(
+                onPressed: () => Linux.openDiskSpaceAnalyzer(context, mountpoint),
+                text: Text(AppLocalizations.of(context)!.analyseDiskspace,
+                    style: MintY.heading4White),
+                color: MintY.currentColor,
+              ),
+            )
+          ],
         ),
         // Timeshift
         if (Directory('$mountpoint/timeshift/snapshots/').existsSync())
