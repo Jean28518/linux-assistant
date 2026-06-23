@@ -93,7 +93,9 @@
   "signalDescription": "Messaggistica open source. Funziona solo con l'app per smartphone.",
   "discordDescription": "Software proprietario di chat di comunità",
   "zoomDescription": "Software proprietario per conferenze.",
-  "teamsDescription": "Software proprietario di comunicazione per team.",
+  "whatsieDescription": "Semplice client Web WhatsApp.",
+  "telegramDescription": "Applicazione di messaggistica popolare, veloce e sicura.",
+  "threemaDescription": "Messaggistica sicura con una forte attenzione alla privacy e all'anonimato.",
   "communicationSoftware": "Software di comunicazione",
   "flatpakIsNotInstalled": "Flatpak non è installato sul tuo sistema.",
   "flatpakDescription": "Per un facile accesso a molte app popolari, si consiglia vivamente Flatpak. Flatpak è una nuova utility per la gestione dei pacchetti per Linux. Offre un ambiente sandbox in cui le app possono essere eseguite in isolamento dal resto del sistema. Collegando 'Flathub' (il più grande repository per flatpak) puoi accedere a oltre 1800 diverse app Linux. Come svantaggio i Flatpak richiedono più spazio su disco.",
@@ -813,11 +815,6 @@
     "type": "text"
   },
   "@zoomDescription": {
-    "placeholders": {},
-    "description": "",
-    "type": "text"
-  },
-  "@teamsDescription": {
     "placeholders": {},
     "description": "",
     "type": "text"

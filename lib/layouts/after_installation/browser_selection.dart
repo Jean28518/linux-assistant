@@ -150,83 +150,6 @@ class AfterInstallationBrowserSelection extends StatelessWidget {
               },
             ),
             FutureBuilder(
-              future: googleChromeStableInstalled,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  AfterInstallationService.googleChrome[0] =
-                      snapshot.data.toString() == 'true';
-                  AfterInstallationService.googleChrome[1] =
-                      snapshot.data.toString() == 'true';
-                  return MintYSelectableEntryWithIconHorizontal(
-                    icon: const SystemIcon(
-                        iconString: "google-chrome", iconSize: 64),
-                    title: "Google Chrome",
-                    text: AppLocalizations.of(context)!.chromeDescription,
-                    selected: snapshot.data.toString() == 'true',
-                    onPressed: () {
-                      AfterInstallationService.googleChrome[1] =
-                          !AfterInstallationService.googleChrome[1];
-                    },
-
-                    /// Display warning text if installed version will be removed by user
-                    infoText: snapshot.data.toString() == 'true'
-                        ? Text(
-                            AppLocalizations.of(context)!
-                                .thisApplicationWillBeRemoved,
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelLarge!
-                                .copyWith(
-                                  color: Theme.of(context).colorScheme.error,
-                                ),
-                          )
-                        : null,
-                    showInfoTextAtThisSelectionState: false,
-                  );
-                } else {
-                  return const MintYProgressIndicatorCircle();
-                }
-              },
-            ),
-            FutureBuilder(
-              future: vivadiInstalled,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  AfterInstallationService.vivaldi[0] =
-                      snapshot.data.toString() == 'true';
-                  AfterInstallationService.vivaldi[1] =
-                      snapshot.data.toString() == 'true';
-                  return MintYSelectableEntryWithIconHorizontal(
-                    icon: const SystemIcon(iconString: "vivaldi", iconSize: 64),
-                    title: "Vivaldi",
-                    text: AppLocalizations.of(context)!.vivaldiDescription,
-                    selected: snapshot.data.toString() == 'true',
-                    onPressed: () {
-                      AfterInstallationService.vivaldi[1] =
-                          !AfterInstallationService.vivaldi[1];
-                    },
-
-                    /// Display warning text if installed version will be removed by user
-                    infoText: snapshot.data.toString() == 'true'
-                        ? Text(
-                            AppLocalizations.of(context)!
-                                .thisApplicationWillBeRemoved,
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelLarge!
-                                .copyWith(
-                                  color: Theme.of(context).colorScheme.error,
-                                ),
-                          )
-                        : null,
-                    showInfoTextAtThisSelectionState: false,
-                  );
-                } else {
-                  return const MintYProgressIndicatorCircle();
-                }
-              },
-            ),
-            FutureBuilder(
               future: librewolfInstalled,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
@@ -318,6 +241,83 @@ class AfterInstallationBrowserSelection extends StatelessWidget {
                     onPressed: () {
                       AfterInstallationService.torBrowser[1] =
                           !AfterInstallationService.torBrowser[1];
+                    },
+
+                    /// Display warning text if installed version will be removed by user
+                    infoText: snapshot.data.toString() == 'true'
+                        ? Text(
+                            AppLocalizations.of(context)!
+                                .thisApplicationWillBeRemoved,
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
+                                .copyWith(
+                                  color: Theme.of(context).colorScheme.error,
+                                ),
+                          )
+                        : null,
+                    showInfoTextAtThisSelectionState: false,
+                  );
+                } else {
+                  return const MintYProgressIndicatorCircle();
+                }
+              },
+            ),
+            FutureBuilder(
+              future: googleChromeStableInstalled,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  AfterInstallationService.googleChrome[0] =
+                      snapshot.data.toString() == 'true';
+                  AfterInstallationService.googleChrome[1] =
+                      snapshot.data.toString() == 'true';
+                  return MintYSelectableEntryWithIconHorizontal(
+                    icon: const SystemIcon(
+                        iconString: "google-chrome", iconSize: 64),
+                    title: "Google Chrome",
+                    text: AppLocalizations.of(context)!.chromeDescription,
+                    selected: snapshot.data.toString() == 'true',
+                    onPressed: () {
+                      AfterInstallationService.googleChrome[1] =
+                          !AfterInstallationService.googleChrome[1];
+                    },
+
+                    /// Display warning text if installed version will be removed by user
+                    infoText: snapshot.data.toString() == 'true'
+                        ? Text(
+                            AppLocalizations.of(context)!
+                                .thisApplicationWillBeRemoved,
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
+                                .copyWith(
+                                  color: Theme.of(context).colorScheme.error,
+                                ),
+                          )
+                        : null,
+                    showInfoTextAtThisSelectionState: false,
+                  );
+                } else {
+                  return const MintYProgressIndicatorCircle();
+                }
+              },
+            ),
+            FutureBuilder(
+              future: vivadiInstalled,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  AfterInstallationService.vivaldi[0] =
+                      snapshot.data.toString() == 'true';
+                  AfterInstallationService.vivaldi[1] =
+                      snapshot.data.toString() == 'true';
+                  return MintYSelectableEntryWithIconHorizontal(
+                    icon: const SystemIcon(iconString: "vivaldi", iconSize: 64),
+                    title: "Vivaldi",
+                    text: AppLocalizations.of(context)!.vivaldiDescription,
+                    selected: snapshot.data.toString() == 'true',
+                    onPressed: () {
+                      AfterInstallationService.vivaldi[1] =
+                          !AfterInstallationService.vivaldi[1];
                     },
 
                     /// Display warning text if installed version will be removed by user

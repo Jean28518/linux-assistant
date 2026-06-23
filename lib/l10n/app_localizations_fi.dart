@@ -325,7 +325,16 @@ class AppLocalizationsFi extends AppLocalizations {
   String get zoomDescription => 'Omallinen konferenssiohjelmisto.';
 
   @override
-  String get teamsDescription => 'Omallinen tiimiviestintäohjelmisto.';
+  String get whatsieDescription =>
+      'Yksinkertainen WhatsApp Web -asiakasohjelma.';
+
+  @override
+  String get telegramDescription =>
+      'Suosittu, nopea ja turvallinen viestintäsovellus.';
+
+  @override
+  String get threemaDescription =>
+      'Turvallinen pikaviestin, joka keskittyy vahvasti yksityisyyteen ja anonymiteettiin.';
 
   @override
   String get communicationSoftware => 'viestintäohjelmisto';

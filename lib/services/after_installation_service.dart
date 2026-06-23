@@ -25,7 +25,9 @@ class AfterInstallationService {
   static List<bool> signal = [false, false];
   static List<bool> discord = [false, false];
   static List<bool> zoom = [false, false];
-  static List<bool> microsoftTeams = [false, false];
+  static List<bool> whatsie = [false, false];
+  static List<bool> telegram = [false, false];
+  static List<bool> threema = [false, false];
 
   static bool applyUpdatesSinceRelease = true;
   static bool installMultimediaCodecs = true;
@@ -119,9 +121,12 @@ class AfterInstallationService {
     Future fZoom = applyApplicationActionIfNecessary(
         ["us.zoom.Zoom", "zoom-client"], zoom);
 
-    /// Here the snap is preferred, because it is offically supported by Microsoft.
-    Future fTeams = applyApplicationActionIfNecessary(
-        ["teams", "com.microsoft.Teams"], microsoftTeams);
+    Future fWhatsie = applyApplicationActionIfNecessary(
+        ["whatsie"], whatsie);
+    Future fTelegram = applyApplicationActionIfNecessary(
+        ["telegram-desktop", "org.telegram.desktop", "telegram-desktop"], telegram);
+    Future fThreema = applyApplicationActionIfNecessary(
+        ["ch.threema.threema-desktop"], threema);
 
     await fThunderbird;
     await fJitsi;
@@ -129,7 +134,9 @@ class AfterInstallationService {
     await fSignal;
     await fDiscord;
     await fZoom;
-    await fTeams;
+    await fWhatsie;
+    await fTelegram;
+    await fThreema;
   }
 
   /// Only take action, if the user clicked on the card.

@@ -321,7 +321,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get zoomDescription => 'Proprietary conference software.';
 
   @override
-  String get teamsDescription => 'Proprietary team communication software.';
+  String get whatsieDescription => 'Simple WhatsApp Web client.';
+
+  @override
+  String get telegramDescription =>
+      'Popular, fast and secure messaging application.';
+
+  @override
+  String get threemaDescription =>
+      'Secure messenger with a strong focus on privacy and anonymity.';
 
   @override
   String get communicationSoftware => 'Communication Software';

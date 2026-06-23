@@ -654,11 +654,23 @@ abstract class AppLocalizations {
   /// **'Proprietary conference software.'**
   String get zoomDescription;
 
-  ///
+  /// No description provided for @whatsieDescription.
   ///
   /// In en, this message translates to:
-  /// **'Proprietary team communication software.'**
-  String get teamsDescription;
+  /// **'Simple WhatsApp Web client.'**
+  String get whatsieDescription;
+
+  /// No description provided for @telegramDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Popular, fast and secure messaging application.'**
+  String get telegramDescription;
+
+  /// No description provided for @threemaDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Secure messenger with a strong focus on privacy and anonymity.'**
+  String get threemaDescription;
 
   ///
   ///

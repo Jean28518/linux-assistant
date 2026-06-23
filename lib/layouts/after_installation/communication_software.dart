@@ -23,9 +23,12 @@ class AfterInstallationCommunicationSoftwareSelection extends StatelessWidget {
   static Future<bool> zoomInstalled =
       Linux.areApplicationsInstalled(["us.zoom.Zoom", "zoom-client"]);
 
-  /// Here the snap is preferred, because it is offically supported by Microsoft.
-  static Future<bool> microsoftTeamsInstalled =
-      Linux.areApplicationsInstalled(["teams", "com.microsoft.Teams"]);
+  static Future<bool> whatsieInstalled =
+      Linux.areApplicationsInstalled(["whatsie", "com.ktechpit.whatsie"]);
+  static Future<bool> telegramInstalled = Linux.areApplicationsInstalled(
+      ["telegram-desktop", "org.telegram.desktop"]);
+  static Future<bool> threemaInstalled =
+      Linux.areApplicationsInstalled(["threema", "ch.threema.threema-desktop"]);
 
   @override
   Widget build(BuildContext context) {
@@ -177,6 +180,111 @@ class AfterInstallationCommunicationSoftwareSelection extends StatelessWidget {
             },
           ),
           FutureBuilder<bool>(
+            future: whatsieInstalled,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                AfterInstallationService.whatsie[0] =
+                    snapshot.data.toString() == 'true';
+                AfterInstallationService.whatsie[1] =
+                    snapshot.data.toString() == 'true';
+                return MintYSelectableEntryWithIconHorizontal(
+                  icon: const SystemIcon(iconString: "whatsie", iconSize: 64),
+                  title: "Whatsie",
+                  text: AppLocalizations.of(context)!.whatsieDescription,
+                  selected: snapshot.data.toString() == 'true',
+                  onPressed: () {
+                    AfterInstallationService.whatsie[1] =
+                        !AfterInstallationService.whatsie[1];
+                  },
+
+                  /// Display warning text if installed version will be removed by user
+                  infoText: snapshot.data.toString() == 'true'
+                      ? Text(
+                          AppLocalizations.of(context)!
+                              .thisApplicationWillBeRemoved,
+                          style:
+                              Theme.of(context).textTheme.labelLarge!.copyWith(
+                                    color: Theme.of(context).colorScheme.error,
+                                  ),
+                        )
+                      : null,
+                  showInfoTextAtThisSelectionState: false,
+                );
+              }
+              return const Center(child: MintYProgressIndicatorCircle());
+            },
+          ),
+          FutureBuilder<bool>(
+            future: telegramInstalled,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                AfterInstallationService.telegram[0] =
+                    snapshot.data.toString() == 'true';
+                AfterInstallationService.telegram[1] =
+                    snapshot.data.toString() == 'true';
+                return MintYSelectableEntryWithIconHorizontal(
+                  icon: const SystemIcon(iconString: "telegram", iconSize: 64),
+                  title: "Telegram",
+                  text: AppLocalizations.of(context)!.telegramDescription,
+                  selected: snapshot.data.toString() == 'true',
+                  onPressed: () {
+                    AfterInstallationService.telegram[1] =
+                        !AfterInstallationService.telegram[1];
+                  },
+
+                  /// Display warning text if installed version will be removed by user
+                  infoText: snapshot.data.toString() == 'true'
+                      ? Text(
+                          AppLocalizations.of(context)!
+                              .thisApplicationWillBeRemoved,
+                          style:
+                              Theme.of(context).textTheme.labelLarge!.copyWith(
+                                    color: Theme.of(context).colorScheme.error,
+                                  ),
+                        )
+                      : null,
+                  showInfoTextAtThisSelectionState: false,
+                );
+              }
+              return const Center(child: MintYProgressIndicatorCircle());
+            },
+          ),
+          FutureBuilder<bool>(
+            future: threemaInstalled,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                AfterInstallationService.threema[0] =
+                    snapshot.data.toString() == 'true';
+                AfterInstallationService.threema[1] =
+                    snapshot.data.toString() == 'true';
+                return MintYSelectableEntryWithIconHorizontal(
+                  icon: const SystemIcon(iconString: "threema", iconSize: 64),
+                  title: "Threema",
+                  text: AppLocalizations.of(context)!.threemaDescription,
+                  selected: snapshot.data.toString() == 'true',
+                  onPressed: () {
+                    AfterInstallationService.threema[1] =
+                        !AfterInstallationService.threema[1];
+                  },
+
+                  /// Display warning text if installed version will be removed by user
+                  infoText: snapshot.data.toString() == 'true'
+                      ? Text(
+                          AppLocalizations.of(context)!
+                              .thisApplicationWillBeRemoved,
+                          style:
+                              Theme.of(context).textTheme.labelLarge!.copyWith(
+                                    color: Theme.of(context).colorScheme.error,
+                                  ),
+                        )
+                      : null,
+                  showInfoTextAtThisSelectionState: false,
+                );
+              }
+              return const Center(child: MintYProgressIndicatorCircle());
+            },
+          ),
+          FutureBuilder<bool>(
             future: discordInstalled,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
@@ -227,42 +335,6 @@ class AfterInstallationCommunicationSoftwareSelection extends StatelessWidget {
                   onPressed: () {
                     AfterInstallationService.zoom[1] =
                         !AfterInstallationService.zoom[1];
-                  },
-
-                  /// Display warning text if installed version will be removed by user
-                  infoText: snapshot.data.toString() == 'true'
-                      ? Text(
-                          AppLocalizations.of(context)!
-                              .thisApplicationWillBeRemoved,
-                          style:
-                              Theme.of(context).textTheme.labelLarge!.copyWith(
-                                    color: Theme.of(context).colorScheme.error,
-                                  ),
-                        )
-                      : null,
-                  showInfoTextAtThisSelectionState: false,
-                );
-              }
-              return const Center(child: MintYProgressIndicatorCircle());
-            },
-          ),
-          FutureBuilder<bool>(
-            future: microsoftTeamsInstalled,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                AfterInstallationService.microsoftTeams[0] =
-                    snapshot.data.toString() == 'true';
-                AfterInstallationService.microsoftTeams[1] =
-                    snapshot.data.toString() == 'true';
-                return MintYSelectableEntryWithIconHorizontal(
-                  icon: const SystemIcon(
-                      iconString: "microsoft-teams", iconSize: 64),
-                  title: "Microsoft Teams",
-                  text: AppLocalizations.of(context)!.teamsDescription,
-                  selected: snapshot.data.toString() == 'true',
-                  onPressed: () {
-                    AfterInstallationService.microsoftTeams[1] =
-                        !AfterInstallationService.microsoftTeams[1];
                   },
 
                   /// Display warning text if installed version will be removed by user

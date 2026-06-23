@@ -93,7 +93,9 @@
   "signalDescription": "Open source messenger. Works only with the smartphone app.",
   "discordDescription": "Proprietary community chat software",
   "zoomDescription": "Proprietary conference software.",
-  "teamsDescription": "Proprietary team communication software.",
+  "whatsieDescription": "Simple WhatsApp Web client.",
+  "telegramDescription": "Popular, fast and secure messaging application.",
+  "threemaDescription": "Secure messenger with a strong focus on privacy and anonymity.",
   "communicationSoftware": "Communication Software",
   "flatpakIsNotInstalled": "Flatpak isn't installed on your system.",
   "flatpakDescription": "For easy access to many popular apps Flatpak is highly recommended. Flatpak is a new utility for packet management for Linux. It is offering a sandbox environment in which apps can run in isolation of the rest of the system. By binding the 'Flathub' (biggest repository for flatpaks) you get access to over 1800 different Linux apps. As a downside Flatpaks require more diskpace.",
@@ -799,11 +801,6 @@
     "type": "text"
   },
   "@zoomDescription": {
-    "placeholders": {},
-    "description": "",
-    "type": "text"
-  },
-  "@teamsDescription": {
     "placeholders": {},
     "description": "",
     "type": "text"

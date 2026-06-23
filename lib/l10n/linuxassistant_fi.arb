@@ -93,7 +93,9 @@
  "signalDescription": "Avoimen lähdekoodin messenger. Toimii vain älypuhelinsovelluksen kanssa.",
  "discordDescription": "Yhteisön oma chat-ohjelmisto",
  "zoomDescription": "Omallinen konferenssiohjelmisto.",
- "teamsDescription": "Omallinen tiimiviestintäohjelmisto.",
+ "whatsieDescription": "Yksinkertainen WhatsApp Web -asiakasohjelma.",
+ "telegramDescription": "Suosittu, nopea ja turvallinen viestintäsovellus.",
+ "threemaDescription": "Turvallinen pikaviestin, joka keskittyy vahvasti yksityisyyteen ja anonymiteettiin.",
  "communicationSoftware": "viestintäohjelmisto",
  "flatpakIsNotInstalled": "Flatpakia ei ole asennettu järjestelmääsi.",
  "flatpakDescription": "Helppo pääsyyn moniin suosittuihin sovelluksiin Flatpak on erittäin suositeltavaa. Flatpak on uusi apuohjelma paketinhallintaan Linuxille. Se tarjoaa hiekkalaatikkoympäristön, jossa sovellukset voivat toimia erillään muusta järjestelmästä. Sitomalla Flathub (suurin arkisto flatpakeille) saat käyttöösi yli 1800 erilaista Linux-sovellusta. Haittapuolena Flatpaks vaatii enemmän levytilaa.",
@@ -691,11 +693,6 @@
  "tyyppi": "teksti"
  },
  "@zoomDescription": {
- "paikkamerkit": {},
- "description": "",
- "tyyppi": "teksti"
- },
- "@teamsDescription": {
  "paikkamerkit": {},
  "description": "",
  "tyyppi": "teksti"
