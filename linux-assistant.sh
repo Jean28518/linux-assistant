@@ -1,24 +1,47 @@
 #!/bin/bash
-APP_DIR="/usr/lib/linux-assistant"
 
-# if the file "linux-assistant" is present in the same directory as this script, change APP_DIR
-if [ -f "linux-assistant" ]; then
-   APP_DIR="."
+APP_DIR="" # leave it empty
+
+# if the application is running as a Snap
+# snap applications are installed in /snap/<appname>/<version> and the script is in bin
+# so the lib dir is at $SNAP/bin/lib
+# unset some variables to prevent conflicts
+if [ -n "$SNAP" ]; then
+    APP_DIR="$SNAP/bin/lib"
+    # disable some variables
+    unset LD_LIBRARY_PATH
+    unset XDG_DATA_DIRS
+    unset GTK_PATH
+    unset GSETTINGS_SCHEMA_DIR
+    unset GI_TYPELIB_PATH
+    unset GIO_EXTRA_MODULES
+    unset GTK_USE_PORTAL
+    unset GDK_DISABLE_MEDIA
+    echo "[LA] Using snap"
+    
+# running as LA as flatpak
+elif [ -d "/app/bin" ]; then
+    APP_DIR="/app/bin"
+    echo "[LA] Using flatpak"
+    
+# running LA local
+elif [ -f "linux-assistant" ]; then
+    APP_DIR="."
+    echo "[LA] Using local"
+else
+    # use /usr/lib as fallback 
+    APP_DIR="/usr/lib/linux-assistant"
+    echo "[LA] Using standard installation"
 fi
 
-# if /app/bin is present change APP_DIR (because then we are in flatpak)
-if [ -d "/app/bin" ]; then
-   APP_DIR="/app/bin"
-fi
-
-echo "App_DIR: $APP_DIR"
+echo "[LA] App_DIR: $APP_DIR"
 
 if [[ "$1" == "-v" || "$1" == "--version" ]]; then
   VERSION=""
   if [ -f "$APP_DIR/version" ]; then
     VERSION=$( cat "$APP_DIR/version" )
   fi
-
+  echo ""
   echo "Linux-Assistant $VERSION"
   echo "A daily linux helper with powerful integrated search, routines and checks."
   echo "Homepage: https://www.linux-assistant.org"

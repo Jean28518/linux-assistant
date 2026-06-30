@@ -1,0 +1,177 @@
+name: linux-assistant
+base: core24
+version: '0.6.1'
+summary: A daily Linux helper
+description: |
+  Linux Assistant \E2\80\93 a daily Linux helper with powerful search,
+  routine checks, and management tools.
+  System interventions are secured via Polkit.
+  
+# required for metadata
+title: Linux Assistant
+contact: your-email@example.com # who wants to stand here?
+license: GPL-3.0-only 
+
+# required by lint
+donation: https://www.linuxguides.de/unterstuetzen/
+issues: https://github.com/Jean28518/linux-assistant/issues
+source-code: https://github.com/Jean28518/linux-assistant
+website: https://www.linux-assistant.org/
+
+grade: stable
+confinement: classic
+
+apps:
+  linux-assistant:
+    command: bin/linux-assistant
+    desktop: gui/linux-assistant.desktop
+    environment:
+      PATH: $SNAP/bin:$SNAP/usr/bin:$PATH
+      LD_LIBRARY_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET:$SNAP/lib/$SNAPCRAFT_ARCH_TRIPLET"
+      XDG_DATA_DIRS: $SNAP/usr/share:$SNAP/share:$XDG_DATA_DIRS
+      GTK_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/gtk-4.0
+      GSETTINGS_SCHEMA_DIR: $SNAP/share/glib-2.0/schemas
+      GI_TYPELIB_PATH: $SNAP/usr/lib/girepository-1.0:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/girepository-1.0
+      GIO_EXTRA_MODULES: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/gio/modules
+      GTK_USE_PORTAL: "1"
+      GDK_DISABLE_MEDIA: "1"
+      GSK_RENDERER: "cairo"
+      GTK_MEDIA_BACKEND: "none"
+      PYTHONPATH: $SNAP/bin/lib/additional/python
+    plugs:
+      - network
+      - network-bind
+      - home
+      - x11
+      - wayland
+      - opengl
+      - desktop
+      - desktop-legacy
+      - pulseaudio
+      - camera
+      - removable-media
+      - system-observe
+      - mount-observe
+      - hardware-observe
+      - network-observe
+      - process-control
+      - raw-usb
+      - gsettings
+      - cups
+      - uhid
+      - unity7
+      
+plugs:
+  gtk-3-themes:
+    interface: content
+    target: $SNAP/data-dir/themes
+    default-provider: gtk-common-themes
+
+  gtk-themes:
+    interface: content
+    target: $SNAP/data-dir/themes
+    default-provider: gtk-common-themes
+    
+  icon-themes:
+    interface: content
+    target: $SNAP/data-dir/icons
+    default-provider: gtk-common-themes
+    
+  dbus:
+    interface: dbus
+    bus: session
+    name: org.freedesktop.portal.Desktop
+  
+  opengl:
+    interface: opengl
+
+slots:
+  linux-assistant:
+    interface: dbus
+    bus: session
+    name: io.github.jean28518.linux-assistant
+ 
+environment:
+  LIBGL_DRIVERS_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/dri
+  LIBGL_DEBUG: verbose
+  MESA_LOADER_DRIVER_OVERRIDE: swrast
+  
+# split the snap building
+parts:
+  # get the binary, lib, data, additional from the latest release 
+  linux-assistant-release: # I use this methode, because building from source doesn't work with device/snapcraft setup
+    plugin: dump
+    source: https://github.com/Jean28518/linux-assistant/releases/download/v0.6.1/linux-assistant-bundle.zip
+    source-type: zip
+    organize:
+      #linux-assistant-bundle/additional: /bin/lib/additional/
+      linux-assistant-bundle/data: /bin/lib/data/
+      linux-assistant-bundle/lib: /bin/lib/lib/
+      linux-assistant-bundle/linux-assistant: bin/lib/linux-assistant
+      linux-assistant-bundle/version: /bin/lib/
+    build-packages: 
+      - libglib2.0-dev-bin
+      - libglib2.0-bin
+    stage-packages:
+      # GTK3 rt
+      - libglib2.0-0
+      - libgtk-3-0
+      - libpango-1.0-0
+      - libcairo2
+      - libatk1.0-0
+      - libgdk-pixbuf-2.0-0
+      # GTK4 rt
+      - libgtk-4-1
+      - libadwaita-1-0
+      # themes & icons
+      - adwaita-icon-theme
+      - hicolor-icon-theme
+      - gnome-themes-extra
+      - shared-mime-info
+      - librsvg2-common
+      # other packages
+      - libcanberra-gtk3-0
+      - libcanberra-gtk-module
+      - libnotify4
+      - gvfs
+      - dconf-gsettings-backend
+      - coreutils
+      - dconf-gsettings-backend
+      - xdg-desktop-portal
+      - xdg-desktop-portal-gtk
+      - xdg-utils
+      - libproxy1v5
+      - libproxy1-plugin-gsettings
+      - libproxy1-plugin-networkmanager
+      - curl
+      - pkexec
+      - libgl1
+      - libegl1
+      - libgles2
+      - wget
+      - unzip
+    override-build: |
+      craftctl default
+      glib-compile-schemas $SNAPCRAFT_PART_INSTALL/usr/share/glib-2.0/schemas
+      gio-querymodules $SNAPCRAFT_PART_INSTALL/usr/lib/x86_64-linux-gnu/gio/modules
+  
+  # get the local linux-assistant.sh, .desktop, linux-assistant.png 
+  linux-assistant-local: # use local files, because the .desktop file need other icon dir
+    plugin: dump
+    source: .
+    organize:
+      additional: /bin/lib/additional/
+      linux-assistant.sh: bin/linux-assistant
+      linux-assistant.png: meta/gui/linux-assistant.png
+      linux-assistant.desktop: gui/linux-assistant.desktop
+    override-build: | 
+      set -eux
+      mkdir -p $SNAPCRAFT_PART_INSTALL/bin
+      cp linux-assistant.sh $SNAPCRAFT_PART_INSTALL/bin/linux-assistant
+      mkdir -p $SNAPCRAFT_PART_INSTALL/meta/gui
+      cp linux-assistant.png $SNAPCRAFT_PART_INSTALL/meta/gui/linux-assistant.png
+      mkdir -p $SNAPCRAFT_PART_INSTALL/gui
+      cp linux-assistant.desktop $SNAPCRAFT_PART_INSTALL/gui/linux-assistant.desktop
+      sed -i 's@^Icon=.*$@Icon=${SNAP}/meta/gui/linux-assistant.png@' $SNAPCRAFT_PART_INSTALL/gui/linux-assistant.desktop
+      mkdir -p $SNAPCRAFT_PART_INSTALL/bin/lib/additional/
+      cp -r additional/* $SNAPCRAFT_PART_INSTALL/bin/lib/additional/
